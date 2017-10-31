@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="res/style.css">
+	<link rel="stylesheet" href="node_modules/vex-js/dist/css/vex.css">
+	<link rel="stylesheet" href="node_modules/vex-js/dist/css/vex-theme-default.css">
+
+	<script src="res/color-thief.js"></script>
+</head>
+<body>
+
+	<webview src="http://polygates.livehost.fr/UPDATES/" useragent="Mozilla/5.0 (Linux; <Android Version>; <Build Tag etc.>) AppleWebKit/<WebKit Rev> (KHTML, like Gecko) Chrome/<Chrome Rev> Mobile Safari/<WebKit Rev>" style="width: 100%; height: 590px;"></webview>
+
+	<div class="bar">
+	</div>
+
+</body>
+<script>
+	const $ = require("jQuery");
+	const fs = require('fs');
+	const jsonfile = require('jsonfile')
+	const vex = require('vex-js');
+	const getColors = require('get-image-colors');
+
+	vex.registerPlugin(require('vex-dialog'));
+	vex.defaultOptions.className = 'vex-theme-default';
+	var colorThief = new ColorThief();
+</script>
+<script src="res/main.js"></script>
+</html>
