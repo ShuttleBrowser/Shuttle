@@ -19,7 +19,7 @@ All updates are automatics (checking at the launching of the app), you can also 
 
 Shuttle store all informations of websites you use in a json file.
 
-```
+```json
 {"web":"gmail.com"},
 {"web":"google.com"},
 {"web":"instagram.com"},
@@ -44,11 +44,11 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 * **Robin Julian** - *Lead developer* - [rjulian](https://github.com/rjulian)
 * **Regis Brasme** - *Designer* - [rbrasme](https://github.com/rbrasme)
 
-See also the list of [contributors](https://github.com/rjulian/shuttle/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/ShuttleLtd/Shuttle/blob/master/LICENSE) file for details.
 
 ## Current Version
 
