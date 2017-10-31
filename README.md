@@ -7,7 +7,7 @@ The fastest access to your favorites applications.
 Launch Shuttle by clicking on the Exe (on Ms Windows).
 The program will started in the notification center, and can be open by a simple click.
 
-For adding a website, just click on the "plus" button. A window will open, and put the url of the website you want, choice a color in the color picker, and click on add.
+For adding a website, just click on the "plus" button. A window will open, then put the url of the website you want and click on add.
 The website will appear next to the "plus" button.
 This action can be repeat any time.
 
@@ -20,7 +20,7 @@ All updates are automatics (checking at the launching of the app), you can also 
 Shuttle store all informations of websites you use in a json file.
 
 ```json
-{"web":"gmail.com"},
+[{"web":"gmail.com"},
 {"web":"google.com"},
 {"web":"instagram.com"},
 {"web":"twitter.com"}
