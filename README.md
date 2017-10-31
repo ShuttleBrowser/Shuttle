@@ -33,7 +33,7 @@ Working on Microsoft Windows (7, 8 and 10), Debian and Mac OS.
 ## Built With
 
 * [Electron](https://electron.atom.io/) - NodeJS Module
-* [NodeJS](https://pypi.python.org/pypi/passlib) - Javascript Environnement
+* [NodeJS](https://nodejs.org) - Javascript Environnement
 
 ## Contributing
 
