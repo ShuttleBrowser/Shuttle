@@ -29,7 +29,7 @@ Shuttle store all informations of websites you use in a json file.
 ## Deployment
 
 Working on Microsoft Windows (7, 8 and 10), Debian and Mac OS.
-_Not tested on Debian and Mac OS_**
+_Not tested on Debian and Mac OS_
 
 ## Built With
 
