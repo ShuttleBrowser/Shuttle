@@ -41,7 +41,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Authors
 
-* **Robin Julian** - *Lead developer* - [rjulian](https://github.com/rjulian)
+* **Robin Julian** - *Lead developer* - [robjulian](https://github.com/robjulian)
 * **Regis Brasme** - *Designer* - [rbrasme](https://github.com/rbrasme)
 
 See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contributors) who participated in this project.
