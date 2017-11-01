@@ -2,8 +2,6 @@
 
 The fastest access to your favorites applications.
 
-![alt text](http://polygates.livehost.fr/github.png "prs")
-
 ## Getting Started
 
 Launch Shuttle by clicking on the Exe (on Ms Windows).
