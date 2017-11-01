@@ -4,4 +4,4 @@ var lang = {
 	EnterUrl:"Entrez l'URL d'un site Web",
 	addButton:"Ajouter",
 	RemoveButton:"Annuler"
-}
+};
