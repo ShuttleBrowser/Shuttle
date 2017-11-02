@@ -11,7 +11,7 @@ For adding a website, just click on the "plus" button. A window will open, then 
 The website will appear next to the "plus" button.
 This action can be repeat any time.
 
-You can delete a favorites by right-clicking on his color, and then clicking "Delete".
+You can delete a favorites by right-clicking on his color, then a window will open, and click "Continue".
 
 All updates are automatics (checking at the launching of the app), you can also check if there is one by right-clicking on his icon in the notification center.
 
