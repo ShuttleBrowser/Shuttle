@@ -53,4 +53,4 @@ This project is licensed under the GPL v3 License - see the [LICENSE.md](https:/
 
 ## Current Version
 
-* Shuttle alpha 0.0.8
+* Shuttle alpha 0.1.0
