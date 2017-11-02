@@ -2,12 +2,18 @@
 const electron = require('electron');
 const menubar = require('menubar');
 const url = require('url');
-const path = require('path');
-const request = require('request');
-const storage = require('electron-settings');
 const http = require('http');
 const fs = require('fs');
-const unzip = require('unzip');
+const updater = require('electron-simple-updater');
+
+require('electron-debug')({enabled: true});
+
+updater.init({
+  checkUpdateOnStart: true,
+  autoDownload: true,
+  url: 'http://polygates.livehost.fr/UPDATES/updates.json',
+  disabled: true
+});
 
 var mb = menubar({
   index: "file://" + __dirname + "/index.html",
@@ -17,26 +23,29 @@ var mb = menubar({
   height:640,
   resizable: false
 });
-//on créé le menu "click droit"
+
+//We create the context menu
 const contextMenu = electron.Menu.buildFromTemplate([
   {
     label: 'About',
     click() {
-    //on ouvre le site sur la page "about"
-      electron.shell.openExternal('https://electron.atom.io')
+    //We open the website at about
+      electron.shell.openExternal('https://getshuttle.xyz/about')
     }
   },
   {
     label: 'Updates',
     click() {
-      update(true);
+      updater.checkForUpdates();
+        function onUpdateAvailable(meta) {
+          updater.downloadUpdate();
+      }
     }
   },
   {type: 'separator'},
   {
     label: 'Quit',
     click() {
-    //on quitte l'app
       mb.app.quit();
       console.log('stopping');
     }
@@ -45,68 +54,8 @@ const contextMenu = electron.Menu.buildFromTemplate([
 ]);
 
 mb.on('ready', function () {
-  update()
   console.log('Shuttle is ready');
   if (process.platform == 'win32') {
     mb.tray.setContextMenu(contextMenu);
   }
 });
-
-function update(check) {
-	if (storage.has('version')) {
-		request('http://polygates.livehost.fr/UPDATES/Shuttle.txt', function (error, response, body) {
-		  console.log('version:', body);
-		  if (body != storage.get('version')) {
-		    storage.set('version', body);
-		    console.log("Download Update...");
-		    downloadFile("http://polygates.livehost.fr/UPDATES/ShuttleUpdate.zip", __dirname+"/ShuttleUpdate.zip");
-		  } else if (check) {
-		    electron.dialog.showMessageBox({title: "Shuttle", type:"info", message: "No update avalible"});
-		  }
-		});
-	} else {
-		request('http://polygates.livehost.fr/UPDATES/Shuttle.txt', function (error, response, body) {
-			storage.set('version', body);
-		});
-	}
-}
-
-
-function downloadFile(file_url , targetPath){
-    // Save variable to know progress
-    var received_bytes = 0;
-    var total_bytes = 0;
-
-    var req = request({
-        method: 'GET',
-        uri: file_url
-    });
-
-    var out = fs.createWriteStream(targetPath);
-    req.pipe(out);
-
-    req.on('response', function ( data ) {
-        // Change the total bytes value to get progress later.
-        total_bytes = parseInt(data.headers['content-length' ]);
-    });
-
-    req.on('data', function(chunk) {
-        // Update the received bytes
-        received_bytes += chunk.length;
-
-        showProgress(received_bytes, total_bytes);
-    });
-
-    req.on('end', function() {
-        console.log("File succesfully downloaded");
-        console.log("Extracting...");
-        fs.createReadStream(__dirname+"/ShuttleUpdate.zip").pipe(unzip.Extract({ path: __dirname+'/' }));
-    	electron.dialog.showMessageBox({title: "Shuttle", type:"info", message: "Update complete !"});
-        fs.unlink(__dirname+"/ShuttleUpdate.zip")
-    });
-}
-
-function showProgress(received,total){
-    var percentage = (received * 100) / total;
-    console.log(percentage + "% | " + received + " bytes out of " + total + " bytes.");
-}

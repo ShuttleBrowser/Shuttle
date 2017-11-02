@@ -7,7 +7,6 @@ webview {
     position: fixed;
 }
 
-
 div.bar {
     background-color: #F1F1F1;
     overflow: auto;
@@ -22,19 +21,6 @@ div.bar a {
     display: inline-block;
 }
 
-/*
-.bar {
-    width: 100%;
-	height: 50px;
-	position: absolute;
-	bottom: 0;
-	background-color: #F1F1F1;
-    overflow-x: auto;
-    overflow-y: hidden;
-    display: inline-block;
-    white-space: nowrap;
-}
-*/
 .btn {
 	margin: 4px;
     display:block;
@@ -96,4 +82,45 @@ div.bar a {
     }
 ::-webkit-scrollbar-thumb:window-inactive {
     background: grey;
+}
+
+/* context menu */
+
+.context-menu {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  width: 80px;
+  background-color: #fff;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.context-menu--active {
+  display: block;
+}
+
+.context-menu__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu__item {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.context-menu__item:last-child {
+  margin-bottom: 0;
+}
+
+.context-menu__link {
+  display: block;
+  padding: 4px 12px;
+  color: black;
+  text-decoration: none;
+}
+
+.context-menu__link:hover {
+  background-color: rgba(198, 202, 209, 0.7);
 }

@@ -5,27 +5,30 @@
 	<link rel="stylesheet" href="res/style.css">
 	<link rel="stylesheet" href="node_modules/vex-js/dist/css/vex.css">
 	<link rel="stylesheet" href="node_modules/vex-js/dist/css/vex-theme-default.css">
-
-	<script src="res/color-thief.js"></script>
 </head>
 <body>
 
 	<webview src="http://polygates.livehost.fr/UPDATES/" useragent="Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36" style="width: 100%; height: 590px;"></webview>
 
-	<div class="bar">
-	</div>
+	<div class="bar"></div>
+
+
 
 </body>
 <script>
+	const {remote} = require('electron')
 	const $ = require("jQuery");
 	const fs = require('fs');
 	const jsonfile = require('jsonfile')
 	const vex = require('vex-js');
 	const getColors = require('get-image-colors');
+	const {Menu, MenuItem} = remote;
+	const replace = require("replace");
 
 	vex.registerPlugin(require('vex-dialog'));
 	vex.defaultOptions.className = 'vex-theme-default';
-	var colorThief = new ColorThief();
+	const menu = new Menu()
 </script>
 <script src="res/main.js"></script>
+
 </html>
