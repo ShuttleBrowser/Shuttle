@@ -2,23 +2,23 @@
 const electron = require('electron');
 const menubar = require('menubar');
 const url = require('url');
-const http = require('http');
 const fs = require('fs');
 const updater = require('electron-simple-updater');
+const AutoLaunch = require('auto-launch');
 
 require('electron-debug')({enabled: true});
 
 updater.init({
   checkUpdateOnStart: true,
   autoDownload: true,
-  url: 'http://polygates.livehost.fr/UPDATES/updates.json',
-  disabled: true
+  url: 'update.getshuttle.xyz',
+  disabled: false
 });
 
 var mb = menubar({
   index: "file://" + __dirname + "/index.html",
   tooltip: "Shuttle",
-  icon:__dirname + "/res/logo.png",
+  icon:__dirname + "/assets/logo.png",
   width:360,
   height:640,
   resizable: false
@@ -38,7 +38,7 @@ const contextMenu = electron.Menu.buildFromTemplate([
     click() {
       updater.checkForUpdates();
         function onUpdateAvailable(meta) {
-          updater.downloadUpdate();
+	        updater.downloadUpdate();
       }
     }
   },
