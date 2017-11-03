@@ -18,7 +18,7 @@ updater.init({
 var mb = menubar({
   index: "file://" + __dirname + "/index.html",
   tooltip: "Shuttle",
-  icon:__dirname + "/assets/logo.png",
+  icon:__dirname + "/assets/img/logo.png",
   width:360,
   height:640,
   resizable: false

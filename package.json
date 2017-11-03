@@ -14,6 +14,7 @@
     "jsonfile": "^4.0.0",
     "menubar": "^5.2.3",
     "replace": "^0.3.0",
+    "tooltipster": "^4.2.5",
     "vex-js": "^4.0.1"
   },
   "devDependencies": {},

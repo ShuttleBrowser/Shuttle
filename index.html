@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="assets/style.css">
 	<link rel="stylesheet" href="node_modules/vex-js/dist/css/vex.css">
 	<link rel="stylesheet" href="node_modules/vex-js/dist/css/vex-theme-default.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/tooltipster/dist/css/tooltipster.bundle.css" />
 </head>
 <body>
 
@@ -15,7 +16,7 @@
 </body>
 <script>
 	const {remote} = require('electron')
-	const $ = require("jQuery");
+	const jQuery = require("jQuery");
 	const fs = require('fs');
 	const jsonfile = require('jsonfile')
 	const vex = require('vex-js');
@@ -27,6 +28,9 @@
 	vex.defaultOptions.className = 'vex-theme-default';
 	const menu = new Menu()
 </script>
-<script src="assets/main.js"></script>
+
+<script type="text/javascript" src="node_modules/tooltipster/dist/js/tooltipster.bundle.min.js"></script>
+
+<script src="assets/js/main.js"></script>
 
 </html>
