@@ -8,10 +8,20 @@ const AutoLaunch = require('auto-launch');
 
 require('electron-debug')({enabled: true});
 
+updater.on('update-available', function(){
+  updater.downloadUpdate();
+});
+
+updater.on('update-downloaded', function(){
+  if (window.confirm('The app has been updated. Do you like to restart it now?')) {
+    updater.quitAndInstall();
+  }
+});
+
 updater.init({
   checkUpdateOnStart: true,
   autoDownload: true,
-  url: 'update.getshuttle.xyz',
+  url: 'https://update.getshuttle.xyz',
   disabled: false
 });
 
@@ -37,10 +47,16 @@ const contextMenu = electron.Menu.buildFromTemplate([
     label: 'Updates',
     click() {
       updater.checkForUpdates();
-        function onUpdateAvailable(meta) {
-	        updater.downloadUpdate();
+        updater.on('update-available', function(){
+          updater.downloadUpdate();
+        });
+
+        updater.on('update-downloaded', function(){
+          if (window.confirm('The app has been updated. Do you like to restart it now?')) {
+            updater.quitAndInstall();
+          }
+        });
       }
-    }
   },
   {type: 'separator'},
   {

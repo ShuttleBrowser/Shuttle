@@ -10,17 +10,25 @@ webview {
     position: fixed;
 }
 
-div.bar {
-    background-color: #F1F1F1;
+.bar {
+    background-color: transparent;
     overflow: auto;
     white-space: nowrap;
     position: absolute;
     bottom: 0;
     height: 50px;
-    width: 100%;
 }
 
-div.bar a {
+.bar-bg {
+    background-color: #F1F1F1;
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+}
+
+.bar a {
     display: inline-block;
 }
 
