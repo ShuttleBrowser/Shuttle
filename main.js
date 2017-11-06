@@ -31,7 +31,8 @@ var mb = menubar({
   icon:__dirname + "/assets/img/logo.png",
   width:360,
   height:640,
-  resizable: false
+  resizable: false,
+  title: "Shuttle"
 });
 
 //We create the context menu

@@ -20,9 +20,9 @@
   "devDependencies": {},
   "scripts": {
     "start": "electron .",
-    "package-mac": "electron-packager . Shuttle --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-    "package-win": "electron-packager . Shuttle --overwrite --platform=win32 --arch=x64 --icon=assets/icon.ico --out=release-builds --version-string.CompanyName=Shuttle_ltd --version-string.ProductName=\"Shuttle\"",
-    "package-linux": "electron-packager . Shuttle --overwrite --platform=linux --arch=x64 --icon=res/logo.png --out=release-builds"
+    "package-mac": "electron-packager . Shuttle --overwrite --platform=darwin --arch=x64 --icon=assets/img/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . Shuttle --overwrite --platform=win32 --arch=x64 --icon=assets/img/icon.ico --out=release-builds --version-string.CompanyName=Shuttle_ltd --version-string.ProductName=\"Shuttle\"",
+    "package-linux": "electron-packager . Shuttle --overwrite --platform=linux --arch=x64 --icon=assets/img/icon.png --out=release-builds"
   },
   "author": "Robin Jullian & Regis Brasme",
   "license": "GPLv3"

@@ -13,6 +13,35 @@ const {shell} = require('electron');
 //set $ to jQuery function
 const $ = jQuery;
 
+ $.get("https://ipinfo.io", function(response) {
+      if (response.country == "FR") {
+        const lang = require(__dirname + "/assets/lang/fr.js");
+        console.log(lang.noUpdate);
+      } else {
+        const lang = require(__dirname + "/assets/lang/en.js");
+        console.log(lang.noUpdate);
+      }
+  }, "jsonp");
+
+//Remove the mouswheel click
+(function() {
+  function callback(e) {
+    var e = window.e || e;
+    if (e.target.localName == 'a') {
+      e.preventDefault();
+    }
+    return
+  }
+
+  if (document.addEventListener) {
+    document.addEventListener('auxclick', callback, false);
+  } else {
+    document.attachEvent('onauxclick', callback);
+  }
+})();
+
+  bar.addEventListener("mousewheel", scrollHorizontally, false);
+
 //function to open the url of the webview
 function showWebsite(url) {
   //if there is http:// or https:// in valu we load the web page
@@ -71,7 +100,6 @@ function addWebsite() {
                 $("<a href=\"javascript:addWebsite()\" class=\"add-btn\"></a>").appendTo(bar);
                 //we initialize the right-click function
                 rightClick();
-                vex.closeAll();
           }
       }
   });
@@ -122,7 +150,6 @@ function getColor(link, key) {
   getColors('https://www.google.com/s2/favicons?domain='+link).then(colors => {
     console.log('https://www.google.com/s2/favicons?domain='+link);
     document.getElementById(key).style.backgroundColor = colors[4].hex();
-    $('#'+key).tooltipster();
   })
 }
 
@@ -132,6 +159,7 @@ function updateBar(link) {
   for (var key in link) {
    $("<a href=\"#\" url=\""+link[key].web+"\" title=\""+link[key].web+"\" class=\"btn\" id=\""+key+"\" onclick='showWebsite(\""+link[key].web+"\")'></a>").appendTo(bar);
     getColor(link[key].web, key);
+	$('#'+key).tooltipster();
   }
   $("<a href=\"javascript:addWebsite()\" class=\"add-btn\"></a>").appendTo(bar);
   rightClick();
@@ -179,47 +207,8 @@ function removeWebsite(ida, url) {
             });
 
           }
-        vex.closeAll();
       }
-  })
+  }, vex.closeAll());
 }
 
-
-$("p").hover(function() {
-	$("img").fadeIn( 500 );
-}
-
-
-
-$( document ).ready(function() {
-
-  $.get("https://ipinfo.io", function(response) {
-      if (response.country == "FR") {
-        const lang = require(__dirname + "/assets/lang/fr.js");
-        console.log(lang.noUpdate);
-      } else {
-        const lang = require(__dirname + "/assets/lang/en.js");
-        console.log(lang.noUpdate);
-      }
-  }, "jsonp");
-
-//Remove the mouswheel click
-(function() {
-  function callback(e) {
-    var e = window.e || e;
-    if (e.target.localName == 'a') {
-      e.preventDefault();
-    }
-    return
-  }
-
-  if (document.addEventListener) {
-    document.addEventListener('auxclick', callback, false);
-  } else {
-    document.attachEvent('onauxclick', callback);
-  }
-})();
-
-  bar.addEventListener("mousewheel", scrollHorizontally, false);
-  rightClick();
-});
+rightClick();
