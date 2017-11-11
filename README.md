@@ -1,4 +1,4 @@
-# Shuttle
+# Shuttle [![Build Status]]
 
 The fastest access to your favorites applications.
 
