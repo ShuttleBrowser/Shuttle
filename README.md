@@ -47,7 +47,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 * **Robin Julian** - *Lead developer* - [robjulian](https://github.com/robjulian)
 * **Regis Brasme** - *Main Designer* - [rbrasme](https://github.com/rbrasme)
 
-[Official Website](https://getshuttle.xyz)
+Check also the [official website](https://getshuttle.xyz)
 
 See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contributors) who participated in this project.
 
