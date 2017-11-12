@@ -1,6 +1,6 @@
 # Shuttle
 
-The fastest access to your favorites applications.
+The fastest access to your favorite applications.
 
 ## Getting Started
 
