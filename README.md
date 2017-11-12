@@ -2,6 +2,8 @@
 
 The fastest access to your favorite applications.
 
+Check also the [official website](https://getshuttle.xyz) of this project.
+
 ## Getting Started
 
 Launch Shuttle by clicking on the Exe (on Ms Windows).
@@ -47,8 +49,6 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 * **Robin Julian** - *Lead developer* - [robjulian](https://github.com/robjulian)
 * **Regis Brasme** - *Main Designer* - [rbrasme](https://github.com/rbrasme)
 
-Check also the [official website](https://getshuttle.xyz)
-
 See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contributors) who participated in this project.
 
 ## License
@@ -58,3 +58,5 @@ This project is licensed under the GPL v3 License - see the [LICENSE.md](https:/
 ## Current Version
 
 * Shuttle 1.0.1 beta
+
+## Special Thanks
