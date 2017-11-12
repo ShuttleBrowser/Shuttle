@@ -3,32 +3,23 @@ const electron = require('electron');
 const menubar = require('menubar');
 const url = require('url');
 const fs = require('fs');
-const updater = require('electron-simple-updater');
 const AutoLaunch = require('auto-launch');
+const update = require("./Updater/Updater.js");
 
 require('electron-debug')({enabled: true});
 
-updater.on('update-available', function(){
-  updater.downloadUpdate();
+update.updateAndInstall();
+
+var ShuttleAutoLauncher = new AutoLaunch({
+    name: 'Shuttle',
 });
 
-updater.on('update-downloaded', function(){
-  if (window.confirm('The app has been updated. Do you like to restart it now?')) {
-    updater.quitAndInstall();
-  }
-});
-
-updater.init({
-  checkUpdateOnStart: true,
-  autoDownload: true,
-  url: 'https://update.getshuttle.xyz',
-  disabled: false
-});
+ShuttleAutoLauncher.enable();
 
 var mb = menubar({
   index: "file://" + __dirname + "/index.html",
   tooltip: "Shuttle",
-  icon:__dirname + "/assets/img/logo.png",
+  icon:__dirname + "/assets/img/icon.ico",
   width:360,
   height:640,
   resizable: false,
@@ -47,16 +38,7 @@ const contextMenu = electron.Menu.buildFromTemplate([
   {
     label: 'Updates',
     click() {
-      updater.checkForUpdates();
-        updater.on('update-available', function(){
-          updater.downloadUpdate();
-        });
-
-        updater.on('update-downloaded', function(){
-          if (window.confirm('The app has been updated. Do you like to restart it now?')) {
-            updater.quitAndInstall();
-          }
-        });
+    	 update.updateAndInstall();
       }
   },
   {type: 'separator'},

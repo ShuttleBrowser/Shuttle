@@ -3,5 +3,8 @@ module.exports = {
 	UpdateCompleted:"Update complete !",
 	EnterUrl:"Enter the url of a website",
 	addButton:"Add",
-	RemoveButton:"Cancel"
+	CancelButton:"Cancel",
+	ContinueButton:"Continue",
+	Remove: "Remove ",
+	FBM: " from bookmarks ?"
 };

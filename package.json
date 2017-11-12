@@ -13,14 +13,17 @@
     "jquery": "^3.2.1",
     "jsonfile": "^4.0.0",
     "menubar": "^5.2.3",
+    "os-locale": "^2.1.0",
     "replace": "^0.3.0",
-    "tooltipster": "^4.2.5",
-    "vex-js": "^4.0.1"
+    "request": "^2.83.0",
+    "unzip": "^0.1.11",
+    "vex-js": "^4.0.1",
+    "winreg": "^1.2.4"
   },
   "devDependencies": {},
   "scripts": {
     "start": "electron .",
-    "package-mac": "electron-packager . Shuttle --overwrite --platform=darwin --arch=x64 --icon=assets/img/icon.icns --prune=true --out=release-builds",
+    "package-mac": "electron-packager . Shuttle --overwrite --platform=darwin --arch=x64 --icon=assets/img/logo.icns --out=release-builds",
     "package-win": "electron-packager . Shuttle --overwrite --platform=win32 --arch=x64 --icon=assets/img/icon.ico --out=release-builds --version-string.CompanyName=Shuttle_ltd --version-string.ProductName=\"Shuttle\"",
     "package-linux": "electron-packager . Shuttle --overwrite --platform=linux --arch=x64 --icon=assets/img/icon.png --out=release-builds"
   },

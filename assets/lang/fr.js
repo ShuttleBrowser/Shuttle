@@ -3,5 +3,8 @@ module.exports = {
 	UpdateCompleted:"Mise a jour effectué",
 	EnterUrl:"Entrez l'URL d'un site Web",
 	addButton:"Ajouter",
-	RemoveButton:"Annuler"
+	CancelButton:"Annuler",
+	ContinueButton:"Continuer",
+	Remove: "Suprimer ",
+	FBM: " des favoris ?"
 };
