@@ -60,3 +60,9 @@ This project is licensed under the GPL v3 License - see the [LICENSE.md](https:/
 * Shuttle 1.0.1 beta
 
 ## Special Thanks
+
+Special thanks to all beta testers.
+
+* **Julien B.**
+* **Loris G.**
+* **Nicolas B.**
