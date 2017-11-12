@@ -15,6 +15,8 @@ You can delete a favorites by right-clicking on his color, then a window will op
 
 All updates are automatics (checking at the launching of the app), you can also check if there is one by right-clicking on his icon in the notification center.
 
+If you need help for setup, use or just reporting a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz)
+
 ### Storage
 
 Shuttle store all informations of websites you use in a json file.
@@ -44,6 +46,8 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 * **Robin Julian** - *Lead developer* - [robjulian](https://github.com/robjulian)
 * **Regis Brasme** - *Main Designer* - [rbrasme](https://github.com/rbrasme)
+
+[Official Website](https://getshuttle.xyz)
 
 See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contributors) who participated in this project.
 
