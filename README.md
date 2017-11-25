@@ -15,7 +15,7 @@ This action can be repeat any time.
 
 You can delete a favorites by right-clicking on his color, then a window will open, and click "Continue".
 
-All updates are automatics (checking at the launching of the app), you can also check if there is one by right-clicking on his icon in the notification center.
+All updates are automatics (checking at the launching of the app).
 
 If you need help for setup, use or just reporting a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz)
 
