@@ -15,6 +15,8 @@ This action can be repeat any time.
 
 You can delete a favorites by right-clicking on his color, then a window will open, and click "Continue".
 
+You can edit settings by right-clicking on Shuttle's icon, and clicking "Settings". Then, you can manage your preferences like turning off "boot starting" or turning on "stay open".
+
 All updates are automatics (checking at the launching of the app).
 
 If you need help for setup, use or just reporting a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz)
