@@ -4,28 +4,54 @@ const menubar = require('menubar');
 const url = require('url');
 const fs = require('fs');
 const AutoLaunch = require('auto-launch');
-const update = require(__dirname+"/Updater/Updater.js");
+const updater = require('./updater/index.js');
+const path = require("path");
+const settings = require("electron-settings");
 
-if (require('electron-squirrel-startup')) return;
+const BrowserWindow = electron.BrowserWindow;
+const Tray = electron.Tray;
+
+let settingsWin;
+
 require('electron-debug')({enabled: true});
 
-update.updateAndInstall();
+if (settings.get('ShuttleAutoLauncher') == true) {
+	var ShuttleAutoLauncher = new AutoLaunch({
+	    name: 'Shuttle',
+	});
 
-var ShuttleAutoLauncher = new AutoLaunch({
-    name: 'Shuttle',
-});
+	ShuttleAutoLauncher.enable();
+}
 
-ShuttleAutoLauncher.enable();
+updater.updateAndInstall();
 
-var mb = menubar({
-  index: "file://" + __dirname + "/index.html",
-  tooltip: "Shuttle",
-  icon:__dirname + "/assets/img/icon.ico",
-  width:360,
-  height:640,
-  resizable: false,
-  title: "Shuttle"
-});
+if (settings.get('SOpen') == true) {
+	var mb = menubar({
+	  index: "file://" + __dirname + "/index.html",
+	  tooltip: "Shuttle",
+	  icon:__dirname + "/assets/img/icon.ico",
+	  width:360,
+	  height:640,
+	  resizable: false,
+	  title: "Shuttle",
+	  preloadWindow: true,
+	  showDockIcon: false,
+	  alwaysOnTop: true
+	});
+} else {
+	var mb = menubar({
+	  index: "file://" + __dirname + "/index.html",
+	  tooltip: "Shuttle",
+	  icon:__dirname + "/assets/img/icon.ico",
+	  width:360,
+	  height:640,
+	  resizable: false,
+	  title: "Shuttle",
+	  preloadWindow: true,
+	  showDockIcon: false
+	});	
+}
+
 
 //We create the context menu
 const contextMenu = electron.Menu.buildFromTemplate([
@@ -33,13 +59,13 @@ const contextMenu = electron.Menu.buildFromTemplate([
     label: 'About',
     click() {
     //We open the website at about
-      electron.shell.openExternal('https://getshuttle.xyz/about')
+      electron.shell.openExternal('https://getshuttle.xyz/')
     }
   },
   {
-    label: 'Updates',
+    label: 'Settings',
     click() {
-    	 update.updateAndInstall();
+        createSettingsWindows();
       }
   },
   {type: 'separator'},
@@ -60,70 +86,20 @@ mb.on('ready', function () {
   }
 });
 
+function createSettingsWindows() {
+  settingsWin = new BrowserWindow({
+	icon:__dirname + "/assets/img/icon.ico",
+    width: 300,
+    height: 400,
+    resizable: false,
+    title: "Settings",
+    preloadWindow: true,
+    frame: false
+  });
 
-if (handleSquirrelEvent()) {
-  // squirrel event handled and app will exit in 1000ms, so don't do anything else 
-  return;
+  settingsWin.loadURL(url.format({
+    pathname: path.join(__dirname, '/settings/index.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
 }
- 
-function handleSquirrelEvent() {
-  if (process.argv.length === 1) {
-    return false;
-  }
- 
-  const ChildProcess = require('child_process');
-  const path = require('path');
- 
-  const appFolder = path.resolve(process.execPath, '..');
-  const rootAtomFolder = path.resolve(appFolder, '..');
-  const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
-  const exeName = path.basename(process.execPath);
- 
-  const spawn = function(command, args) {
-    let spawnedProcess, error;
- 
-    try {
-      spawnedProcess = ChildProcess.spawn(command, args, {detached: true});
-    } catch (error) {}
- 
-    return spawnedProcess;
-  };
- 
-  const spawnUpdate = function(args) {
-    return spawn(updateDotExe, args);
-  };
- 
-  const squirrelEvent = process.argv[1];
-  switch (squirrelEvent) {
-    case '--squirrel-install':
-    case '--squirrel-updated':
-      // Optionally do things such as: 
-      // - Add your .exe to the PATH 
-      // - Write to the registry for things like file associations and 
-      //   explorer context menus 
- 
-      // Install desktop and start menu shortcuts 
-      spawnUpdate(['--createShortcut', exeName]);
- 
-      setTimeout(amb.pp.quit, 1000);
-      return true;
- 
-    case '--squirrel-uninstall':
-      // Undo anything you did in the --squirrel-install and 
-      // --squirrel-updated handlers 
- 
-      // Remove desktop and start menu shortcuts 
-      spawnUpdate(['--removeShortcut', exeName]);
- 
-      setTimeout(mb.app.quit, 1000);
-      return true;
- 
-    case '--squirrel-obsolete':
-      // This is called on the outgoing version of your app before 
-      // we update to the new version - it's the opposite of 
-      // --squirrel-updated 
- 
-      mb.app.quit();
-      return true;
-  }
-};

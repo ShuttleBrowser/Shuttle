@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Settings</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="../node_modules/vex-js/dist/css/vex.css">
+	<link rel="stylesheet" href="../node_modules/vex-js/dist/css/vex-theme-default.css">
+
+</head>
+<body>
+
+<div class="bar"></div>
+<div class="close"><img src="close.png" alt=""></div>
+
+<div class="content">
+	<label class="switch">
+	  <input type="checkbox" name="SOpen">
+	  <span class="slider round"></span>
+	</label>
+	<br>
+	<br>
+	<label class="switch">
+	  <input type="checkbox" name="AutoStart">
+	  <span class="slider round"></span>
+	</label>
+</div>
+
+<div class="text">
+	<p id="SOpen"></p>
+	<p id="SAboot"></p>
+</div>
+
+	<p class="version"></p>
+
+</body>
+
+<script>
+
+const osLocale = require('os-locale');
+
+if (osLocale.sync() == "fr_FR") {
+	var lang = require(__dirname + "/../assets/lang/fr.js");
+} else if (osLocale.sync() == "en_US" || osLocale.sync() == "en_EN") {
+	var lang = require(__dirname + "/../assets/lang/en.js");
+} else {
+	var lang = require(__dirname + "/../assets/lang/en.js");
+}
+
+	const settings = require("electron-settings");
+	const AutoLaunch = require('auto-launch');
+	const remote = require('electron').remote;
+
+	const appVersion = require('../package.json').version;
+
+	const versionNumber = document.querySelector('.version');
+	const sopen = document.getElementById('SOpen');
+	const saboot = document.getElementById('SAboot');
+
+	const checkboxSOpen = document.querySelector("input[name=SOpen]");
+	const checkboxAutoStart = document.querySelector("input[name=AutoStart]");
+
+	var ShuttleAutoLauncher = new AutoLaunch({
+	    name: 'Shuttle',
+	});
+
+	checkboxAutoStart.addEventListener( 'change', function() {
+	    if(this.checked) {
+			ShuttleAutoLauncher.enable();
+			settings.set('ShuttleAutoLauncher', true);
+	    } else {
+			ShuttleAutoLauncher.disable();
+			settings.set('ShuttleAutoLauncher', false);
+	    }
+	});
+
+	checkboxSOpen.addEventListener( 'change', function() {
+	    if(this.checked) {
+			settings.set('SOpen', true);
+			alert(lang.restartApp);
+	    } else {
+			settings.set('SOpen', false);
+			alert(lang.restartApp);
+	    }
+	});
+
+
+	versionNumber.innerHTML += "shuttle version "+appVersion;
+	sopen.innerHTML += lang.SOpen;
+	saboot.innerHTML += lang.SAboot;
+
+if (settings.get('ShuttleAutoLauncher') == true) {checkboxAutoStart.checked = true;} else {checkboxAutoStart.checked = false;}
+if (settings.get('SOpen') == true) {checkboxSOpen.checked = true;} else {checkboxSOpen.checked = false;}
+
+document.querySelector(".close").addEventListener("click", function (e) {
+    var window = remote.getCurrentWindow();
+    window.close();
+}); 
+
+</script>
+
+</html>

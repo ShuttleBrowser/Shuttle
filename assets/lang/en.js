@@ -6,5 +6,8 @@ module.exports = {
 	CancelButton:"Cancel",
 	ContinueButton:"Continue",
 	Remove: "Remove ",
-	FBM: " from bookmarks ?"
+	FBM: " from bookmarks ?",
+	restartApp: "Your modifications will be applied from the next restart of Shuttle."
+	SAboot: "start at boot",
+	SOpen: "stay open"
 };

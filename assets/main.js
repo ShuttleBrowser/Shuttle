@@ -46,13 +46,13 @@ function showWebsite(url) {
 	
 	//we test the connexion with a request on google.com
 	$.ajax({
-	    url: "http://www.google.com",
+	    url: "http://a.root-servers.org/",
 	    context: document.body,
 	    error: function(jqXHR, exception) {
 	        webview.loadURL("file://"+__dirname+"/404.html");
 	    },
 	    success: function() {
-	        console.info("online");
+	     console.info("online");
         //if there is http:// or https:// in valu we load the web page
         if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
           webview.loadURL(url);
@@ -116,25 +116,13 @@ function addWebsite() {
   });
 }
 
-  //we define the rules css for the webview
-  webview.addEventListener('dom-ready', function () {
-      webview.insertCSS('\n \
-  ::-webkit-scrollbar {\n \
-    width: 5px;\n \
-    height: 5px;\n \
-  }\n \
-  ::-webkit-scrollbar-track {\n \
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);\n \
-    -webkit-border-radius: 10px;border-radius: 10px;\n \
-  }\n \
-  ::-webkit-scrollbar-thumb {\n \
-    background: transparent;\n \
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);\n \
-  }\n \
-  ::-webkit-scrollbar-thumb:window-inactive {\n \
-    background: grey;\n \
-  }')
-  });
+      var browser = remote.getCurrentWindow();
+      webview.addEventListener("enter-html-full-screen", function() {
+        browser.setFullScreen(true);
+      });
+      webview.addEventListener("leave-html-full-screen", function() {
+        browser.setFullScreen(false);
+      });
 
 //we load the json file
  loadJSON(function(response) {
