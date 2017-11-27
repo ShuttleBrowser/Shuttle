@@ -7,6 +7,8 @@
 	<link rel="stylesheet" href="../node_modules/vex-js/dist/css/vex.css">
 	<link rel="stylesheet" href="../node_modules/vex-js/dist/css/vex-theme-default.css">
 
+	<script src="FileSaver.js"></script>
+
 </head>
 <body>
 
@@ -24,11 +26,19 @@
 	  <input type="checkbox" name="AutoStart">
 	  <span class="slider round"></span>
 	</label>
+	<br>
+	<br>
+	<input type="button" name="download" class="btn">
+	<br>
+	<br>
+	<input type="button" name="upload" class="btn">
 </div>
 
 <div class="text">
 	<p id="SOpen"></p>
 	<p id="SAboot"></p>
+	<p id="Export"></p>
+	<p id="Import"></p>
 </div>
 
 	<p class="version"></p>
@@ -50,15 +60,20 @@ if (osLocale.sync() == "fr_FR") {
 	const settings = require("electron-settings");
 	const AutoLaunch = require('auto-launch');
 	const remote = require('electron').remote;
+	const fs = require('fs');
 
 	const appVersion = require('../package.json').version;
 
 	const versionNumber = document.querySelector('.version');
 	const sopen = document.getElementById('SOpen');
 	const saboot = document.getElementById('SAboot');
+	const exportF = document.getElementById('Export');
+	const importF = document.getElementById('Import');
 
 	const checkboxSOpen = document.querySelector("input[name=SOpen]");
 	const checkboxAutoStart = document.querySelector("input[name=AutoStart]");
+	const downloadBtn = document.querySelector("input[name=download]");
+	const uploadBtn = document.querySelector("input[name=upload]");
 
 	var ShuttleAutoLauncher = new AutoLaunch({
 	    name: 'Shuttle',
@@ -84,10 +99,18 @@ if (osLocale.sync() == "fr_FR") {
 	    }
 	});
 
+	downloadBtn.addEventListener( 'click', function() {
+		downloadFavorites();
+	});
+	uploadBtn.addEventListener( 'click', function() {
+		uploadFavorites();
+	});
 
 	versionNumber.innerHTML += "shuttle version "+appVersion;
 	sopen.innerHTML += lang.SOpen;
 	saboot.innerHTML += lang.SAboot;
+	exportF.innerHTML += lang.Export;
+	importF.innerHTML += lang.Import;
 
 if (settings.get('ShuttleAutoLauncher') == true) {checkboxAutoStart.checked = true;} else {checkboxAutoStart.checked = false;}
 if (settings.get('SOpen') == true) {checkboxSOpen.checked = true;} else {checkboxSOpen.checked = false;}
@@ -97,6 +120,28 @@ document.querySelector(".close").addEventListener("click", function (e) {
     window.close();
 }); 
 
+
+function downloadFavorites() {
+	var data = fs.readFileSync(__dirname+'/../data.json','utf8');
+	var fileToSave = new Blob([data], {
+	    type: 'application/json',
+	    name: "data.shtd"
+	});
+	saveAs(fileToSave, "data.shtd");
+}
+
+function uploadFavorites() {
+   remote.dialog.showOpenDialog({filters: [{name: 'Shuttle data', extensions: ['shtd']}]}, function (fileNames) { 
+      if(fileNames === undefined) { 
+         console.log("No file selected"); 
+      } else { 
+        console.log(fileNames[0]);
+        fs.createReadStream(fileNames[0]).pipe(fs.createWriteStream(__dirname+'/../data.json'));
+		alert(lang.restartApp);
+      } 
+   });
+
+}
 </script>
 
 </html>

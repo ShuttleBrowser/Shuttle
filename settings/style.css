@@ -49,6 +49,22 @@ p.version {
   line-height: 166%;
   color: #BFBFBE;
 }
+
+.btn  {
+  width: 80px;
+  height: 34px;
+  background-color: #FF3753;
+  border-radius: 34px;
+  border:none;
+  position: absolute;
+  right: 20px;
+  transition-duration: 0.3s;
+}
+.btn:hover {
+  background-color: #FF5773;  
+  border-radius: 12px;
+}
+
 /* Switch button */
 
 .switch {
@@ -71,7 +87,6 @@ p.version {
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 .slider:before {
   position: absolute;
   content: "";
