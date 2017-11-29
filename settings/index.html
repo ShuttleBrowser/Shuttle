@@ -28,17 +28,28 @@
 	</label>
 	<br>
 	<br>
+	<label class="switch">
+	  <input type="checkbox" name="Frame">
+	  <span class="slider round"></span>
+	</label>
+	<br>
+	<br>
 	<input type="button" name="download" class="btn">
 	<br>
 	<br>
 	<input type="button" name="upload" class="btn">
+	<br>
+	<br>
+	<input type="button" name="reset" class="btn">
 </div>
 
 <div class="text">
 	<p id="SOpen"></p>
 	<p id="SAboot"></p>
+	<p id="Frame"></p>
 	<p id="Export"></p>
 	<p id="Import"></p>
+	<p id="Reset"></p>
 </div>
 
 	<p class="version"></p>
@@ -69,11 +80,15 @@ if (osLocale.sync() == "fr_FR") {
 	const saboot = document.getElementById('SAboot');
 	const exportF = document.getElementById('Export');
 	const importF = document.getElementById('Import');
+	const reset = document.getElementById('Reset');
+	const frame = document.getElementById('Frame');
 
 	const checkboxSOpen = document.querySelector("input[name=SOpen]");
 	const checkboxAutoStart = document.querySelector("input[name=AutoStart]");
 	const downloadBtn = document.querySelector("input[name=download]");
 	const uploadBtn = document.querySelector("input[name=upload]");
+	const ResetBtn = document.querySelector("input[name=reset]");
+	const FrameBtn = document.querySelector("input[name=Frame]");
 
 	var ShuttleAutoLauncher = new AutoLaunch({
 	    name: 'Shuttle',
@@ -99,11 +114,25 @@ if (osLocale.sync() == "fr_FR") {
 	    }
 	});
 
+	FrameBtn.addEventListener( 'change', function() {
+	    if(this.checked) {
+			settings.set('Frame', true);
+			alert(lang.restartApp);
+	    } else {
+			settings.set('Frame', false);
+			alert(lang.restartApp);
+	    }
+	});
+
+
 	downloadBtn.addEventListener( 'click', function() {
 		downloadFavorites();
 	});
 	uploadBtn.addEventListener( 'click', function() {
 		uploadFavorites();
+	});
+	ResetBtn.addEventListener( 'click', function() {
+		resetFavorites();
 	});
 
 	versionNumber.innerHTML += "shuttle version "+appVersion;
@@ -111,6 +140,8 @@ if (osLocale.sync() == "fr_FR") {
 	saboot.innerHTML += lang.SAboot;
 	exportF.innerHTML += lang.Export;
 	importF.innerHTML += lang.Import;
+	reset.innerHTML += lang.ResetBtn;
+	frame.innerHTML += lang.Frame;
 
 if (settings.get('ShuttleAutoLauncher') == true) {checkboxAutoStart.checked = true;} else {checkboxAutoStart.checked = false;}
 if (settings.get('SOpen') == true) {checkboxSOpen.checked = true;} else {checkboxSOpen.checked = false;}
@@ -141,6 +172,22 @@ function uploadFavorites() {
       } 
    });
 
+}
+
+function resetFavorites() {
+	var choice = remote.dialog.showMessageBox({
+		type: 'question',
+		buttons: [lang.Yes, lang.No],
+		title: 'Confirm',
+		message: lang.Reset
+	});
+	if (choice == 0) {
+		console.log('Reset...');
+		fs.writeFile(__dirname+'/../data.json', '[{"web":"changelog.getshuttle.xyz"}', function (err) {
+		    if (err) 
+		        return console.log(err);
+		});
+	}
 }
 </script>
 

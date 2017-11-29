@@ -1,4 +1,4 @@
-//1.0.3
+//1.0.10
 'use strict';
 const electron = require('electron');
 const menubar = require('menubar');
@@ -15,6 +15,7 @@ const Tray = electron.Tray;
 let settingsWin;
 
 require('electron-debug')({enabled: true});
+if(require('electron-squirrel-startup')) return;
 
 if (settings.get('ShuttleAutoLauncher') == true) {
 	var ShuttleAutoLauncher = new AutoLaunch({
@@ -26,7 +27,6 @@ if (settings.get('ShuttleAutoLauncher') == true) {
 
 updater.updateAndInstall();
 
-if (settings.get('SOpen') == true) {
 	var mb = menubar({
 	  index: "file://" + __dirname + "/index.html",
 	  tooltip: "Shuttle",
@@ -36,23 +36,10 @@ if (settings.get('SOpen') == true) {
 	  resizable: false,
 	  title: "Shuttle",
 	  preloadWindow: true,
-	  showDockIcon: false,
-	  alwaysOnTop: true
-	});
-} else {
-	var mb = menubar({
-	  index: "file://" + __dirname + "/index.html",
-	  tooltip: "Shuttle",
-	  icon:__dirname + "/assets/img/icon.ico",
-	  width:360,
-	  height:640,
-	  resizable: false,
-	  title: "Shuttle",
-	  preloadWindow: true,
-	  showDockIcon: false
-	});	
-}
-
+    autoHideMenuBar: true,
+	  alwaysOnTop: settings.get('SOpen'),
+    frame: settings.get('Frame')
+  });
 
 //We create the context menu
 const contextMenu = electron.Menu.buildFromTemplate([
@@ -103,4 +90,46 @@ function createSettingsWindows() {
     protocol: 'file:',
     slashes: true
   }));
+}
+
+var handleStartupEvent = function() {
+  if (process.platform !== 'win32') {
+    return false;
+  }
+
+  var squirrelCommand = process.argv[1];
+  switch (squirrelCommand) {
+    case '--squirrel-install':
+    case '--squirrel-updated':
+
+      // Optionally do things such as:
+      //
+      // - Install desktop and start menu shortcuts
+      // - Add your .exe to the PATH
+      // - Write to the registry for things like file associations and
+      //   explorer context menus
+
+      // Always quit when done
+      app.quit();
+
+      return true;
+    case '--squirrel-uninstall':
+      // Undo anything you did in the --squirrel-install and
+      // --squirrel-updated handlers
+
+      // Always quit when done
+      app.quit();
+
+      return true;
+    case '--squirrel-obsolete':
+      // This is called on the outgoing version of your app before
+      // we update to the new version - it's the opposite of
+      // --squirrel-updated
+      app.quit();
+      return true;
+  }
+};
+
+if (handleStartupEvent()) {
+  return;
 }

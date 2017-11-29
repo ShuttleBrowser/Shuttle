@@ -5,9 +5,16 @@ module.exports = {
 	addButton:"Ajouter",
 	CancelButton:"Annuler",
 	ContinueButton:"Continuer",
-	Remove: "Suprimer ",
+	Remove: "Supprimer ",
+	Yes: "Oui",
+	No: "Non",
 	FBM: " des favoris ?",
-	restartApp: "Vos modifications seront appliquées dès le prochain redémarrage de Shuttle.",
+	restartApp: "Vos modifications seront appliquées dès le prochain redémarage de Shuttle.",
 	SAboot: "lancer au démarage",
-	SOpen: "laisser actif"
+	SOpen: "laisser actif",
+	Import: "importer vos favoris",
+	Export: "exporter vos favoris",
+	Reset: "Voulez-vous vraiment remettre à zéro les favoris ?",
+	ResetBtn: "supprimer favoris",
+	Frame: "Bouger la fenêtre"
 };
