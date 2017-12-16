@@ -11,7 +11,7 @@ webview {
 }
 
 .bar {
-    background-color: transparent;
+    background-color: #F1F1F1;
     overflow-y: hidden;
     white-space: nowrap;
     position: absolute;

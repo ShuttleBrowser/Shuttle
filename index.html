@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<title></title>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="assets/style.css">
 	<link rel="stylesheet" href="node_modules/vex-js/dist/css/vex.css">
@@ -8,28 +9,28 @@
 </head>
 <body>
 
-	<webview src="http://changelog.getshuttle.xyz" useragent="Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36" style="position: absolute; left: 0; top: 0; right: 0; bottom: 50px"></webview>
+	<webview src="http://changelog.getshuttle.xyz" useragent="Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36" style="position: fixed; left: 0; top: 0; right: 0; bottom: 50px" allowfullscreen></webview>
 
 	<div class="bar"></div>
 	<div class="bar-bg"></div>
 
 </body>
-<script>
-	const {remote} = require('electron');
-	const osLocale = require('os-locale');
-	const jQuery = require("jQuery");
-	const fs = require('fs');
-	const jsonfile = require('jsonfile')
-	const vex = require('vex-js');
-	const getColors = require('get-image-colors');
-	const {Menu, MenuItem} = remote;
-	const replace = require("replace");
-	vex.registerPlugin(require('vex-dialog'));
-	vex.defaultOptions.className = 'vex-theme-default';
-	const menu = new Menu()
+<script async>
+const {remote} = require('electron');
+const osLocale = require('os-locale');
+const jQuery = require("jQuery");
+const fs = require('fs');
+const jsonfile = require('jsonfile')
+const vex = require('vex-js');
+const getColors = require('get-image-colors');
+const {Menu, MenuItem} = remote;
+const replace = require("replace");
+vex.registerPlugin(require('vex-dialog'));
+vex.defaultOptions.className = 'vex-theme-default';
+const menu = new Menu()
 
 </script>
 
-<script src="assets/main.js"></script>
+<script src="./assets/main.js" async=""></script>
 
 </html>

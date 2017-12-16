@@ -9,12 +9,12 @@ module.exports = {
 	Yes: "Yes",
 	No: "No",
 	FBM: " from bookmarks ?",
-	restartApp: "Your modifications will be applied from the next restart of Shuttle."
+	restartApp: "Your modifications will be applied at the next restart of Shuttle."
 	SAboot: "start at boot",
 	SOpen: "stay open",
-	Import: "import your favorites",
-	Export: "export your favorites",
+	Import: "import your bookmarks",
+	Export: "export your bookmarks",
 	Reset: "Do you really want to put back to zero the favorites?",
-	ResetBtn: "remove favorites",
-	Frame: "Allow move window"
+	ResetBtn: "remove bookmarks",
+	Frame: "allow move window"
 };

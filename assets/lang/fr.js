@@ -1,6 +1,6 @@
 module.exports = {
 	noUpdate:"Pas de mise a jour disponible",
-	UpdateCompleted:"Mise a jour effectué",
+	UpdateCompleted:"Mise a jour effectuée",
 	EnterUrl:"Entrez l'URL d'un site Web",
 	addButton:"Ajouter",
 	CancelButton:"Annuler",
@@ -15,6 +15,6 @@ module.exports = {
 	Import: "importer vos favoris",
 	Export: "exporter vos favoris",
 	Reset: "Voulez-vous vraiment remettre à zéro les favoris ?",
-	ResetBtn: "supprimer favoris",
-	Frame: "Bouger la fenêtre"
+	ResetBtn: "supprimer les favoris",
+	Frame: "bouger la fenêtre"
 };

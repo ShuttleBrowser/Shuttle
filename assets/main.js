@@ -1,6 +1,9 @@
 //get the webview
 const webview = document.querySelector('webview');
 
+//get title
+const title = document.querySelector('title');
+
 //get the navbar
 const bar = document.querySelector('.bar');
 
@@ -15,12 +18,16 @@ const $ = jQuery;
 
 //Check language
 if (osLocale.sync() == "fr_FR") {
-	var lang = require(__dirname + "/assets/lang/fr.js");
+    var lang = require(__dirname + "/assets/lang/fr.js");
 } else if (osLocale.sync() == "en_US" || osLocale.sync() == "en_EN") {
-	var lang = require(__dirname + "/assets/lang/en.js");
+    var lang = require(__dirname + "/assets/lang/en.js");
 } else {
-	var lang = require(__dirname + "/assets/lang/en.js");
+    var lang = require(__dirname + "/assets/lang/en.js");
 }
+
+webview.addEventListener("did-stop-loading", function() {
+    title.innerHTML = webview.getTitle();
+});
 
 //Remove the mouswheel click
 (function() {
@@ -43,26 +50,33 @@ if (osLocale.sync() == "fr_FR") {
 
 //function to open the url of the webview
 function showWebsite(url) {
-	
-	//we test the connexion with a request on google.com
-	$.ajax({
-	    url: "http://a.root-servers.org/",
-	    context: document.body,
-	    error: function(jqXHR, exception) {
-	        webview.loadURL("file://"+__dirname+"/404.html");
-	    },
-	    success: function() {
-	     console.info("online");
-        //if there is http:// or https:// in valu we load the web page
-        if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
-          webview.loadURL(url);
-        } else if (url.indexOf("http://") == -1) {
-          webview.loadURL("http://"+url);
-        } else {
-          console.log("Error at loading");
-        }
-	    }
-	})
+    console.info("online");
+    //if there is http:// or https:// in valu we load the web page
+    if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
+        $.ajax({
+            url: `${url}`,
+            context: document.body,
+            error: function(jqXHR, exception) {
+                webview.loadURL("file://"+__dirname+"/404.html");
+            },
+            success: function() {
+                webview.loadURL(url);
+            }
+        });
+    } else if (url.indexOf("http://") == -1) {
+        $.ajax({
+            url: `http://${url}`,
+            context: document.body,
+            error: function(jqXHR, exception) {
+                webview.loadURL("file://"+__dirname+"/404.html");
+            },
+            success: function() {
+                webview.loadURL("http://"+url);
+            }
+        });
+    } else {
+        console.log("Error at loading");
+    }
 }
 
 //Add horizontall scroll for navbar
@@ -119,9 +133,13 @@ function addWebsite() {
       var browser = remote.getCurrentWindow();
       webview.addEventListener("enter-html-full-screen", function() {
         browser.setFullScreen(true);
+        bar.style.display = "none";
+        webview.style.bottom = "0px";
       });
       webview.addEventListener("leave-html-full-screen", function() {
         browser.setFullScreen(false);
+        bar.style.display = "block";
+        webview.style.bottom = "50px";
       });
 
 //we load the json file
