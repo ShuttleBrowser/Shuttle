@@ -25,7 +25,7 @@ if (settings.get('ShuttleAutoLauncher') == true) {
 	ShuttleAutoLauncher.enable();
 }
 
-//updater.updateAndInstall();
+updater.updateAndInstall();
   var iconPath = __dirname + "/assets/img/icon.ico";
   if (process.platform == 'darwin')
     iconPath = "file://" + __dirname + "/assets/img/icon.ico";
