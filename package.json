@@ -24,7 +24,9 @@
     "vex-js": "^4.0.1",
     "winreg": "^1.2.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "electron-packager": "^10.1.0"
+  },
   "scripts": {
     "start": "electron .",
     "package-mac": "electron-packager . Shuttle --overwrite --platform=darwin --arch=x64 --icon=assets/img/logo.icns --out=release-builds",
