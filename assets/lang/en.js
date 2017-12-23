@@ -9,7 +9,7 @@ module.exports = {
 	Yes: "Yes",
 	No: "No",
 	FBM: " from bookmarks ?",
-	restartApp: "Your modifications will be applied at the next restart of Shuttle."
+	restartApp: "Your modifications will be applied at the next restart of Shuttle.",
 	SAboot: "start at boot",
 	SOpen: "stay open",
 	Import: "import your bookmarks",

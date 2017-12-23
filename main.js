@@ -26,11 +26,14 @@ if (settings.get('ShuttleAutoLauncher') == true) {
 }
 
 updater.updateAndInstall();
+  var iconPath = __dirname + "/assets/img/icon.ico";
+  if (process.platform == 'darwin')
+    iconPath = "file://" + __dirname + "/assets/img/icon.ico";
 
 	var mb = menubar({
 	  index: "file://" + __dirname + "/index.html",
 	  tooltip: "Shuttle",
-	  icon:__dirname + "/assets/img/icon.ico",
+    icon: iconPath,
 	  width:360,
 	  height:640,
 	  resizable: false,

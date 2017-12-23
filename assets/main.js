@@ -17,12 +17,12 @@ const {shell} = require('electron');
 const $ = jQuery;
 
 //Check language
-if (osLocale.sync() == "fr_FR") {
-    var lang = require(__dirname + "/assets/lang/fr.js");
-} else if (osLocale.sync() == "en_US" || osLocale.sync() == "en_EN") {
-    var lang = require(__dirname + "/assets/lang/en.js");
+if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-1) {
+  var lang = require("./assets/lang/fr.js");
+} else if (osLocale.sync().indexOf("en_US") > -1 || osLocale.sync().indexOf("en_EN") > -1) {
+  var lang = require("./assets/lang/en.js");
 } else {
-    var lang = require(__dirname + "/assets/lang/en.js");
+  var lang = require("./assets/lang/en.js");
 }
 
 webview.addEventListener("did-stop-loading", function() {
