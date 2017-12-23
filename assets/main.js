@@ -12,7 +12,6 @@ const path = __dirname+'/data.json';
 
 //import electron
 const {shell} = require('electron');
-const urlExists = require("url-exists");
 
 //set $ to jQuery function
 const $ = jQuery;
@@ -29,6 +28,13 @@ if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-
 webview.addEventListener("did-stop-loading", function() {
     title.innerHTML = webview.getTitle();
 });
+
+function urlExists(url, cb) {
+  request({ url: url, method: 'HEAD' }, function(err, res) {
+    if (err) return cb(null, false);
+    cb(null, /4\d\d/.test(res.statusCode) === false);
+  });
+}
 
 //Remove the mouswheel click
 (function() {
@@ -175,13 +181,23 @@ function addWebsite() {
 
 //function to set the color of the background with the main the favicon
 function getColor(link, key) {
-  var url = "https://icons.better-idea.org/allicons.json?url=" + link.toLowerCase();
-  var image = "";
-  $.getJSON(url, function(data) {
-      if (typeof data.icons !== 'undefined') {
-          image = data.icons[0].url;
-      }
-      $(document).find('#' + key).css('background-image', "url(" + image + ")");
+  getColors('http://www.google.com/s2/favicons?domain=' + link).then(colors => {
+    document.getElementById(key).style.backgroundColor = colors[4].hex();
+      $.getJSON(__dirname + "/assets/colors.json", function(data) {
+         for (i in data) {
+
+          if ("http://"+data[i].url == link) {
+              console.log(data[i].url + " : " + data[i].color);
+              $(document).find('#' + key).css('background-color', "" + data[i].color + "");
+             // $("<h1>" + link.charAt(7).toUpperCase() + "</h1>").appendTo("#"+key);
+          } else if (data[i].url == link) {
+              console.log(data[i].url + " : " + data[i].color);
+              $(document).find('#' + key).css('background-color', "" + data[i].color + "");
+              //$("<h1>" + link.charAt(0).toUpperCase() + "</h1>").appendTo("#"+key)            
+          }
+
+         }
+      });
   });
 }
 
