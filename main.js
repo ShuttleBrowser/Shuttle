@@ -95,6 +95,13 @@ function createSettingsWindows() {
   }));
 }
 
+//right click menu for Tray
+mb.on('after-create-window', function () {
+  mb.tray.on('right-click', () => {
+    mb.tray.popUpContextMenu(contextMenu);
+  })
+});
+
 var handleStartupEvent = function() {
   if (process.platform !== 'win32') {
     return false;

@@ -12,6 +12,7 @@ const path = __dirname+'/data.json';
 
 //import electron
 const {shell} = require('electron');
+const urlExists = require("url-exists");
 
 //set $ to jQuery function
 const $ = jQuery;
