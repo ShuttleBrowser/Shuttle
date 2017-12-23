@@ -1,6 +1,6 @@
 {
   "name": "Shuttle",
-  "version": "1.1.1.2",
+  "version": "1.2.0.0",
   "description": "The fastest access to your favorites applications.",
   "main": "main.js",
   "dependencies": {
@@ -12,7 +12,6 @@
     "electron-simple-updater": "^1.2.3",
     "electron-squirrel-startup": "^1.0.0",
     "fs": "0.0.1-security",
-    "get-image-colors": "^1.8.1",
     "http": "0.0.0",
     "jquery": "^3.2.1",
     "jsonfile": "^4.0.0",
@@ -21,6 +20,7 @@
     "replace": "^0.3.0",
     "request": "^2.83.0",
     "unzip": "^0.1.11",
+    "url-exists": "^1.0.3",
     "vex-js": "^4.0.1",
     "winreg": "^1.2.4"
   },

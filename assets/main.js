@@ -103,30 +103,40 @@ function addWebsite() {
       callback: function (data) {
           if (data) {
             console.log('URL', data.URL);
-            //we open the data.json file
-            var save = fs.createWriteStream(path, {
-                flags: 'a'
+            if (!/^https?:\/\//i.test(data.URL)) { // add http protocol to the url to make url-exists
+                data.URL = 'http://' + data.URL;
+            }
+            urlExists(data.URL, function(err, exists) { //verify that the url exists
+                if(exists) {
+                  //we open the data.json file
+                  var save = fs.createWriteStream(path, {
+                      flags: 'a'
+                  });
+      
+                  //we write the json file with the url given by the user
+                  save.write(',{"web":"'+data.URL+'"}');
+                  save.end()
+                  
+                  //we set a random id for the new bookmark
+                  var RandomID = Math.floor((Math.random() * 10000) + 1000);
+  
+                  //we remove the add button so that the new button does not cover it
+                  document.querySelector('.add-btn').remove();
+                  //we add the new button
+                  $("<a href=\"#\" id=\""+RandomID+"\" class=\"btn\" url=\""+data.URL+"\" title=\""+data.URL+"\" onclick='showWebsite(\""+data.URL+"\")'></a>").appendTo(bar);
+                  //we set the background-color
+                  getColor(data.URL, RandomID);
+                  //we add the add button
+                  $("<a href=\"javascript:addWebsite()\" class=\"add-btn\"></a>").appendTo(bar);
+                  //we initialize the right-click function
+                  rightClick();
+                } else {
+                    vex.dialog.alert("This URL doesn't exists. Please retry.");
+                    console.log("This URL doesn't exists. Please retry.");
+                }
             });
-
-            //we write the json file with the url given by the user
-            save.write(',{"web":"'+data.URL+'"}');
-            save.end()
-            
-                //we set a random id for the new bookmark
-                var RandomID = Math.floor((Math.random() * 10000) + 1000);
-
-                //we remove the add button so that the new button does not cover it
-                document.querySelector('.add-btn').remove();
-                //we add the new button
-                $("<a href=\"#\" id=\""+RandomID+"\" class=\"btn\" url=\""+data.URL+"\" title=\""+data.URL+"\" onclick='showWebsite(\""+data.URL+"\")'></a>").appendTo(bar);
-                //we set the background-color
-                getColor(data.URL, RandomID);
-                //we add the add button
-                $("<a href=\"javascript:addWebsite()\" class=\"add-btn\"></a>").appendTo(bar);
-                //we initialize the right-click function
-                rightClick();
-          }
-      }
+        }
+    }
   });
 }
 
@@ -162,12 +172,16 @@ function addWebsite() {
     xobj.send(null);  
  }
 
-//function to set the color of the background with the main color of the favicon
+//function to set the color of the background with the main the favicon
 function getColor(link, key) {
-  getColors('https://www.google.com/s2/favicons?domain='+link).then(colors => {
-    console.log('Color getting at : https://www.google.com/s2/favicons?domain='+link);
-    document.getElementById(key).style.backgroundColor = colors[4].hex();
-  })
+  var url = "https://icons.better-idea.org/allicons.json?url=" + link.toLowerCase();
+  var image = "";
+  $.getJSON(url, function(data) {
+      if (typeof data.icons !== 'undefined') {
+          image = data.icons[0].url;
+      }
+      $(document).find('#' + key).css('background-image', "url(" + image + ")");
+  });
 }
 
 //we show the buttons
