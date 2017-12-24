@@ -17,7 +17,7 @@ const {shell} = require('electron');
 const $ = jQuery;
 
 //Check language
-if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-1) {
+if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-1 || osLocale.sync().indexOf("fr_CA") >-1) {
   var lang = require("./assets/lang/fr.js");
 } else if (osLocale.sync().indexOf("en_US") > -1 || osLocale.sync().indexOf("en_EN") > -1) {
   var lang = require("./assets/lang/en.js");
@@ -28,13 +28,6 @@ if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-
 webview.addEventListener("did-stop-loading", function() {
     title.innerHTML = webview.getTitle();
 });
-
-function urlExists(url, cb) {
-  request({ url: url, method: 'HEAD' }, function(err, res) {
-    if (err) return cb(null, false);
-    cb(null, /4\d\d/.test(res.statusCode) === false);
-  });
-}
 
 //Remove the mouswheel click
 (function() {
@@ -218,7 +211,7 @@ function getColor(link, key) {
               $(document).find('#' + key).css('background-image', "url(" + url + ")");
 
           }
-          $(document).find('#0').css('background-image', "url("+__dirname+"/assets/shuttle-cr.svg)");
+          $(document).find('#0').css('background-image', "url(./assets/img/shuttle-cr.svg)");
          }
 
       });

@@ -12,6 +12,7 @@
     "electron-simple-updater": "^1.2.3",
     "electron-squirrel-startup": "^1.0.0",
     "fs": "0.0.1-security",
+    "get-image-colors": "^1.8.1",
     "http": "0.0.0",
     "jquery": "^3.2.1",
     "jsonfile": "^4.0.0",
@@ -32,7 +33,7 @@
     "start": "electron .",
     "dmg-mac": "electron-installer-dmg ./release-builds/Shuttle-darwin-x64/Shuttle.app Shuttle --overwrite --out=release-builds",
     "package-mac": "electron-packager . Shuttle --overwrite --platform=darwin --arch=x64 --icon=assets/img/logo.icns --out=release-builds",
-    "package-win": "electron-packager . Shuttle --overwrite --platform=win32 --arch=x64 --icon=assets/img/icon.ico --out=release-builds --version-string.CompanyName=Shuttle_ltd --version-string.ProductName=\"Shuttle\"",
+    "package-win": "electron-packager . Shuttle --overwrite --platform=win32 --arch=x64 --icon=assets/img/icon.ico --out=release-builds --version-string.CompanyName=\"Shuttle_ltd\" --version-string.ProductName=\"Shuttle\" --version-string.FileDescription=\"Shuttle\"",
     "package-linux": "electron-packager . Shuttle --overwrite --platform=linux --arch=x64 --icon=assets/img/icon.png --out=release-builds"
   },
   "author": "Robin Jullian & Regis Brasme",

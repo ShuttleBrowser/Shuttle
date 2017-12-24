@@ -53,7 +53,7 @@ p.version {
 .btn  {
   width: 80px;
   height: 34px;
-  background-color: #FF3753;
+  background-color: #e71f5f;
   border-radius: 34px;
   border:none;
   position: absolute;
@@ -61,7 +61,7 @@ p.version {
   transition-duration: 0.3s;
 }
 .btn:hover {
-  background-color: #FF5773;  
+  background-color: #EB5C7B;  
   border-radius: 12px;
 }
 
@@ -100,11 +100,11 @@ p.version {
 }
 
 input:checked + .slider {
-  background-color: #FF3753;
+  background-color: #e71f5f;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #FF3753;
+  box-shadow: 0 0 1px #e71f5f;
 }
 
 input:checked + .slider:before {

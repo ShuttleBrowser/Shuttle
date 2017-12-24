@@ -73,7 +73,7 @@ exports.updateAndInstall = function () {
 						}
 					});
 					console.log("Extacted");
-					if (osLocale.sync() == "fr_FR") {
+					if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-1 || osLocale.sync().indexOf("fr_CA") >-1) {
 						electron.dialog.showMessageBox({title: "Shuttle", type:"info", message: "Une mise à jour a été téléchargée, veuillez redémarrer l'application pour avoir accès aux nouvelles fonctionnalités.", buttons: ["Close"] });
 					} else if (osLocale.sync() == "en_US" || osLocale.sync() == "en_EN") {
 						electron.dialog.showMessageBox({title: "Shuttle", type:"info", message: "Please restart shuttle to apply the update.", buttons: ["Close"] });
