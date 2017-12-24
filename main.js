@@ -1,4 +1,4 @@
-//1.2.2
+//1.1.1.0
 'use strict';
 const electron = require('electron');
 const menubar = require('menubar');

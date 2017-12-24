@@ -112,9 +112,7 @@ function addWebsite() {
             console.log('URL', data.URL);
             if (!/^https?:\/\//i.test(data.URL)) { // add http protocol to the url to make url-exists
                 data.URL = 'http://' + data.URL;
-            }
-            urlExists(data.URL, function(err, exists) { //verify that the url exists
-                if(exists) {
+              }
                   //we open the data.json file
                   var save = fs.createWriteStream(path, {
                       flags: 'a'
@@ -137,15 +135,10 @@ function addWebsite() {
                   $("<a href=\"javascript:addWebsite()\" class=\"add-btn\"></a>").appendTo(bar);
                   //we initialize the right-click function
                   rightClick();
-                } else {
-                    vex.dialog.alert("This URL doesn't exists. Please retry.");
-                    console.log("This URL doesn't exists. Please retry.");
                 }
-            });
-        }
+            }
+        });
     }
-  });
-}
 
       var browser = remote.getCurrentWindow();
       webview.addEventListener("enter-html-full-screen", function() {
@@ -158,6 +151,23 @@ function addWebsite() {
         bar.style.display = "block";
         webview.style.bottom = "50px";
       });
+
+   webview.addEventListener('dom-ready', function () {
+        webview.insertCSS('\
+          ::-webkit-scrollbar \
+          { \
+            width: 5px; \
+            background-color: white; \
+          } \
+          \
+          ::-webkit-scrollbar-thumb \
+          { \
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); \
+            background-color: #555; \
+          } \
+          ')
+      });
+
 
 //we load the json file
  loadJSON(function(response) {
@@ -181,25 +191,41 @@ function addWebsite() {
 
 //function to set the color of the background with the main the favicon
 function getColor(link, key) {
-  getColors('http://www.google.com/s2/favicons?domain=' + link).then(colors => {
-    document.getElementById(key).style.backgroundColor = colors[4].hex();
-      $.getJSON(__dirname + "/assets/colors.json", function(data) {
+  getColors('https://www.google.com/s2/favicons?domain=' + link.toLowerCase()).then(colors => {
+
+            var url = "https://icons.better-idea.org/lettericons/"+link.charAt(7).toUpperCase()+"-64-"+ colors[4].hex().substr(1).slice(0) +".png";
+            console.log("color for " + link + " : " + colors[4].hex());
+            console.log(url);
+            $(document).find('#' + key).css('background-image', "url(" + url + ")");
+
+    //get icon + color
+      $.getJSON("http://api.getshuttle.xyz/colors.json", function(data) {
          for (i in data) {
 
           if ("http://"+data[i].url == link) {
-              console.log(data[i].url + " : " + data[i].color);
-              $(document).find('#' + key).css('background-color', "" + data[i].color + "");
-             // $("<h1>" + link.charAt(7).toUpperCase() + "</h1>").appendTo("#"+key);
-          } else if (data[i].url == link) {
-              console.log(data[i].url + " : " + data[i].color);
-              $(document).find('#' + key).css('background-color', "" + data[i].color + "");
-              //$("<h1>" + link.charAt(0).toUpperCase() + "</h1>").appendTo("#"+key)            
-          }
 
+              var url = "https://icons.better-idea.org/lettericons/"+link.charAt(7).toUpperCase()+"-64-"+ data[i].color.substr(1).slice(0) +".png";
+              console.log("color for " + data[i].url + " : " + data[i].color);
+              console.log(url+"\n");
+              $(document).find('#' + key).css('background-image', "url(" + url + ")");
+
+
+          } else if (data[i].url == link) {
+
+              var url = "https://icons.better-idea.org/lettericons/"+link.charAt(0).toUpperCase()+"-64-"+ data[i].color.substr(1).slice(0) +".png";
+              console.log("color for " + data[i].url + " : " + data[i].color);
+              console.log(url+"\n");
+              $(document).find('#' + key).css('background-image', "url(" + url + ")");
+
+          }
+          $(document).find('#0').css('background-image', "url("+__dirname+"/assets/shuttle-cr.svg)");
          }
+
       });
-  });
+    });
 }
+
+
 
 //we show the buttons
 function updateBar(link) {
