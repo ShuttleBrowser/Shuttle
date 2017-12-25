@@ -102,6 +102,8 @@ mb.on('after-create-window', function () {
   })
 });
 
+mb.on( 'ready', () => app.setAppUserModelId('xyz.ShuttleLtd.Shuttle'))
+
 var handleStartupEvent = function() {
   if (process.platform !== 'win32') {
     return false;
