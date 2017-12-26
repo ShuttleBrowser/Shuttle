@@ -1,5 +1,4 @@
-//1.2.6
-'use strict';
+//1.2.7
 const electron = require('electron');
 const menubar = require('menubar');
 const url = require('url');
@@ -13,6 +12,7 @@ const BrowserWindow = electron.BrowserWindow;
 const Tray = electron.Tray;
 
 let settingsWin;
+let Overlay;
 
 require('electron-debug')({enabled: true});
 if(require('electron-squirrel-startup')) return;
@@ -96,8 +96,42 @@ function createSettingsWindows() {
   }));
 }
 
+function createOverlay() {
+	Overlay = new BrowserWindow({
+		width: 40,
+		height: 40,
+		resizable: false,
+		title: "Overlay",
+		preloadWindow: true,
+		frame: false,
+		skipTaskbar: true,
+		show: false,
+		transparent: true,
+		x: mb.tray.getBounds().x + 130,
+		y: mb.tray.getBounds().y - 70,
+		alwaysOnTop: true
+	});
+
+  Overlay.loadURL(url.format({
+    pathname: path.join(__dirname, '/overlay/index.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+}
+
 //right click menu for Tray
 mb.on('after-create-window', function () {
+//	createOverlay()
+
+//	electron.globalShortcut.register('Shift+S', () => {
+//		if (settings.get('OverlayIsActive') == true) {
+//			settings.set('OverlayIsActive', false);
+//			Overlay.minimize();
+//		} else if (settings.get('OverlayIsActive') == false) {
+//			settings.set('OverlayIsActive', true);
+//			Overlay.show();	
+//		}
+//	})
 
 	mb.tray.on('right-click', () => {
 		mb.tray.popUpContextMenu(contextMenu);

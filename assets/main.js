@@ -217,6 +217,13 @@ function getColor(link, key) {
                 console.log(url+"\n\n");
                 $(document).find('#' + key).css('background-image', "url(" + url + ")");
 
+              } else if (data[i].url == link) {
+
+                url = "https://icons.better-idea.org/lettericons/"+link.charAt(0).toUpperCase()+"-64-"+ data[i].color.substr(1).slice(0) +".png";
+                console.log("[no proto] color for " + data[i].url + " : " + data[i].color);
+                console.log(url+"\n\n");
+                $(document).find('#' + key).css('background-image', "url(" + url + ")");
+
               }
             }
           });

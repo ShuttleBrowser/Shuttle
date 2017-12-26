@@ -6,31 +6,34 @@
 
 <style>
 	@font-face {
-	    font-family: Regular;
-	    src: url(assets/fonts/RobotoSlab-Regular.ttf);
+	    font-family: Light;
+	    src: url(./assets/fonts/SourceSanPro-Light.ttf);
 	}
 	html {
 		overflow: hidden;
-		font-family: 'Regular', serif;
+		font-family: 'Light';
 	}
-	.bg {
-		background: url("./assets/img/noint.png") no-repeat center;
-		background-size: 40% 21%;
-		width: 100%;
-		height: 100vh;
-	}
-	h3 {
-		z-index: 9999;
-		color: #BFBFBE;
+
+	img {
 		position: absolute;
-		top: 62%;
-		left: 22%;
+		left: 50%; top: 40%;
+		transform: translate(-50%);
+		width: 25%;
+	}
+
+	h3 {
+		position: absolute;
+		left: 50%; top: 55%;
+		transform: translate(-50%);
+		font-family: 'Source Sans Pro Light', sans-serif;
+		font-size: 11.5pt;
 	}
 </style>
 
 </head>
 <body>
 <div class="bg"></div>
-<h3>no internet connection</h3>
+<img src="./assets/img/noint.svg" alt="">
+<h3>NO INTERNET CONNECTION</h3>
 </body>
 </html>
