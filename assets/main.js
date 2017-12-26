@@ -184,38 +184,77 @@ function addWebsite() {
 
 //function to set the color of the background with the main the favicon
 function getColor(link, key) {
-  getColors('https://www.google.com/s2/favicons?domain=' + link.toLowerCase()).then(colors => {
+  let url;
 
-            var url = "https://icons.better-idea.org/lettericons/"+link.charAt(7).toUpperCase()+"-64-"+ colors[4].hex().substr(1).slice(0) +".png";
-            console.log("color for " + link + " : " + colors[4].hex());
-            console.log(url);
+  if (link == "changelog.getshuttle.xyz") {
+    $(document).find('#0').css('background-image', "url(./assets/img/shuttle-cr.svg)");
+  } else {
+    $.ajax({
+      url: link,
+      async: true,
+
+      error: function() {
+        console.warn("ERROR: "+link);
+      },
+
+      success: function(data) {
+        var matches = data.match(/<title>(.*?)<\/title>/);
+
+        if (matches == null) {
+          $.getJSON(__dirname+"/assets/colors.json", function(data) {
+            for (i in data) {
+
+              if ("http://"+data[i].url == link) {
+                url = "https://icons.better-idea.org/lettericons/"+link.charAt(7).toUpperCase()+"-64-"+ data[i].color.substr(1).slice(0) +".png";
+                console.log("[no proto] color for " + data[i].url + " : " + data[i].color);
+                console.log(url+"\n\n");
+                $(document).find('#' + key).css('background-image', "url(" + url + ")");
+
+              } else if ("https://"+data[i].url == link) {
+
+                url = "https://icons.better-idea.org/lettericons/"+link.charAt(8).toUpperCase()+"-64-"+ data[i].color.substr(1).slice(0) +".png";
+                console.log("[no proto] color for " + data[i].url + " : " + data[i].color);
+                console.log(url+"\n\n");
+                $(document).find('#' + key).css('background-image', "url(" + url + ")");
+
+              }
+            }
+          });
+        } else {
+          getColors('https://www.google.com/s2/favicons?domain=' + link.toLowerCase()).then(colors => {
+
+            url = "https://icons.better-idea.org/lettericons/"+matches[1].charAt(0).toUpperCase()+"-64-"+ colors[4].hex().substr(1).slice(0) +".png";
+            console.log("[no json] color for " + link + " : " + colors[4].hex());
+            console.log(url+"\n\n");
             $(document).find('#' + key).css('background-image', "url(" + url + ")");
 
-    //get icon + color
-      $.getJSON("http://api.getshuttle.xyz/colors.json", function(data) {
-         for (i in data) {
+            //get icon + color
+              $.getJSON(__dirname+"/assets/colors.json", function(data) {
+                 for (i in data) {
 
-          if ("http://"+data[i].url == link) {
+                  if ("http://"+data[i].url == link) {
 
-              var url = "https://icons.better-idea.org/lettericons/"+link.charAt(7).toUpperCase()+"-64-"+ data[i].color.substr(1).slice(0) +".png";
-              console.log("color for " + data[i].url + " : " + data[i].color);
-              console.log(url+"\n");
-              $(document).find('#' + key).css('background-image', "url(" + url + ")");
+                      url = "https://icons.better-idea.org/lettericons/"+matches[1].charAt(0).toUpperCase()+"-64-"+ data[i].color.substr(1).slice(0) +".png";
+                      console.log("[no proto] color for " + data[i].url + " : " + data[i].color);
+                      console.log(url+"\n\n");
+                      $(document).find('#' + key).css('background-image', "url(" + url + ")");
 
+                  } else if ("https://"+data[i].url == link) {
 
-          } else if (data[i].url == link) {
+                      url = "https://icons.better-idea.org/lettericons/"+matches[1].charAt(0).toUpperCase()+"-64-"+ data[i].color.substr(1).slice(0) +".png";
+                      console.log("[no proto] color for " + data[i].url + " : " + data[i].color);
+                      console.log(url+"\n\n");
+                      $(document).find('#' + key).css('background-image', "url(" + url + ")");
 
-              var url = "https://icons.better-idea.org/lettericons/"+link.charAt(0).toUpperCase()+"-64-"+ data[i].color.substr(1).slice(0) +".png";
-              console.log("color for " + data[i].url + " : " + data[i].color);
-              console.log(url+"\n");
-              $(document).find('#' + key).css('background-image', "url(" + url + ")");
+                  }
+                 }
 
+              });
+            });
           }
-          $(document).find('#0').css('background-image', "url(./assets/img/shuttle-cr.svg)");
-         }
-
-      });
+      }
     });
+  }
 }
 
 

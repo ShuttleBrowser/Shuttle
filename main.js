@@ -1,4 +1,4 @@
-//1.1.1.0
+//1.2.6
 'use strict';
 const electron = require('electron');
 const menubar = require('menubar');
@@ -13,6 +13,7 @@ const BrowserWindow = electron.BrowserWindow;
 const Tray = electron.Tray;
 
 let settingsWin;
+let Overlay;
 
 require('electron-debug')({enabled: true});
 if(require('electron-squirrel-startup')) return;
@@ -21,28 +22,29 @@ if (settings.get('ShuttleAutoLauncher') == true) {
 	var ShuttleAutoLauncher = new AutoLaunch({
 	    name: 'Shuttle',
 	});
-
 	ShuttleAutoLauncher.enable();
 }
 
 updater.updateAndInstall();
-  var iconPath = __dirname + "/assets/img/icon.ico";
-  if (process.platform == 'darwin')
-    iconPath = "file://" + __dirname + "/assets/img/icon.ico";
+	var iconPath = __dirname + "/assets/img/icon.ico";
 
-	var mb = menubar({
-	  index: "file://" + __dirname + "/index.html",
-	  tooltip: "Shuttle",
-    icon: iconPath,
-	  width:360,
-	  height:640,
-	  resizable: false,
-	  title: "Shuttle",
-	  preloadWindow: true,
-    autoHideMenuBar: true,
-	  alwaysOnTop: settings.get('SOpen'),
-    frame: settings.get('Frame')
-  });
+	if (process.platform == 'darwin')
+		iconPath = "file://" + __dirname + "/assets/img/icon.ico";
+
+var mb = menubar({
+	index: "file://" + __dirname + "/index.html",
+	tooltip: "Shuttle",
+	icon: iconPath,
+	width:360,
+	height:640,
+	resizable: false,
+	title: "Shuttle",
+	preloadWindow: true,
+	autoHideMenuBar: true,
+	alwaysOnTop: settings.get('SOpen'),
+	frame: settings.get('Frame'),
+    skipTaskbar: true
+});
 
 //We create the context menu
 const contextMenu = electron.Menu.buildFromTemplate([
@@ -95,14 +97,50 @@ function createSettingsWindows() {
   }));
 }
 
+function createOverlay() {
+  Overlay = new BrowserWindow({
+	icon:__dirname + "/assets/img/icon.ico",
+    width: 40,
+    height: 40,
+    resizable: false,
+    title: "Overlay",
+    preloadWindow: true,
+    frame: false,
+    skipTaskbar: true,
+    show: false,
+    transparent: true,
+    x: mb.tray.getBounds().x + 130,
+    y: mb.tray.getBounds().y - 70,
+    alwaysOnTop: true
+  });
+
+  Overlay.loadURL(url.format({
+    pathname: path.join(__dirname, '/overlay/index.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+}
+
 //right click menu for Tray
 mb.on('after-create-window', function () {
-  mb.tray.on('right-click', () => {
-    mb.tray.popUpContextMenu(contextMenu);
-  })
-});
+	console.log();
 
-mb.on( 'ready', () => app.setAppUserModelId('xyz.ShuttleLtd.Shuttle'))
+	createOverlay();
+
+	electron.globalShortcut.register('Shift+S', () => {
+		if (settings.get('OverlayIsActive') == true) {
+			settings.set('OverlayIsActive', false);
+			Overlay.minimize();
+		} else if (settings.get('OverlayIsActive') == false) {
+			settings.set('OverlayIsActive', true);
+			Overlay.show();		
+		}
+	})
+
+	mb.tray.on('right-click', () => {
+		mb.tray.popUpContextMenu(contextMenu);
+	})
+});
 
 var handleStartupEvent = function() {
   if (process.platform !== 'win32') {
