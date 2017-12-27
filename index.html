@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<title></title>
 	<meta charset="UTF-8">
 	<link href="https://use.fontawesome.com/releases/v5.0.2/css/all.css" rel="stylesheet">
 	<link rel="stylesheet" href="assets/style.css">
 	<link rel="stylesheet" href="node_modules/vex-js/dist/css/vex.css">
 	<link rel="stylesheet" href="node_modules/vex-js/dist/css/vex-theme-default.css">
-
-
 </head>
 <body>
 
@@ -18,20 +17,21 @@
 	<div class="bar-bg"></div>
 
 </body>
+
 <script async>
-const {remote} = require('electron');
-const osLocale = require('os-locale');
-const jQuery = require("jQuery");
-const fs = require('fs');
-const jsonfile = require('jsonfile')
-const vex = require('vex-js');
-const getColors = require('get-image-colors');
-const {Menu, MenuItem} = remote;
-const replace = require("replace");
-vex.registerPlugin(require('vex-dialog'));
-vex.defaultOptions.className = 'vex-theme-default';
-const menu = new Menu()
-const request = require('request');
+	const jQuery = require('jQuery');
+	const {remote} = require('electron');
+	const osLocale = require('os-locale');
+	const fs = require('fs');
+	const jsonfile = require('jsonfile')
+	const vex = require('vex-js');
+	const getColors = require('get-image-colors');
+	const {Menu, MenuItem} = remote;
+	const replace = require("replace");
+	vex.registerPlugin(require('vex-dialog'));
+	vex.defaultOptions.className = 'vex-theme-default';
+	const menu = new Menu()
+	const request = require('request');
 
 </script>
 

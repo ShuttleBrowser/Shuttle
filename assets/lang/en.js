@@ -16,5 +16,6 @@ module.exports = {
 	Export: "export your bookmarks",
 	Reset: "Do you really want to put back to zero the favorites?",
 	ResetBtn: "remove bookmarks",
-	Frame: "allow move window"
+	Frame: "allow move window",
+	Bookmarks: "BOOKMARKS"
 };

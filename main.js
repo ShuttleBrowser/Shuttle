@@ -1,4 +1,4 @@
-//1.2.7
+//1.3.1
 const electron = require('electron');
 const menubar = require('menubar');
 const url = require('url');
@@ -7,12 +7,15 @@ const AutoLaunch = require('auto-launch');
 const updater = require('./updater/index.js');
 const path = require("path");
 const settings = require("electron-settings");
+const {ipcMain} = require('electron');
 
 const BrowserWindow = electron.BrowserWindow;
 const Tray = electron.Tray;
 
 let settingsWin;
 let Overlay;
+
+let iconPath;
 
 require('electron-debug')({enabled: true});
 if(require('electron-squirrel-startup')) return;
@@ -25,10 +28,12 @@ if (settings.get('ShuttleAutoLauncher') == true) {
 }
 
 updater.updateAndInstall();
-	var iconPath = __dirname + "/assets/img/icon.ico";
 
-	if (process.platform == 'darwin')
-		iconPath = "file://" + __dirname + "/assets/img/icon.ico";
+if (process.platform == 'darwin' || process.platform == 'Linux') {
+	iconPath = "file://" + __dirname + "/assets/img/icon.ico";
+} else if (process.platform == 'win32') {
+	iconPath = __dirname + "/assets/img/icon.ico";
+}
 
 var mb = menubar({
 	index: "file://" + __dirname + "/index.html",
@@ -86,7 +91,8 @@ function createSettingsWindows() {
     resizable: false,
     title: "Settings",
     preloadWindow: true,
-    frame: false
+    frame: false,
+    alwaysOnTop: true
   });
 
   settingsWin.loadURL(url.format({
@@ -179,3 +185,9 @@ var handleStartupEvent = function() {
 if (handleStartupEvent()) {
   return;
 }
+
+ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
+  mb.setOption('alwaysOnTop', arg);
+  mb.hideWindow();
+  console.log(arg);
+})

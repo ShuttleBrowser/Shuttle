@@ -9,12 +9,13 @@ module.exports = {
 	Yes: "Oui",
 	No: "Non",
 	FBM: " des favoris ?",
-	restartApp: "Vos modifications seront appliquées dès le prochain redémarage de Shuttle.",
-	SAboot: "lancer au démarage",
+	restartApp: "Vos modifications seront appliquées dès le prochain redémarrage de Shuttle.",
+	SAboot: "lancer au démarrage",
 	SOpen: "laisser actif",
 	Import: "importer vos favoris",
 	Export: "exporter vos favoris",
 	Reset: "Voulez-vous vraiment remettre à zéro les favoris ?",
 	ResetBtn: "supprimer les favoris",
-	Frame: "bouger la fenêtre"
+	Frame: "bouger la fenêtre",
+	Bookmarks: "FAVORIS"
 };

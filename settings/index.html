@@ -13,46 +13,60 @@
 <body>
 
 <div class="bar"></div>
-<div class="close"><img src="close.png" alt=""></div>
-
+<br>
+<br>
+<h1>GENERAL</h1>
 <div class="content">
-	<label class="switch">
-	  <input type="checkbox" name="SOpen">
-	  <span class="slider round"></span>
-	</label>
-	<br>
-	<br>
-	<label class="switch">
-	  <input type="checkbox" name="AutoStart">
-	  <span class="slider round"></span>
-	</label>
-	<br>
-	<br>
-	<label class="switch">
-	  <input type="checkbox" name="Frame">
-	  <span class="slider round"></span>
-	</label>
-	<br>
-	<br>
-	<input type="button" name="download" class="btn">
-	<br>
-	<br>
-	<input type="button" name="upload" class="btn">
-	<br>
-	<br>
-	<input type="button" name="reset" class="btn">
+
+	<div class="section gray">
+		<p id="SOpen"></p>
+		<label class="switch">
+		  <input type="checkbox" name="SOpen">
+		  <span class="slider round"></span>
+		</label>
+	</div>
+	
+	<div class="section white">
+		<p id="SAboot"></p>
+		<label class="switch">
+		  <input type="checkbox" name="AutoStart">
+		  <span class="slider round"></span>
+		</label>
+	</div>
+
+	<div class="section gray">
+		<p id="Frame"></p>
+		<label class="switch">
+		  <input type="checkbox" name="Frame">
+		  <span class="slider round"></span>
+		</label>
+	</div>
+
+</div>
+<br>
+<h1 id="bkms"></h1>
+<div class="content">
+
+	<div class="section gray">
+		<p id="Export"></p>
+		<input type="button" name="download" class="btn">
+	</div>
+
+	<div class="section white">
+		<p id="Import"></p>
+		<input type="button" name="upload" class="btn">
+	</div>
+
+	<div class="section gray">
+		<p id="Reset"></p>
+		<input type="button" name="reset" class="btn">
+	</div>
+
 </div>
 
-<div class="text">
-	<p id="SOpen"></p>
-	<p id="SAboot"></p>
-	<p id="Frame"></p>
-	<p id="Export"></p>
-	<p id="Import"></p>
-	<p id="Reset"></p>
-</div>
 
-	<p class="version"></p>
+<p class="version"></p>
+<div class="close"><img src="close.png" alt=""></div>
 
 </body>
 
@@ -72,6 +86,7 @@ if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-
 	const AutoLaunch = require('auto-launch');
 	const remote = require('electron').remote;
 	const fs = require('fs');
+	const {ipcRenderer} = require('electron');
 
 	const appVersion = require('../package.json').version;
 
@@ -82,6 +97,7 @@ if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-
 	const importF = document.getElementById('Import');
 	const reset = document.getElementById('Reset');
 	const frame = document.getElementById('Frame');
+	const bookmarks = document.getElementById('bkms');
 
 	const checkboxSOpen = document.querySelector("input[name=SOpen]");
 	const checkboxAutoStart = document.querySelector("input[name=AutoStart]");
@@ -107,10 +123,10 @@ if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-
 	checkboxSOpen.addEventListener( 'change', function() {
 	    if(this.checked) {
 			settings.set('SOpen', true);
-			alert(lang.restartApp);
+			ipcRenderer.send('SettingSetAlwaysOnTop', true);
 	    } else {
 			settings.set('SOpen', false);
-			alert(lang.restartApp);
+			ipcRenderer.send('SettingSetAlwaysOnTop', false);
 	    }
 	});
 
@@ -135,13 +151,14 @@ if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-
 		resetFavorites();
 	});
 
-	versionNumber.innerHTML += "shuttle version "+appVersion;
+	versionNumber.innerHTML += "SHUTTLE VERSION "+appVersion;
 	sopen.innerHTML += lang.SOpen;
 	saboot.innerHTML += lang.SAboot;
 	exportF.innerHTML += lang.Export;
 	importF.innerHTML += lang.Import;
 	reset.innerHTML += lang.ResetBtn;
 	frame.innerHTML += lang.Frame;
+	bookmarks.innerHTML += lang.Bookmarks;
 
 if (settings.get('ShuttleAutoLauncher') == true) {checkboxAutoStart.checked = true;} else {checkboxAutoStart.checked = false;}
 if (settings.get('SOpen') == true) {checkboxSOpen.checked = true;} else {checkboxSOpen.checked = false;}
