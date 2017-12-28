@@ -10,6 +10,31 @@ webview {
     position: fixed;
 }
 
+.title-bar {
+	background-color: #F1F1F1;
+	width: 100%;
+	height: 20px;
+	-webkit-app-region: drag;
+	position: absolute;
+	top: 0;
+	z-index: 99999;
+}
+.title-bar p {
+    -webkit-app-region: drag;
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    font-size: 9pt;
+    margin: 1px;
+}
+.title-bar img {
+    -webkit-app-region: no-drag;
+    position: absolute;
+    top: 3.5px;
+    right: 5px;
+    width: 12px;
+}
+
 .bar {
     background-color: #F1F1F1;
     overflow-y: hidden;

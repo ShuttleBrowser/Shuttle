@@ -4,7 +4,7 @@ const menubar = require('menubar');
 const url = require('url');
 const fs = require('fs');
 const AutoLaunch = require('auto-launch');
-const updater = require('./updater/index.js');
+const updater = require('./Updater/index.js');
 const path = require("path");
 const settings = require("electron-settings");
 const {ipcMain} = require('electron');
@@ -29,12 +29,12 @@ if (settings.get('ShuttleAutoLauncher') == true) {
 
 updater.updateAndInstall();
 
-if (process.platform == 'darwin' || process.platform == 'Linux') {
-	iconPath = "file://" + __dirname + "/assets/img/icon.ico";
+if (process.platform == 'darwin' || process.platform == 'linux') {
+	iconPath =  __dirname + "/assets/img/icon.png";
 } else if (process.platform == 'win32') {
 	iconPath = __dirname + "/assets/img/icon.ico";
 }
-
+console.log(iconPath);
 var mb = menubar({
 	index: "file://" + __dirname + "/index.html",
 	tooltip: "Shuttle",
@@ -46,8 +46,8 @@ var mb = menubar({
 	preloadWindow: true,
 	autoHideMenuBar: true,
 	alwaysOnTop: settings.get('SOpen'),
-	frame: settings.get('Frame'),
-    skipTaskbar: true
+	frame: false,
+  skipTaskbar: true
 });
 
 //We create the context menu
@@ -139,6 +139,7 @@ mb.on('after-create-window', function () {
 //		}
 //	})
 
+  mb.tray.setContextMenu(contextMenu);
 	mb.tray.on('right-click', () => {
 		mb.tray.popUpContextMenu(contextMenu);
 	})
@@ -191,3 +192,16 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
   mb.hideWindow();
   console.log(arg);
 })
+
+ipcMain.on('SettingSetFrame', (event, arg) => {
+  mb.window.webContents.send('addframe' , arg);
+  if (arg == true) {
+    mb.setOption('with', 380);
+  }
+});
+
+if (settings.get('Frame') == true) {
+    mb.setOption('with', 380);
+} else if (settings.get('Frame') == false) {
+    mb.setOption('with', 360);
+}

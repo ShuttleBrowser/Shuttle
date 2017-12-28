@@ -133,10 +133,10 @@ if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-
 	frameBtn.addEventListener( 'change', function() {
 	    if(this.checked) {
 			settings.set('Frame', true);
-			alert(lang.restartApp);
+			ipcRenderer.send('SettingSetFrame', true);
 	    } else {
 			settings.set('Frame', false);
-			alert(lang.restartApp);
+			ipcRenderer.send('SettingSetFrame', false);
 	    }
 	});
 
