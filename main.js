@@ -1,4 +1,4 @@
-//1.3.1
+//1.3.2
 const electron = require('electron');
 const menubar = require('menubar');
 const url = require('url');
@@ -8,6 +8,7 @@ const updater = require('./Updater/index.js');
 const path = require("path");
 const settings = require("electron-settings");
 const {ipcMain} = require('electron');
+const osLocale = require('os-locale');
 
 const BrowserWindow = electron.BrowserWindow;
 const Tray = electron.Tray;
@@ -17,14 +18,25 @@ let Overlay;
 
 let iconPath;
 
-require('electron-debug')({enabled: true});
+if (settings.get('DevMod') == true) {
+	require('electron-debug')({enabled: true});
+}
+
 if(require('electron-squirrel-startup')) return;
+
+if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-1 || osLocale.sync().indexOf("fr_CA") >-1) {
+	var lang = require("./assets/lang/fr.js");
+} else if (osLocale.sync().indexOf("en_US") > -1 || osLocale.sync().indexOf("en_EN") > -1) {
+	var lang = require("./assets/lang/en.js");
+} else {
+	var lang = require("./assets/lang/en.js");
+}
 
 if (settings.get('ShuttleAutoLauncher') == true) {
 	var ShuttleAutoLauncher = new AutoLaunch({
 	    name: 'Shuttle',
 	});
-	ShuttleAutoLauncher.enable();
+	//ShuttleAutoLauncher.enable();
 }
 
 updater.updateAndInstall();
@@ -47,27 +59,27 @@ var mb = menubar({
 	autoHideMenuBar: true,
 	alwaysOnTop: settings.get('SOpen'),
 	frame: false,
-  skipTaskbar: true
+  	skipTaskbar: true
 });
 
 //We create the context menu
 const contextMenu = electron.Menu.buildFromTemplate([
   {
-    label: 'About',
+    label: lang.menu_about,
     click() {
     //We open the website at about
       electron.shell.openExternal('https://getshuttle.xyz/')
     }
   },
   {
-    label: 'Settings',
+    label: lang.menu_settings,
     click() {
         createSettingsWindows();
       }
   },
   {type: 'separator'},
   {
-    label: 'Quit',
+    label: lang.menu_quit,
     click() {
       mb.app.quit();
       console.log('stopping');
@@ -199,6 +211,15 @@ ipcMain.on('SettingSetFrame', (event, arg) => {
     mb.setOption('with', 380);
   }
 });
+
+ipcMain.on('OpenDevTool', (event, arg) => {
+	mb.window.openDevTools();
+});
+
+ipcMain.on('OpenReportWindow', (event, arg) => {
+	electron.shell.openExternal('mailto:support@getshuttle.xyz?subject=[BUG SHUTTLE]');
+});
+
 
 if (settings.get('Frame') == true) {
     mb.setOption('with', 380);

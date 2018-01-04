@@ -5,6 +5,7 @@ const appVersion = require('../package.json').version;
 const fs = require('fs');
 const osLocale = require('os-locale');
 const electron = require("electron");
+const settings = require("electron-settings");
 
 var updateZip = new DecompressZip(__dirname+"/update.zip");
 
@@ -48,20 +49,20 @@ function downloadFile(configuration){
     });
 }
 
-exports.updateAndInstall = function () {
-//we get the json file
-	request('http://update.getshuttle.xyz/updates.txt', function (error, response, body) {
+var dlupdate = (u) => {
+
+	request('http://'+u+'.getshuttle.xyz/updates.txt', function (error, response, body) {
 		if (error) {
 			console.log("Error for checking update");
 		} else if (response) {
 			if (body != appVersion) {
 				console.log("Download...");
 				downloadFile({
-				    remoteFile: "http://update.getshuttle.xyz/Latest.zip",
+				    remoteFile: "http://"+u+".getshuttle.xyz/Latest.zip",
 				    localFile: __dirname+"/update.zip",
 				    onProgress: function (received,total){
 				        var percentage = (received * 100) / total;
-				        console.log(percentage + "% | " + received + " bytes out of " + total + " bytes.");
+				        console.log(Math.round(percentage) + "% - "+u+".getshuttle.xyz");
 				    }
 				}).then(function(){
 					console.log("Download finished");
@@ -84,5 +85,17 @@ exports.updateAndInstall = function () {
 			}
 		}
 	});
+
+}
+
+exports.updateAndInstall = function () {
+//we get the json file
+
+	if (settings.get('DevMod') == true) {
+		dlupdate("back");
+		console.log("Dev Mode = OK");
+	} else {
+		dlupdate("update");
+	}
 
 }

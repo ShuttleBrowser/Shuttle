@@ -30,7 +30,7 @@ const titlebar = "<div class=\"title-bar\"><p id=\"title-bar-title\"></p><a onmo
     }
 
     webview.addEventListener("did-stop-loading", function() {
-		document.querySelector('#title-bar-title').innerHTML = webview.getTitle().substring(0,55);
+		document.querySelector('#title-bar-title').innerHTML = "Shuttle - "+webview.getTitle().substring(0,46);
     });
 
     //Remove the mouswheel click
@@ -143,10 +143,10 @@ const titlebar = "<div class=\"title-bar\"><p id=\"title-bar-title\"></p><a onmo
             bar.style.display = "none";
             webview.style.bottom = "0px";
 
-			if (settings.get('Frame') == true) {
-				$(document).find(webview).css('top', "0");
-				document.querySelector('.title-bar').remove();
-			}
+      			if (settings.get('Frame') == true) {
+      				$(document).find(webview).css('top', "0");
+      				document.querySelector('.title-bar').remove();
+      			}
 
           });
           webview.addEventListener("leave-html-full-screen", function() {
@@ -157,7 +157,7 @@ const titlebar = "<div class=\"title-bar\"><p id=\"title-bar-title\"></p><a onmo
 			if (settings.get('Frame') == true) {
 				$(document).find(webview).css('top', "20px");
 				$(titlebar).appendTo('body');
-				document.querySelector('#title-bar-title').innerHTML = webview.getTitle().substring(0,30);
+				document.querySelector('#title-bar-title').innerHTML = "Shuttle - "+webview.getTitle().substring(0,46);
 			}
 
           });
@@ -352,8 +352,9 @@ const titlebar = "<div class=\"title-bar\"><p id=\"title-bar-title\"></p><a onmo
     console.log("received");
     if (arg == true) {
       $(document).find(webview).css('top', "20px");
-
       $(titlebar).appendTo('body');
+      document.querySelector('#title-bar-title').innerHTML = "Shuttle - "+webview.getTitle().substring(0,46);
+
 
     } else if (arg == false) {
       $(document).find(webview).css('top', "0");

@@ -9,6 +9,7 @@ module.exports = {
 	Yes: "Oui",
 	No: "Non",
 	FBM: " des favoris ?",
+	//Settings
 	restartApp: "Vos modifications seront appliquées dès le prochain redémarrage de Shuttle.",
 	SAboot: "lancer au démarrage",
 	SOpen: "laisser actif",
@@ -17,5 +18,14 @@ module.exports = {
 	Reset: "Voulez-vous vraiment remettre à zéro les favoris ?",
 	ResetBtn: "supprimer les favoris",
 	Frame: "bouger la fenêtre",
-	Bookmarks: "FAVORIS"
+	dmod: "mode developpeur",
+	shcons: "afficher la console",
+	rep: "signaler un bug",
+	//title settings
+	Bookmarks: "FAVORIS",
+	Developper: "DEVELOPPEUR",
+	//Context Menu
+	menu_quit: "Quitter",
+	menu_settings: "Paramètres",
+	menu_about: "A propos"
 };
