@@ -37,7 +37,7 @@ webview.addEventListener('did-stop-loading', function () {
 (function () {
   function callback (e) {
     var e = window.e || e
-    if (e.target.localName == 'a') {
+    if (e.target.localName === 'a') {
       e.preventDefault()
     }
     return
@@ -56,7 +56,7 @@ bar.addEventListener('mousewheel', scrollHorizontally, false)
 function showWebsite (url) {
   console.info('online')
   //if there is http:// or https:// in valu we load the web page
-  if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {
+  if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
     $.ajax({
       url: `${url}`,
       context: document.body,
@@ -67,7 +67,7 @@ function showWebsite (url) {
         webview.loadURL(url)
       }
     })
-  } else if (url.indexOf('http://') == -1) {
+  } else if (url.indexOf('http://') === -1) {
     $.ajax({
       url: `http://${url}`,
       context: document.body,
@@ -143,7 +143,7 @@ webview.addEventListener('enter-html-full-screen', function () {
   bar.style.display = 'none'
   webview.style.bottom = '0px'
 
-  if (settings.get('Frame') == true) {
+  if (settings.get('Frame') === true) {
     $(document).find(webview).css('top', '0')
     document.querySelector('.title-bar').remove()
   }
@@ -154,7 +154,7 @@ webview.addEventListener('leave-html-full-screen', function () {
   bar.style.display = 'block'
   webview.style.bottom = '50px'
 
-  if (settings.get('Frame') == true) {
+  if (settings.get('Frame') === true) {
     $(document).find(webview).css('top', '20px')
     $(titlebar).appendTo('body')
     document.querySelector('#title-bar-title').innerHTML = 'Shuttle - ' + webview.getTitle().substring(0, 46)
@@ -193,7 +193,7 @@ function loadJSON (callback, jsonfile) {
   xobj.overrideMimeType('application/json')
   xobj.open('GET', jsonfile, true)
   xobj.onreadystatechange = function () {
-    if (xobj.readyState == 4 && xobj.status == '200') {
+    if (xobj.readyState === 4 && xobj.status === '200') {
       callback(xobj.responseText)
     }
   }
@@ -204,7 +204,7 @@ function loadJSON (callback, jsonfile) {
 function getColor (link, key) {
   let url
 
-  if (link == 'changelog.getshuttle.xyz') {
+  if (link === 'changelog.getshuttle.xyz') {
     $(document).find('#0').css('background-image', 'url(./assets/img/shuttle-cr.svg)')
   } else {
     $.ajax({
@@ -222,20 +222,20 @@ function getColor (link, key) {
           $.getJSON(__dirname + '/assets/colors.json', function (data) {
             for (i in data) {
 
-              if ('http://' + data[i].url == link) {
+              if ('http://' + data[i].url === link) {
                 url = 'https://icons.better-idea.org/lettericons/' + link.charAt(7).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
                 console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
                 console.log(url + '\n\n')
                 $(document).find('#' + key).css('background-image', 'url(' + url + ')')
 
-              } else if ('https://' + data[i].url == link) {
+              } else if ('https://' + data[i].url === link) {
 
                 url = 'https://icons.better-idea.org/lettericons/' + link.charAt(8).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
                 console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
                 console.log(url + '\n\n')
                 $(document).find('#' + key).css('background-image', 'url(' + url + ')')
 
-              } else if (data[i].url == link) {
+              } else if (data[i].url === link) {
 
                 url = 'https://icons.better-idea.org/lettericons/' + link.charAt(0).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
                 console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
@@ -257,14 +257,14 @@ function getColor (link, key) {
             $.getJSON(__dirname + '/assets/colors.json', function (data) {
               for (i in data) {
 
-                if ('http://' + data[i].url == link) {
+                if ('http://' + data[i].url === link) {
 
                   url = 'https://icons.better-idea.org/lettericons/' + matches[1].charAt(0).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
                   console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
                   console.log(url + '\n\n')
                   $(document).find('#' + key).css('background-image', 'url(' + url + ')')
 
-                } else if ('https://' + data[i].url == link) {
+                } else if ('https://' + data[i].url === link) {
 
                   url = 'https://icons.better-idea.org/lettericons/' + matches[1].charAt(0).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
                   console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
@@ -297,7 +297,7 @@ function updateBar (link) {
 //function to remove an bookmark with a right click
 function rightClick () {
   $('.btn').on('contextmenu', function (e) {
-    if (this.id == '0') {
+    if (this.id === '0') {
       console.warn('Nope')
     } else {
       var id = this.id
@@ -350,22 +350,22 @@ rightClick()
 
 ipcRenderer.on('addframe', (event, arg) => {
   console.log('received')
-  if (arg == true) {
+  if (arg === true) {
     $(document).find(webview).css('top', '20px')
     $(titlebar).appendTo('body')
     document.querySelector('#title-bar-title').innerHTML = 'Shuttle - ' + webview.getTitle().substring(0, 46)
 
 
-  } else if (arg == false) {
+  } else if (arg === false) {
     $(document).find(webview).css('top', '0')
     document.querySelector('.title-bar').remove()
   }
 })
 
-if (settings.get('Frame') == true) {
+if (settings.get('Frame') === true) {
   $(document).find(webview).css('top', '20px')
   $(titlebar).appendTo('body')
-} else if (settings.get('Frame') == false) {
+} else if (settings.get('Frame') === false) {
   console.info('no frame')
 }
 

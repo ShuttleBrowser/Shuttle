@@ -8,7 +8,7 @@ const $ = jQuery;
 (function () {
   function callback (e) {
     var e = window.e || e
-    if (e.target.localName == 'a') {
+    if (e.target.localName === 'a') {
       e.preventDefault()
     }
     return
@@ -23,9 +23,9 @@ const $ = jQuery;
 
 //function to open the url
 function showWebsite (url) {
-  if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {
+  if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
     webview.setAttribute('src', url)
-  } else if (url.indexOf('http://') == -1) {
+  } else if (url.indexOf('http://') === -1) {
     webview.setAttribute('src', 'http://' + url)
   } else {
     console.log('Error at loading')
@@ -111,7 +111,7 @@ function loadJSON (callback, jsonfile) {
   xobj.overrideMimeType('application/json')
   xobj.open('GET', jsonfile, true)
   xobj.onreadystatechange = function () {
-    if (xobj.readyState == 4 && xobj.status == '200') {
+    if (xobj.readyState === 4 && xobj.status === '200') {
       callback(xobj.responseText)
     }
   }
@@ -139,7 +139,7 @@ function updateBar (link) {
 //Remove
 function rightClick () {
   $('.btn').on('contextmenu', function (e) {
-    if (this.id == '0') {
+    if (this.id === '0') {
       console.warn('Nope')
     } else {
       var id = this.id

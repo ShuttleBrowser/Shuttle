@@ -10,7 +10,7 @@ exports.updateAndInstall = function () {
 
   request('http://update.getshuttle.xyz/updates.json', function (error, response, body) {
 
-    if (body != fs.readFileSync(__dirname + '/version.txt', 'utf8')) {
+    if (body !== fs.readFileSync(__dirname + '/version.txt', 'utf8')) {
       console.log('\n######################################\n')
       console.log('Update availible !\n')
 

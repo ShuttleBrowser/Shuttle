@@ -213,23 +213,23 @@
   shcons.innerHTML += lang.shcons
   rep.innerHTML += lang.rep
 
-  if (settings.get('ShuttleAutoLauncher') == true) {
+  if (settings.get('ShuttleAutoLauncher') === true) {
     checkboxAutoStart.checked = true
   } else {
     checkboxAutoStart.checked = false
   }
-  if (settings.get('SOpen') == true) {
+  if (settings.get('SOpen') === true) {
     checkboxSOpen.checked = true
   } else {
     checkboxSOpen.checked = false
   }
-  if (settings.get('Frame') == true) {
+  if (settings.get('Frame') === true) {
     frameBtn.checked = true
   } else {
     frameBtn.checked = false
   }
 
-  if (settings.get('DevMod') == true) {
+  if (settings.get('DevMod') === true) {
     devmodBtn.checked = true
     showConsoleBtn.disabled = false
     reportBtn.disabled = false
@@ -274,7 +274,7 @@
       title: 'Confirm',
       message: lang.Reset
     })
-    if (choice == 0) {
+    if (choice === 0) {
       console.log('Reset...')
       fs.writeFile(__dirname + '/../data.json', '[{"web":"changelog.getshuttle.xyz"}', function (err) {
         if (err)

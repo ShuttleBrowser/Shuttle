@@ -18,7 +18,7 @@ let Overlay
 
 let iconPath
 
-if (settings.get('DevMod') == true) {
+if (settings.get('DevMod') === true) {
   require('electron-debug')({ enabled: true })
 }
 
@@ -32,7 +32,7 @@ if (osLocale.sync().indexOf('fr_FR') > -1 || osLocale.sync().indexOf('fr_BE') > 
   var lang = require('./assets/lang/en.js')
 }
 
-if (settings.get('ShuttleAutoLauncher') == true) {
+if (settings.get('ShuttleAutoLauncher') === true) {
   var ShuttleAutoLauncher = new AutoLaunch({
     name: 'Shuttle',
   })
@@ -41,7 +41,7 @@ if (settings.get('ShuttleAutoLauncher') == true) {
 
 updater.updateAndInstall()
 
-if (process.platform == 'darwin' || process.platform == 'linux') {
+if (process.platform === 'darwin' || process.platform === 'linux') {
   iconPath = __dirname + '/assets/img/icon.png'
 } else if (process.platform == 'win32') {
   iconPath = __dirname + '/assets/img/icon.ico'
@@ -90,7 +90,7 @@ const contextMenu = electron.Menu.buildFromTemplate([
 
 mb.on('ready', function () {
   console.log('Shuttle is ready')
-  if (process.platform == 'win32') {
+  if (process.platform === 'win32') {
     mb.tray.setContextMenu(contextMenu)
   }
 })
@@ -207,7 +207,7 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
 
 ipcMain.on('SettingSetFrame', (event, arg) => {
   mb.window.webContents.send('addframe', arg)
-  if (arg == true) {
+  if (arg === true) {
     mb.setOption('with', 380)
   }
 })
@@ -221,8 +221,8 @@ ipcMain.on('OpenReportWindow', (event, arg) => {
 })
 
 
-if (settings.get('Frame') == true) {
+if (settings.get('Frame') === true) {
   mb.setOption('with', 380)
-} else if (settings.get('Frame') == false) {
+} else if (settings.get('Frame') === false) {
   mb.setOption('with', 360)
 }

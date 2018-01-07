@@ -54,7 +54,7 @@ exports.updateAndInstall = function () {
     if (error) {
       console.log('Error for checking update')
     } else if (response) {
-      if (body != appVersion) {
+      if (body !== appVersion) {
         console.log('Download...')
         downloadFile({
           remoteFile: 'http://update.getshuttle.xyz/Latest.zip',
@@ -73,14 +73,14 @@ exports.updateAndInstall = function () {
             }
           })
           console.log('Extacted')
-          if (osLocale.sync() == 'fr_FR') {
+          if (osLocale.sync() === 'fr_FR') {
             electron.dialog.showMessageBox({
               title: 'Shuttle',
               type: 'info',
               message: 'Une mise à jour a été téléchargée, veuillez redémarrer l\'application pour avoir accès aux nouvelles fonctionnalités.',
               buttons: ['Close']
             })
-          } else if (osLocale.sync() == 'en_US' || osLocale.sync() == 'en_EN') {
+          } else if (osLocale.sync() === 'en_US' || osLocale.sync() === 'en_EN') {
             electron.dialog.showMessageBox({
               title: 'Shuttle',
               type: 'info',
