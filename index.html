@@ -20,22 +20,23 @@
 </body>
 
 <script async>
+    
   const jQuery = require('jQuery')
 
-  const { remote } = require('electron')
+  const {remote} = require('electron')
   const osLocale = require('os-locale')
   const fs = require('fs')
   const jsonfile = require('jsonfile')
   const vex = require('vex-js')
   const getColors = require('get-image-colors')
-  const { Menu, MenuItem } = remote
+  const {Menu, MenuItem} = remote
   const replace = require('replace')
   vex.registerPlugin(require('vex-dialog'))
   vex.defaultOptions.className = 'vex-theme-default'
   const menu = new Menu()
   const request = require('request')
   const settings = require('electron-settings')
-  const { ipcRenderer } = require('electron')
+  const {ipcRenderer} = require('electron')
 </script>
 
 <script src="./assets/main.js" async=""></script>
