@@ -120,15 +120,19 @@ function addWebsite () {
         save.write(',{"web":"' + data.URL + '"}')
         save.end()
 
-        // we set a random id for the new bookmark
-        const RandomID = Math.floor((Math.random() * 10000) + 1000)
+        //we set a random id for the new bookmark & avoid duplicates
+        do {
+          var randomID = Math.floor((Math.random() * 10000) + 1000)
+          var idAlreadyExist = $('#' + randomID).length !== 0
+
+        } while( idAlreadyExist )
 
         // we remove the add button so that the new button does not cover it
         document.querySelector('.add-btn').remove()
         // we add the new button
-        $('<a href="#" id="' + RandomID + '" class="btn" url="' + data.URL + '" title="' + data.URL + '" onclick=\'showWebsite("' + data.URL + '")\'></a>').appendTo(bar)
+        $('<a href="#" id="' + randomID + '" class="btn" url="' + data.URL + '" title="' + data.URL + '" onclick=\'showWebsite("' + data.URL + '")\'></a>').appendTo(bar)
         // we set the background-color
-        getColor(data.URL, RandomID)
+        getColor(data.URL, randomID)
         // we add the add button
         $('<a href="javascript:addWebsite()" class="add-btn"></a>').appendTo(bar)
         // we initialize the right-click function
