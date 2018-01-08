@@ -7,8 +7,8 @@
     "asar-original-fs": "^0.13.0",
     "auto-launch": "^5.0.1",
     "decompress-zip": "^0.3.0",
-    "electron": "^1.7.9",
-    "electron-debug": "^1.4.0",
+    "electron": "^1.8.1",
+    "electron-debug": "^1.5.0",
     "electron-settings": "^3.1.4",
     "electron-simple-updater": "^1.2.3",
     "electron-squirrel-startup": "^1.0.0",
@@ -28,7 +28,8 @@
   },
   "devDependencies": {
     "electron-installer-dmg": "^0.2.1",
-    "electron-packager": "^10.1.0"
+    "electron-packager": "^10.1.0",
+    "standard": "^10.0.3"
   },
   "scripts": {
     "start": "electron .",
