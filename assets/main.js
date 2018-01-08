@@ -1,3 +1,5 @@
+const npath = require('path')
+
 // get the webview
 const webview = document.querySelector('webview')
 
@@ -60,7 +62,7 @@ function showWebsite (url) {
       url: `${url}`,
       context: document.body,
       error: function (jqXHR, exception) {
-        webview.loadURL(path.join('file://', __dirname, '/404.html'))
+        webview.loadURL(npath.join('file://', __dirname, '/404.html'))
       },
       success: function () {
         webview.loadURL(url)
@@ -71,7 +73,7 @@ function showWebsite (url) {
       url: `http://${url}`,
       context: document.body,
       error: function (jqXHR, exception) {
-        webview.loadURL(path.join('file://', __dirname, '/404.html'))
+        webview.loadURL(npath.join('file://', __dirname, '/404.html'))
       },
       success: function () {
         webview.loadURL('http://' + url)
@@ -213,7 +215,7 @@ function getColor (link, key) {
         const matches = data.match(/<title>(.*?)<\/title>/)
 
         if (matches == null) {
-          $.getJSON(path.resolve('assets/colors.json'), function (data) {
+          $.getJSON(npath.resolve('assets/colors.json'), function (data) {
             for (let i in data) {
               if ('http://' + data[i].url === link) {
                 url = 'https://icons.better-idea.org/lettericons/' + link.charAt(7).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
@@ -241,8 +243,8 @@ function getColor (link, key) {
             $(document).find('#' + key).css('background-image', 'url(' + url + ')')
 
             // get icon + color
-            $.getJSON(path.resolve('assets/colors.json'), function (data) {
-              for (i in data) {
+            $.getJSON(npath.resolve('assets/colors.json'), function (data) {
+              for (let i in data) {
                 if ('http://' + data[i].url === link) {
                   url = 'https://icons.better-idea.org/lettericons/' + matches[1].charAt(0).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
                   console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
