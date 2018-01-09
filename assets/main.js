@@ -120,15 +120,19 @@ function addWebsite () {
         save.write(',{"web":"' + data.URL + '"}')
         save.end()
 
-        // we set a random id for the new bookmark
-        const RandomID = Math.floor((Math.random() * 10000) + 1000)
+        //we set a random id for the new bookmark & avoid duplicates
+        do {
+          var randomID = Math.floor((Math.random() * 10000) + 1000)
+          var idAlreadyExist = $('#' + randomID).length !== 0
+
+        } while( idAlreadyExist )
 
         // we remove the add button so that the new button does not cover it
         document.querySelector('.add-btn').remove()
         // we add the new button
-        $('<a href="#" id="' + RandomID + '" class="btn" url="' + data.URL + '" title="' + data.URL + '" onclick=\'showWebsite("' + data.URL + '")\'></a>').appendTo(bar)
+        $('<a href="#" id="' + randomID + '" class="btn" url="' + data.URL + '" title="' + data.URL + '" onclick=\'showWebsite("' + data.URL + '")\'></a>').appendTo(bar)
         // we set the background-color
-        getColor(data.URL, RandomID)
+        createBackgroundColor(data.URL, randomID)
         // we add the add button
         $('<a href="javascript:addWebsite()" class="add-btn"></a>').appendTo(bar)
         // we initialize the right-click function
@@ -189,7 +193,7 @@ function loadJSON (callback, jsonfile) {
   xobj.overrideMimeType('application/json')
   xobj.open('GET', jsonfile, true)
   xobj.onreadystatechange = function () {
-    if (xobj.readyState === 4 && xobj.status === '200') {
+    if (xobj.readyState === 4 && xobj.status == '200') {
       callback(xobj.responseText)
     }
   }
@@ -197,7 +201,7 @@ function loadJSON (callback, jsonfile) {
 }
 
 // function to set the color of the background with the main the favicon
-function getColor (link, key) {
+function createBackgroundColor (link, key) {
   let url
 
   if (link === 'changelog.getshuttle.xyz') {
@@ -210,54 +214,58 @@ function getColor (link, key) {
       error: function () {
         console.warn('ERROR: ' + link)
       },
-
+          
       success: function (data) {
         const matches = data.match(/<title>(.*?)<\/title>/)
+        const hasTitleTag = (matches !== null)
 
-        if (matches == null) {
-          $.getJSON(npath.resolve('assets/colors.json'), function (data) {
-            for (let i in data) {
-              if ('http://' + data[i].url === link) {
-                url = 'https://icons.better-idea.org/lettericons/' + link.charAt(7).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
-                console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
-                console.log(url + '\n\n')
-                $(document).find('#' + key).css('background-image', 'url(' + url + ')')
-              } else if ('https://' + data[i].url === link) {
-                url = 'https://icons.better-idea.org/lettericons/' + link.charAt(8).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
-                console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
-                console.log(url + '\n\n')
-                $(document).find('#' + key).css('background-image', 'url(' + url + ')')
-              } else if (data[i].url === link) {
-                url = 'https://icons.better-idea.org/lettericons/' + link.charAt(0).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
-                console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
-                console.log(url + '\n\n')
-                $(document).find('#' + key).css('background-image', 'url(' + url + ')')
-              }
-            }
-          })
+        if(hasTitleTag) {
+          createBackgroundColorFromFavicon(link)
         } else {
-          getColors('https://www.google.com/s2/favicons?domain=' + link.toLowerCase()).then(colors => {
-            url = 'https://icons.better-idea.org/lettericons/' + matches[1].charAt(0).toUpperCase() + '-64-' + colors[4].hex().substr(1).slice(0) + '.png'
-            console.log('[no json] color for ' + link + ' : ' + colors[4].hex())
-            console.log(url + '\n\n')
-            $(document).find('#' + key).css('background-image', 'url(' + url + ')')
+          const backgroundHasBeenSet = createBackgroundColorFromAssets(link)
 
-            // get icon + color
-            $.getJSON(npath.resolve('assets/colors.json'), function (data) {
-              for (let i in data) {
-                if ('http://' + data[i].url === link) {
-                  url = 'https://icons.better-idea.org/lettericons/' + matches[1].charAt(0).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
-                  console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
-                  console.log(url + '\n\n')
-                  $(document).find('#' + key).css('background-image', 'url(' + url + ')')
-                } else if ('https://' + data[i].url === link) {
-                  url = 'https://icons.better-idea.org/lettericons/' + matches[1].charAt(0).toUpperCase() + '-64-' + data[i].color.substr(1).slice(0) + '.png'
-                  console.log('[no proto] color for ' + data[i].url + ' : ' + data[i].color)
-                  console.log(url + '\n\n')
-                  $(document).find('#' + key).css('background-image', 'url(' + url + ')')
-                }
-              }
-            })
+          if(! backgroundHasBeenSet) {
+            const defaultColor = '080404'
+            const backgroundUrl = 'https://icons.better-idea.org/lettericons/' + hostName(link).charAt(0).toUpperCase() + '-64-' + defaultColor + '.png'
+            $(document).find('#' + key).css('background-image', 'url(' + backgroundUrl + ')')
+          }
+        }
+
+        function hostName (link) {
+          if( link.startsWith("http://") )
+            return link.substr(7)
+          else if( link.startsWith("https://") )
+            return link.substr(8)
+          else
+            return link
+        }
+
+        function createBackgroundColorFromAssets (link) {
+          $.getJSON(npath.resolve('assets/colors.json'), function (sites) {
+            var backgroundHasBeenSet = false
+            const domain = hostName(link)
+
+            for (let i in sites) {
+              var firstTitleLetter = undefined
+
+              if( sites[i].url !== hostName )
+                continue
+              
+              firstTitleLetter = hostName.charAt(0).toUpperCase()
+
+              const backgroundUrl = 'https://icons.better-idea.org/lettericons/' + firstTitleLetter + '-64-' + sites[i].color.substr(1).slice(0) + '.png'
+              $(document).find('#' + key).css('background-image', 'url(' + backgroundUrl + ')')
+              backgroundHasBeenSet = true
+            }
+            
+            return backgroundHasBeenSet
+          })
+        }
+
+        function createBackgroundColorFromFavicon (link) {
+          getColors('https://www.google.com/s2/favicons?domain=' + link.toLowerCase()).then(colors => {
+            const url = 'https://icons.better-idea.org/lettericons/' + matches[1].charAt(0).toUpperCase() + '-64-' + colors[0].hex().substr(1).slice(0) + '.png'
+            $(document).find('#' + key).css('background-image', 'url(' + url + ')')
           })
         }
       }
@@ -270,7 +278,7 @@ function updateBar (link) {
   bar.innerHTML = ''
   for (let key in link) {
     $('<a href="#" url="' + link[key].web + '" class="btn" id="' + key + '" title="' + link[key].web + '" onclick=\'showWebsite("' + link[key].web + '")\'></a>').appendTo(bar)
-    getColor(link[key].web, key)
+    createBackgroundColor(link[key].web, key)
   }
   $('<a href="javascript:addWebsite()" class="add-btn"></a>').appendTo(bar)
   rightClick()
