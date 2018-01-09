@@ -1,7 +1,6 @@
 <div align="center">
-<br>
-<br>
 <img width="500" src="https://getshuttle.xyz/images/logo.png" alt="electron-vue">
+<br>
 <br>
 </div>
 
