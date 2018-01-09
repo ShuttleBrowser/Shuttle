@@ -6,9 +6,14 @@
 </div>
 <p align="center">
 The fastest access to your favorite applications.
+[official website](https://getshuttle.xyz)
 </p>
 
-Check also the [official website](https://getshuttle.xyz) of this project.
+<div align="center">
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/for-you.svg)](http://forthebadge.com)
+</div>
 
 ## Getting Started
 
