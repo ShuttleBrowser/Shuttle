@@ -1,8 +1,12 @@
-<div style="text-align:center"><img src ="https://getshuttle.xyz/images/logo.png" /></div>
-
-# Shuttle
-
+<div align="center">
+<br>
+<img width="500" src="https://getshuttle.xyz/images/logo.png" alt="electron-vue">
+<br>
+<br>
+</div>
+<p align="center">
 The fastest access to your favorite applications.
+</p>
 
 Check also the [official website](https://getshuttle.xyz) of this project.
 
