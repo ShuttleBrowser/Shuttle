@@ -1,3 +1,5 @@
+<div style="text-align:center"><img src ="https://getshuttle.xyz/images/logo.png" /></div>
+
 # Shuttle
 
 The fastest access to your favorite applications.
