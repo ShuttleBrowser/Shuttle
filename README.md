@@ -1,7 +1,7 @@
 <div align="center">
 <br>
-<img width="500" src="https://getshuttle.xyz/images/logo.png" alt="electron-vue">
 <br>
+<img width="500" src="https://getshuttle.xyz/images/logo.png" alt="electron-vue">
 <br>
 </div>
 
