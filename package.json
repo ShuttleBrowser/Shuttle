@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "start": "node server.js && electron dev.js"
+  },
+  "name": "Shuttle",
+  "version": "2.0.0",
+  "devDependencies": {
+    "electron": "^1.7.10"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "jquery": "^3.2.1",
+    "jquery-browserify": "^1.8.1",
+    "node-isonline": "^0.1.0",
+    "vex": "0.0.4",
+    "vex-dialog": "^1.0.7",
+    "vex-js": "^4.0.1"
+  }
+}
