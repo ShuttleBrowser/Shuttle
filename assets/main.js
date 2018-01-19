@@ -214,7 +214,7 @@ function createBackgroundColor (link, key) {
       error: function () {
         console.warn('ERROR: ' + link)
       },
-          
+
       success: function (data) {
         const matches = data.match(/<title>(.*?)<\/title>/)
         const hasTitleTag = (matches !== null)
