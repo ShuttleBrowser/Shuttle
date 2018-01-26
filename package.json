@@ -1,0 +1,34 @@
+{
+  "name": "shuttle",
+  "version": "2.0.0",
+  "description": "The fastest access to your favorite applications",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShuttleLtd/Shuttle.git"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "electron"
+  ],
+  "author": "Shuttle Ltd",
+  "license": "NPOSL-3.0",
+  "bugs": {
+    "url": "https://github.com/ShuttleLtd/Shuttle/issues"
+  },
+  "homepage": "https://getshuttle.xyz/",
+  "dependencies": {
+    "electron": "^1.7.10",
+    "favicon-getter": "^1.1.3",
+    "lowdb": "^1.0.0",
+    "menubar": "^5.2.3",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3"
+  }
+}

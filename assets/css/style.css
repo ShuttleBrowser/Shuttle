@@ -1,0 +1,123 @@
+body {
+	margin: 0;
+	user-select: none;
+}
+
+i {
+	color: #CECECE;
+	transition: 0.3s;
+}
+i:hover {
+	color: #7F7F7F
+}
+
+webview {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 35px;
+	right: 0px;
+}
+
+.btn-bar {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 35px;
+	height: 100px;
+	background-color: #F4F4F4;
+	text-align: center;
+	font-size: 20px;
+}
+
+a {
+	text-decoration:none;
+	color: black;
+}
+
+.bkms-bar {
+	position: absolute;
+	top: 0;
+	bottom: 100px;
+	left: 0;
+	width: 35px;
+	background-color: #F4F4F4;
+	text-align: center;
+	overflow: auto;
+}	
+
+.shuttle-btn img {
+	background: url(../img/ic.svg) no-repeat center;
+	width: 70%;
+	transition: 0.2s;
+	margin-top: 20px;
+}
+.shuttle-btn img:hover {
+	background: url(../img/ic-hover.svg) no-repeat center;
+}
+
+hr {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.bubble-btn {
+	margin-top: 4px;
+	margin-left: 2.5px;
+	display: block;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	transition: 0.2s;
+	background-color: white;
+	background-size: 70% auto;
+	background-color: #ffff;
+	background-repeat: no-repeat;
+	background-position: center; 
+}
+.bubble-btn:hover {
+	border-radius: 25%;
+}
+
+.control-bar {
+	display: none;
+	position: absolute;
+	top: 50px;
+	left: 35px;
+	width: 30px;
+	height: 100px;
+	background-color: #F4F4F4;
+	text-align: center;
+	font-size: 20px;
+	transition: 0.35s;
+}
+.control-bar i {
+	margin-top: 8.25px;
+}
+
+.search-bar {
+	display: none;
+	width: 150px;
+	height: 35px;
+	position: absolute;
+	left: 35px;
+	bottom: 50px;
+	background-color: #F4F4F4;
+}
+
+.search-bar input[type=text] {
+    width: 100%;
+    padding: 10px 10px;
+    border: none;
+    background-color: #F4F4F4;
+}
+
+.search-bar input[type=text]::placeholder {
+    font-style: italic;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background-color: #F4F4F4;
+}
