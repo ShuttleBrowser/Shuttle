@@ -18,7 +18,6 @@ const view = document.querySelector('webview')
 const browser = remote.getCurrentWindow()
 
 // the data value
-// a faire : chercher le contenue du fichier et le mettre dans la variable. Si la personne a de la co et qu'elle a la syncro activée sa get le json sur le serveur
 const bookmarksFilePath = `${__dirname}/../app/bookmarks.json`
 const bookmarksFile = fs.readFileSync(bookmarksFilePath) + ']'
 let bookmarks = JSON.parse(bookmarksFile)
