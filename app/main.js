@@ -25,6 +25,10 @@ let bookmarks = JSON.parse(bookmarksFile)
 
 let currentBookmarkId = undefined
 
+// Make possible to load views one at a time, avoiding did-fail-load events
+let isLoadingAView = false
+let nextBookmarkToDisplay = undefined
+
 const shuttle = {
 
   /** Creates a new bookmark in the bookmarks bar for each entry in bkmarks. */
@@ -74,21 +78,30 @@ const shuttle = {
     if( id !== undefined && id === currentBookmarkId )
       return
 
+    // If Electron is already loading an other view, make this one in standby
+    // Avoids "did-fail-load" event to be triggered by loading differents views at once
+    if( isLoadingAView ) {
+      nextBookmarkToDisplay = { url: url, id: id }
+      return;
+    }
+
     if (url.startsWith('https://')) {
       // if the computer is connnected to internet
       if (navigator.onLine) {
         adapter.adapteWebSite(url)
         view.loadURL(url);
+        isLoadingAView = true
         // else we load the "no_internet" page
       } else {
         view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION');
       }
     } else if (url.startsWith('modules://')) {
       view.loadURL(`${__dirname}/../app/modules/${url.replace('modules://', '')}`);
+      isLoadingAView = true
     } else {
-      winston.info("DEFAULT");
       if (navigator.onLine) {
         view.loadURL('http://' + url);
+        isLoadingAView = true
       } else {
         view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION');
       }
@@ -144,7 +157,19 @@ const shuttle = {
 shuttle.createBookmarks(bookmarks)
 
 view.addEventListener('did-fail-load', function () {
-  view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION')
+  view.loadURL(__dirname + '/no_internet.html?text=AN ERROR OCCURED')
+})
+
+view.addEventListener('did-finish-load', function() {
+  isLoadingAView = false
+
+  // If the user asked to display a new bookmark while loading,
+  // let's display the requested one
+  if( nextBookmarkToDisplay !== undefined ) {
+    winston.info("loading finished")
+    shuttle.loadView(nextBookmarkToDisplay.url, nextBookmarkToDisplay.id)
+    nextBookmarkToDisplay = undefined
+  }
 })
 
 view.addEventListener('dom-ready', function () {
