@@ -72,7 +72,7 @@ if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-
 
 	devmodBtn.addEventListener( 'change', function() {
 	    if(this.checked) {
-	    	alert("Discalmer: You're going to switch your app to the developer mode, that mean you can suffer some unknow issues who will force you to install again Shuttle.", "Developer Mode")
+	    	alert("Caution: you're going to developer mode. You may encounter unknown issues that could corrupt Shuttle's installation and force you to install it again.", "Developer Mode")
 			settings.set('DevMod', true);
 			reportBtn.disabled = false;
 			showConsoleBtn.disabled = false;

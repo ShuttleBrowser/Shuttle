@@ -9,134 +9,167 @@ const adapter = require(`${__dirname}/../app/modules/adapter.js`)
 winston.add(winston.transports.File, { filename: `${__dirname}/../app/logs/Latest.log` })
 
 // elements for DOM
-const bkmsBar = document.querySelector('.bkms-bar')
-const ControlBar = document.querySelector('.control-bar')
-const SearchBar = document.querySelector('.search-bar')
+const bookmarksBar = document.querySelector('.bkms-bar')
+const controlBar = document.querySelector('.control-bar')
+const searchBar = document.querySelector('.search-bar')
 const view = document.querySelector('webview')
-
-// path to the data file
-const dataPath = `${__dirname}/../app/data.json`
 
 // get the browser window
 const browser = remote.getCurrentWindow()
 
 // the data value
 // a faire : chercher le contenue du fichier et le mettre dans la variable. Si la personne a de la co et qu'elle a la syncro activée sa get le json sur le serveur
-let fileData = fs.readFileSync(dataPath) + ']'
-let data = JSON.parse(fileData)
+const bookmarksFilePath = `${__dirname}/../app/bookmarks.json`
+const bookmarksFile = fs.readFileSync(bookmarksFilePath) + ']'
+let bookmarks = JSON.parse(bookmarksFile)
+
+let currentBookmarkId = undefined
+
+// Make possible to load views one at a time, avoiding did-fail-load events
+let isLoadingAView = false
+let nextBookmarkToDisplay = undefined
 
 const shuttle = {
 
-  loadBkms: (data) => {
-    bkmsBar.innerHTML = ''
-    bkmsBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadView('changelog.getshuttle.xyz')"><img src="" alt=""></a><hr>`
-    for (i in data) {
-      shuttle.createBkms(data[i].web, i)
+  /** Creates a new bookmark in the bookmarks bar for each entry in bkmarks. */
+  createBookmarks: (bkmarks) => {
+    bookmarksBar.innerHTML = ''
+    bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadView('changelog.getshuttle.xyz')"><img src="" alt=""></a><hr>`
+    for (i in bkmarks) {
+      shuttle.createBookmark(bkmarks[i].web, i)
     }
   },
 
-	// function to add bookmarks
-  addBkms: (url, id = data.length + 1) => {
-    fs.appendFile(dataPath, `,{"web":"${url}"}`, function (err) {
+	/** Saves a new bookmark and creates it in the bookmarks bar */
+  saveBookmark: (url, id = bookmarks.length + 1) => {
+    fs.appendFile(bookmarksFilePath, `,{"web":"${url}"}`, function (err) {
       if (err) {
-        winston.log('error ' + err)
+        winston.error('Unable to save bookmark: ' + err)
       }
-      shuttle.createBkms(url, id)
-      fileData = fs.readFileSync(dataPath) + ']'
-      data = JSON.parse(fileData)
+      shuttle.createBookmark(url, id)
+      bookmarksFile = fs.readFileSync(bookmarksFilePath) + ']'
+      bookmarks = JSON.parse(bookmarksFile)
     })
   },
 
-  createBkms: (url, id) => {
-    if (url.indexOf('modules://') == 0) {
-      bkmsBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}')" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('modules://', '')}/icon.ico);"></a>`
+  /** Creates a new bookmark in the bookmarks bar */
+  createBookmark: (url, id) => {
+    if (url.startsWith('modules://')) {
+      bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('modules://', '')}/icon.ico);"></a>`
     } else {
       fetch(`https://shuttleapp.herokuapp.com/icons/${url}`).then((resp) => resp.json()).then((data) => {
-        bkmsBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}')" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.url});"></a>`
+        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.url});"></a>`
       }).catch((error) => {
-        bkmsBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}')" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-color: gray"></a>`
+        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-color: gray"></a>`
       })
     }
   },
 
-  removeBkms: (id) => {
-  	console.log(id)
+  /** Removes a bookmark from the bookmarks bar */
+  removeBookmark: (id) => {
+  	winston.info("Removing bookmark with id " + id)
     document.querySelector(`#id-${id}`).remove()
-    data.replace(`{"web": "${data[id].web}"}`, '')
+    bookmarks.replace(`{"web": "${bookmarks[id].web}"}`, '')
   },
 
-  // function to load page
-  loadView: (url) => {
-    // if http is in url
-    if (url.indexOf('https://') == 0 || url.indexOf('https://') == 0) {
+  /** Displays a site within the webview */
+  loadView: (url, id=undefined) => {
+    // Ignore the request if the site is already displayed
+    if( id !== undefined && id === currentBookmarkId )
+      return
+
+    // If Electron is already loading an other view, make this one in standby
+    // Avoids "did-fail-load" event to be triggered by loading differents views at once
+    if( isLoadingAView ) {
+      nextBookmarkToDisplay = { url: url, id: id }
+      return;
+    }
+
+    if (url.startsWith('https://')) {
       // if the computer is connnected to internet
-      if (navigator.onLine === true) {
+      if (navigator.onLine) {
         adapter.adapteWebSite(url)
-        view.loadURL(url)
+        view.loadURL(url);
+        isLoadingAView = true
         // else we load the "no_internet" page
       } else {
-        view.loadURL(__dirname + '/no_intenet.html?text=NO INTERNET CONNECTION')
+        view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION');
       }
-    } else if (url.indexOf('modules://') == 0) {
-      view.loadURL(`${__dirname}/../app/modules/${url.replace('modules://', '')}`)
+    } else if (url.startsWith('modules://')) {
+      view.loadURL(`${__dirname}/../app/modules/${url.replace('modules://', '')}`);
+      isLoadingAView = true
     } else {
-      if (navigator.onLine === true) {
-        view.loadURL('http://' + url)
+      if (navigator.onLine) {
+        view.loadURL('http://' + url);
+        isLoadingAView = true
       } else {
-        view.loadURL(__dirname + '/no_intenet.html?text=NO INTERNET CONNECTION')
+        view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION');
       }
     }
+    currentBookmarkId = id;
   },
 
-  ViewBack: () => {
-  	if (view.canGoBack() === true) {
+  viewBack: () => {
+  	if (view.canGoBack()) {
   		view.goBack()
   	}
   },
 
-  ViewForward: () => {
-  	if (view.canGoForward() === true) {
+  viewForward: () => {
+  	if (view.canGoForward()) {
   		view.goForward()
   	}
   },
 
   showControlBar: (id, event) => {
   	if (event === 'show') {
-	  	ControlBar.style.display = 'block'
-	  	ControlBar.style.top = `${document.querySelector('#' + id).offsetTop - 1}px`
+	  	controlBar.style.display = 'block'
+	  	controlBar.style.top = `${document.querySelector('#' + id).offsetTop - 1}px`
   	} else if (event === 'hide') {
-	  	ControlBar.style.display = 'none'
+	  	controlBar.style.display = 'none'
   	}
   },
 
   showSearchBar: (event) => {
   	if (event === 'show') {
-	  	SearchBar.style.display = 'block'
+	  	searchBar.style.display = 'block'
   	} else if (event === 'hide') {
-	  	SearchBar.style.display = 'none'
+	  	searchBar.style.display = 'none'
   	}
   },
 
   quickSearch: () => {
-  	let SearchValue = document.querySelector('#quickSearch').value
-  	view.loadURL(`https://google.com/search?q=${SearchValue.split(' ').join('+')}`)
+  	const searchValue = document.querySelector('#quickSearch').value
+  	view.loadURL(`https://google.com/search?q=${searchValue.split(' ').join('+')}`)
   },
 
   openSettings: () => {
-    ipcRenderer.send('openSettings', data)
+    ipcRenderer.send('openSettings', bookmarks)
   },
 
   checkForUpate: () => {
-    ipcRenderer.send('CheckUpdate', data)
+    ipcRenderer.send('CheckUpdate', bookmarks)
   }
 
 }
 
 // app init
-shuttle.loadBkms(data)
+shuttle.createBookmarks(bookmarks)
 
 view.addEventListener('did-fail-load', function () {
-  view.loadURL(__dirname + '/no_intenet.html?text=NO INTERNET CONNECTION')
+  view.loadURL(__dirname + '/no_internet.html?text=AN ERROR OCCURED')
+})
+
+view.addEventListener('did-finish-load', function() {
+  isLoadingAView = false
+
+  // If the user asked to display a new bookmark while loading,
+  // let's display the requested one
+  if( nextBookmarkToDisplay !== undefined ) {
+    winston.info("loading finished")
+    shuttle.loadView(nextBookmarkToDisplay.url, nextBookmarkToDisplay.id)
+    nextBookmarkToDisplay = undefined
+  }
 })
 
 view.addEventListener('dom-ready', function () {
@@ -155,13 +188,13 @@ view.addEventListener('dom-ready', function () {
 
 view.addEventListener('enter-html-full-screen', function () {
   browser.setFullScreen(true)
-  bkmsBar.style.display = 'none'
-  ControlBar.style.display = 'none'
+  bookmarksBar.style.display = 'none'
+  controlBar.style.display = 'none'
   view.style.left = '0px'
 })
 view.addEventListener('leave-html-full-screen', function () {
   browser.setFullScreen(false)
-  bkmsBar.style.display = 'block'
-  ControlBar.style.display = 'block'
+  bookmarksBar.style.display = 'block'
+  controlBar.style.display = 'block'
   view.style.left = '35px'
 })

@@ -70,7 +70,7 @@ const contextMenu = Menu.buildFromTemplate([
   {
     label: 'Quit',
     click () {
-      console.log('Goodbye !')
+      winston.info('Goodbye !')
       mb.app.quit()
     }
   }
@@ -81,7 +81,7 @@ ipcMain.on('openSettings', (event, arg) => {
   main.settings()
 })
 ipcMain.on('CheckUpdate', (event, arg) => {
-  console.log("No update are availible because the udate systeme are not created (lol)")
+  winston.info("No update are availible because the udate systeme are not created (lol)")
 })
 
 let settingsIsActive = false
@@ -94,7 +94,7 @@ const main = {
 
     if (settingsIsActive === false) {
 
-      console.log("open settings window")
+      winston.info("open settings window")
       settingsIsActive = true
 
       let settingsWin = new BrowserWindow({
@@ -117,7 +117,7 @@ const main = {
 
     if (authIsActive === false) {
 
-      console.log("open authWindow")
+      winston.info("open authWindow")
       let authIsActive = true
 
       let authWindow = new BrowserWindow({
