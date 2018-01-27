@@ -4,7 +4,7 @@ module.exports = {
   adapteWebSite: (url) => {
 
     // adpate webview for messenger
-    if (url.indexOf('messenger.com') == 0) {
+    if (url.startsWith('messenger.com')) {
       // remove the UserAgent
       view.setUserAgent('')
       view.addEventListener('dom-ready', function () {
@@ -15,7 +15,7 @@ module.exports = {
       })
 
       // adapte webview for spotify
-    } else if (url.indexOf('spotify.com') == 0) {
+    } else if (url.startsWith('spotify.com')) {
         view.setUserAgent('')
     } else {
       view.setUserAgent(useragent)
