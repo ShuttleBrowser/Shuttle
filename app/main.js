@@ -23,6 +23,8 @@ const bookmarksFilePath = `${__dirname}/../app/bookmarks.json`
 const bookmarksFile = fs.readFileSync(bookmarksFilePath) + ']'
 let bookmarks = JSON.parse(bookmarksFile)
 
+let currentBookmarkId = undefined
+
 const shuttle = {
 
   /** Creates a new bookmark in the bookmarks bar for each entry in bkmarks. */
@@ -49,12 +51,12 @@ const shuttle = {
   /** Creates a new bookmark in the bookmarks bar */
   createBookmark: (url, id) => {
     if (url.startsWith('modules://')) {
-      bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}')" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('modules://', '')}/icon.ico);"></a>`
+      bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('modules://', '')}/icon.ico);"></a>`
     } else {
       fetch(`https://shuttleapp.herokuapp.com/icons/${url}`).then((resp) => resp.json()).then((data) => {
-        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}')" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.url});"></a>`
+        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.url});"></a>`
       }).catch((error) => {
-        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}')" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-color: gray"></a>`
+        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.removeBkms('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-color: gray"></a>`
       })
     }
   },
@@ -66,26 +68,32 @@ const shuttle = {
     bookmarks.replace(`{"web": "${bookmarks[id].web}"}`, '')
   },
 
-  // function to load page
-  loadView: (url) => {
+  /** Displays a site within the webview */
+  loadView: (url, id=undefined) => {
+    // Ignore the request if the site is already displayed
+    if( id !== undefined && id === currentBookmarkId )
+      return
+
     if (url.startsWith('https://')) {
       // if the computer is connnected to internet
       if (navigator.onLine) {
         adapter.adapteWebSite(url)
-        view.loadURL(url)
+        view.loadURL(url);
         // else we load the "no_internet" page
       } else {
-        view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION')
+        view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION');
       }
-    } else if (url.startswith('modules://')) {
-      view.loadURL(`${__dirname}/../app/modules/${url.replace('modules://', '')}`)
+    } else if (url.startsWith('modules://')) {
+      view.loadURL(`${__dirname}/../app/modules/${url.replace('modules://', '')}`);
     } else {
+      winston.info("DEFAULT");
       if (navigator.onLine) {
-        view.loadURL('http://' + url)
+        view.loadURL('http://' + url);
       } else {
-        view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION')
+        view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION');
       }
     }
+    currentBookmarkId = id;
   },
 
   viewBack: () => {
