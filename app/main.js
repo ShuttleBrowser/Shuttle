@@ -42,7 +42,7 @@ const shuttle = {
     bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadView('changelog.getshuttle.xyz')"><img src="" alt=""></a><hr>`
     bookmarksBar.innerHTML += '<a href="javascript:shuttle.saveBookmark()" class="add-btn"></a>'
     for (i in bkmarks) {
-      shuttle.createBookmark(bookmarks[i].url, i)
+      shuttle.createBookmark(bkmarks[i].url, i)
     }
   },
 
