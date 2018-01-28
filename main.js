@@ -1,4 +1,4 @@
-const {app, protocol, Menu, ipcMain, BrowserWindow} = require('electron')
+const {Menu, ipcMain, BrowserWindow} = require('electron')
 const lowdb = require('lowdb')
 const menubar = require('menubar')
 const winston = require('winston')
@@ -81,44 +81,32 @@ ipcMain.on('openSettings', (event, arg) => {
   main.settings()
 })
 ipcMain.on('CheckUpdate', (event, arg) => {
-  winston.info("No update are availible because the udate systeme are not created (lol)")
+  winston.info('No update are availible because the udate systeme are not created (lol)')
 })
-
-let settingsIsActive = false
-let authIsActive = false
 
 const main = {
 
   // The settings window
   settings: () => {
+    winston.info('open settings window')
 
-    if (settingsIsActive === false) {
+    let settingsWin = new BrowserWindow({
+      icon: `${__dirname}/assets/img/icon.png`,
+      width: 300,
+      height: 400,
+      resizable: false,
+      title: 'Settings',
+      preloadWindow: true,
+      frame: false,
+      alwaysOnTop: true
+    })
 
-      winston.info("open settings window")
-      settingsIsActive = true
-
-      let settingsWin = new BrowserWindow({
-        icon: `${__dirname}/assets/img/icon.png`,
-        width: 300,
-        height: 400,
-        resizable: false,
-        title: 'Settings',
-        preloadWindow: true,
-        frame: false,
-        alwaysOnTop: true
-      })
-
-      settingsWin.loadURL(`${__dirname}/views/settings.html`)
-    }
+    settingsWin.loadURL(`${__dirname}/views/settings.html`)
   },
 
   // The auth window
   authWindow: () => {
-
-    if (authIsActive === false) {
-
-      winston.info("open authWindow")
-      let authIsActive = true
+      winston.info('open authWindow')
 
       let authWindow = new BrowserWindow({
         icon: `${__dirname}/assets/img/icon.png`,
@@ -133,5 +121,4 @@ const main = {
 
       authWindow.loadURL(`${__dirname}/views/auth.html`)
     }
-  }
 }

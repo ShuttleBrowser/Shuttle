@@ -5,6 +5,7 @@ body {
 
 i {
 	color: #CECECE;
+	font-size: 20px;
 	transition: 0.3s;
 }
 i:hover {
@@ -27,7 +28,9 @@ webview {
 	height: 100px;
 	background-color: #F4F4F4;
 	text-align: center;
-	font-size: 20px;
+}
+.btn-bar i {
+	margin: 5px;
 }
 
 a {
@@ -79,6 +82,23 @@ hr {
 	border-radius: 25%;
 }
 
+.add-btn {
+	margin-top: 4px;
+	margin-left: 4px;
+	display: block;
+	width: 27px;
+	height: 27px;
+	transition: 0.2s;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center; 
+	background-image: url(../img/add.svg)
+}
+
+.add-btn:hover {
+	background-image: url(../img/add-hover.svg)
+}
+
 .control-bar {
 	display: none;
 	position: absolute;
@@ -88,11 +108,10 @@ hr {
 	height: 100px;
 	background-color: #F4F4F4;
 	text-align: center;
-	font-size: 20px;
 	transition: 0.35s;
 }
 .control-bar i {
-	margin-top: 8.25px;
+	margin-top: 11px;
 }
 
 .search-bar {
