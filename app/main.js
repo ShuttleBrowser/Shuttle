@@ -28,67 +28,107 @@ const browser = remote.getCurrentWindow()
 
 let bookmarks = db.get('bookmarks').value()
 
-let currentBookmarkId
+// Manage bookmarks' id & makes possible to access a bookmark from its url
+let idToUrl = {}
+let maxId = 0
 
 // Make possible to load views one at a time, avoiding did-fail-load events
+let currentBookmarkId
 let isLoadingAView = false
 let nextBookmarkToDisplay
 
 const shuttle = {
   
-  /** Creates a new bookmark in the bookmarks bar for each entry in bkmarks. */
-  createBookmarks: (bkmarks) => {
+  /** Initializes the bookmarks bar with given bookmarks */
+  initBookmarks: (bkmarks) => {
     bookmarksBar.innerHTML = ''
     bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadView('changelog.getshuttle.xyz')"><img src="" alt=""></a><hr>`
-    bookmarksBar.innerHTML += '<a href="javascript:shuttle.saveBookmark()" class="add-btn"></a>'
+    bookmarksBar.innerHTML += '<a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a>'
     for (i in bkmarks) {
-      shuttle.createBookmark(bookmarks[i].url, i)
+      maxId = Math.max(maxId, bkmarks[i].id)
+      shuttle.addBookmarkToBar(bkmarks[i].url, bkmarks[i].id)
     }
   },
 
-  /** Saves a new bookmark and creates it in the bookmarks bar */
-  saveBookmark: (id = bookmarks.length + 1) => {
+  /** Asks the user the address of the bookmark he wants to add */
+  askNewBookAddress: (id = maxId + 1) => {
     vex.dialog.prompt({
       message: 'Enter the url of a website',
       placeholder: 'http://',
       callback: (url) => {
         if (url) {
-          db.get('bookmarks').push({ url : url }).write()
+          maxId = id
           shuttle.createBookmark(url, id)
+          shuttle.addBookmarkToBar(url, id)
+          shuttle.loadView(url, id)
         }
       }
     })
   },
-
-  /** Creates a new bookmark in the bookmarks bar */
+  
+  /** Creates a new bookmark and persists it */
   createBookmark: (url, id) => {
+    db.get('bookmarks').push({ id: id, url: url }).write()
+    idToUrl[id] = url
+  },
+  
+  /** Adds a bookmark to the bookmarks bar */
+  addBookmarkToBar: (url, id) => {
     if (url.startsWith('mod:')) {
-      bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.removeBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('mod:', '')}/icon.png);"></a>`
+      bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('mod:', '')}/icon.png);"></a>`
     } else {
       fetch(`https://shuttleapp.herokuapp.com/icons/${url}`).then((resp) => resp.json()).then((data) => {
-        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.removeBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.url});"></a>`
+        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.url});"></a>`
       }).catch((error) => {
-        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.removeBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../../assets/img/no-icon.png);"></a>`
+        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../../assets/img/no-icon.png);"></a>`
       })
     }
   },
-
-  /** Removes a bookmark from the bookmarks bar */
-  removeBookmark: (id) => {
+  
+  /** Asks the user to confirm the removal of a given bookmark */
+  askToRemoveBookmark: (id) => {
     vex.dialog.buttons.YES.text = 'Yes'
     vex.dialog.buttons.NO.text = 'No'
     vex.dialog.confirm({
       message: `Removing bookmark ?`,
-      callback: function (value) {
-        if (value) {
-          winston.info('Removing bookmark with id ' + id)
-          document.querySelector(`#id-${id}`).remove()
-          db.get('bookmarks').remove({ url: bookmarks[id].url }).write()
+      callback: function (removalConfirmed) {
+        if (removalConfirmed) {
+          bookmarkUrl = idToUrl[id]
+          
+          shuttle.removeBookmark(bookmarkUrl, id)
+          shuttle.removeBookmarkFromBar(id)
+
+          if( id == currentBookmarkId )
+            shuttle.displayLastBookmark()
         }
         vex.dialog.buttons.YES.text = 'Ok'
         vex.dialog.buttons.NO.text = 'Cancel'
       }
     })
+  },
+  
+  /** Removes a bookmark and persists the change */
+  removeBookmark: (url, id) => {
+    const index = db.get('bookmarks').value().findIndex(bookmark => bookmark.id == id)
+    db.get('bookmarks').splice(index, 1).write()
+
+    delete idToUrl[id]
+  },  
+  
+  /** Removes a bookmark from the bookmarks bar */
+  removeBookmarkFromBar: (id) => {
+    document.querySelector(`#id-${id}`).remove()
+  },
+
+  /** Displays either the last bookmark, or Shuttle's home page if there aren't any bookmarks */
+  displayLastBookmark: () => {
+    if( bookmarks.length > 0 ) {
+      last = bookmarks[bookmarks.length-1]
+      shuttle.loadView(last.url, last.id)
+    }
+    else {
+      shuttle.loadView('changelog.getshuttle.xyz')
+    }
   },
 
   /** Displays a site within the webview */
@@ -179,7 +219,7 @@ const shuttle = {
 }
 
 // app init
-shuttle.createBookmarks(bookmarks)
+shuttle.initBookmarks(bookmarks)
 
 view.addEventListener('did-fail-load', () => {
   view.loadURL(__dirname + '/no_internet.html?text=AN ERROR OCCURED')
@@ -191,7 +231,6 @@ view.addEventListener('did-finish-load', () => {
   // If the user asked to display a new bookmark while loading,
   // let's display the requested one
   if (nextBookmarkToDisplay !== undefined) {
-    winston.info('loading finished')
     shuttle.loadView(nextBookmarkToDisplay.url, nextBookmarkToDisplay.id)
     nextBookmarkToDisplay = undefined
   }
