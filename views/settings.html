@@ -10,32 +10,31 @@
 </head>
 <body>
 
-<div class="bar"></div>
 <br>
 <br>
 <h1>GENERAL</h1>
 <div class="content">
 
 	<div class="section gray">
-		<p id="SOpen">start at boot</p>
+		<p id="SAboot">start at boot</p>
 		<label class="switch">
-		  <input type="checkbox" name="SOpen">
+		  <input type="checkbox" name="SAboot">
 		  <span class="slider round"></span>
 		</label>
 	</div>
 	
 	<div class="section white">
-		<p id="SAboot">stay open</p>
+		<p id="SOpen">stay open</p>
 		<label class="switch">
-		  <input type="checkbox" name="AutoStart">
+		  <input type="checkbox" name="SOpen">
 		  <span class="slider round"></span>
 		</label>
 	</div>
 
 	<div class="section gray">
-		<p id="Frame">show frame</p>
+		<p id="SFrame">show frame</p>
 		<label class="switch">
-		  <input type="checkbox" name="Frame">
+		  <input type="checkbox" name="SFrame">
 		  <span class="slider round"></span>
 		</label>
 	</div>
@@ -88,11 +87,10 @@
 <br>
 <div class="bar-bottom white">
 	<p class="version">VERSION 2.0</p>
-	<div class="close"><img src="../assets/img/close.png" alt=""></div>
 </div>
 
 </body>
 
-<script type="text/javascript" src="../app/modules/settings.js"></script>
+<script type="text/javascript" src="../app/modules/settings.js" async></script>
 
 </html>

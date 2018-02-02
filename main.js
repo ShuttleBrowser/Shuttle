@@ -77,6 +77,9 @@ const contextMenu = Menu.buildFromTemplate([
 
 ])
 
+ipcMain.on('CheckUpdate', (event, arg) => {
+  shuttleUpdater.checkUpdate()
+})
 ipcMain.on('openSettings', (event, arg) => {
   main.settings()
 })

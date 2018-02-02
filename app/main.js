@@ -77,8 +77,8 @@ const shuttle = {
     if (url.startsWith('mod:')) {
       bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('mod:', '')}/icon.png);"></a>`
     } else {
-      fetch(`https://shuttleapp.herokuapp.com/icons/${url}`).then((resp) => resp.json()).then((data) => {
-        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.url});"></a>`
+      fetch(`http://besticon-demo.herokuapp.com/allicons.json?url=${url}`).then((resp) => resp.json()).then((data) => {
+        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.icons[0].url});"></a>`
       }).catch((error) => {
         bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../../assets/img/no-icon.png);"></a>`
       })
@@ -209,7 +209,7 @@ const shuttle = {
   },
 
   openSettings: () => {
-    ipcRenderer.send('openSettings', bookmarks)
+    view.loadURL(`file:///${__dirname}/settings.html`)
   },
 
   checkForUpate: () => {
@@ -239,8 +239,8 @@ view.addEventListener('did-finish-load', () => {
 view.addEventListener('dom-ready', () => {
   view.insertCSS(`\
               ::-webkit-scrollbar { 
-                width: 5px; 
-                height: 5px; 
+                width: 7px; 
+                height: 7px; 
                 background-color: #F4F4F4; 
               } 
               
