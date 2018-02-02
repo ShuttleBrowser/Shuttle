@@ -90,7 +90,7 @@ const shuttle = {
     vex.dialog.buttons.YES.text = 'Yes'
     vex.dialog.buttons.NO.text = 'No'
     vex.dialog.confirm({
-      message: `Removing bookmark ?`,
+      message: `Removing ${} bookmark ?`,
       callback: function (removalConfirmed) {
         if (removalConfirmed) {
           bookmarkUrl = idToUrl[id]
@@ -144,26 +144,16 @@ const shuttle = {
     }
 
     if (url.startsWith('https://')) {
-      // if the computer is connnected to internet
-      if (navigator.onLine) {
-        adapter.adapteWebSite(url)
-        view.loadURL(url)
-        isLoadingAView = true
-        // else we load the "no_internet" page
-      } else {
-        view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION')
-      }
+      adapter.adapteWebSite(url)
+      view.loadURL(url)
+      isLoadingAView = true
     } else if (url.startsWith('mod:')) {
       view.loadURL(`${__dirname}/../app/modules/${url.replace('mod:', '')}/index.html`)
       isLoadingAView = true
     } else {
-      if (navigator.onLine) {
-        adapter.adapteWebSite(url)
-        view.loadURL('http://' + url)
-        isLoadingAView = true
-      } else {
-        view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION')
-      }
+      adapter.adapteWebSite(url)
+      view.loadURL('http://' + url)
+      isLoadingAView = true
     }
     currentBookmarkId = id
   },
@@ -222,7 +212,11 @@ const shuttle = {
 shuttle.initBookmarks(bookmarks)
 
 view.addEventListener('did-fail-load', () => {
-  view.loadURL(__dirname + '/no_internet.html?text=AN ERROR OCCURED')
+  if (navigator.onLine === false) {
+    view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION')
+  } else {
+    view.loadURL(__dirname + '/no_internet.html?text=AN ERROR OCCURED')
+  }
 })
 
 view.addEventListener('did-finish-load', () => {
