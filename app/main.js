@@ -90,7 +90,7 @@ const shuttle = {
     vex.dialog.buttons.YES.text = 'Yes'
     vex.dialog.buttons.NO.text = 'No'
     vex.dialog.confirm({
-      message: `Removing ${} bookmark ?`,
+      message: `Removing bookmark ?`,
       callback: function (removalConfirmed) {
         if (removalConfirmed) {
           bookmarkUrl = idToUrl[id]
