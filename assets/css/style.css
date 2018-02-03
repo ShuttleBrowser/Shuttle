@@ -20,6 +20,10 @@ webview {
 	right: 0px;
 }
 
+#settings {
+	visibility: hidden;
+}
+
 .btn-bar {
 	position: absolute;
 	bottom: 0;

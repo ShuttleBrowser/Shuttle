@@ -22,6 +22,7 @@ const bookmarksBar = document.querySelector('.bkms-bar')
 const controlBar = document.querySelector('.control-bar')
 const searchBar = document.querySelector('.search-bar')
 const view = document.querySelector('webview')
+const settingsView = document.querySelector('#settings')
 
 // get the browser window
 const browser = remote.getCurrentWindow()
@@ -36,6 +37,8 @@ let maxId = 0
 let currentBookmarkId
 let isLoadingAView = false
 let nextBookmarkToDisplay
+
+let settingsIsActive;
 
 const shuttle = {
   
@@ -133,6 +136,14 @@ const shuttle = {
 
   /** Displays a site within the webview */
   loadView: (url, id = undefined) => {
+    console.log(`Loading ${url}...`)
+
+    if (settingsIsActive) {
+      view.style.visibility = "visible"
+      settingsView.style.visibility = "hidden"
+      settingsIsActive = false
+    }
+
     // Ignore the request if the site is already displayed
     if (id !== undefined && id === currentBookmarkId) { return }
 
@@ -144,16 +155,19 @@ const shuttle = {
     }
 
     if (url.startsWith('https://')) {
-      adapter.adapteWebSite(url)
-      view.loadURL(url)
-      isLoadingAView = true
+        adapter.adapteWebSite(url)
+        view.loadURL(url)
+        isLoadingAView = true
     } else if (url.startsWith('mod:')) {
-      view.loadURL(`${__dirname}/../app/modules/${url.replace('mod:', '')}/index.html`)
-      isLoadingAView = true
+        view.loadURL(`${__dirname}/../app/modules/${url.replace('mod:', '')}/index.html`)
+        isLoadingAView = true
+    } else if (url.startsWith('file:///')) {
+        adapter.adapteWebSite(url)
+        view.loadURL(url)
     } else {
-      adapter.adapteWebSite(url)
-      view.loadURL('http://' + url)
-      isLoadingAView = true
+        adapter.adapteWebSite(url)
+        view.loadURL('http://' + url)
+        isLoadingAView = true
     }
     currentBookmarkId = id
   },
@@ -199,7 +213,9 @@ const shuttle = {
   },
 
   openSettings: () => {
-    view.loadURL(`file:///${__dirname}/settings.html`)
+    view.style.visibility = "hidden"
+    settingsView.style.visibility = "visible"
+    settingsIsActive = true
   },
 
   checkForUpate: () => {
