@@ -1,13 +1,30 @@
-const {Menu, ipcMain, BrowserWindow} = require('electron')
+const {Menu, ipcMain, BrowserWindow, app} = require('electron')
 const lowdb = require('lowdb')
 const menubar = require('menubar')
 const winston = require('winston')
+const AutoLaunch = require('auto-launch')
 
 const shuttleUpdater = require(`${__dirname}/app/modules/shuttle-updater.js`)
 
 winston.add(winston.transports.File, { filename: `${__dirname}/app/logs/Latest.log` })
 
 winston.info('Lauch app')
+
+// Lowdb db init
+const FileSync = require('lowdb/adapters/FileSync')
+const LowdbAdapterSettings = new FileSync(`${app.getPath('userData')}/settings.json`)
+const settings = lowdb(LowdbAdapterSettings)
+
+// Autolaunch init
+let ShuttleAutoLauncher = new AutoLaunch({
+  name: 'Shuttle',
+});
+
+if (settings.get('settings.autostart').value() === true || settings.get('settings.autostart').value() === undefined) {
+  ShuttleAutoLauncher.enable();
+} else {
+  ShuttleAutoLauncher.disable();
+}
 
 // create the window
 const mb = menubar({
@@ -83,45 +100,12 @@ ipcMain.on('CheckUpdate', (event, arg) => {
 ipcMain.on('openSettings', (event, arg) => {
   main.settings()
 })
-ipcMain.on('CheckUpdate', (event, arg) => {
-  winston.info('No update are availible because the udate systeme are not created (lol)')
+
+ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
+  mb.setOption('alwaysOnTop', arg);
+  mb.hideWindow();
 })
-
-const main = {
-
-  // The settings window
-  settings: () => {
-    winston.info('open settings window')
-
-    let settingsWin = new BrowserWindow({
-      icon: `${__dirname}/assets/img/icon.png`,
-      width: 300,
-      height: 400,
-      resizable: false,
-      title: 'Settings',
-      preloadWindow: true,
-      frame: false,
-      alwaysOnTop: true
-    })
-
-    settingsWin.loadURL(`${__dirname}/views/settings.html`)
-  },
-
-  // The auth window
-  authWindow: () => {
-      winston.info('open authWindow')
-
-      let authWindow = new BrowserWindow({
-        icon: `${__dirname}/assets/img/icon.png`,
-        width: 300,
-        height: 400,
-        resizable: false,
-        title: 'Auth',
-        preloadWindow: true,
-        frame: false,
-        alwaysOnTop: true
-      })
-
-      authWindow.loadURL(`${__dirname}/views/auth.html`)
-    }
-}
+ipcMain.on('SettingShowFrame', (event, arg) => {
+  mb.window.webContents.send('addframe' , arg);
+  console.log(arg);
+})

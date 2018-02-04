@@ -209,7 +209,7 @@ const shuttle = {
   },
 
   quickSearch: (search) => {
-    view.loadURL(`https://google.com/search?q=${search.split(' ').join('+')}`)
+    shuttle.loadView(`https://google.com/search?q=${search.split(' ').join('+')}`)
   },
 
   openSettings: () => {
