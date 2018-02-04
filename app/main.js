@@ -9,8 +9,11 @@ const lowdb = require('lowdb')
 
 // Lowdb db init
 const FileSync = require('lowdb/adapters/FileSync')
-const LowdbAdapter = new FileSync(`${app.getPath('userData')}/db.json`)
-const db = lowdb(LowdbAdapter)
+const bookmarksFile = new FileSync(`${app.getPath('userData')}/db.json`)
+const settingsFile = new FileSync(`${app.getPath('userData')}/settings.json`)
+
+const db = lowdb(bookmarksFile)
+const settings = lowdb(settingsFile)
 
 db.defaults({ bookmarks: [] }).write()
 
@@ -21,6 +24,7 @@ winston.add(winston.transports.File, { filename: `${__dirname}/../app/logs/Lates
 const bookmarksBar = document.querySelector('.bkms-bar')
 const controlBar = document.querySelector('.control-bar')
 const searchBar = document.querySelector('.search-bar')
+const titleBar = document.querySelector('.title-bar')
 const view = document.querySelector('webview')
 const settingsView = document.querySelector('#settings')
 
@@ -220,12 +224,51 @@ const shuttle = {
 
   checkForUpate: () => {
     ipcRenderer.send('CheckUpdate', bookmarks)
+  },
+
+  showFrame: (show) => {
+    if (show) {
+      view.style.top = "15px"
+      titleBar.style.visibility = "visible"
+    } else {
+      view.style.top = "0"
+      titleBar.style.visibility = "hidden"
+    }
+  },
+
+  makeScreenshot: () => {
+    view.capturePage((data) => {
+      let img = data.toPng().toString('base64')
+      setTimeout(() => {
+        let path = `${app.getPath('downloads')}/Capture${Math.floor((Math.random() * 10000) + 1)}.png`
+
+        fs.writeFile(path, img.replace(/^data:image\/png;base64,/, ''), 'base64', function(err) {
+          if (err) throw err;
+        });
+        vex.dialog.buttons.YES.text = 'Ok'
+        vex.dialog.buttons.NO.text = 'Open folder'
+        vex.dialog.confirm({
+          message: `Screenshot successfully done`,
+          callback: function (value) {
+            if (value) {
+              return
+            } else {
+              remote.shell.showItemInFolder(path)
+            }
+            vex.dialog.buttons.YES.text = 'Ok'
+            vex.dialog.buttons.NO.text = 'Cancel'
+          }
+        })
+
+      }, 2000);
+    });
   }
 
 }
 
 // app init
 shuttle.initBookmarks(bookmarks)
+shuttle.showFrame(settings.get('settings.ShowFrame').value())
 
 view.addEventListener('did-fail-load', () => {
   if (navigator.onLine === false) {
@@ -272,3 +315,9 @@ view.addEventListener('leave-html-full-screen', () => {
   controlBar.style.display = 'block'
   view.style.left = '35px'
 })
+
+ipcRenderer.on('addframe', (event, arg) => {
+  console.log(`Frame: ${arg}`)
+  shuttle.showFrame(arg)
+})
+

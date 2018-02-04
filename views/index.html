@@ -15,6 +15,8 @@
 </head>
 <body>
 
+	<div class="title-bar"></div>
+
 	<webview src="https://changelog.getshuttle.xyz" useragent="Mozilla/5.0 (Linux; Android 8.0.0; SM-G920F Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) shuttle/2.0.0 Chrome/58.0.3029.110 Electron/1.7.10 Safari/537.36" onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
 	<webview id="settings" src="./settings.html" nodeintegration onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
 
@@ -31,9 +33,10 @@
 	</div>
 
 	<div class="control-bar">
-		<a href="#" onclick="view.reload()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
 		<a href="#" onclick="shuttle.viewBack()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 		<a href="#" onclick="shuttle.viewForward()"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+		<a href="#" onclick="view.reload()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+		<a href="#" onclick="shuttle.makeScreenshot()"><i class="fa fa-scissors" aria-hidden="true"></i></a>
 	</div>
 
 	<a href="javascript:shuttle.saveBookmark()" class="add-btn"></a>

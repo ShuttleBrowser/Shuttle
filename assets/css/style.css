@@ -109,7 +109,7 @@ hr {
 	top: 50px;
 	left: 35px;
 	width: 30px;
-	height: 100px;
+	height: 128px;
 	background-color: #F4F4F4;
 	text-align: center;
 	transition: 0.35s;
@@ -137,6 +137,17 @@ hr {
 
 .search-bar input[type=text]::placeholder {
     font-style: italic;
+}
+
+.title-bar {
+	height: 15px;
+	position: absolute;
+	top: 0;
+	left: 0px;
+	right: 0;
+	background-color: #F4F4F4;
+	-webkit-app-region: drag;
+	z-index: 99999;
 }
 
 ::-webkit-scrollbar {
