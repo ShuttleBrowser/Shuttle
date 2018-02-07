@@ -6,14 +6,20 @@ const {remote, ipcRenderer} = require('electron')
 const {app} = require('electron').remote;
 const adapter = require(`${__dirname}/../app/modules/adapter.js`)
 const lowdb = require('lowdb')
+const locationMsg = require(`${__dirname}/../app/modules/lang.js`)
 
 // Lowdb db init
 const FileSync = require('lowdb/adapters/FileSync')
 const bookmarksFile = new FileSync(`${app.getPath('userData')}/db.json`)
 const settingsFile = new FileSync(`${app.getPath('userData')}/settings.json`)
+const langFile = new FileSync(`./assets/lang.json`)
 
 const db = lowdb(bookmarksFile)
 const settings = lowdb(settingsFile)
+
+// remove after lang config
+const langFileadd = new FileSync(`./assets/lang.json`)
+const langadd = lowdb(langFileadd)
 
 db.defaults({ bookmarks: [] }).write()
 
@@ -60,7 +66,7 @@ const shuttle = {
   /** Asks the user the address of the bookmark he wants to add */
   askNewBookAddress: (id = maxId + 1) => {
     vex.dialog.prompt({
-      message: 'Enter the url of a website',
+      message: locationMsg('addBookmark'),
       placeholder: 'http://',
       callback: (url) => {
         if (url) {
@@ -97,7 +103,7 @@ const shuttle = {
     vex.dialog.buttons.YES.text = 'Yes'
     vex.dialog.buttons.NO.text = 'No'
     vex.dialog.confirm({
-      message: `Removing bookmark ?`,
+      message: locationMsg('removeBookmarks'),
       callback: function (removalConfirmed) {
         if (removalConfirmed) {
           bookmarkUrl = idToUrl[id]
@@ -201,7 +207,7 @@ const shuttle = {
   showSearchBar: () => {
       vex.dialog.buttons.YES.text = 'Search'
       vex.dialog.prompt({
-        message: 'Enter your quick search bellow ?',
+        message: locationMsg('quickSearch'),
         placeholder: 'Search',
         callback: (value) => {
           if (value) {
@@ -229,10 +235,10 @@ const shuttle = {
   showFrame: (show) => {
     if (show) {
       view.style.top = "15px"
-      titleBar.style.visibility = "visible"
+      titleBar.style.top = "0"
     } else {
       view.style.top = "0"
-      titleBar.style.visibility = "hidden"
+      titleBar.style.top = "-15px"
     }
   },
 
@@ -248,7 +254,7 @@ const shuttle = {
         vex.dialog.buttons.YES.text = 'Ok'
         vex.dialog.buttons.NO.text = 'Open folder'
         vex.dialog.confirm({
-          message: `Screenshot successfully done`,
+          message: locationMsg('screenDone'),
           callback: function (value) {
             if (value) {
               return

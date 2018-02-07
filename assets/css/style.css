@@ -148,6 +148,7 @@ hr {
 	background-color: #F4F4F4;
 	-webkit-app-region: drag;
 	z-index: 99999;
+	transition: 0.5s;
 }
 
 ::-webkit-scrollbar {

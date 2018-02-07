@@ -3,6 +3,7 @@ const {app} = require('electron').remote;
 const fs = require('fs');
 const winston = require('winston')
 const AutoLaunch = require('auto-launch')
+const locationMsg = require(`${__dirname}/../app/modules/lang.js`)
 
 require('../assets/js/FileSaver.js')
 
@@ -17,16 +18,33 @@ const db = lowdb(LowdbAdapter)
 const checkboxAutoStart = document.querySelector('input[name=SAboot]')
 const checkboxStayOpen = document.querySelector('input[name=SOpen]')
 const checkboxShowFrame = document.querySelector('input[name=SFrame]')
-// dev mode
-const checkboxDevMode = document.querySelector('input[name=DevMod]')
 
 // all buttons
 const downloadButton = document.querySelector('input[name=download]') 
 const uploadButton = document.querySelector('input[name=upload]') 
 const resetButton = document.querySelector('input[name=reset]') 
-//dev mode
+//advanced mode
 const showConsoleButton = document.querySelector('input[name=ShowConsole]')
 const reportBugButton = document.querySelector('input[name=report]')
+const clearCacheButton = document.querySelector('input[name=ccache]')
+
+// text
+document.querySelector('#SAboot').innerHTML = locationMsg('settings_StartAtBoot')
+document.querySelector('#SOpen').innerHTML = locationMsg('settings_StayOpen')
+document.querySelector('#SFrame').innerHTML = locationMsg('settings_ShowFrame')
+
+document.querySelector('#bkms').innerHTML = locationMsg('bookmarks')
+document.querySelector('#Export').innerHTML = locationMsg('settings_ExportBokmarks')
+document.querySelector('#Import').innerHTML = locationMsg('settings_importBokmarks')
+document.querySelector('#Reset').innerHTML = locationMsg('settings_ResetBookmarks')
+
+document.querySelector('#devtitle').innerHTML = locationMsg('advanced')
+document.querySelector('#shcons').innerHTML = locationMsg('settings_ShowConsole')
+document.querySelector('#ccache').innerHTML = locationMsg('settings_ReportBug')
+document.querySelector('#rep').innerHTML = locationMsg('settings_ClearCache')
+
+
+
 
 let ShuttleAutoLauncher = new AutoLaunch({
   name: 'Shuttle',
@@ -57,21 +75,6 @@ checkboxShowFrame.addEventListener('change', () => {
   db.set('settings.ShowFrame', checkboxShowFrame.checked).write()
   ipcRenderer.send('SettingShowFrame', checkboxShowFrame.checked)
   console.log(`ShowFrame: ${checkboxShowFrame.checked}`)
-})
-
-// Checkbox for Dev mode
-checkboxDevMode.addEventListener('change', () => {
-  if (checkboxDevMode.checked) {  
-    showConsoleButton.disabled = false;
-    reportBugButton.disabled = false;
-    db.set('settings.DevMode', true).write()
-    console.log(`DevMode: ${checkboxDevMode.checked}`)
-  } else {
-    showConsoleButton.disabled = true;
-    reportBugButton.disabled = true;
-    db.set('settings.DevMode', false).write()
-    console.log(`DevMode: ${checkboxDevMode.checked}`)
-  }
 })
 
 //////////// BUTTONS ////////////
@@ -106,18 +109,18 @@ reportBugButton.addEventListener('click', () => {
   remote.shell.openExternal('mailto:support@getshuttle.xyz?subject=[BUG SHUTTLE]');
 })
 
+clearCacheButton.addEventListener('click', () => {
+  console.log(`clear cache button is clicked`)
+  let win = remote.getCurrentWindow();
+  win.webContents.session.clearCache(() => {
+    console.log('cache is cleared')
+  });
+})
+
 // Settings loading
 if ( db.get('settings.autostart').value() === true || db.get('settings.autostart').value() === undefined ) { checkboxAutoStart.checked = true }
 if ( db.get('settings.StayOpen').value() === true ) { checkboxStayOpen.checked = true }
 if ( db.get('settings.ShowFrame').value() === true ) { checkboxShowFrame.checked = true }
-if ( db.get('settings.DevMode').value() === true ) {
-  checkboxDevMode.checked = true
-  showConsoleButton.disabled = false;
-  reportBugButton.disabled = false;
-} else if ( db.get('settings.DevMode').value() === false || db.get('settings.DevMode').value() === undefined ) {
-  showConsoleButton.disabled = true;
-  reportBugButton.disabled = true;
-}
 
 // All functiion for settings
 const settings = {
