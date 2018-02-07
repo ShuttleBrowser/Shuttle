@@ -34,8 +34,8 @@ Shuttle store all informations of websites you use in a json file.
 
 ## Deployment
 
-Working on Microsoft Windows (7, 8 and 10), Debian and Mac OS.
-_Not tested on Debian and Mac OS_
+Working on Microsoft Windows (7, 8 and 10), GNU/Linux Debian (under Xfce and Mate) and Mac OS (1.9+).
+_Not deployed on Mac OS_
 
 ## Built With
 
@@ -48,8 +48,9 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Authors
 
-* **Robin Julian** - *Lead developer* - [robjulian](https://github.com/robjullian)
-* **Regis Brasme** - *Main Designer* - [rbrasme](https://github.com/rbrasme)
+* **Robin Jullian** - *Lead developer* - [robjullian](https://github.com/robjullian)
+
+Currently maintained by [robjullian](https://github.com/robjullian), [KazeJiyu](https://github.com/KazeJiyu) and [Vahelnir](https://github.com/Vahelnir).
 
 See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contributors) who participated in this project.
 
