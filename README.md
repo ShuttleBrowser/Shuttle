@@ -42,10 +42,6 @@ _Not deployed on Mac OS_
 * [Electron](https://electron.atom.io/) - NodeJS Module
 * [NodeJS](https://nodejs.org) - Javascript Environnement
 
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
 * **Robin Jullian** - *Lead developer* - [robjullian](https://github.com/robjullian)
