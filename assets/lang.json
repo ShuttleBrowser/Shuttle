@@ -1,0 +1,40 @@
+{
+  "fr": {
+    "addBookmark": "Entre l'url de votre favoris",
+    "removeBookmarks": "Supprimer le favoris ?",
+    "quickSearch": "Entrez votre recherche rapide ci-dessous ?",
+    "screenDone": "Capture d'écran réussie",
+    "yes": "oui",
+    "no": "non",
+    "settings_StartAtBoot": "lancer au démarage",
+    "settings_StayOpen": "laisser ouvert",
+    "settings_ShowFrame": "bouger la fenêtre",
+    "settings_ExportBokmarks": "exporter les favoris",
+    "settings_importBokmarks": "importer des favoris",
+    "settings_ResetBookmarks": "supprimer les favoris",
+    "settings_ShowConsole": "Afficher la console",
+    "settings_ReportBug": "reporter un bug",
+    "settings_ClearCache": "supprimer le cache",
+    "bookmarks": "FAVORIS",
+    "advanced": "AVANCER"
+  },
+  "en": {
+    "addBookmarks": "Enter the url of a website",
+    "removeBookmarks": "Removing bookmark ?",
+    "quickSearch": "Enter your quick search bellow ?",
+    "screenDone": "Screenshot successfully done",
+    "yes": "yes",
+    "no": "no",
+    "settings_StartAtBoot": "start at boot",
+    "settings_StayOpen": "stay open",
+    "settings_ShowFrame": "show frame",
+    "settings_ExportBokmarks": "export bookmarks",
+    "settings_importBokmarks": "import bookmarks",
+    "settings_ResetBookmarks": "reset bookmarks",
+    "settings_ShowConsole": "show console",
+    "settings_ReportBug": "report a bug",
+    "settings_ClearCache": "clear cache",
+    "bookmarks": "BOOKMARKS",
+    "advanced": "ADVANCED"
+  }
+}
