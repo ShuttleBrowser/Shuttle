@@ -34,7 +34,7 @@ Shuttle store all informations of websites you use in a json file.
 
 ## Deployment
 
-Working on Microsoft Windows (7, 8 and 10), GNU/Linux Debian (under Xfce and Mate) and Mac OS (1.9+).
+Working on Microsoft Windows (7, 8 and 10), GNU/Linux Debian (under Xfce and Mate) and Mac OS (1.9+).<br>
 _Not deployed on Mac OS_
 
 ## Built With
