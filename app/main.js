@@ -28,6 +28,7 @@ winston.add(winston.transports.File, { filename: `${__dirname}/../app/logs/Lates
 
 // elements for DOM
 const bookmarksBar = document.querySelector('.bkms-bar')
+const bookmarkZone = document.querySelector('.bookmarks-zone')
 const controlBar = document.querySelector('.control-bar')
 const searchBar = document.querySelector('.search-bar')
 const titleBar = document.querySelector('.title-bar')
@@ -56,7 +57,7 @@ const shuttle = {
   initBookmarks: (bkmarks) => {
     bookmarksBar.innerHTML = ''
     bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadView('changelog.getshuttle.xyz')"><img src="" alt=""></a><hr>`
-    bookmarksBar.innerHTML += '<a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a>'
+    bookmarksBar.innerHTML += `<div class="bookmarks-zone"></div>`
     for (i in bkmarks) {
       maxId = Math.max(maxId, bkmarks[i].id)
       shuttle.addBookmarkToBar(bkmarks[i].url, bkmarks[i].id)
@@ -88,14 +89,17 @@ const shuttle = {
   /** Adds a bookmark to the bookmarks bar */
   addBookmarkToBar: (url, id) => {
     if (url.startsWith('mod:')) {
-      bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('mod:', '')}/icon.png);"></a>`
+      document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('mod:', '')}/icon.png);"></a>`
     } else {
       fetch(`http://besticon-demo.herokuapp.com/allicons.json?url=${url}`).then((resp) => resp.json()).then((data) => {
-        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.icons[0].url});"></a>`
+        document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.icons[0].url});"></a>`
       }).catch((error) => {
-        bookmarksBar.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../../assets/img/no-icon.png);"></a>`
+        document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../../assets/img/no-icon.png);"></a>`
       })
     }
+    setTimeout(() => {
+      shuttle.reloadAddButton()
+    }, 1000)
   },
   
   /** Asks the user to confirm the removal of a given bookmark */
@@ -114,6 +118,9 @@ const shuttle = {
           if( id == currentBookmarkId )
             shuttle.displayLastBookmark()
         }
+
+        shuttle.reloadAddButton()
+
         vex.dialog.buttons.YES.text = 'Ok'
         vex.dialog.buttons.NO.text = 'Cancel'
       }
@@ -242,6 +249,12 @@ const shuttle = {
     }
   },
 
+  reloadAddButton: () => {
+    document.querySelector('.add-btn').remove()
+    bookmarksBar.innerHTML += `<a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a>`
+    document.querySelector('.add-btn').style.top = `${document.querySelector('.bookmarks-zone').offsetHeight + document.querySelector('.bookmarks-zone').offsetTop}px`
+  },
+
   makeScreenshot: () => {
     view.capturePage((data) => {
       let img = data.toPng().toString('base64')
@@ -275,6 +288,7 @@ const shuttle = {
 // app init
 shuttle.initBookmarks(bookmarks)
 shuttle.showFrame(settings.get('settings.ShowFrame').value())
+shuttle.reloadAddButton()
 
 view.addEventListener('did-fail-load', () => {
   if (navigator.onLine === false) {

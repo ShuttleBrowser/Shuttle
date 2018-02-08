@@ -53,6 +53,13 @@ a {
 	overflow: auto;
 }	
 
+.bookmarks-zone {
+	position: absolute;
+	top: 50px;
+	left: 0;
+	width: 35px;
+}
+
 .shuttle-btn img {
 	background: url(../img/ic.svg) no-repeat center;
 	width: 70%;
@@ -87,6 +94,7 @@ hr {
 }
 
 .add-btn {
+	position: absolute;
 	margin-top: 4px;
 	margin-left: 4px;
 	display: block;

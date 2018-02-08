@@ -48,8 +48,8 @@
       "icon": "assets/img/icon.ico"
     },
     "mac": {
-     "target": "dmg",
-    "icon": "assets/img/icon.icns"
-   }
+      "target": "dmg",
+      "icon": "assets/img/icon.icns"
+    }
   }
 }
