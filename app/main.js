@@ -106,8 +106,8 @@ const shuttle = {
   
   /** Asks the user to confirm the removal of a given bookmark */
   askToRemoveBookmark: (id) => {
-    vex.dialog.buttons.YES.text = 'Yes'
-    vex.dialog.buttons.NO.text = 'No'
+    vex.dialog.buttons.YES.text = locationMsg('yes')
+    vex.dialog.buttons.NO.text = locationMsg('cancel')
     vex.dialog.confirm({
       message: locationMsg('removeBookmarks'),
       callback: function (removalConfirmed) {
@@ -213,10 +213,11 @@ const shuttle = {
   },
 
   showSearchBar: () => {
-      vex.dialog.buttons.YES.text = 'Search'
+      vex.dialog.buttons.YES.text = locationMsg('search')
+      vex.dialog.buttons.NO.text = locationMsg('cancel')
       vex.dialog.prompt({
         message: locationMsg('quickSearch'),
-        placeholder: 'Search',
+        placeholder: locationMsg('search'),
         callback: (value) => {
           if (value) {
             shuttle.quickSearch(value)
