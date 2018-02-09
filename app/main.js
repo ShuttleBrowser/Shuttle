@@ -227,7 +227,11 @@ const shuttle = {
   },
 
   quickSearch: (search) => {
-    shuttle.loadView(`https://google.com/search?q=${search.split(' ').join('+')}`)
+    if (search.startsWith('https://') || search.startsWith('http://') || search.startsWith('file:///')) {
+      shuttle.loadView(search)
+    } else {
+      shuttle.loadView(`https://google.com/search?q=${search.split(' ').join('+')}`)
+    }
   },
 
   openSettings: () => {
