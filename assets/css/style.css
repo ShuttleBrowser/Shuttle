@@ -104,7 +104,8 @@ hr {
 	background-size: 100%;
 	background-repeat: no-repeat;
 	background-position: center; 
-	background-image: url(../img/add.svg)
+	background-image: url(../img/add.svg);
+	transition: 0.5s;
 }
 
 .add-btn:hover {

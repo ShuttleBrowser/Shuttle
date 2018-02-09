@@ -95,11 +95,13 @@ const shuttle = {
         document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.icons[0].url});"></a>`
       }).catch((error) => {
         document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark('${id}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../../assets/img/no-icon.png);"></a>`
+      }).then(() => {
+        shuttle.reloadAddButton()
       })
     }
     setTimeout(() => {
       shuttle.reloadAddButton()
-    }, 1000)
+    }, db.get('bookmarks').length * 1000)
   },
   
   /** Asks the user to confirm the removal of a given bookmark */
@@ -153,7 +155,6 @@ const shuttle = {
 
   /** Displays a site within the webview */
   loadView: (url, id = undefined) => {
-    console.log(`Loading ${url}...`)
 
     if (settingsIsActive) {
       view.style.visibility = "visible"
@@ -162,7 +163,7 @@ const shuttle = {
     }
 
     // Ignore the request if the site is already displayed
-    if (id !== undefined && id === currentBookmarkId) { return }
+    if (id !== undefined && id === currentBookmarkId) { return } else { console.log(`Loading ${url}...`) }
 
     // If Electron is already loading an other view, make this one in standby
     // Avoids "did-fail-load" event to be triggered by loading differents views at once
@@ -204,7 +205,7 @@ const shuttle = {
   showControlBar: (id, event) => {
     if (event === 'show') {
       controlBar.style.display = 'block'
-      controlBar.style.top = `${document.querySelector('#' + id).offsetTop - 1}px`
+      controlBar.style.top = `${document.querySelector('#' + id).offsetTop + document.querySelector('.bookmarks-zone').offsetTop - 1}px`
     } else if (event === 'hide') {
       controlBar.style.display = 'none'
       controlBar.style.top = '0px'
@@ -311,16 +312,17 @@ view.addEventListener('did-finish-load', () => {
 
 view.addEventListener('dom-ready', () => {
   view.insertCSS(`\
-              ::-webkit-scrollbar { 
-                width: 7px; 
-                height: 7px; 
-                background-color: #F4F4F4; 
-              } 
-              
-              ::-webkit-scrollbar-thumb { 
-                background-color: #white; 
-              } 
-              `)
+  ::-webkit-scrollbar { 
+    width: 10px; 
+    height: 7px; 
+    background-color: #F4F4F4; 
+    z-index: 9999999;
+    }
+    
+    ::-webkit-scrollbar-thumb { 
+    background-color: #333333; 
+    } 
+  `)
 })
 
 view.addEventListener('enter-html-full-screen', () => {
