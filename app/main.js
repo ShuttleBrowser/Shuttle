@@ -251,8 +251,6 @@ const shuttle = {
   },
 
   reloadAddButton: () => {
-    document.querySelector('.add-btn').remove()
-    bookmarksBar.innerHTML += `<a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a>`
     document.querySelector('.add-btn').style.top = `${document.querySelector('.bookmarks-zone').offsetHeight + document.querySelector('.bookmarks-zone').offsetTop}px`
   },
 
@@ -343,3 +341,7 @@ ipcRenderer.on('addframe', (event, arg) => {
   shuttle.showFrame(arg)
 })
 
+window.addEventListener('online', () => {
+  shuttle.initBookmarks(bookmarks)
+  shuttle.loadView('https://changelog.getshutttle.xyz')
+})
