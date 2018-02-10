@@ -17,30 +17,53 @@
 
 ## Getting Started
 
-Launch Shuttle by clicking on the Exe (on Ms Windows).
+Launch Shuttle by clicking his shortcut on the desktop (on Windows).
 The program will started in the notification center, and can be open by a simple click.
 
 For adding a website, just click on the "plus" button. A window will open, then put the url of the website you want and click on add.
-The website will appear next to the "plus" button.
+The website will appear above to the "plus" button.
 This action can be repeat any time.
 
 You can delete a favorites by right-clicking on his icon, then a window will open, and click "Continue".
 
-You can edit settings by right-clicking on Shuttle's icon, and clicking "Settings". Then, you can manage your preferences like turning off "boot starting" or turning on "stay open".
+You can edit settings by clicking on the gear. Then, you can manage your preferences like turning off "boot starting" or turning on "stay open".
 
-All updates are automatics (checking at the launching of the app).
+All updates are automatics (checking at the launching of the app). You can also check for updates by clicking on the arrows below the settings.
 
 If you need help for setup, use or just reporting a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz)
+
+### Keyboard shortcuts
+
+<i>Currently in developement.</i>
+
+* Add bookmark : <kbd>Ctrl</kbd> <kbd>+</kbd>
+* Remove bookmark : <kbd>Ctrl</kbd> <kbd>-</kbd>
+* Sho home page: <kbd>Ctrl</kbd> <kbd>H</kbd>
+* Show settings : <kbd>Ctrl</kbd> <kbd>S</kbd>
+* Open quicksearch : <kbd>Ctrl</kbd> <kbd>Q</kbd>
+* Take screenshot : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>S</kbd>
 
 ### Storage
 
 Shuttle store all informations of websites you use in a json file.
 
 ```json
-{"web":"gmail.com"},
-{"web":"google.com"},
-{"web":"instagram.com"},
-{"web":"twitter.com"}
+{
+  "bookmarks": [
+    {
+      "id": 1,
+      "url": "google.com"
+    },
+    {
+      "id": 2,
+      "url": "instagram.com"
+    },
+    {
+      "id": 3,
+      "url": "twitter.com"
+    }
+  ]
+}
 ```
 
 ## Deployment
@@ -67,4 +90,4 @@ This project is licensed under the GPL v3 License - see the [LICENSE.md](https:/
 
 ## Current Version
 
-* Currently in development
+* 2.0.0
