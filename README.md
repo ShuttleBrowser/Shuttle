@@ -38,7 +38,7 @@ If you need help for setup, use or just reporting a bug, please contact us at [s
 
 * Add bookmark : <kbd>Ctrl</kbd> <kbd>+</kbd>
 * Remove bookmark : <kbd>Ctrl</kbd> <kbd>-</kbd>
-* Sho home page: <kbd>Ctrl</kbd> <kbd>H</kbd>
+* Show home page: <kbd>Ctrl</kbd> <kbd>H</kbd>
 * Show settings : <kbd>Ctrl</kbd> <kbd>S</kbd>
 * Open quicksearch : <kbd>Ctrl</kbd> <kbd>Q</kbd>
 * Take screenshot : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>S</kbd>
