@@ -86,7 +86,7 @@ See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contri
 
 ## License
 
-This project is licensed under the GPL v3 License - see the [LICENSE.md](https://github.com/ShuttleLtd/Shuttle/blob/master/LICENSE) file for details.
+This project is licensed under the [NPOSL 3.0](https://opensource.org/licenses/NPOSL-3.0) License.
 
 ## Current Version
 
