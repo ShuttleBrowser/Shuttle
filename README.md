@@ -1,6 +1,6 @@
 <div align="center">
 <br>
-<img width="500" src="https://getshuttle.xyz/images/logo.png" alt="electron-vue">
+<img width="500" src="https://getshuttle.xyz/images/new/logo-r.png" alt="Shuttle">
 <br>
 <br>
 </div>
@@ -24,7 +24,7 @@ For adding a website, just click on the "plus" button. A window will open, then 
 The website will appear next to the "plus" button.
 This action can be repeat any time.
 
-You can delete a favorites by right-clicking on his color, then a window will open, and click "Continue".
+You can delete a favorites by right-clicking on his icon, then a window will open, and click "Continue".
 
 You can edit settings by right-clicking on Shuttle's icon, and clicking "Settings". Then, you can manage your preferences like turning off "boot starting" or turning on "stay open".
 
