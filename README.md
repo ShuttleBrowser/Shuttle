@@ -7,6 +7,7 @@
 
 <p align="center" color="#6a737d">
   <i>The fastest access to your favorite applications.</i>
+  Check also the <a href="https://getshuttle.xyz" target="_blank">official website</a> of this project.
 </p>
 
 <div align="center">
