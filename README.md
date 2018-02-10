@@ -6,7 +6,7 @@
 </div>
 
 <p align="center" color="#6a737d">
-The fastest access to your favorite applications.
+  <i>The fastest access to your favorite applications.</i>
 </p>
 
 <div align="center">
