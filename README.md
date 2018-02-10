@@ -6,8 +6,8 @@
 </div>
 
 <p align="center" color="#6a737d">
-  <i>The fastest access to your favorite applications.</i>
-  Check also the <a href="https://getshuttle.xyz" target="_blank">official website</a> of this project.
+  <i>The fastest access to your favorite applications.</i><br>
+  <h5>Check also the <a href="https://getshuttle.xyz" target="_blank">official website</a> of this project.</h5>
 </p>
 
 <div align="center">
