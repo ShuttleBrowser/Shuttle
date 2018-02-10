@@ -30,7 +30,7 @@ You can edit settings by clicking on the gear. Then, you can manage your prefere
 
 All updates are automatics (checking at the launching of the app). You can also check for updates by clicking on the arrows below the settings.
 
-If you need help for setup, use or just reporting a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz)
+If you need help for setup, use or just reporting a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz).
 
 ### Keyboard shortcuts
 
