@@ -1,6 +1,6 @@
 <div align="center">
 <br>
-<a href="https://getshuttle.xyz" target="_blank"><img width="500" src="https://getshuttle.xyz/images/logo.png" alt="Shuttle"></a>
+<a href="https://getshuttle.xyz" target="_blank"><img width="500" src="https://getshuttle.xyz/images/new/logo-p.png" alt="Shuttle"></a>
 <br>
 <br>
 </div>
