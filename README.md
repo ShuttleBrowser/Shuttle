@@ -87,6 +87,7 @@ See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contri
 ## License
 
 This project is licensed under the [NPOSL 3.0](https://opensource.org/licenses/NPOSL-3.0) License.
+The logo and all visuals associated are under the [CC BY-NC-ND 3.0](https://creativecommons.org/licenses/by-nc-nd/3.0/) License.
 
 ## Current Version
 
