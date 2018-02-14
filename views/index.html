@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Shuttle</title>
+
+	<link rel="stylesheet" href="../assets/css/style.css">
+	<link rel="stylesheet" href="../assets/css/fontawesome.css">
+
+	<script src="../assets/js/vex.combined.min.js"></script>
+	<script>vex.defaultOptions.className = 'vex-theme-default'</script>
+	<link rel="stylesheet" href="../assets/css/vex.css" />
+	<link rel="stylesheet" href="../assets/css/vex-theme-default.css" />
+
+</head>
+<body>
+
+	<div class="title-bar"></div>
+
+	<webview src="./changelog.html" useragent="Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36" onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
+	<webview id="settings" src="./settings.html" nodeintegration onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
+
+	<div class="bkms-bar" onclick="shuttle.showControlBar('id-0', 'hide');">
+		<a href="#" class="shuttle-btn" onclick="shuttle.loadChangelog()"></a>
+		<hr>
+		<div class="bookmarks-zone"></div>
+	</div>
+
+	<div class="btn-bar">
+		<hr>
+		<a href="javascript:shuttle.showSearchBar()"><i class="fa fa-send" aria-hidden="true"></i></a>
+		<a href="#" onclick="shuttle.openSettings()"><i class="fa fa-cog" aria-hidden="true"></i></a>
+		<a href="#" onclick="shuttle.checkForUpate()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+	</div>
+
+	<div class="control-bar">
+		<a href="#" onclick="shuttle.viewBack()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+		<a href="#" onclick="shuttle.viewForward()"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+		<a href="#" onclick="view.reload()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+		<a href="#" onclick="shuttle.makeScreenshot()"><i class="fa fa-scissors" aria-hidden="true"></i></a>
+	</div>
+
+	<a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a>
+
+
+</body>
+
+<script src="../app/main.js" async=""></script>
+
+</html>

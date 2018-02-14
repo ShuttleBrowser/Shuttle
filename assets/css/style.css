@@ -1,0 +1,175 @@
+body {
+	margin: 0;
+	user-select: none;
+}
+
+i {
+	color: #CECECE;
+	font-size: 20px;
+	transition: 0.3s;
+}
+i:hover {
+	color: #7F7F7F
+}
+
+webview {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 35px;
+	right: 0px;
+}
+
+#settings {
+	visibility: hidden;
+}
+
+.btn-bar {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 35px;
+	height: 100px;
+	background-color: #F4F4F4;
+	text-align: center;
+}
+.btn-bar i {
+	margin: 5px;
+}
+
+a {
+	text-decoration:none;
+	color: black;
+}
+
+.bkms-bar {
+	position: absolute;
+	top: 0;
+	bottom: 100px;
+	left: 0;
+	width: 35px;
+	background-color: #F4F4F4;
+	text-align: center;
+	overflow: auto;
+}	
+
+.bookmarks-zone {
+	position: absolute;
+	top: 50px;
+	left: 0;
+	width: 35px;
+}
+
+.shuttle-btn {
+	margin-top: 11px;
+	margin-left: 2px;
+	display: block;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-size: 60% auto;
+	background-repeat: no-repeat;
+	background-position: center; 
+	background-image: url(../img/bar-icon.png);
+	transition: 0.2s;
+}
+.shuttle-btn:hover {
+	background-image: url(../img/bar-icon-hover.png);
+}
+
+hr {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 2.5px;
+}
+
+.bubble-btn {
+	margin-top: 4px;
+	margin-left: 2.5px;
+	display: block;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	transition: 0.2s;
+	background-color: white;
+	background-size: 70% auto;
+	background-color: #ffff;
+	background-repeat: no-repeat;
+	background-position: center; 
+}
+.bubble-btn:hover {
+	border-radius: 25%;
+}
+
+.add-btn {
+	position: absolute;
+	margin-top: 4px;
+	margin-left: 4px;
+	display: block;
+	width: 27px;
+	height: 27px;
+	transition: 0.2s;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center; 
+	background-image: url(../img/add.svg);
+	transition: 0.5s;
+}
+
+.add-btn:hover {
+	background-image: url(../img/add-hover.svg)
+}
+
+.control-bar {
+	display: none;
+	position: absolute;
+	top: 50px;
+	left: 35px;
+	width: 30px;
+	height: 128px;
+	background-color: #F4F4F4;
+	text-align: center;
+	transition: 0.35s;
+}
+.control-bar i {
+	margin-top: 11px;
+}
+
+.search-bar {
+	display: none;
+	width: 150px;
+	height: 35px;
+	position: absolute;
+	left: 35px;
+	bottom: 50px;
+	background-color: #F4F4F4;
+}
+
+.search-bar input[type=text] {
+    width: 100%;
+    padding: 10px 10px;
+    border: none;
+    background-color: #F4F4F4;
+}
+
+.search-bar input[type=text]::placeholder {
+    font-style: italic;
+}
+
+.title-bar {
+	height: 15px;
+	position: absolute;
+	top: 0;
+	left: 0px;
+	right: 0;
+	background-color: #F4F4F4;
+	-webkit-app-region: drag;
+	z-index: 99999;
+	transition: 0.5s;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background-color: #F4F4F4;
+}
