@@ -48,6 +48,13 @@
       "publish": [
         "github"
       ]
+    },
+    "linux": {
+      "target": "deb",
+      "icon": "./assets/img/icon.png",
+      "synopsis": "The fastest access to your favorite applications",
+      "description": "The fastest access to your favorite applications",
+      "category": "Network"
     }
   }
 }
