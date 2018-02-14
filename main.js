@@ -1,120 +1,168 @@
-const {Menu, ipcMain, app, net, shell} = require('electron')
-const lowdb = require('lowdb')
-const menubar = require('menubar')
-const winston = require('winston')
-const AutoLaunch = require('auto-launch')
-const osLocale = require('os-locale')
-const electronLocalshortcut = require('electron-localshortcut');
-if(require('electron-squirrel-startup')) return;
+//1.3.2
+const electron = require('electron');
+const menubar = require('menubar');
+const url = require('url');
+const fs = require('fs');
+const AutoLaunch = require('auto-launch');
+const path = require("path");
+const settings = require("electron-settings");
+const {ipcMain, net, app} = require('electron');
+const osLocale = require('os-locale');
 
-const shuttleUpdater = require(`${__dirname}/app/modules/shuttle-updater.js`)
-const locationMsg = require(`${__dirname}/app/modules/lang.js`)
+const BrowserWindow = electron.BrowserWindow;
+const Tray = electron.Tray;
 
-winston.add(winston.transports.File, { filename: `${__dirname}/app/logs/Latest.log` })
+let settingsWin;
+let Overlay;
 
-winston.info('Lauch app')
+let iconPath;
 
-// Lowdb db init
-const FileSync = require('lowdb/adapters/FileSync')
-const LowdbAdapterSettings = new FileSync(`${app.getPath('userData')}/settings.json`)
-const settings = lowdb(LowdbAdapterSettings)
-
-// Autolaunch init
-let ShuttleAutoLauncher = new AutoLaunch({
-  name: 'Shuttle'
-})
-
-if (settings.get('settings.autostart').value() === true || settings.get('settings.autostart').value() === undefined) {
-  ShuttleAutoLauncher.enable()
-} else {
-  ShuttleAutoLauncher.disable()
+if (settings.get('DevMod') == true) {
+	require('electron-debug')({enabled: true});
 }
 
-// create the window
-const mb = menubar({
-  icon: `${__dirname}/assets/img/icon.ico`,
-  index: `${__dirname}/views/index.html`,
-  width: 395,
-  height: 640,
-  resizable: false,
-  title: 'Shuttle',
-  autoHideMenuBar: true,
-  frame: false,
-  skipTaskbar: true,
-  alwaysOnTop: settings.get('settings.StayOpen').value()
-})
+if(require('electron-squirrel-startup')) return;
 
-mb.on('ready', () => {
-  winston.log('Shuttle is ready')
-  mb.tray.setContextMenu(contextMenu)
-})
+if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-1 || osLocale.sync().indexOf("fr_CA") >-1) {
+	var lang = require("./assets/lang/fr.js");
+} else if (osLocale.sync().indexOf("en_US") > -1 || osLocale.sync().indexOf("en_EN") > -1) {
+	var lang = require("./assets/lang/en.js");
+} else {
+	var lang = require("./assets/lang/en.js");
+}
 
-mb.on('after-create-window', () => {
-  mb.tray.setContextMenu(contextMenu)
-  mb.tray.on('right-click', () => {
-    mb.tray.popUpContextMenu(contextMenu)
-  })
-})
+if (settings.get('ShuttleAutoLauncher') == true) {
+	var ShuttleAutoLauncher = new AutoLaunch({
+	    name: 'Shuttle',
+	});
+	//ShuttleAutoLauncher.enable();
+}
 
-// create the context menu
-const contextMenu = Menu.buildFromTemplate([
+if (process.platform == 'darwin' || process.platform == 'linux') {
+	iconPath =  __dirname + "/assets/img/icon.png";
+} else if (process.platform == 'win32') {
+	iconPath = __dirname + "/assets/img/icon.ico";
+}
+console.log(iconPath);
+var mb = menubar({
+	index: "file://" + __dirname + "/index.html",
+	tooltip: "Shuttle",
+	icon: iconPath,
+	width:360,
+	height:640,
+	resizable: false,
+	title: "Shuttle",
+	preloadWindow: true,
+	autoHideMenuBar: true,
+	alwaysOnTop: settings.get('SOpen'),
+	frame: false,
+  	skipTaskbar: true
+});
 
-  // about btn
+//We create the context menu
+const contextMenu = electron.Menu.buildFromTemplate([
   {
-    label: locationMsg('about', osLocale.sync()),
-    click () {
-      // We open the website at about
-      shell.openExternal('https://getshuttle.xyz/')
+    label: lang.menu_about,
+    click() {
+    //We open the website at about
+      electron.shell.openExternal('https://getshuttle.xyz/')
     }
   },
-
-  // Settings btn
   {
-    label: locationMsg('settings', osLocale.sync()),
-    click () {
-      mb.window.webContents.send('openSettings')
-    }
+    label: lang.menu_settings,
+    click() {
+        createSettingsWindows();
+      }
   },
-
-  // Check update
-  {
-    label: locationMsg('checkForUpdates', osLocale.sync()),
-    click () {
-      shuttleUpdater.checkUpdate()
-    }
-  },
-
-  // wow, a separator !
   {type: 'separator'},
-
-  // quit btn :(
   {
-    label: locationMsg('quit', osLocale.sync()),
-    click () {
-      winston.info('Goodbye !')
-      mb.app.quit()
+    label: lang.menu_quit,
+    click() {
+      mb.app.quit();
+      console.log('stopping');
     }
   }
 
-])
+]);
 
-ipcMain.on('CheckUpdate', (event, arg) => {
-  shuttleUpdater.checkUpdate()
+mb.on('ready', function () {
+  console.log('Shuttle is ready');
+  if (process.platform == 'win32') {
+    mb.tray.setContextMenu(contextMenu);
+  }
+});
+
+function createSettingsWindows() {
+  settingsWin = new BrowserWindow({
+	icon:__dirname + "/assets/img/icon.ico",
+    width: 300,
+    height: 400,
+    resizable: false,
+    title: "Settings",
+    preloadWindow: true,
+    frame: false,
+    alwaysOnTop: true
+  });
+
+  settingsWin.loadURL(url.format({
+    pathname: path.join(__dirname, '/settings/index.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+}
+
+function createOverlay() {
+	Overlay = new BrowserWindow({
+		width: 40,
+		height: 40,
+		resizable: false,
+		title: "Overlay",
+		preloadWindow: true,
+		frame: false,
+		skipTaskbar: true,
+		show: false,
+		transparent: true,
+		x: mb.tray.getBounds().x + 130,
+		y: mb.tray.getBounds().y - 70,
+		alwaysOnTop: true
+	});
+
+  Overlay.loadURL(url.format({
+    pathname: path.join(__dirname, '/overlay/index.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+}
+
+app.on('will-quit', () => {
+  let request = net.request('https://shuttleserver.herokuapp.com/user/remove')
+  request.end()
 })
-ipcMain.on('openSettings', (event, arg) => {
-  main.settings()
+
+app.on('ready', () => {
+  let request = net.request('https://shuttleserver.herokuapp.com/user/add')
+  request.end()
 })
-ipcMain.on('refreshApp', (event, arg) => {
-  mb.window.webContents.send('refreshApp')
-  console.log('true')
-})
-ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
-  mb.setOption('alwaysOnTop', arg)
-  mb.hideWindow()
-})
-ipcMain.on('SettingShowFrame', (event, arg) => {
-  mb.window.webContents.send('addframe', arg)
-})
+
+//right click menu for Tray
+mb.on('after-create-window', function () {
+//	createOverlay()
+
+//	electron.globalShortcut.register('Shift+S', () => {
+//		if (settings.get('OverlayIsActive') == true) {
+//			settings.set('OverlayIsActive', false);
+//			Overlay.minimize();
+//		} else if (settings.get('OverlayIsActive') == false) {
+//			settings.set('OverlayIsActive', true);
+//			Overlay.show();	
+//		}
+//	})
+
+  mb.tray.setContextMenu(contextMenu);
+	mb.tray.on('right-click', () => {
+		mb.tray.popUpContextMenu(contextMenu);
+	})
+});
 
 var handleStartupEvent = function() {
   if (process.platform !== 'win32') {
@@ -156,4 +204,32 @@ var handleStartupEvent = function() {
 
 if (handleStartupEvent()) {
   return;
+}
+
+ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
+  mb.setOption('alwaysOnTop', arg);
+  mb.hideWindow();
+  console.log(arg);
+})
+
+ipcMain.on('SettingSetFrame', (event, arg) => {
+  mb.window.webContents.send('addframe' , arg);
+  if (arg == true) {
+    mb.setOption('with', 380);
+  }
+});
+
+ipcMain.on('OpenDevTool', (event, arg) => {
+	mb.window.openDevTools();
+});
+
+ipcMain.on('OpenReportWindow', (event, arg) => {
+	electron.shell.openExternal('mailto:support@getshuttle.xyz?subject=[BUG SHUTTLE]');
+});
+
+
+if (settings.get('Frame') == true) {
+    mb.setOption('with', 380);
+} else if (settings.get('Frame') == false) {
+    mb.setOption('with', 360);
 }

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Settings</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="../node_modules/vex-js/dist/css/vex.css">
+	<link rel="stylesheet" href="../node_modules/vex-js/dist/css/vex-theme-default.css">
+
+	<script src="FileSaver.js"></script>
+
+</head>
+<body>
+
+<div class="bar"></div>
+<br>
+<br>
+<h1>GENERAL</h1>
+<div class="content">
+
+	<div class="section gray">
+		<p id="SOpen"></p>
+		<label class="switch">
+		  <input type="checkbox" name="SOpen">
+		  <span class="slider round"></span>
+		</label>
+	</div>
+	
+	<div class="section white">
+		<p id="SAboot"></p>
+		<label class="switch">
+		  <input type="checkbox" name="AutoStart">
+		  <span class="slider round"></span>
+		</label>
+	</div>
+
+	<div class="section gray">
+		<p id="Frame"></p>
+		<label class="switch">
+		  <input type="checkbox" name="Frame">
+		  <span class="slider round"></span>
+		</label>
+	</div>
+
+</div>
+<br>
+<h1 id="bkms"></h1>
+<div class="content">
+
+	<div class="section gray">
+		<p id="Export"></p>
+		<input type="button" name="download" class="btn">
+	</div>
+
+	<div class="section white">
+		<p id="Import"></p>
+		<input type="button" name="upload" class="btn">
+	</div>
+
+	<div class="section gray">
+		<p id="Reset"></p>
+		<input type="button" name="reset" class="btn">
+	</div>
+
+</div>
+<br>
+<br>
+<div class="bar-bottom white">
+	<p class="version"></p>
+	<div class="close"><img src="close.png" alt=""></div>
+</div>
+
+</body>
+
+<script>
+
+const osLocale = require('os-locale');
+
+if (osLocale.sync().indexOf("fr_FR") > -1 || osLocale.sync().indexOf("fr_BE") >-1 || osLocale.sync().indexOf("fr_CA") >-1) {
+	var lang = require(__dirname + "/../assets/lang/fr.js");
+} else if (osLocale.sync().indexOf("en_US") > -1 || osLocale.sync().indexOf("en_EN") > -1) {
+	var lang = require(__dirname + "/../assets/lang/en.js");
+} else {
+	var lang = require(__dirname + "/../assets/lang/en.js");
+}
+
+	const settings = require("electron-settings");
+	const AutoLaunch = require('auto-launch');
+	const remote = require('electron').remote;
+	const fs = require('fs');
+	const {ipcRenderer} = require('electron');
+
+	const appVersion = require('../package.json').version;
+
+	const versionNumber = document.querySelector('.version');
+	const sopen = document.getElementById('SOpen');
+	const saboot = document.getElementById('SAboot');
+	const exportF = document.getElementById('Export');
+	const importF = document.getElementById('Import');
+	const reset = document.getElementById('Reset');
+	const frame = document.getElementById('Frame');
+	const bookmarks = document.getElementById('bkms');
+
+	const checkboxSOpen = document.querySelector("input[name=SOpen]");
+	const checkboxAutoStart = document.querySelector("input[name=AutoStart]");
+	const downloadBtn = document.querySelector("input[name=download]");
+	const uploadBtn = document.querySelector("input[name=upload]");
+	const ResetBtn = document.querySelector("input[name=reset]");
+	const frameBtn = document.querySelector("input[name=Frame]");
+
+	var ShuttleAutoLauncher = new AutoLaunch({
+	    name: 'Shuttle',
+	});
+
+	checkboxAutoStart.addEventListener( 'change', function() {
+	    if(this.checked) {
+			ShuttleAutoLauncher.enable();
+			settings.set('ShuttleAutoLauncher', true);
+	    } else {
+			ShuttleAutoLauncher.disable();
+			settings.set('ShuttleAutoLauncher', false);
+	    }
+	});
+
+	checkboxSOpen.addEventListener( 'change', function() {
+	    if(this.checked) {
+			settings.set('SOpen', true);
+			ipcRenderer.send('SettingSetAlwaysOnTop', true);
+	    } else {
+			settings.set('SOpen', false);
+			ipcRenderer.send('SettingSetAlwaysOnTop', false);
+	    }
+	});
+
+	frameBtn.addEventListener( 'change', function() {
+	    if(this.checked) {
+			settings.set('Frame', true);
+			ipcRenderer.send('SettingSetFrame', true);
+	    } else {
+			settings.set('Frame', false);
+			ipcRenderer.send('SettingSetFrame', false);
+	    }
+	});
+
+	downloadBtn.addEventListener( 'click', function() {
+		downloadFavorites();
+	});
+	uploadBtn.addEventListener( 'click', function() {
+		uploadFavorites();
+	});
+	ResetBtn.addEventListener( 'click', function() {
+		resetFavorites();
+	});
+
+
+	versionNumber.innerHTML += "SHUTTLE VERSION "+appVersion;
+	sopen.innerHTML += lang.SOpen;
+	saboot.innerHTML += lang.SAboot;
+	exportF.innerHTML += lang.Export;
+	importF.innerHTML += lang.Import;
+	reset.innerHTML += lang.ResetBtn;
+	frame.innerHTML += lang.Frame;
+	bookmarks.innerHTML += lang.Bookmarks;
+
+if (settings.get('ShuttleAutoLauncher') == true) {checkboxAutoStart.checked = true;} else {checkboxAutoStart.checked = false;}
+if (settings.get('SOpen') == true) {checkboxSOpen.checked = true;} else {checkboxSOpen.checked = false;}
+if (settings.get('Frame') == true) {frameBtn.checked = true;} else {frameBtn.checked = false;}
+
+document.querySelector(".close").addEventListener("click", function (e) {
+    var window = remote.getCurrentWindow();
+    window.close();
+}); 
+
+
+function downloadFavorites() {
+	var data = fs.readFileSync(__dirname+'/../data.json','utf8');
+	var fileToSave = new Blob([data], {
+	    type: 'application/json',
+	    name: "data.shtd"
+	});
+	saveAs(fileToSave, "data.shtd");
+}
+
+function uploadFavorites() {
+   remote.dialog.showOpenDialog({filters: [{name: 'Shuttle data', extensions: ['shtd']}]}, function (fileNames) { 
+      if(fileNames === undefined) { 
+         console.log("No file selected"); 
+      } else { 
+        console.log(fileNames[0]);
+        fs.createReadStream(fileNames[0]).pipe(fs.createWriteStream(__dirname+'/../data.json'));
+		alert(lang.restartApp);
+      } 
+   });
+
+}
+
+function resetFavorites() {
+	var choice = remote.dialog.showMessageBox({
+		type: 'question',
+		buttons: [lang.Yes, lang.No],
+		title: 'Confirm',
+		message: lang.Reset
+	});
+	if (choice == 0) {
+		console.log('Reset...');
+		fs.writeFile(__dirname+'/../data.json', '[{"web":"changelog.getshuttle.xyz"}', function (err) {
+		    if (err) 
+		        return console.log(err);
+		});
+	}
+}
+</script>
+
+</html>
