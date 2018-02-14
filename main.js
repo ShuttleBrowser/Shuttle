@@ -7,6 +7,9 @@ const osLocale = require('os-locale')
 const electronLocalshortcut = require('electron-localshortcut');
 if(require('electron-squirrel-startup')) return;
 
+let os = require("os").platform()
+let iconPath
+
 const shuttleUpdater = require(`${__dirname}/app/modules/shuttle-updater.js`)
 const locationMsg = require(`${__dirname}/app/modules/lang.js`)
 
@@ -28,6 +31,12 @@ if (settings.get('settings.autostart').value() === true || settings.get('setting
   ShuttleAutoLauncher.enable()
 } else {
   ShuttleAutoLauncher.disable()
+}
+
+if (os === "win32") {
+  iconPath = `${__dirname}/assets/img/icon.ico`
+} else if (os === "linux" || os === "darwin") {
+  iconPath = `${__dirname}/assets/img/icon.png`
 }
 
 // create the window
