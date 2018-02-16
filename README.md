@@ -7,6 +7,7 @@
 
 <p align="center" color="#6a737d">
   <i>The fastest access to your favorite applications.</i><br>
+  <a href="https://paypal.me/shuttleapp" target="_blank">Buy us a coffee !</a>
 </p>
 
 <div align="center">
@@ -31,6 +32,8 @@ You can edit settings by clicking on the gear. Then, you can manage your prefere
 All updates are automatics (checking at the launching of the app). You can also check for updates by clicking on the arrows below the settings.
 
 If you need help for setup, use or just reporting a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz).
+
+Stay in touch by joining us on our [Twitter](https://twitter.com/shuttle_app) and our [Discord](discord.gg/QCFdGq7).
 
 ### Keyboard shortcuts
 
@@ -91,4 +94,4 @@ The logo and all visuals associated are under the [CC BY-NC-ND 3.0](https://crea
 
 ## Current Version
 
-* 2.0.2
+* 2.0.3
