@@ -16,7 +16,7 @@
     "javascript",
     "electron"
   ],
-  "author": "Robin Jullian",
+  "author": "Robin Jullian <robin.jullian@getshuttle.xyz>",
   "license": "NPOSL-3.0",
   "bugs": {
     "url": "https://github.com/robjullian/shuttle/issues"

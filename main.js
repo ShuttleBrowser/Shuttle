@@ -33,16 +33,15 @@ if (settings.get('settings.autostart').value() === true || settings.get('setting
   ShuttleAutoLauncher.disable()
 }
 
-if (os === "win32") {
-  iconPath = `${__dirname}/assets/img/icon.ico`
-} else if (os === "linux" || os === "darwin") {
-  iconPath = `${__dirname}/assets/img/icon.png`
+if (process.platform == 'darwin' || process.platform == 'linux') {
+	iconPath =  __dirname + "/assets/img/icon.png";
+} else if (process.platform == 'win32') {
+	iconPath = __dirname + "/assets/img/icon.ico";
 }
 
-// create the window
 const mb = menubar({
-  icon: `${__dirname}/assets/img/icon.ico`,
-  index: `${__dirname}/views/index.html`,
+  icon: iconPath,
+  index: `file://${__dirname}/views/index.html`,
   width: 395,
   height: 640,
   resizable: false,
@@ -52,6 +51,7 @@ const mb = menubar({
   skipTaskbar: true,
   alwaysOnTop: settings.get('settings.StayOpen').value()
 })
+
 
 mb.on('ready', () => {
   winston.log('Shuttle is ready')
@@ -67,6 +67,14 @@ mb.on('after-create-window', () => {
 
 // create the context menu
 const contextMenu = Menu.buildFromTemplate([
+
+  // about btn
+  {
+    label: locationMsg('showShuttle', osLocale.sync()),
+    click () {
+      mb.showWindow()
+    }
+  },
 
   // about btn
   {

@@ -24,10 +24,11 @@
     "checkForUpdates": "Rechercher des mises a jour",
     "settings": "Options",
     "about": "A propos",
-    "updateAvailible": "Une mise a jour est disponible, voulez vous l'installer ?"
+    "updateAvailible": "Une mise a jour est disponible, voulez vous l'installer ?",
+    "showShuttle": "Afficher Shuttle"
   },
   "en": {
-    "addBookmarks": "Enter the url of a website",
+    "addBookmark": "Enter the url of a website",
     "removeBookmarks": "Removing bookmark ?",
     "quickSearch": "Enter your quick search bellow ?",
     "screenDone": "Screenshot successfully done",
@@ -51,6 +52,7 @@
     "checkForUpdates": "Check for updates",
     "settings": "Settings",
     "about": "About",
-    "updateAvailible": "An update is available, do you want to install it ?"
+    "updateAvailible": "An update is available, do you want to install it ?",
+    "showShuttle": "Show Shuttle"
   }
 }
