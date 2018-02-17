@@ -43,14 +43,20 @@
     "compression": "maximum",
     "asar": "true",
     "win": {
-      "target": "nsis",
+      "target": [
+        "NSIS",
+        "zip"
+      ],
       "icon": "./assets/img/icon.ico",
       "publish": [
         "github"
       ]
     },
     "linux": {
-      "target": "deb",
+      "target": [
+        "deb",
+        "tar.gz"
+      ],
       "icon": "./assets/img/icon.png",
       "synopsis": "The fastest access to your favorite applications",
       "description": "The fastest access to your favorite applications",
