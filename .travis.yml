@@ -1,7 +1,24 @@
 language: node_js
 node_js:
   - '8'
+os:
+  - linux
 notifications:
   email:
     on_success: never
     on_failure: always
+install:
+  - npm install -g electron-builder
+  - npm install
+after_success:
+  - electron-builder --linux --windows
+deploy:
+  provider: releases
+  api_key: GITHUB_TOKEN
+  skip_cleanup: true
+  file_glob: true
+  file:
+    - "dist/shuttle*.exe"
+    - "dist/shuttle*.deb"
+    - "dist/shuttle*.zip"
+    - "dist/shuttle*.tar.gz"
