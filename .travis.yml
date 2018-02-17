@@ -22,3 +22,8 @@ deploy:
     - "dist/shuttle*.deb"
     - "dist/shuttle*.zip"
     - "dist/shuttle*.tar.gz"
+cache:
+  directories:
+    - node_modules
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
