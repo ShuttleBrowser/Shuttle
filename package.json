@@ -63,7 +63,7 @@
       "category": "Network"
     },
     "mac": {
-      "icon": "./assets/img/icon.png",
+      "icon": "./assets/img/logo.icns",
       "category": "public.app-category.productivity"
     }
   }
