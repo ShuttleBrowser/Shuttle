@@ -61,6 +61,10 @@
       "synopsis": "The fastest access to your favorite applications",
       "description": "The fastest access to your favorite applications",
       "category": "Network"
+    },
+    "mac": {
+      "icon": "./assets/img/icon.png",
+      "category": "public.app-category.productivity"
     }
   }
 }
