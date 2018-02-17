@@ -19,9 +19,11 @@ deploy:
   skip_cleanup: true
   file_glob: true
   file:
+    - "dist/latest.yml"
     - "dist/shuttle*.exe"
     - "dist/shuttle*.deb"
     - "dist/shuttle*.zip"
+    - "dist/shuttle*.dmg"
     - "dist/shuttle*.tar.gz"
 cache:
   directories:
