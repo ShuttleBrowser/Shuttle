@@ -1,0 +1,42 @@
+language: node_js
+node_js:
+  - '8'
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.2
+      env:
+        - ELECTRON_CACHE=$HOME/.cache/electron
+        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+install:
+  - npm install
+after_success:
+  - npm run dist
+  - cd dist ; for file in * ; do mv "$file" "${file// /-}" ; done ; cd ..
+  - cd dist ; for file in * ; do mv "$file" "${file//shuttle./shuttle-}" ; done ; cd ..
+  - cd dist ; for file in * ; do mv "$file" "${file//shuttle-/Shuttle-}" ; done ; cd ..
+deploy:
+  provider: releases
+  api_key:
+    secure: gbkgZzoYJW1qDGZ/eR/Py1Y9dm1mwozICtkiioqiIjJhkAcqdxpPrRxDI8UoMKEK5cL+4mksJBDKemeUPkvKv9ucEvbO8pi3OF/H0UHZ+G97tGNH6CVeZwzcL48qJ2XhZutiIV1VPDSeFsb035w2mj5yL30qcVajG183S0vWi9dLN8913NszuKC2RWxjgu610DTL3F10kKlxRj2SGwYfQ19C/2FSVMG8QbmraadUZCoNBLQG9VOD0MxL9OHHJLbwhAmhzEhc6n4ewGBjmUY3SDahMXUrxpwdKxCWD9tBATA1kh7QorRaxU6jA/d6T+U8AcbVhgWouyvEZib2ks74Dnjv+NhVV1C+kBp7YG9Fr9VRIYAeW+8l349K1M7BkDaMNhAUqjGeAJQerUGhFAKwx6ycVQCKVCy//2WGoqygbHw5Z0LVElhIuQmMEuAJmJ9MjNOLrZxD++uPwrHW9FqtIwugZanUZmKt0Nj55tX+jlsZ5Se0cPPyLCFku+/csX3tSMBa7jOzG7pHVqt7zRoCDlEihIx/1cEqA6tKVOfdrZXaN3AUn3ijfIBhw0FE1xPbD3aWOktxzfWC9QiDULgjszx/MA0kBEH+zLK7ES5zo+7IIEpaF1NjFHQ+WY/2+M8Si+6uOwfLadvNNNTJ7Z/QrukAuVqKMBE7blP7FNIska0=
+  skip_cleanup: true
+  file_glob: true
+  file:
+    - "dist/latest.yml"
+    - "dist/latest-mac.yml"
+    - "dist/Shuttle*.exe"
+    - "dist/Shuttle*.deb"
+    - "dist/Shuttle*.zip"
+    - "dist/Shuttle*.dmg"
+    - "dist/Shuttle*.tar.gz"
+  on:
+    tags: true
+cache:
+  directories:
+    - node_modules
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
