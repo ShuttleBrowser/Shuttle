@@ -35,6 +35,8 @@ deploy:
     - "dist/Shuttle*.zip"
     - "dist/Shuttle*.dmg"
     - "dist/Shuttle*.tar.gz"
+  on:
+    tags: true
 cache:
   directories:
     - node_modules
