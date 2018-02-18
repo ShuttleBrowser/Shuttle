@@ -46,11 +46,7 @@
       "target": [
         "NSIS",
         "zip"
-      ],
-      "publish": {
-        "provider": "generic",
-        "url": "shuttle-setup-2.0.3.exe"
-      }
+      ]
     },
     "linux": {
       "target": [
