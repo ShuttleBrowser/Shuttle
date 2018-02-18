@@ -8,10 +8,13 @@ notifications:
     on_success: never
     on_failure: always
 install:
-  - npm install -g electron-builder
   - npm install
 after_success:
+  - npm install -g electron-builder
   - electron-builder --linux --windows --mac
+  - cd dist ; for file in * ; do mv "$file" "${file// /-}" ; done ; cd ..
+  - cd dist ; for file in * ; do mv "$file" "${file//shuttle./shuttle-}" ; done ; cd ..
+  - cd dist ; for file in * ; do mv "$file" "${file//shuttle-/Shuttle-}" ; done ; cd ..
 deploy:
   provider: releases
   api_key:
@@ -20,11 +23,11 @@ deploy:
   file_glob: true
   file:
     - "dist/latest.yml"
-    - "dist/shuttle*.exe"
-    - "dist/shuttle*.deb"
-    - "dist/shuttle*.zip"
-    - "dist/shuttle*.dmg"
-    - "dist/shuttle*.tar.gz"
+    - "dist/Shuttle*.exe"
+    - "dist/Shuttle*.deb"
+    - "dist/Shuttle*.zip"
+    - "dist/Shuttle*.dmg"
+    - "dist/Shuttle*.tar.gz"
 cache:
   directories:
     - node_modules
