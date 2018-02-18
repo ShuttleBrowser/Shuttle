@@ -1,8 +1,14 @@
 language: node_js
 node_js:
   - '8'
-os:
-  - osx
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.2
+      env:
+        - DEBUG=electron-builder
+        - ELECTRON_CACHE=$HOME/.cache/electron
+        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 notifications:
   email:
     on_success: never
@@ -10,11 +16,12 @@ notifications:
 install:
   - npm install
 after_success:
-  - npm install -g electron-builder
-  - electron-builder --linux --windows --mac
+  - npm run dist
+  - ls
   - cd dist ; for file in * ; do mv "$file" "${file// /-}" ; done ; cd ..
   - cd dist ; for file in * ; do mv "$file" "${file//shuttle./shuttle-}" ; done ; cd ..
   - cd dist ; for file in * ; do mv "$file" "${file//shuttle-/Shuttle-}" ; done ; cd ..
+  - ls dist
 deploy:
   provider: releases
   api_key:
@@ -23,6 +30,7 @@ deploy:
   file_glob: true
   file:
     - "dist/latest.yml"
+    - "dist/latest-mac.yml"
     - "dist/Shuttle*.exe"
     - "dist/Shuttle*.deb"
     - "dist/Shuttle*.zip"
