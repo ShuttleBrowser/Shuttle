@@ -11,34 +11,36 @@
 </p>
 
 <div align="center">
-
-<img src="https://api.travis-ci.org/KazeJiyu/Shuttle.svg?branch=master">
-
+  <img src="https://api.travis-ci.org/KazeJiyu/Shuttle.svg?branch=master">
 </div>
-<br>
+
+## Installation
+
+Shuttle's last stable version can be downloaded from either [our website](https://getshuttle.xyz) or [GitHub releases](https://github.com/robjullian/shuttle/releases).
+
+Working on Microsoft Windows (7+), GNU/Linux Debian (Xfce and Mate) and MacOS (1.9+).
+_Not deployed on MacOS_
 
 ## Getting Started
 
-Launch Shuttle by clicking his shortcut on the desktop (on Windows).
-The program will started in the notification center, and can be open by a simple click.
+On Windows, Shuttle can be launched by clicking on its shortcut which can be found directly on the desktop or from the Start menu.
+The program should then start in the notification center. Its icon can be found in the system tray, at the bottom right of the screen. Clicking on its icon will show Shuttle's main window.
 
-For adding a website, just click on the "plus" button. A window will open, then put the url of the website you want and click on add.
-The website will appear above to the "plus" button.
-This action can be repeat any time.
+In order to add a new website (we refer to them as "bookmarks") just click on the "plus" `(+)` button. A dialog will open to ask you for the URL of the website you want to add. Enter it and validate to see a new icon being added to the bookmarks bar. You can now click on this icon at any time to display the website.
 
-You can delete a favorites by right-clicking on his icon, then a window will open, and click "Continue".
+A bookmark can be deleted by right-clicking on its icon.
 
-You can edit settings by clicking on the gear. Then, you can manage your preferences like turning off "boot starting" or turning on "stay open".
+The settings can be edited by clicking on the gear. They make possible to manage your preferences by offering, for instance, to launch Shuttle on boot or to force Shuttle to stay opened.
 
-All updates are automatics (checking at the launching of the app). You can also check for updates by clicking on the arrows below the settings.
+All updates are automatic and new versions are checked at the launch of the application. You can also search for updates by clicking on the arrows below the settings.
 
-If you need help for setup, use or just reporting a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz).
+If you need help to setup or use Shuttle, or you want to report a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz).
 
-Stay in touch by joining us on our [Twitter](https://twitter.com/shuttle_app) and our [Discord](discord.gg/QCFdGq7).
+Stay in touch by joining us on [Twitter](https://twitter.com/shuttle_app) or [Discord](discord.gg/QCFdGq7).
 
 ### Keyboard shortcuts
 
-<i>Currently in developement.</i>
+_Currently in developement._
 
 * Add bookmark : <kbd>Ctrl</kbd> <kbd>+</kbd>
 * Remove bookmark : <kbd>Ctrl</kbd> <kbd>-</kbd>
@@ -49,7 +51,7 @@ Stay in touch by joining us on our [Twitter](https://twitter.com/shuttle_app) an
 
 ### Storage
 
-Shuttle store all informations of websites you use in a json file.
+Shuttle stores informations about your current bookmarks in a JSON file:
 
 ```json
 {
@@ -70,11 +72,6 @@ Shuttle store all informations of websites you use in a json file.
 }
 ```
 
-## Deployment
-
-Working on Microsoft Windows (7+), GNU/Linux Debian (Xfce and Mate) and MacOS (1.9+).<br>
-_Not deployed on MacOS_
-
 ## Built With
 
 * [Electron](https://electron.atom.io/) - NodeJS Module
@@ -91,7 +88,7 @@ See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contri
 ## License
 
 This project is licensed under the [NPOSL 3.0](https://opensource.org/licenses/NPOSL-3.0) License.<br>
-The logo and all visuals associated are under the [CC BY-NC-ND 3.0](https://creativecommons.org/licenses/by-nc-nd/3.0/) License.
+The logo and all associated visuals are under the [CC BY-NC-ND 3.0](https://creativecommons.org/licenses/by-nc-nd/3.0/) License.
 
 ## Current Version
 
