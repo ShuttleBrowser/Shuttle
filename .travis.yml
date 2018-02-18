@@ -16,11 +16,9 @@ install:
   - npm install
 after_success:
   - npm run dist
-  - ls
   - cd dist ; for file in * ; do mv "$file" "${file// /-}" ; done ; cd ..
   - cd dist ; for file in * ; do mv "$file" "${file//shuttle./shuttle-}" ; done ; cd ..
   - cd dist ; for file in * ; do mv "$file" "${file//shuttle-/Shuttle-}" ; done ; cd ..
-  - ls dist
 deploy:
   provider: releases
   api_key:
