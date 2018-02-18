@@ -48,9 +48,10 @@
         "zip"
       ],
       "icon": "./assets/img/icon.ico",
-      "publish": [
-        "github"
-      ]
+      "publish": {
+        "provider": "generic",
+        "url": "shuttle-setup-2.0.3.exe"
+      }
     },
     "linux": {
       "target": [
@@ -61,10 +62,6 @@
       "synopsis": "The fastest access to your favorite applications",
       "description": "The fastest access to your favorite applications",
       "category": "Network"
-    },
-    "mac": {
-      "icon": "./assets/img/logo.icns",
-      "category": "public.app-category.productivity"
     }
   }
 }
