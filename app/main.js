@@ -199,6 +199,14 @@ const shuttle = {
     }
   },
 
+  viewReload: () => {
+    if (currentBookmarkId === 'error') {
+      view.goForward()
+    } else {
+      view.reload()
+    }
+  },
+
   showControlBar: (id, event) => {
     if (event === 'show') {
       controlBar.style.display = 'block'
@@ -297,6 +305,7 @@ shuttle.showFrame(settings.get('settings.ShowFrame').value())
 shuttle.reloadAddButton()
 
 view.addEventListener('did-fail-load', () => {
+  currentBookmarkId = 'error'
   if (navigator.onLine === false) {
     view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION')
   } else {
