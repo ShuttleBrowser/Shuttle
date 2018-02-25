@@ -168,6 +168,15 @@ hr {
 	transition: 0.5s;
 }
 
+.loader {
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 99999;
+	margin-left: 18px;
+	visibility: hidden;
+}
+
 ::-webkit-scrollbar {
     width: 0px;
     height: 0px;

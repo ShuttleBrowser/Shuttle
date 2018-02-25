@@ -332,15 +332,29 @@ view.addEventListener('dom-ready', () => {
 
 view.addEventListener('enter-html-full-screen', () => {
   browser.setFullScreen(true)
-  bookmarksBar.style.display = 'none'
-  controlBar.style.display = 'none'
+  bookmarksBar.style.visibility = 'hidden'
+  controlBar.style.visibility = 'hidden'
+  document.querySelector('.add-btn').style.visibility = 'hidden'
+  document.querySelector('.btn-bar').style.visibility = 'hidden'
   view.style.left = '0px'
 })
 view.addEventListener('leave-html-full-screen', () => {
   browser.setFullScreen(false)
-  bookmarksBar.style.display = 'block'
-  controlBar.style.display = 'block'
+  bookmarksBar.style.visibility = 'visible'
+  controlBar.style.visibility = 'visible'
+  document.querySelector('.add-btn').style.visibility = 'visible'
+  document.querySelector('.btn-bar').style.visibility = 'visible'
   view.style.left = '35px'
+})
+
+view.addEventListener('did-start-loading', () => {
+  view.style.visibility = 'hidden'
+  document.querySelector('.loader').style.visibility = 'visible'
+})
+
+view.addEventListener('did-stop-loading', () => {
+  document.querySelector('.loader').style.visibility = 'hidden'
+  view.style.visibility = 'visible'
 })
 
 ipcRenderer.on('addframe', (event, arg) => {
