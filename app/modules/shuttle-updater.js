@@ -11,6 +11,10 @@ app.on('ready', () => {
   autoUpdater.checkForUpdates();
 })
 
+setInterval(() => {
+  autoUpdater.checkForUpdates();
+}, 120000)
+
 autoUpdater.on('checking-for-update', () => {
   console.log('checking for update')
 });
