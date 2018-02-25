@@ -51,7 +51,7 @@ const shuttle = {
   /** Initializes the bookmarks bar with given bookmarks */
   initBookmarks: (bkmarks) => {
     bookmarksBar.innerHTML = ''
-    bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadChangelog()"><img src="" alt=""></a><hr>`
+    bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadView('changelog.getshuttle.xyz')"><img src="" alt=""></a><hr>`
     bookmarksBar.innerHTML += `<div class="bookmarks-zone"></div>`
     for (i in bkmarks) {
       maxId = Math.max(maxId, bkmarks[i].id)
@@ -187,16 +187,6 @@ const shuttle = {
     currentBookmarkId = id
   },
 
-  loadChangelog: () => {
-    setTimeout(() => {
-      if (navigator.onLine === true) {
-        shuttle.loadView('changelog.getshuttle.xyz')
-      } else {
-        view.loadURL(__dirname + '/changelog.html')
-      }
-    }, 500)
-  },
-
   viewBack: () => {
     if (view.canGoBack()) {
       view.goBack()
@@ -206,6 +196,14 @@ const shuttle = {
   viewForward: () => {
     if (view.canGoForward()) {
       view.goForward()
+    }
+  },
+
+  viewReload: () => {
+    if (currentBookmarkId === 'error') {
+      view.goForward()
+    } else {
+      view.reload()
     }
   },
 
@@ -305,9 +303,9 @@ const shuttle = {
 shuttle.initBookmarks(bookmarks)
 shuttle.showFrame(settings.get('settings.ShowFrame').value())
 shuttle.reloadAddButton()
-shuttle.loadChangelog()
 
 view.addEventListener('did-fail-load', () => {
+  currentBookmarkId = 'error'
   if (navigator.onLine === false) {
     view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION')
   } else {
@@ -343,15 +341,29 @@ view.addEventListener('dom-ready', () => {
 
 view.addEventListener('enter-html-full-screen', () => {
   browser.setFullScreen(true)
-  bookmarksBar.style.display = 'none'
-  controlBar.style.display = 'none'
+  bookmarksBar.style.visibility = 'hidden'
+  controlBar.style.visibility = 'hidden'
+  document.querySelector('.add-btn').style.visibility = 'hidden'
+  document.querySelector('.btn-bar').style.visibility = 'hidden'
   view.style.left = '0px'
 })
 view.addEventListener('leave-html-full-screen', () => {
   browser.setFullScreen(false)
-  bookmarksBar.style.display = 'block'
-  controlBar.style.display = 'block'
+  bookmarksBar.style.visibility = 'visible'
+  controlBar.style.visibility = 'visible'
+  document.querySelector('.add-btn').style.visibility = 'visible'
+  document.querySelector('.btn-bar').style.visibility = 'visible'
   view.style.left = '35px'
+})
+
+view.addEventListener('did-start-loading', () => {
+  view.style.visibility = 'hidden'
+  document.querySelector('.loader').style.visibility = 'visible'
+})
+
+view.addEventListener('did-stop-loading', () => {
+  document.querySelector('.loader').style.visibility = 'hidden'
+  view.style.visibility = 'visible'
 })
 
 ipcRenderer.on('addframe', (event, arg) => {
