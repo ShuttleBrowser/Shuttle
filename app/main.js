@@ -51,7 +51,7 @@ const shuttle = {
   /** Initializes the bookmarks bar with given bookmarks */
   initBookmarks: (bkmarks) => {
     bookmarksBar.innerHTML = ''
-    bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadChangelog()"><img src="" alt=""></a><hr>`
+    bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadView('changelog.getshuttle.xyz')"><img src="" alt=""></a><hr>`
     bookmarksBar.innerHTML += `<div class="bookmarks-zone"></div>`
     for (i in bkmarks) {
       maxId = Math.max(maxId, bkmarks[i].id)
@@ -187,16 +187,6 @@ const shuttle = {
     currentBookmarkId = id
   },
 
-  loadChangelog: () => {
-    setTimeout(() => {
-      if (navigator.onLine === true) {
-        shuttle.loadView('changelog.getshuttle.xyz')
-      } else {
-        view.loadURL(__dirname + '/changelog.html')
-      }
-    }, 500)
-  },
-
   viewBack: () => {
     if (view.canGoBack()) {
       view.goBack()
@@ -305,7 +295,6 @@ const shuttle = {
 shuttle.initBookmarks(bookmarks)
 shuttle.showFrame(settings.get('settings.ShowFrame').value())
 shuttle.reloadAddButton()
-shuttle.loadChangelog()
 
 view.addEventListener('did-fail-load', () => {
   if (navigator.onLine === false) {
