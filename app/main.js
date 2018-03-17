@@ -304,12 +304,21 @@ shuttle.initBookmarks(bookmarks)
 shuttle.showFrame(settings.get('settings.ShowFrame').value())
 shuttle.reloadAddButton()
 
-view.addEventListener('did-fail-load', () => {
+view.addEventListener('crashed', () => {
+  view.reload()
+})
+
+view.addEventListener('did-fail-load', (errorCode, errorDescription, validatedURL) => {
+  console.log()
   currentBookmarkId = 'error'
   if (navigator.onLine === false) {
     view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION')
   } else {
-    view.loadURL(__dirname + '/no_internet.html?text=AN ERROR OCCURED')
+    if (errorCode.errorDescription) {
+      view.loadURL(__dirname + `/no_internet.html?text=${errorCode.errorDescription}`)
+    } else {
+      view.loadURL(__dirname + `/no_internet.html?text=UNKNOW ERROR`)
+    }
   }
 })
 
@@ -327,7 +336,7 @@ view.addEventListener('did-finish-load', () => {
 view.addEventListener('dom-ready', () => {
   view.insertCSS(`\
   ::-webkit-scrollbar { 
-    width: 10px; 
+    width: 7px; 
     height: 7px; 
     background-color: #F4F4F4; 
     z-index: 9999999;

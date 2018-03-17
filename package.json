@@ -34,7 +34,7 @@
     "winston": "^2.4.0"
   },
   "devDependencies": {
-    "electron": "^1.8.2",
+    "electron": "^1.8.4",
     "electron-builder": "^20.0.5",
     "electron-packager": "^10.1.2",
     "standard": "^10.0.3"
