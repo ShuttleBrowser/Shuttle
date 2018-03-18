@@ -42,7 +42,7 @@
   "build": {
     "appId": "xyz.robjullian.shuttle",
     "compression": "maximum",
-    "asar": "true",
+    "asar": "false",
     "win": {
       "target": [
         "NSIS",

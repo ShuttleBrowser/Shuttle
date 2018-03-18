@@ -110,7 +110,7 @@ const shuttle = {
       callback: function (removalConfirmed) {
         if (removalConfirmed) {
           bookmarkUrl = idToUrl[id]
-          
+
           shuttle.removeBookmark(bookmarkUrl, id)
           shuttle.removeBookmarkFromBar(id)
 
@@ -125,7 +125,7 @@ const shuttle = {
       }
     })
   },
-  
+
   /** Removes a bookmark and persists the change */
   removeBookmark: (url, id) => {
     const index = db.get('bookmarks').value().findIndex(bookmark => bookmark.id == id)
@@ -133,7 +133,7 @@ const shuttle = {
 
     delete idToUrl[id]
   },  
-  
+
   /** Removes a bookmark from the bookmarks bar */
   removeBookmarkFromBar: (id) => {
     document.querySelector(`#id-${id}`).remove()
@@ -303,10 +303,6 @@ const shuttle = {
 shuttle.initBookmarks(bookmarks)
 shuttle.showFrame(settings.get('settings.ShowFrame').value())
 shuttle.reloadAddButton()
-
-view.addEventListener('crashed', () => {
-  view.reload()
-})
 
 view.addEventListener('did-fail-load', (errorCode, errorDescription, validatedURL) => {
   console.log()

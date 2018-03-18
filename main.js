@@ -1,11 +1,10 @@
-const {Menu, ipcMain, app, net, shell} = require('electron')
+const {Menu, ipcMain, app, net, shell, session} = require('electron')
 const lowdb = require('lowdb')
 const menubar = require('menubar')
 const winston = require('winston')
 const AutoLaunch = require('auto-launch')
 const osLocale = require('os-locale')
-const electronLocalshortcut = require('electron-localshortcut');
-if(require('electron-squirrel-startup')) return;
+const electronLocalshortcut = require('electron-localshortcut')
 
 let os = require("os").platform()
 let iconPath
@@ -34,7 +33,7 @@ if (settings.get('settings.autostart').value() === true || settings.get('setting
 }
 
 if (process.platform == 'darwin' || process.platform == 'linux') {
-	iconPath =  __dirname + "/assets/img/icon.png";
+  iconPath =  __dirname + "/assets/img/icon.png";
 } else if (process.platform == 'win32') {
 	iconPath = __dirname + "/assets/img/icon.ico";
 }
@@ -49,13 +48,15 @@ const mb = menubar({
   autoHideMenuBar: true,
   frame: false,
   skipTaskbar: true,
+  backgroundColor: '#ffffff',
+  preloadWindow: true,
   alwaysOnTop: settings.get('settings.StayOpen').value()
 })
-
 
 mb.on('ready', () => {
   winston.log('Shuttle is ready')
   mb.tray.setContextMenu(contextMenu)
+  mb.window.openDevTools()
 })
 
 mb.on('after-create-window', () => {
@@ -132,45 +133,3 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
 ipcMain.on('SettingShowFrame', (event, arg) => {
   mb.window.webContents.send('addframe', arg)
 })
-
-var handleStartupEvent = function() {
-  if (process.platform !== 'win32') {
-    return false;
-  }
-
-  var squirrelCommand = process.argv[1];
-  switch (squirrelCommand) {
-    case '--squirrel-install':
-    case '--squirrel-updated':
-
-      // Optionally do things such as:
-      //
-      // - Install desktop and start menu shortcuts
-      // - Add your .exe to the PATH
-      // - Write to the registry for things like file associations and
-      //   explorer context menus
-
-      // Always quit when done
-      app.quit();
-
-      return true;
-    case '--squirrel-uninstall':
-      // Undo anything you did in the --squirrel-install and
-      // --squirrel-updated handlers
-
-      // Always quit when done
-      app.quit();
-
-      return true;
-    case '--squirrel-obsolete':
-      // This is called on the outgoing version of your app before
-      // we update to the new version - it's the opposite of
-      // --squirrel-updated
-      app.quit();
-      return true;
-  }
-};
-
-if (handleStartupEvent()) {
-  return;
-}
