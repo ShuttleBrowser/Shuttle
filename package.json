@@ -1,6 +1,6 @@
 {
   "name": "shuttle",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "The fastest access to your favorite applications",
   "main": "main.js",
   "scripts": {
