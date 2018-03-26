@@ -92,4 +92,4 @@ The logo and all associated visuals are under the [CC BY-NC-ND 3.0](https://crea
 
 ## Current Version
 
-* 2.0.3
+* 2.0.5
