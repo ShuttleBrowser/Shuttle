@@ -51,7 +51,7 @@ _Currently in developement._
 * Take screenshot : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>S</kbd>
 * Show/Hide Shuttle : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>X</kbd><br>
 <br>
-_Note: the_ <kbd>Ctrl</kbd> _key is replaced by_ <kbd>Cmd</kbd> _key on MacOs._
+Note: the <kbd>Ctrl</kbd> key is replaced by <kbd>Cmd</kbd> key on MacOs.
 
 ### Storage
 
