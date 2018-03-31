@@ -390,12 +390,28 @@ ipcRenderer.on('addframe', (event, arg) => {
   shuttle.showFrame(arg)
 })
 
+ipcRenderer.on('addBmks', (event, arg) => {
+  shuttle.askNewBookAddress()
+})
+
 ipcRenderer.on('openSettings', (event, arg) => {
   shuttle.openSettings()
 })
 
 ipcRenderer.on('refreshApp', (event, arg) => {
   location.reload()
+})
+
+ipcRenderer.on('home', (event, arg) => {
+  shuttle.loadView('changelog.getshuttle.xyz')
+})
+
+ipcRenderer.on('quicksearch', (event, arg) => {
+  shuttle.showSearchBar()
+})
+
+ipcRenderer.on('screenshot', (event, arg) => {
+  shuttle.makeScreenshot()
 })
 
 window.addEventListener('online', () => {

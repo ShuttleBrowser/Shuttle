@@ -1,4 +1,4 @@
-const {Menu, ipcMain, app, net, shell, session} = require('electron')
+const {Menu, ipcMain, app, net, shell, session, globalShortcut} = require('electron')
 const lowdb = require('lowdb')
 const menubar = require('menubar')
 const winston = require('winston')
@@ -8,6 +8,7 @@ const electronLocalshortcut = require('electron-localshortcut')
 
 let os = require("os").platform()
 let iconPath
+let toggleShow = false
 
 const shuttleUpdater = require(`${__dirname}/app/modules/shuttle-updater.js`)
 const locationMsg = require(`${__dirname}/app/modules/lang.js`)
@@ -38,7 +39,7 @@ if (process.platform == 'darwin' || process.platform == 'linux') {
 	iconPath = __dirname + "/assets/img/icon.ico";
 }
 
-const mb = menubar({
+let mb = menubar({
   icon: iconPath,
   index: `file://${__dirname}/views/index.html`,
   width: 395,
@@ -56,6 +57,38 @@ const mb = menubar({
 mb.on('ready', () => {
   winston.log('Shuttle is ready')
   mb.tray.setContextMenu(contextMenu)
+
+  /** LOCAL SHORTCUTS */
+  globalShortcut.register('CmdOrCtrl+Shift+X', () => {
+    if (!toggleShow) {
+      mb.showWindow()
+      console.log('show window')
+    } else {
+      mb.hideWindow()
+      console.log('hide window')
+    }
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+P', () => {
+    mb.window.webContents.send('addBmks')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+H', () => {
+    mb.window.webContents.send('home')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+S', () => {
+    mb.window.webContents.send('openSettings')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+K', () => {
+    mb.window.webContents.send('quicksearch')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+Shift+S', () => {
+    mb.window.webContents.send('screenshot')
+  })
+
 })
 
 mb.on('after-create-window', () => {
@@ -63,6 +96,14 @@ mb.on('after-create-window', () => {
   mb.tray.on('right-click', () => {
     mb.tray.popUpContextMenu(contextMenu)
   })
+})
+
+mb.on('hide', () => {
+  toggleShow = false
+})
+
+mb.on('show', () => {
+  toggleShow = true
 })
 
 // create the context menu
