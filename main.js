@@ -56,7 +56,6 @@ const mb = menubar({
 mb.on('ready', () => {
   winston.log('Shuttle is ready')
   mb.tray.setContextMenu(contextMenu)
-  mb.window.openDevTools()
 })
 
 mb.on('after-create-window', () => {
