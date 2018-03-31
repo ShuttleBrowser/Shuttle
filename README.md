@@ -43,12 +43,15 @@ Stay in touch by joining us on [Twitter](https://twitter.com/shuttle_app) or [Di
 
 _Currently in developement._
 
-* Add bookmark : <kbd>Ctrl</kbd> <kbd>+</kbd>
-* Remove bookmark : <kbd>Ctrl</kbd> <kbd>-</kbd>
+* Add bookmark : <kbd>Ctrl</kbd> <kbd>P</kbd>
+* Remove bookmark : <kbd>Ctrl</kbd> <kbd>R</kbd> *(not implemented)*
 * Show home page: <kbd>Ctrl</kbd> <kbd>H</kbd>
 * Show settings : <kbd>Ctrl</kbd> <kbd>S</kbd>
-* Open quicksearch : <kbd>Ctrl</kbd> <kbd>Q</kbd>
+* Open quicksearch : <kbd>Ctrl</kbd> <kbd>K</kbd>
 * Take screenshot : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>S</kbd>
+* Show/Hide Shuttle : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>X</kbd><br>
+<br>
+_Note: the_ <kbd>Ctrl</kbd> _key is replaced by_ <kbd>Cmd</kbd> _key on MacOs._
 
 ### Storage
 
@@ -93,4 +96,4 @@ The logo and all associated visuals are under the [CC BY-NC-ND 3.0](https://crea
 
 ## Current Version
 
-* 2.0.5
+* 2.0.6
