@@ -4,7 +4,6 @@ const winston = require('winston')
 const {remote, ipcRenderer} = require('electron')
 const {app} = require('electron').remote;
 const lowdb = require('lowdb')
-const favicon = require('favicon');
 
 const locationMsg = require(`${__dirname}/../app/modules/lang.js`)
 const adapter = require(`${__dirname}/../app/modules/adapter.js`)
@@ -97,13 +96,13 @@ const shuttle = {
       document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('mod:', '')}/icon.png);"></a>`
     } else {
 
-      favicon(favurl, function(err, favicon_url) {
-        if (err || favicon_url === null) {
-          document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../assets/img/no-icon.png);"></a>`
-        } else {
-          document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${favicon_url});"></a>`
-        }
-      });
+      fetch(`http://besticon-demo.herokuapp.com/allicons.json?url=${url}`).then((resp) => resp.json()).then((data) => {
+        document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.icons[0].url});"></a>`
+      }).catch((error) => {
+        document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../assets/img/no-icon.png);"></a>` 
+      }).then(() => {
+        shuttle.reloadAddButton()
+      })
 
     }
     setTimeout(() => {
@@ -313,10 +312,6 @@ const shuttle = {
 shuttle.initBookmarks(bookmarks)
 shuttle.showFrame(settings.get('settings.ShowFrame').value())
 shuttle.reloadAddButton()
-
-setInterval(() => {
-  shuttle.reloadAddButton()
-}, 500)
 
 view.addEventListener('did-fail-load', (errorCode, errorDescription, validatedURL) => {
   console.log()
