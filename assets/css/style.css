@@ -22,6 +22,8 @@ webview {
 
 #settings {
 	visibility: hidden;
+	background-color: white;
+	z-index: 99999;
 }
 
 .btn-bar {
