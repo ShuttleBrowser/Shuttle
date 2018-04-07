@@ -23,7 +23,7 @@ webview {
 #settings {
 	visibility: hidden;
 	background-color: white;
-	z-index: 99999;
+	z-index: 15;
 }
 
 .btn-bar {
@@ -132,6 +132,7 @@ hr {
 	background-color: #F4F4F4;
 	text-align: center;
 	transition: 0.35s;
+	z-index: 20;
 }
 .control-bar i {
 	margin-top: 11px;

@@ -33,6 +33,8 @@ const settingsView = document.querySelector('#settings')
 // get the browser window
 const browser = remote.getCurrentWindow()
 
+let iconGetter = "http://besticon.herokuapp.com"
+
 let bookmarks = db.get('bookmarks').value()
 
 // Manage bookmarks' id & makes possible to access a bookmark from its url
@@ -96,7 +98,7 @@ const shuttle = {
       document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('mod:', '')}/icon.png);"></a>`
     } else {
 
-      fetch(`http://besticon-demo.herokuapp.com/allicons.json?url=${url}`).then((resp) => resp.json()).then((data) => {
+      fetch(`${iconGetter}/allicons.json?url=${url}`).then((resp) => resp.json()).then((data) => {
         document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.icons[0].url});"></a>`
       }).catch((error) => {
         document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../assets/img/no-icon.png);"></a>` 
