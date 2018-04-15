@@ -5,9 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "postinstall": "install-app-deps",
-    "pack": "rimraf app/js-cov && build",
-    "dist": "rimraf app/js-cov && build"
+    "dist": "build -mwl"
   },
   "repository": {
     "type": "git",
