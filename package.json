@@ -1,9 +1,10 @@
 {
   "name": "shuttle",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "The fastest access to your favorite applications",
   "main": "main.js",
   "scripts": {
+    "postinstall": "install-app-deps",
     "start": "electron .",
     "dist": "build -mwl"
   },
@@ -27,15 +28,16 @@
     "electron-localshortcut": "^3.1.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^2.20.1",
+    "is-promise": "^2.1.0",
     "lowdb": "^1.0.0",
     "menubar": "^5.2.3",
     "os-locale": "^2.1.0",
-    "request": "^2.83.0",
+    "request": "^2.87.0",
     "winston": "^2.4.0"
   },
   "devDependencies": {
-    "electron": "^1.8.4",
-    "electron-builder": "^20.0.5",
+    "electron": "^2.0.3",
+    "electron-builder": "^20.17.0",
     "electron-packager": "^10.1.2",
     "standard": "^10.0.3"
   },
@@ -54,7 +56,7 @@
         "deb",
         "tar.gz"
       ],
-      "icon": "./assets/img/icon.png",
+      "icon": "./build/icon.png",
       "synopsis": "The fastest access to your favorite applications",
       "description": "The fastest access to your favorite applications",
       "category": "Network"

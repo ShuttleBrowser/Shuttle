@@ -9,6 +9,8 @@ const electronLocalshortcut = require('electron-localshortcut')
 let os = require("os").platform()
 let iconPath
 let toggleShow = false
+let toggleSkipTaskbar
+let toggleAlwaysOnTop
 
 const shuttleUpdater = require(`${__dirname}/app/modules/shuttle-updater.js`)
 const locationMsg = require(`${__dirname}/app/modules/lang.js`)
@@ -35,8 +37,12 @@ if (settings.get('settings.autostart').value() === true || settings.get('setting
 
 if (process.platform == 'darwin' || process.platform == 'linux') {
   iconPath =  __dirname + "/assets/img/icon.png";
+  toggleSkipTaskbar = false
+  toggleAlwaysOnTop = true
 } else if (process.platform == 'win32') {
-	iconPath = __dirname + "/assets/img/icon.ico";
+  iconPath = __dirname + "/assets/img/icon.ico";
+  toggleSkipTaskbar = true
+  toggleAlwaysOnTop = settings.get('settings.StayOpen').value()
 }
 
 let mb = menubar({
@@ -48,15 +54,17 @@ let mb = menubar({
   title: 'Shuttle',
   autoHideMenuBar: true,
   frame: false,
-  skipTaskbar: true,
+  skipTaskbar: toggleSkipTaskbar,
   backgroundColor: '#ffffff',
   preloadWindow: true,
-  alwaysOnTop: settings.get('settings.StayOpen').value()
+  alwaysOnTop: toggleAlwaysOnTop
 })
 
 mb.on('ready', () => {
   winston.log('Shuttle is ready')
   mb.tray.setContextMenu(contextMenu)
+
+  mb.showWindow()
 
   /** LOCAL SHORTCUTS */
   globalShortcut.register('CmdOrCtrl+Shift+X', () => {
