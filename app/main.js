@@ -33,7 +33,11 @@ const settingsView = document.querySelector('#settings')
 // get the browser window
 const browser = remote.getCurrentWindow()
 
-let iconGetter = "http://besticon.herokuapp.com"
+let iconGetter = "https://besticon.herokuapp.com"
+
+let pcUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36"
+let mobileUserAgent = "Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36"
+let curentUserAgent = mobileUserAgent
 
 let bookmarks = db.get('bookmarks').value()
 
@@ -43,10 +47,12 @@ let maxId = 0
 
 // Make possible to load views one at a time, avoiding did-fail-load events
 let currentBookmarkId
+let currentBookmarkUrl = "https://changelog.getshuttle.xyz"
 let isLoadingAView = false
 let nextBookmarkToDisplay
 
-let settingsIsActive;
+let settingsIsActive
+let userAgentIsPc = false
 
 const shuttle = {
   
@@ -204,8 +210,10 @@ const shuttle = {
   loadView: (url, id = undefined) => {
 
     if (settingsIsActive) {
-      view.style.visibility = "visible"
-      settingsView.style.visibility = "hidden"
+      view.style.opacity = "1"
+      view.style.zIndex = "50"
+      settingsView.style.opacity = "0"
+      settingsView.style.zIndex = "0"
       settingsIsActive = false
     }
 
@@ -220,21 +228,20 @@ const shuttle = {
     }
 
     if (url.startsWith('https://')) {
-        adapter.adapteWebSite(url)
-        view.loadURL(url)
-        isLoadingAView = true
+        currentBookmarkUrl = url
     } else if (url.startsWith('mod:')) {
-        view.loadURL(`${__dirname}/../app/modules/${url.replace('mod:', '')}/index.html`)
-        isLoadingAView = true
+      currentBookmarkUrl = `${__dirname}/../app/modules/${url.replace('mod:', '')}/index.html`
     } else if (url.startsWith('file:///')) {
-        adapter.adapteWebSite(url)
-        view.loadURL(url)
+      currentBookmarkUrl = url    
     } else {
-        url = (url.startsWith('http://')) ? url : 'http://' + url
-        adapter.adapteWebSite(url)
-        view.loadURL(url)
-        isLoadingAView = true
+      url = (url.startsWith('http://')) ? url : 'http://' + url
+      currentBookmarkUrl = url
     }
+
+    adapter.adapteWebSite(currentBookmarkUrl)
+    view.loadURL(currentBookmarkUrl, {userAgent: curentUserAgent})
+    isLoadingAView = true
+
     currentBookmarkId = id
   },
 
@@ -254,7 +261,7 @@ const shuttle = {
     if (currentBookmarkId === 'error') {
       view.goForward()
     } else {
-      view.reload()
+      shuttle.loadView(currentBookmarkUrl)
     }
   },
 
@@ -292,8 +299,11 @@ const shuttle = {
   },
 
   openSettings: () => {
-    view.style.visibility = "hidden"
-    settingsView.style.visibility = "visible"
+    view.style.opacity = "0"
+    view.style.zIndex = "0"
+    settingsView.style.opacity = "1"
+    settingsView.style.zIndex = "50"
+
     settingsIsActive = true
   },
 
@@ -312,7 +322,7 @@ const shuttle = {
   },
 
   reloadAddButton: () => {
-    if (bookmarks.length >= 14) {
+    if (bookmarks.length >= 13) {
       document.querySelector('.add-btn').style.visibility = "hidden"
     } else {
       document.querySelector('.add-btn').style.visibility = "visible"
@@ -322,7 +332,7 @@ const shuttle = {
 
   makeScreenshot: () => {
     view.capturePage((data) => {
-      let img = data.toPng().toString('base64')
+      let img = data.toPNG().toString('base64')
       setTimeout(() => {
         let path = `${app.getPath('downloads')}/Capture${Math.floor((Math.random() * 10000) + 1)}.png`
 
@@ -346,7 +356,37 @@ const shuttle = {
 
       }, 2000);
     });
-  }
+  },
+
+  changeUserAgent: () => {
+    
+    let userAgentBtn = document.querySelector('#userAgentBtn')
+
+    if (userAgentIsPc === false) {
+      
+      view.setAttribute('useragent', pcUserAgent)
+
+      curentUserAgent = pcUserAgent
+      userAgentIsPc = true
+
+      shuttle.viewReload()
+
+      userAgentBtn.innerHTML = '<i class="fa fa-laptop" aria-hidden="true">'
+
+    } else {
+      
+      view.setAttribute('useragent', mobileUserAgent)
+      
+      curentUserAgent = mobileUserAgent
+      userAgentIsPc = false
+      
+      shuttle.viewReload()
+
+      userAgentBtn.innerHTML = '<i class="fa fa-phone" aria-hidden="true">'
+
+    }
+
+  },
 
 }
 
@@ -399,6 +439,7 @@ view.addEventListener('enter-html-full-screen', () => {
   browser.setFullScreen(true)
   bookmarksBar.style.visibility = 'hidden'
   controlBar.style.visibility = 'hidden'
+  titleBar.style.visibility = 'hidden'
   document.querySelector('.add-btn').style.visibility = 'hidden'
   document.querySelector('.btn-bar').style.visibility = 'hidden'
   view.style.left = '0px'
@@ -407,19 +448,18 @@ view.addEventListener('leave-html-full-screen', () => {
   browser.setFullScreen(false)
   bookmarksBar.style.visibility = 'visible'
   controlBar.style.visibility = 'visible'
+  titleBar.style.visibility = 'visible'
   document.querySelector('.add-btn').style.visibility = 'visible'
   document.querySelector('.btn-bar').style.visibility = 'visible'
   view.style.left = '35px'
 })
 
 view.addEventListener('did-start-loading', () => {
-  view.style.visibility = 'hidden'
-  document.querySelector('.loader').style.visibility = 'visible'
+
 })
 
 view.addEventListener('did-stop-loading', () => {
-  document.querySelector('.loader').style.visibility = 'hidden'
-  view.style.visibility = 'visible'
+
 })
 
 ipcRenderer.on('addframe', (event, arg) => {

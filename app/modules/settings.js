@@ -18,11 +18,13 @@ const db = lowdb(LowdbAdapter)
 const checkboxAutoStart = document.querySelector('input[name=SAboot]')
 const checkboxStayOpen = document.querySelector('input[name=SOpen]')
 const checkboxShowFrame = document.querySelector('input[name=SFrame]')
+const checkboxReziseWindow = document.querySelector('input[name=RWindow]')
 
 // all buttons
 const downloadButton = document.querySelector('input[name=download]') 
 const uploadButton = document.querySelector('input[name=upload]') 
 const resetButton = document.querySelector('input[name=reset]') 
+
 //advanced mode
 const showConsoleButton = document.querySelector('input[name=ShowConsole]')
 const reportBugButton = document.querySelector('input[name=report]')
@@ -32,6 +34,7 @@ const clearCacheButton = document.querySelector('input[name=ccache]')
 document.querySelector('#SAboot').innerHTML = locationMsg('settings_StartAtBoot')
 document.querySelector('#SOpen').innerHTML = locationMsg('settings_StayOpen')
 document.querySelector('#SFrame').innerHTML = locationMsg('settings_ShowFrame')
+document.querySelector('#RWindow').innerHTML = locationMsg('settings_ResizeWindow')
 
 document.querySelector('#bkms').innerHTML = locationMsg('bookmarks')
 document.querySelector('#Export').innerHTML = locationMsg('settings_ExportBokmarks')
@@ -75,6 +78,19 @@ checkboxShowFrame.addEventListener('change', () => {
   db.set('settings.ShowFrame', checkboxShowFrame.checked).write()
   ipcRenderer.send('SettingShowFrame', checkboxShowFrame.checked)
   console.log(`ShowFrame: ${checkboxShowFrame.checked}`)
+})
+
+checkboxReziseWindow.addEventListener('change', () => {
+  if (checkboxReziseWindow.checked) {
+    db.set('settings.ResizeWindow', true).write()
+    ipcRenderer.send('SettingResizeWindow', true)
+    console.log(`ReziseWindow : ${true}`)
+  } else {
+    db.set('settings.ResizeWindow', false).write()
+    ipcRenderer.send('SettingResizeWindow', false)
+    console.log(`ReziseWindow : ${false}`)
+  }
+
 })
 
 //////////// BUTTONS ////////////
@@ -121,6 +137,7 @@ clearCacheButton.addEventListener('click', () => {
 if ( db.get('settings.autostart').value() === true || db.get('settings.autostart').value() === undefined ) { checkboxAutoStart.checked = true }
 if ( db.get('settings.StayOpen').value() === true ) { checkboxStayOpen.checked = true }
 if ( db.get('settings.ShowFrame').value() === true ) { checkboxShowFrame.checked = true }
+if ( db.get('settings.ResizeWindow').value() === true ) { checkboxReziseWindow.checked = true }
 
 // All functiion for settings
 const settings = {
@@ -134,7 +151,7 @@ const settings = {
   },
 
   uploadFavorites: () => {
-    remote.dialog.showOpenDialog({filters: [{name: 'Shuttle data', extensions: ['shtd']}]}, function (fileNames) { 
+    remote.dialog.showOpenDialog({filters: [{name: 'Shuttle data', extensions: ['shtd']}]}, (fileNames) => { 
        if(fileNames === undefined) { 
           console.log("No file selected"); 
        } else { 
@@ -154,7 +171,7 @@ const settings = {
     });
     if (choice == 0) {
       console.log('Reset...');
-      fs.writeFile(`${app.getPath('userData')}/db.json`, '', function (err) {
+      fs.writeFile(`${app.getPath('userData')}/db.json`, '', (err) => {
         if (err) {
           return console.log(err);
         } 

@@ -49,7 +49,9 @@ let mb = menubar({
   icon: iconPath,
   index: `file://${__dirname}/views/index.html`,
   width: 395,
+  minWidth: 395,
   height: 640,
+  minHeight: 640,
   resizable: false,
   title: 'Shuttle',
   autoHideMenuBar: true,
@@ -57,7 +59,8 @@ let mb = menubar({
   skipTaskbar: toggleSkipTaskbar,
   backgroundColor: '#ffffff',
   preloadWindow: true,
-  alwaysOnTop: toggleAlwaysOnTop
+  alwaysOnTop: toggleAlwaysOnTop,
+  resizable: settings.get('settings.ResizeWindow').value()
 })
 
 mb.on('ready', () => {
@@ -108,6 +111,7 @@ mb.on('after-create-window', () => {
   mb.tray.on('right-click', () => {
     mb.tray.popUpContextMenu(contextMenu)
   })
+  console.log(mb.window.getSize()[1])
 })
 
 mb.on('hide', () => {
@@ -181,7 +185,21 @@ ipcMain.on('refreshApp', (event, arg) => {
 ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
   mb.setOption('alwaysOnTop', arg)
   mb.hideWindow()
+  setTimeout(() => {
+    mb.showWindow()
+  }, 5)
 })
 ipcMain.on('SettingShowFrame', (event, arg) => {
   mb.window.webContents.send('addframe', arg)
+})
+
+ipcMain.on('SettingResizeWindow', (event, arg) => {
+  mb.window.setResizable(arg)
+  if (arg === false) {
+    mb.window.setSize(396, 641)
+    mb.hideWindow()
+    setTimeout(() => {
+      mb.showWindow()
+    }, 5)
+  }
 })

@@ -6,35 +6,36 @@
 
     <style>
         @font-face {
-            font-family: Light;
-            src: url(../assets/fonts/SourceSanPro-Light.ttf);
+          font-family: Light;
+          src: url(../assets/fonts/SourceSanPro-Light.ttf);
         }
 
         html {
-            overflow: hidden;
-            font-family: 'Light';
+          overflow: hidden;
+          font-family: 'Light';
         }
 
         body {
           text-align: center;
+          background-color: white;
         }
 
         img {
-            position: absolute;
-            left: 50%;
-            top: 40%;
-            transform: translate(-50%);
-            width: 25%;
+          width: 70%;
+          max-width: 200px;
         }
 
         h3 {
-            position: absolute;
-            left: 50%;
-            top: 55%;
-            transform: translate(-50%);
-            font-family: 'Source Sans Pro Light', sans-serif;
-            font-size: 11.5pt;
-            width: 70%;
+          margin-top: 30px;
+          font-family: 'Source Sans Pro Light', sans-serif;
+          font-size: 11.4pt;
+        }
+        
+        .main-content {
+          position: absolute;
+          top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          width: 50%;
         }
     </style>
 
@@ -99,9 +100,11 @@
 
 </head>
 <body>
-<div class="bg"></div>
-<img src="../assets/img/noint.svg" alt="">
-<h3></h3>
+
+  <div class="main-content">
+    <img src="../assets/img/noint.svg" alt="">
+    <h3></h3>
+  </div>
 </body>
 
 <script>
