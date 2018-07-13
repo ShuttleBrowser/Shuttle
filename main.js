@@ -97,6 +97,10 @@ mb.on('ready', () => {
     mb.window.webContents.send('screenshot')
   })
 
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+Shift+I', () => {
+    mb.window.openDevTools()
+  })
+
 })
 
 mb.on('after-create-window', () => {
