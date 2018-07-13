@@ -23,7 +23,7 @@ winston.add(winston.transports.File, { filename: `${__dirname}/../app/logs/Lates
 
 // elements for DOM
 const bookmarksBar = document.querySelector('.bkms-bar')
-const bookmarkZone = document.querySelector('.bookmarks-zone')
+let   bookmarkZone = document.querySelector('.bookmarks-zone')
 const controlBar = document.querySelector('.control-bar')
 const searchBar = document.querySelector('.search-bar')
 const titleBar = document.querySelector('.title-bar')
@@ -61,15 +61,40 @@ const shuttle = {
     }
   },
 
+  radioThisURL: () => {
+    document.querySelector("#radioURL").click()
+  },
+
+  autofocusInput: () => {
+    document.querySelector("#inputURL").focus()
+  },
+
   /** Asks the user the address of the bookmark he wants to add */
   askNewBookAddress: (id = maxId + 1) => {
+      let inputs = [];
+      inputs.push(
+      '<div class="vex-custom-field-wrapper">',
+        '<div class="vex-custom-radio">',
+            '<input type="radio" name="action" checked value="radioURL" id="radioURL" onclick="shuttle.autofocusInput()"><label for="radioURL">' + locationMsg('typeURL') + '</label><br>',
+        '</div>',
+        '<div class="vex-custom-input-wrapper">',
+            '<input name="inputURL" type="text" value="" id="inputURL" onclick="shuttle.radioThisURL()" placeholder="http://" />',
+        '</div>',
+      '</div>')
+
+    inputs.push(
+      '<div class="vex-custom-radio">',
+          '<input type="radio" name="action" value="radioCurrent" id="radioCurrent"><label for="radioCurrent">' + locationMsg('chooseThisURL') + '</label><br>',
+      '</div>')
+    
     vex.dialog.buttons.YES.text = locationMsg('continue')
     vex.dialog.buttons.NO.text = locationMsg('cancel')
-    vex.dialog.prompt({
+    vex.dialog.open({
       message: locationMsg('addBookmark'),
-      placeholder: 'http://',
-      callback: (url) => {
-        if (url) {
+      input: inputs.join(''),
+      callback: (data) => {
+        if (data) {
+          let url = ("inputURL" in data) ? data.inputURL : view.getURL();
           maxId = id
           shuttle.createBookmark(url, id)
           shuttle.addBookmarkToBar(url, id)
@@ -77,6 +102,7 @@ const shuttle = {
         }
       }
     })
+    shuttle.autofocusInput()
   },
   
   /** Creates a new bookmark and persists it */
@@ -110,6 +136,19 @@ const shuttle = {
     setTimeout(() => {
       shuttle.reloadAddButton()
     }, db.get('bookmarks').length * 1000)
+  },
+
+  /** reorder bookmarks and database after sorting */
+  reorderBookmarks: () => {
+    let newBookmarks = [];
+    bookmarkZone = document.querySelector('.bookmarks-zone');
+
+    for(var i = 0; i < bookmarkZone.children.length; i++) {
+        let id = parseInt(bookmarkZone.children[i].id.match(/\d+/)[0]);
+        let bookmark = db.get('bookmarks').find({ id: id}).value();
+        newBookmarks.push(bookmark);
+    }
+    db.set("bookmarks", newBookmarks).write();
   },
   
   /** Asks the user to confirm the removal of a given bookmark */
@@ -191,8 +230,9 @@ const shuttle = {
         adapter.adapteWebSite(url)
         view.loadURL(url)
     } else {
+        url = (url.startsWith('http://')) ? url : 'http://' + url
         adapter.adapteWebSite(url)
-        view.loadURL('http://' + url)
+        view.loadURL(url)
         isLoadingAView = true
     }
     currentBookmarkId = id
@@ -411,7 +451,23 @@ ipcRenderer.on('screenshot', (event, arg) => {
   shuttle.makeScreenshot()
 })
 
+ipcRenderer.on('bookmarkThisPage', (event, arg) => {
+  shuttle.bookmarkThisPage()
+})
+
 window.addEventListener('online', () => {
   shuttle.initBookmarks(bookmarks)
   shuttle.loadView('https://changelog.getshutttle.xyz')
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector(".bookmark-zone").addEventListener('mouseleave', function (e) {
+    console.log("You leave !");
+  })
+})
+
+var sortable = Sortable.create(document.getElementsByClassName("bookmarks-zone")[0], {
+	animation: 150,
+  ghostClass: "ghost",
+	onUpdate: shuttle.reorderBookmarks
 })

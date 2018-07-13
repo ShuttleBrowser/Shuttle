@@ -55,8 +55,7 @@
     box-shadow: inset 0 0 0 300px transparent; } }
 
 .vex.vex-theme-default {
-  padding-top: 160px;
-  padding-bottom: 160px; }
+  padding: 160px 5px; }
   .vex.vex-theme-default.vex-closing .vex-content {
     -webkit-animation: vex-flyout .5s forwards;
     animation: vex-flyout .5s forwards; }
