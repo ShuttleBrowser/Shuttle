@@ -1,6 +1,6 @@
 {
   "name": "shuttle",
-  "version": "2.0.8",
+  "version": "2.1.0",
   "description": "The fastest access to your favorite applications",
   "main": "main.js",
   "scripts": {
@@ -26,7 +26,6 @@
   "dependencies": {
     "auto-launch": "^5.0.5",
     "electron-localshortcut": "^3.1.0",
-    "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^2.20.1",
     "is-promise": "^2.1.0",
     "lowdb": "^1.0.0",
@@ -36,7 +35,6 @@
     "winston": "^2.4.0"
   },
   "devDependencies": {
-    "electron": "^2.0.3",
     "electron-builder": "^20.17.0",
     "electron-packager": "^10.1.2",
     "standard": "^10.0.3"
@@ -45,6 +43,7 @@
     "appId": "xyz.robjullian.shuttle",
     "compression": "maximum",
     "asar": "true",
+    "publish": ["github"],
     "win": {
       "target": [
         "NSIS",

@@ -35,7 +35,7 @@ const browser = remote.getCurrentWindow()
 
 let iconGetter = "https://besticon.herokuapp.com"
 
-let pcUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36"
+let pcUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
 let mobileUserAgent = "Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36"
 let curentUserAgent = mobileUserAgent
 
@@ -59,8 +59,8 @@ const shuttle = {
   /** Initializes the bookmarks bar with given bookmarks */
   initBookmarks: (bkmarks) => {
     bookmarksBar.innerHTML = ''
-    bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadView('changelog.getshuttle.xyz')"><img src="" alt=""></a><hr>`
-    bookmarksBar.innerHTML += `<div class="bookmarks-zone"></div>`
+    bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadView('http://changelog.getshuttle.xyz')"></a><hr>`
+    bookmarksBar.innerHTML += `<div class="bookmarks-zone"><a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a></div>`
     for (i in bkmarks) {
       maxId = Math.max(maxId, bkmarks[i].id)
       shuttle.addBookmarkToBar(bkmarks[i].url, bkmarks[i].id)
@@ -127,13 +127,13 @@ const shuttle = {
     }
 
     if (url.startsWith('mod:')) {
-      document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../app/modules/${url.replace('mod:', '')}/icon.png);"></a>`
+      document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar(event, 'show')" style="background-image: url(../app/modules/${url.replace('mod:', '')}/icon.png);"></a>`
     } else {
 
       fetch(`${iconGetter}/allicons.json?url=${url}`).then((resp) => resp.json()).then((data) => {
-        document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(${data.icons[0].url});"></a>`
+        document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar(event, 'show')" style="background-image: url(${data.icons[0].url});"></a>`
       }).catch((error) => {
-        document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar('id-${id}', 'show')" style="background-image: url(../assets/img/no-icon.png);"></a>` 
+        document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar(event, 'show')" style="background-image: url(../assets/img/no-icon.png);"></a>` 
       }).then(() => {
         shuttle.reloadAddButton()
       })
@@ -146,15 +146,18 @@ const shuttle = {
 
   /** reorder bookmarks and database after sorting */
   reorderBookmarks: () => {
-    let newBookmarks = [];
-    bookmarkZone = document.querySelector('.bookmarks-zone');
+    let newBookmarks = []
+    bookmarkZone = document.querySelector('.bookmarks-zone')
 
-    for(var i = 0; i < bookmarkZone.children.length; i++) {
-        let id = parseInt(bookmarkZone.children[i].id.match(/\d+/)[0]);
-        let bookmark = db.get('bookmarks').find({ id: id}).value();
-        newBookmarks.push(bookmark);
+    for(let i = 0; i < bookmarkZone.children.length; i++) {
+      if (i !== 0) {
+        let id = parseInt(bookmarkZone.children[i].id.match(/\d+/)[0])
+        let bookmark = db.get('bookmarks').find({ id: id}).value()
+        newBookmarks.push(bookmark)
+      }
     }
-    db.set("bookmarks", newBookmarks).write();
+
+    db.set("bookmarks", newBookmarks).write()
   },
   
   /** Asks the user to confirm the removal of a given bookmark */
@@ -265,10 +268,11 @@ const shuttle = {
     }
   },
 
-  showControlBar: (id, event) => {
+  showControlBar: (evt, event) => {
     if (event === 'show') {
       controlBar.style.display = 'block'
-      controlBar.style.top = `${document.querySelector('#' + id).offsetTop + document.querySelector('.bookmarks-zone').offsetTop - 1}px`
+      controlBar.style.top = `${evt.clientY - 10}px`
+      console.log(evt.clientY)
     } else if (event === 'hide') {
       controlBar.style.display = 'none'
       controlBar.style.top = '0px'
@@ -313,21 +317,21 @@ const shuttle = {
 
   showFrame: (show) => {
     if (show) {
-      view.style.top = "15px"
-      titleBar.style.top = "0"
+      view.style.top = "20px"
+      titleBar.style.top = "0px"
+      bookmarksBar.style.top = "10px"
     } else {
       view.style.top = "0"
-      titleBar.style.top = "-15px"
+      titleBar.style.top = "-20px"
+      bookmarksBar.style.top = "0px"
     }
   },
 
   reloadAddButton: () => {
-    if (bookmarks.length >= 13) {
-      document.querySelector('.add-btn').style.visibility = "hidden"
-    } else {
-      document.querySelector('.add-btn').style.visibility = "visible"
-      document.querySelector('.add-btn').style.top = `${document.querySelector('.bookmarks-zone').offsetHeight + document.querySelector('.bookmarks-zone').offsetTop}px`
-    }
+
+    document.querySelector('.add-btn').style.visibility = "visible"
+    document.querySelector('.add-btn').style.top = `${document.querySelectorAll('.bubble-btn').length * 34}px`
+
   },
 
   makeScreenshot: () => {
@@ -388,6 +392,14 @@ const shuttle = {
 
   },
 
+  minimizeWindow: () => {
+    remote.BrowserWindow.getFocusedWindow().minimize()
+  },
+
+  quitWindow: () => {
+    remote.BrowserWindow.getFocusedWindow().close()
+  }
+
 }
 
 // app init
@@ -409,6 +421,24 @@ view.addEventListener('did-fail-load', (errorCode, errorDescription, validatedUR
   }
 })
 
+let rotateBtn
+let deg = 0
+view.addEventListener('did-start-loading', () => {
+
+  document.querySelector('.shuttle-btn').style.WebkitTransitionDuration='1s'
+
+  rotateBtn = setInterval(() => {
+    document.querySelector('.shuttle-btn').style.webkitTransform = `rotate(${deg}deg)`
+    deg = deg + 10
+  }, 5);
+})
+
+view.addEventListener('did-stop-loading', () => {
+  deg = 0
+  clearInterval(rotateBtn)
+  document.querySelector('.shuttle-btn').style.webkitTransform = 'rotate(0deg)';
+})
+
 view.addEventListener('did-finish-load', () => {
   isLoadingAView = false
 
@@ -418,6 +448,9 @@ view.addEventListener('did-finish-load', () => {
     shuttle.loadView(nextBookmarkToDisplay.url, nextBookmarkToDisplay.id)
     nextBookmarkToDisplay = undefined
   }
+
+  view.style.opacity = "1"
+  view.style.zIndex = "50"
 })
 
 view.addEventListener('dom-ready', () => {
@@ -436,30 +469,30 @@ view.addEventListener('dom-ready', () => {
 })
 
 view.addEventListener('enter-html-full-screen', () => {
+
+  if (settings.get('settings.ShowFrame').value() === true) {
+    shuttle.showFrame(false)
+  }
+
   browser.setFullScreen(true)
   bookmarksBar.style.visibility = 'hidden'
   controlBar.style.visibility = 'hidden'
-  titleBar.style.visibility = 'hidden'
   document.querySelector('.add-btn').style.visibility = 'hidden'
   document.querySelector('.btn-bar').style.visibility = 'hidden'
   view.style.left = '0px'
 })
 view.addEventListener('leave-html-full-screen', () => {
+
+  if (settings.get('settings.ShowFrame').value() === true) {
+    shuttle.showFrame(true)
+  }
+
   browser.setFullScreen(false)
   bookmarksBar.style.visibility = 'visible'
   controlBar.style.visibility = 'visible'
-  titleBar.style.visibility = 'visible'
   document.querySelector('.add-btn').style.visibility = 'visible'
   document.querySelector('.btn-bar').style.visibility = 'visible'
   view.style.left = '35px'
-})
-
-view.addEventListener('did-start-loading', () => {
-
-})
-
-view.addEventListener('did-stop-loading', () => {
-
 })
 
 ipcRenderer.on('addframe', (event, arg) => {
@@ -506,8 +539,9 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
-var sortable = Sortable.create(document.getElementsByClassName("bookmarks-zone")[0], {
+let sortable = Sortable.create(document.getElementsByClassName("bookmarks-zone")[0], {
 	animation: 150,
   ghostClass: "ghost",
-	onUpdate: shuttle.reorderBookmarks
+  onUpdate: shuttle.reorderBookmarks,
+  filter: ".add-btn",
 })

@@ -20,15 +20,30 @@
 </head>
 <body>
 
-	<div class="title-bar"></div>
+	<div class="title-bar">
+		<div class="title-bar-btn">
+			<a href="#" class="title-bar-btn-minimize" onclick="shuttle.minimizeWindow()">
+				<svg class="title-bar-btn-ctr">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../assets/img/window.svg#minimize-window"></use>
+				</svg>
+			</a>
+			<a href="#" class="title-bar-btn-close" onclick="shuttle.quitWindow()">
+				<svg class="title-bar-btn-ctr">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../assets/img/window.svg#close-window"></use>
+				</svg>
+			</a>
+		</div>
+	</div>
 
 	<webview src="http://changelog.getshuttle.xyz" useragent="Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36" onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
 	<webview id="settings" src="./settings.html" nodeintegration onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
 
 	<div class="bkms-bar" onclick="shuttle.showControlBar('id-0', 'hide');">
-		<a href="#" class="shuttle-btn" onclick="shuttle.loadView('http://changelog.getshuttle.xyz')"></a>
+		<a href="#" class="shuttle-btn" onclick="shuttle.loadView('http://changelog.getshuttle.xyz')" onmouseover="shuttle.showControlBar('show')"></a>
 		<hr>
-		<div class="bookmarks-zone"></div>
+		<div class="bookmarks-zone">
+			<a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a>
+		</div>
 	</div>
 
 	<div class="btn-bar">
@@ -45,8 +60,6 @@
 		<a href="#" onclick="shuttle.viewReload()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
 		<a href="#" onclick="shuttle.makeScreenshot()"><i class="fa fa-scissors" aria-hidden="true"></i></a>
 	</div>
-
-	<a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a>
 
 	<img src="../assets/img/loader.gif" onmouseover="shuttle.showControlBar('id-0', 'hide');" class="loader" alt="">
 

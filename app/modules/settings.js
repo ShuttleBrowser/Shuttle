@@ -51,6 +51,7 @@ document.querySelector('.version').innerHTML = `VERSION ${require('../package.js
 
 let ShuttleAutoLauncher = new AutoLaunch({
   name: 'Shuttle',
+  path: app.getAppPath()
 });
 
 // Checkbox for Autostart option

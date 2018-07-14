@@ -1,6 +1,7 @@
 body {
 	margin: 0;
 	user-select: none;
+	overflow: hidden;
 }
 
 i {
@@ -42,7 +43,6 @@ webview {
 a {
 	text-decoration:none;
 	color: black;
-	user-drag: none;
 }
 
 .bkms-bar {
@@ -53,13 +53,14 @@ a {
 	width: 35px;
 	background-color: #F4F4F4;
 	text-align: center;
-	overflow: auto;
+	transition: 0.5s;
 }	
 
 .bookmarks-zone {
 	position: absolute;
 	top: 50px;
 	left: 0;
+	bottom: 0px;
 	width: 35px;
 	overflow: auto;
 }
@@ -162,7 +163,7 @@ hr {
 }
 
 .title-bar {
-	height: 15px;
+	height: 20px;
 	position: absolute;
 	top: 1px;
 	left: 1px;
@@ -171,6 +172,39 @@ hr {
 	-webkit-app-region: drag;
 	z-index: 99999;
 	transition: 0.5s;
+}
+
+.title-bar-btn {
+	position: absolute;
+	right: 5px;
+}
+
+.title-bar-btn-minimize {
+	position: absolute;
+	right: 35px;
+	top: 3px;
+	-webkit-app-region: no-drag;
+}
+
+.title-bar-btn-close {
+	position: absolute;
+	right: 5px;
+	top: 1px;
+	-webkit-app-region: no-drag;
+}
+
+.title-bar-btn-close svg {
+	width: 10px;
+	height: 10px;
+}
+
+.title-bar-btn-ctr {
+    width: 15px;
+    height: 15px;
+    -webkit-app-region: no-drag;
+    color: black;
+    opacity: 0.5;
+    shape-rendering: crispEdges;
 }
 
 .loader {

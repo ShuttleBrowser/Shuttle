@@ -26,7 +26,8 @@ const settings = lowdb(LowdbAdapterSettings)
 
 // Autolaunch init
 let ShuttleAutoLauncher = new AutoLaunch({
-  name: 'Shuttle'
+  name: 'Shuttle',
+  path: app.getAppPath()
 })
 
 if (settings.get('settings.autostart').value() === true || settings.get('settings.autostart').value() === undefined) {
@@ -50,8 +51,8 @@ let mb = menubar({
   index: `file://${__dirname}/views/index.html`,
   width: 395,
   minWidth: 395,
-  height: 640,
-  minHeight: 640,
+  height: 645,
+  minHeight: 645,
   resizable: false,
   title: 'Shuttle',
   autoHideMenuBar: true,
@@ -60,7 +61,14 @@ let mb = menubar({
   backgroundColor: '#ffffff',
   preloadWindow: true,
   alwaysOnTop: toggleAlwaysOnTop,
-  resizable: settings.get('settings.ResizeWindow').value()
+  resizable: settings.get('settings.ResizeWindow').value(),
+  webPreferences : {
+    webSecurity: false,
+    "overlay-fullscreen-video": true,
+    webaudio: true,
+    webgl: true,
+    textAreasAreResizable: true
+    }
 })
 
 mb.on('ready', () => {
@@ -196,7 +204,7 @@ ipcMain.on('SettingShowFrame', (event, arg) => {
 ipcMain.on('SettingResizeWindow', (event, arg) => {
   mb.window.setResizable(arg)
   if (arg === false) {
-    mb.window.setSize(396, 641)
+    mb.window.setSize(396, 646)
     mb.hideWindow()
     setTimeout(() => {
       mb.showWindow()
