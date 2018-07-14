@@ -13,10 +13,12 @@ matrix:
       language: generic
 
 cache:
+  yarn: true
   directories:
     - node_modules
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
+    - $HOME/.yarn-cache
 
 script:
   - |
