@@ -1,7 +1,9 @@
+/* global Blob saveAs */
+
 const {ipcRenderer, remote} = require('electron')
-const {app} = require('electron').remote;
-const fs = require('fs');
-const winston = require('winston')
+const {app} = require('electron').remote
+const fs = require('fs')
+// const winston = require('winston')
 const AutoLaunch = require('auto-launch')
 const locationMsg = require(`${__dirname}/../app/modules/lang.js`)
 
@@ -21,11 +23,11 @@ const checkboxShowFrame = document.querySelector('input[name=SFrame]')
 const checkboxReziseWindow = document.querySelector('input[name=RWindow]')
 
 // all buttons
-const downloadButton = document.querySelector('input[name=download]') 
-const uploadButton = document.querySelector('input[name=upload]') 
-const resetButton = document.querySelector('input[name=reset]') 
+const downloadButton = document.querySelector('input[name=download]')
+const uploadButton = document.querySelector('input[name=upload]')
+const resetButton = document.querySelector('input[name=reset]')
 
-//advanced mode
+// advanced mode
 const showConsoleButton = document.querySelector('input[name=ShowConsole]')
 const reportBugButton = document.querySelector('input[name=report]')
 const clearCacheButton = document.querySelector('input[name=ccache]')
@@ -46,23 +48,23 @@ document.querySelector('#shcons').innerHTML = locationMsg('settings_ShowConsole'
 document.querySelector('#ccache').innerHTML = locationMsg('settings_ClearCache')
 document.querySelector('#rep').innerHTML = locationMsg('settings_ReportBug')
 
-//version
+// version
 document.querySelector('.version').innerHTML = `VERSION ${require('../package.json').version}`
 
 let ShuttleAutoLauncher = new AutoLaunch({
   name: 'Shuttle',
   path: app.getAppPath()
-});
+})
 
 // Checkbox for Autostart option
 checkboxAutoStart.addEventListener('change', () => {
   if (checkboxAutoStart.checked) {
     db.set('settings.autostart', true).write()
-    ShuttleAutoLauncher.enable();
+    ShuttleAutoLauncher.enable()
     console.log(`Autostart: ${checkboxAutoStart.checked}`)
   } else {
     db.set('settings.autostart', false).write()
-    ShuttleAutoLauncher.disable();
+    ShuttleAutoLauncher.disable()
     console.log(`Autostart: ${checkboxAutoStart.checked}`)
   }
 })
@@ -91,10 +93,9 @@ checkboxReziseWindow.addEventListener('change', () => {
     ipcRenderer.send('SettingResizeWindow', false)
     console.log(`ReziseWindow : ${false}`)
   }
-
 })
 
-//////////// BUTTONS ////////////
+/// ///////// BUTTONS ///////// ///
 
 // Button for export (dowload) the bookmarks
 downloadButton.addEventListener('click', () => {
@@ -123,45 +124,45 @@ showConsoleButton.addEventListener('click', () => {
 // Button for report a bug
 reportBugButton.addEventListener('click', () => {
   console.log(`report bug button is clicked`)
-  remote.shell.openExternal('mailto:support@getshuttle.xyz?subject=[BUG SHUTTLE]');
+  remote.shell.openExternal('mailto:support@getshuttle.xyz?subject=[BUG SHUTTLE]')
 })
 
 clearCacheButton.addEventListener('click', () => {
   console.log(`clear cache button is clicked`)
-  let win = remote.getCurrentWindow();
+  let win = remote.getCurrentWindow()
   win.webContents.session.clearCache(() => {
     console.log('cache is cleared')
-  });
+  })
 })
 
 // Settings loading
-if ( db.get('settings.autostart').value() === true || db.get('settings.autostart').value() === undefined ) { checkboxAutoStart.checked = true }
-if ( db.get('settings.StayOpen').value() === true ) { checkboxStayOpen.checked = true }
-if ( db.get('settings.ShowFrame').value() === true ) { checkboxShowFrame.checked = true }
-if ( db.get('settings.ResizeWindow').value() === true ) { checkboxReziseWindow.checked = true }
+if (db.get('settings.autostart').value() === true || db.get('settings.autostart').value() === undefined) { checkboxAutoStart.checked = true }
+if (db.get('settings.StayOpen').value() === true) { checkboxStayOpen.checked = true }
+if (db.get('settings.ShowFrame').value() === true) { checkboxShowFrame.checked = true }
+if (db.get('settings.ResizeWindow').value() === true) { checkboxReziseWindow.checked = true }
 
 // All functiion for settings
 const settings = {
   downloadFavorites: () => {
-    let data = fs.readFileSync(`${app.getPath('userData')}/db.json`,'utf8');
+    let data = fs.readFileSync(`${app.getPath('userData')}/db.json`, 'utf8')
     let fileToSave = new Blob([data], {
-        type: 'application/json',
-        name: "data.shtd"
-    });
-    saveAs(fileToSave, "data.shtd");
+      type: 'application/json',
+      name: 'data.shtd'
+    })
+    saveAs(fileToSave, 'data.shtd')
   },
 
   uploadFavorites: () => {
-    remote.dialog.showOpenDialog({filters: [{name: 'Shuttle data', extensions: ['shtd']}]}, (fileNames) => { 
-       if(fileNames === undefined) { 
-          console.log("No file selected"); 
-       } else { 
-         console.log(fileNames[0]);
-         fs.createReadStream(fileNames[0]).pipe(fs.createWriteStream(`${app.getPath('userData')}/db.json`));
-         ipcRenderer.send('refreshApp')
-       } 
-    });
- },
+    remote.dialog.showOpenDialog({filters: [{name: 'Shuttle data', extensions: ['shtd']}]}, (fileNames) => {
+      if (fileNames === undefined) {
+        console.log('No file selected')
+      } else {
+        console.log(fileNames[0])
+        fs.createReadStream(fileNames[0]).pipe(fs.createWriteStream(`${app.getPath('userData')}/db.json`))
+        ipcRenderer.send('refreshApp')
+      }
+    })
+  },
 
   resetFavorites: () => {
     let choice = remote.dialog.showMessageBox({
@@ -169,16 +170,15 @@ const settings = {
       buttons: [locationMsg('continue'), locationMsg('cancel')],
       title: 'Reset',
       message: 'Reset all bookmarks ?'
-    });
-    if (choice == 0) {
-      console.log('Reset...');
+    })
+    if (choice === 0) {
+      console.log('Reset...')
       fs.writeFile(`${app.getPath('userData')}/db.json`, '', (err) => {
         if (err) {
-          return console.log(err);
-        } 
+          return console.log(err)
+        }
         ipcRenderer.send('refreshApp')
-      });
+      })
     }
   }
-
 }
