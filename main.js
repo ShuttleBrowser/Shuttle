@@ -88,6 +88,10 @@ mb.on('ready', () => {
     }
   })
 
+  electronLocalshortcut.register(mb.window, 'Escape', () => {
+    mb.window.webContents.send('quitFullscreen')
+  })
+
   electronLocalshortcut.register(mb.window, 'CmdOrCtrl+P', () => {
     mb.window.webContents.send('addBmks')
   })

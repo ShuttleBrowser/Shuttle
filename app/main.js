@@ -272,7 +272,6 @@ const shuttle = {
     if (event === 'show') {
       controlBar.style.display = 'block'
       controlBar.style.top = `${evt.clientY - 10}px`
-      console.log(evt.clientY)
     } else if (event === 'hide') {
       controlBar.style.display = 'none'
       controlBar.style.top = '0px'
@@ -398,6 +397,37 @@ const shuttle = {
 
   quitWindow: () => {
     remote.BrowserWindow.getFocusedWindow().close()
+  },
+
+  setFullscreen: (bool) => {
+    
+    if (settings.get('settings.ShowFrame').value() === true) {
+      shuttle.showFrame(!bool)
+    }
+    
+    browser.setFullScreen(bool)
+
+    if (bool) {
+    
+      bookmarksBar.style.visibility = 'hidden'
+      controlBar.style.visibility = 'hidden'
+      document.querySelector('.add-btn').style.visibility = 'hidden'
+      document.querySelector('.btn-bar').style.visibility = 'hidden'
+      view.style.left = '0px'
+
+    } else {
+
+      bookmarksBar.style.visibility = 'visible'
+      controlBar.style.visibility = 'visible'
+      document.querySelector('.add-btn').style.visibility = 'visible'
+      document.querySelector('.btn-bar').style.visibility = 'visible'
+      view.style.left = '35px'
+      view.executeJavaScript(`
+        document.webkitExitFullscreen()
+      `)
+
+    }
+
   }
 
 }
@@ -470,29 +500,13 @@ view.addEventListener('dom-ready', () => {
 
 view.addEventListener('enter-html-full-screen', () => {
 
-  if (settings.get('settings.ShowFrame').value() === true) {
-    shuttle.showFrame(false)
-  }
+  shuttle.setFullscreen(true)
 
-  browser.setFullScreen(true)
-  bookmarksBar.style.visibility = 'hidden'
-  controlBar.style.visibility = 'hidden'
-  document.querySelector('.add-btn').style.visibility = 'hidden'
-  document.querySelector('.btn-bar').style.visibility = 'hidden'
-  view.style.left = '0px'
 })
 view.addEventListener('leave-html-full-screen', () => {
 
-  if (settings.get('settings.ShowFrame').value() === true) {
-    shuttle.showFrame(true)
-  }
+  shuttle.setFullscreen(false)
 
-  browser.setFullScreen(false)
-  bookmarksBar.style.visibility = 'visible'
-  controlBar.style.visibility = 'visible'
-  document.querySelector('.add-btn').style.visibility = 'visible'
-  document.querySelector('.btn-bar').style.visibility = 'visible'
-  view.style.left = '35px'
 })
 
 ipcRenderer.on('addframe', (event, arg) => {
@@ -526,6 +540,10 @@ ipcRenderer.on('screenshot', (event, arg) => {
 
 ipcRenderer.on('bookmarkThisPage', (event, arg) => {
   shuttle.bookmarkThisPage()
+})
+
+ipcRenderer.on('quitFullscreen', (event, arg) => {
+  shuttle.setFullscreen(false)
 })
 
 window.addEventListener('online', () => {
