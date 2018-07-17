@@ -1,4 +1,5 @@
-const {Menu, ipcMain, app, net, shell, session, globalShortcut} = require('electron')
+const {resolve} = require('path')
+const {Menu, ipcMain, app, shell, globalShortcut} = require('electron')
 const lowdb = require('lowdb')
 const menubar = require('menubar')
 const winston = require('winston')
@@ -6,16 +7,16 @@ const AutoLaunch = require('auto-launch')
 const osLocale = require('os-locale')
 const electronLocalshortcut = require('electron-localshortcut')
 
-let os = require("os").platform()
+// let os = require('os').platform()
 let iconPath
 let toggleShow = false
 let toggleSkipTaskbar
 let toggleAlwaysOnTop
 
-const shuttleUpdater = require(`${__dirname}/app/modules/shuttle-updater.js`)
-const locationMsg = require(`${__dirname}/app/modules/lang.js`)
+const shuttleUpdater = require(resolve('app/modules/shuttle-updater.js'))
+const locationMsg = require(resolve('app/modules/lang.js'))
 
-winston.add(winston.transports.File, { filename: `${__dirname}/app/logs/Latest.log` })
+winston.add(winston.transports.File, {filename: resolve('app/logs/Latest.log')})
 
 winston.info('Lauch app')
 
@@ -36,12 +37,12 @@ if (settings.get('settings.autostart').value() === true || settings.get('setting
   ShuttleAutoLauncher.disable()
 }
 
-if (process.platform == 'darwin' || process.platform == 'linux') {
-  iconPath =  __dirname + "/assets/img/icon.png";
+if (process.platform === 'darwin' || process.platform === 'linux') {
+  iconPath = resolve('assets/img/icon.png')
   toggleSkipTaskbar = false
   toggleAlwaysOnTop = true
-} else if (process.platform == 'win32') {
-  iconPath = __dirname + "/assets/img/icon.ico";
+} else if (process.platform === 'win32') {
+  iconPath = resolve('assets/img/icon.ico')
   toggleSkipTaskbar = true
   toggleAlwaysOnTop = settings.get('settings.StayOpen').value()
 }
@@ -53,7 +54,6 @@ let mb = menubar({
   minWidth: 395,
   height: 645,
   minHeight: 645,
-  resizable: false,
   title: 'Shuttle',
   autoHideMenuBar: true,
   frame: false,
@@ -62,13 +62,13 @@ let mb = menubar({
   preloadWindow: true,
   alwaysOnTop: toggleAlwaysOnTop,
   resizable: settings.get('settings.ResizeWindow').value(),
-  webPreferences : {
+  webPreferences: {
     webSecurity: false,
-    "overlay-fullscreen-video": true,
+    'overlay-fullscreen-video': true,
     webaudio: true,
     webgl: true,
     textAreasAreResizable: true
-    }
+  }
 })
 
 mb.on('ready', () => {
@@ -115,7 +115,6 @@ mb.on('ready', () => {
   electronLocalshortcut.register(mb.window, 'CmdOrCtrl+Shift+I', () => {
     mb.window.openDevTools()
   })
-
 })
 
 mb.on('after-create-window', () => {
@@ -187,13 +186,12 @@ const contextMenu = Menu.buildFromTemplate([
 ipcMain.on('CheckUpdate', (event, arg) => {
   shuttleUpdater.checkUpdate()
 })
-ipcMain.on('openSettings', (event, arg) => {
-  main.settings()
-})
+
 ipcMain.on('refreshApp', (event, arg) => {
   mb.window.webContents.send('refreshApp')
   console.log('true')
 })
+
 ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
   mb.setOption('alwaysOnTop', arg)
   mb.hideWindow()
@@ -201,6 +199,7 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
     mb.showWindow()
   }, 5)
 })
+
 ipcMain.on('SettingShowFrame', (event, arg) => {
   mb.window.webContents.send('addframe', arg)
 })

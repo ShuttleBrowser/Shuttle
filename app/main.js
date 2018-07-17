@@ -1,8 +1,11 @@
+/* global vex Sortable fetch location */
+
 // modules
 const fs = require('fs')
+const {resolve} = require('path')
 const winston = require('winston')
 const {remote, ipcRenderer} = require('electron')
-const {app} = require('electron').remote;
+const {app} = require('electron').remote
 const lowdb = require('lowdb')
 
 const locationMsg = require(`${__dirname}/../app/modules/lang.js`)
@@ -16,16 +19,16 @@ const settingsFile = new FileSync(`${app.getPath('userData')}/settings.json`)
 const db = lowdb(bookmarksFile)
 const settings = lowdb(settingsFile)
 
-db.defaults({ bookmarks: [] }).write()
+db.defaults({bookmarks: []}).write()
 
 // init winston
-winston.add(winston.transports.File, { filename: `${__dirname}/../app/logs/Latest.log` })
+winston.add(winston.transports.File, {filename: `${__dirname}/../app/logs/Latest.log`})
 
 // elements for DOM
 const bookmarksBar = document.querySelector('.bkms-bar')
-let   bookmarkZone = document.querySelector('.bookmarks-zone')
+let bookmarkZone = document.querySelector('.bookmarks-zone')
 const controlBar = document.querySelector('.control-bar')
-const searchBar = document.querySelector('.search-bar')
+// const searchBar = document.querySelector('.search-bar')
 const titleBar = document.querySelector('.title-bar')
 const view = document.querySelector('webview')
 const settingsView = document.querySelector('#settings')
@@ -33,10 +36,10 @@ const settingsView = document.querySelector('#settings')
 // get the browser window
 const browser = remote.getCurrentWindow()
 
-let iconGetter = "https://besticon.herokuapp.com"
+let iconGetter = 'https://besticon.herokuapp.com'
 
-let pcUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
-let mobileUserAgent = "Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36"
+let pcUserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'
+let mobileUserAgent = 'Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36'
 let curentUserAgent = mobileUserAgent
 
 let bookmarks = db.get('bookmarks').value()
@@ -47,7 +50,7 @@ let maxId = 0
 
 // Make possible to load views one at a time, avoiding did-fail-load events
 let currentBookmarkId
-let currentBookmarkUrl = "https://changelog.getshuttle.xyz"
+let currentBookmarkUrl = 'https://changelog.getshuttle.xyz'
 let isLoadingAView = false
 let nextBookmarkToDisplay
 
@@ -55,44 +58,44 @@ let settingsIsActive
 let userAgentIsPc = false
 
 const shuttle = {
-  
+
   /** Initializes the bookmarks bar with given bookmarks */
   initBookmarks: (bkmarks) => {
     bookmarksBar.innerHTML = ''
     bookmarksBar.innerHTML += `<a href="#" class="shuttle-btn" onclick="shuttle.loadView('http://changelog.getshuttle.xyz')"></a><hr>`
     bookmarksBar.innerHTML += `<div class="bookmarks-zone"><a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a></div>`
-    for (i in bkmarks) {
+    for (let i in bkmarks) {
       maxId = Math.max(maxId, bkmarks[i].id)
       shuttle.addBookmarkToBar(bkmarks[i].url, bkmarks[i].id)
     }
   },
 
   radioThisURL: () => {
-    document.querySelector("#radioURL").click()
+    document.querySelector('#radioURL').click()
   },
 
   autofocusInput: () => {
-    document.querySelector("#inputURL").focus()
+    document.querySelector('#inputURL').focus()
   },
 
   /** Asks the user the address of the bookmark he wants to add */
   askNewBookAddress: (id = maxId + 1) => {
-      let inputs = [];
-      inputs.push(
+    let inputs = []
+    inputs.push(
       '<div class="vex-custom-field-wrapper">',
-        '<div class="vex-custom-radio">',
-            '<input type="radio" name="action" checked value="radioURL" id="radioURL" onclick="shuttle.autofocusInput()"><label for="radioURL">' + locationMsg('typeURL') + '</label><br>',
-        '</div>',
-        '<div class="vex-custom-input-wrapper">',
-            '<input name="inputURL" type="text" value="" id="inputURL" onclick="shuttle.radioThisURL()" placeholder="http://" />',
-        '</div>',
+      '<div class="vex-custom-radio">',
+      '<input type="radio" name="action" checked value="radioURL" id="radioURL" onclick="shuttle.autofocusInput()"><label for="radioURL">' + locationMsg('typeURL') + '</label><br>',
+      '</div>',
+      '<div class="vex-custom-input-wrapper">',
+      '<input name="inputURL" type="text" value="" id="inputURL" onclick="shuttle.radioThisURL()" placeholder="http://" />',
+      '</div>',
       '</div>')
 
     inputs.push(
       '<div class="vex-custom-radio">',
-          '<input type="radio" name="action" value="radioCurrent" id="radioCurrent"><label for="radioCurrent">' + locationMsg('chooseThisURL') + '</label><br>',
+      '<input type="radio" name="action" value="radioCurrent" id="radioCurrent"><label for="radioCurrent">' + locationMsg('chooseThisURL') + '</label><br>',
       '</div>')
-    
+
     vex.dialog.buttons.YES.text = locationMsg('continue')
     vex.dialog.buttons.NO.text = locationMsg('cancel')
     vex.dialog.open({
@@ -100,7 +103,7 @@ const shuttle = {
       input: inputs.join(''),
       callback: (data) => {
         if (data) {
-          let url = ("inputURL" in data) ? data.inputURL : view.getURL();
+          let url = ('inputURL' in data) ? data.inputURL : view.getURL()
           maxId = id
           shuttle.createBookmark(url, id)
           shuttle.addBookmarkToBar(url, id)
@@ -110,34 +113,31 @@ const shuttle = {
     })
     shuttle.autofocusInput()
   },
-  
+
   /** Creates a new bookmark and persists it */
   createBookmark: (url, id) => {
-    db.get('bookmarks').push({ id: id, url: url }).write()
+    db.get('bookmarks').push({id: id, url: url}).write()
     idToUrl[id] = url
   },
-  
+
   /** Adds a bookmark to the bookmarks bar */
   addBookmarkToBar: (url, id) => {
-
-    let favurl = url
+    /* let favurl = url
 
     if (url.indexOf('http://') === -1 || url.indexOf('http://') === -1) {
       favurl = `http://${url}`
-    }
+    } */
 
     if (url.startsWith('mod:')) {
       document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar(event, 'show')" style="background-image: url(../app/modules/${url.replace('mod:', '')}/icon.png);"></a>`
     } else {
-
       fetch(`${iconGetter}/allicons.json?url=${url}`).then((resp) => resp.json()).then((data) => {
         document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar(event, 'show')" style="background-image: url(${data.icons[0].url});"></a>`
-      }).catch((error) => {
-        document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar(event, 'show')" style="background-image: url(../assets/img/no-icon.png);"></a>` 
+      }).catch(() => {
+        document.querySelector('.bookmarks-zone').innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" title="${url}" onclick="shuttle.loadView('${url}', ${id})" oncontextmenu="shuttle.askToRemoveBookmark(${id}, '${url}')" onmouseover="shuttle.showControlBar(event, 'show')" style="background-image: url(../assets/img/no-icon.png);"></a>`
       }).then(() => {
         shuttle.reloadAddButton()
       })
-
     }
     setTimeout(() => {
       shuttle.reloadAddButton()
@@ -149,32 +149,33 @@ const shuttle = {
     let newBookmarks = []
     bookmarkZone = document.querySelector('.bookmarks-zone')
 
-    for(let i = 0; i < bookmarkZone.children.length; i++) {
+    for (let i = 0; i < bookmarkZone.children.length; i++) {
       if (i !== 0) {
         let id = parseInt(bookmarkZone.children[i].id.match(/\d+/)[0])
-        let bookmark = db.get('bookmarks').find({ id: id}).value()
+        let bookmark = db.get('bookmarks').find({id: id}).value()
         newBookmarks.push(bookmark)
       }
     }
 
-    db.set("bookmarks", newBookmarks).write()
+    db.set('bookmarks', newBookmarks).write()
   },
-  
+
   /** Asks the user to confirm the removal of a given bookmark */
   askToRemoveBookmark: (id, url) => {
     vex.dialog.buttons.YES.text = locationMsg('continue')
     vex.dialog.buttons.NO.text = locationMsg('cancel')
     vex.dialog.confirm({
-      message:`${locationMsg('removeBookmarks')} : ${url}`,
+      message: `${locationMsg('removeBookmarks')} : ${url}`,
       callback: function (removalConfirmed) {
         if (removalConfirmed) {
-          bookmarkUrl = idToUrl[id]
+          const bookmarkUrl = idToUrl[id]
 
           shuttle.removeBookmark(bookmarkUrl, id)
           shuttle.removeBookmarkFromBar(id)
 
-          if( id == currentBookmarkId )
+          if (id === currentBookmarkId) {
             shuttle.displayLastBookmark()
+          }
         }
 
         shuttle.reloadAddButton()
@@ -187,11 +188,11 @@ const shuttle = {
 
   /** Removes a bookmark and persists the change */
   removeBookmark: (url, id) => {
-    const index = db.get('bookmarks').value().findIndex(bookmark => bookmark.id == id)
+    const index = db.get('bookmarks').value().findIndex(bookmark => bookmark.id === id)
     db.get('bookmarks').splice(index, 1).write()
 
     delete idToUrl[id]
-  },  
+  },
 
   /** Removes a bookmark from the bookmarks bar */
   removeBookmarkFromBar: (id) => {
@@ -200,23 +201,21 @@ const shuttle = {
 
   /** Displays either the last bookmark, or Shuttle's home page if there aren't any bookmarks */
   displayLastBookmark: () => {
-    if( bookmarks.length > 0 ) {
-      last = bookmarks[bookmarks.length-1]
+    if (bookmarks.length > 0) {
+      const last = bookmarks[bookmarks.length - 1]
       shuttle.loadView(last.url, last.id)
-    }
-    else {
+    } else {
       shuttle.loadView('changelog.getshuttle.xyz')
     }
   },
 
   /** Displays a site within the webview */
   loadView: (url, id = undefined) => {
-
     if (settingsIsActive) {
-      view.style.opacity = "1"
-      view.style.zIndex = "50"
-      settingsView.style.opacity = "0"
-      settingsView.style.zIndex = "0"
+      view.style.opacity = '1'
+      view.style.zIndex = '50'
+      settingsView.style.opacity = '0'
+      settingsView.style.zIndex = '0'
       settingsIsActive = false
     }
 
@@ -226,16 +225,16 @@ const shuttle = {
     // If Electron is already loading an other view, make this one in standby
     // Avoids "did-fail-load" event to be triggered by loading differents views at once
     if (isLoadingAView) {
-      nextBookmarkToDisplay = { url: url, id: id }
+      nextBookmarkToDisplay = {url: url, id: id}
       return
     }
 
     if (url.startsWith('https://')) {
-        currentBookmarkUrl = url
+      currentBookmarkUrl = url
     } else if (url.startsWith('mod:')) {
       currentBookmarkUrl = `${__dirname}/../app/modules/${url.replace('mod:', '')}/index.html`
     } else if (url.startsWith('file:///')) {
-      currentBookmarkUrl = url    
+      currentBookmarkUrl = url
     } else {
       url = (url.startsWith('http://')) ? url : 'http://' + url
       currentBookmarkUrl = url
@@ -279,17 +278,17 @@ const shuttle = {
   },
 
   showSearchBar: () => {
-      vex.dialog.buttons.YES.text = locationMsg('search')
-      vex.dialog.buttons.NO.text = locationMsg('cancel')
-      vex.dialog.prompt({
-        message: locationMsg('quickSearch'),
-        placeholder: locationMsg('search'),
-        callback: (value) => {
-          if (value) {
-            shuttle.quickSearch(value)
-          }
-          vex.dialog.buttons.YES.text = 'Ok'
+    vex.dialog.buttons.YES.text = locationMsg('search')
+    vex.dialog.buttons.NO.text = locationMsg('cancel')
+    vex.dialog.prompt({
+      message: locationMsg('quickSearch'),
+      placeholder: locationMsg('search'),
+      callback: (value) => {
+        if (value) {
+          shuttle.quickSearch(value)
         }
+        vex.dialog.buttons.YES.text = 'Ok'
+      }
     })
   },
 
@@ -302,10 +301,10 @@ const shuttle = {
   },
 
   openSettings: () => {
-    view.style.opacity = "0"
-    view.style.zIndex = "0"
-    settingsView.style.opacity = "1"
-    settingsView.style.zIndex = "50"
+    view.style.opacity = '0'
+    view.style.zIndex = '0'
+    settingsView.style.opacity = '1'
+    settingsView.style.zIndex = '50'
 
     settingsIsActive = true
   },
@@ -316,21 +315,19 @@ const shuttle = {
 
   showFrame: (show) => {
     if (show) {
-      view.style.top = "20px"
-      titleBar.style.top = "0px"
-      bookmarksBar.style.top = "10px"
+      view.style.top = '20px'
+      titleBar.style.top = '0px'
+      bookmarksBar.style.top = '10px'
     } else {
-      view.style.top = "0"
-      titleBar.style.top = "-20px"
-      bookmarksBar.style.top = "0px"
+      view.style.top = '0'
+      titleBar.style.top = '-20px'
+      bookmarksBar.style.top = '0px'
     }
   },
 
   reloadAddButton: () => {
-
-    document.querySelector('.add-btn').style.visibility = "visible"
+    document.querySelector('.add-btn').style.visibility = 'visible'
     document.querySelector('.add-btn').style.top = `${document.querySelectorAll('.bubble-btn').length * 34}px`
-
   },
 
   makeScreenshot: () => {
@@ -339,9 +336,9 @@ const shuttle = {
       setTimeout(() => {
         let path = `${app.getPath('downloads')}/Capture${Math.floor((Math.random() * 10000) + 1)}.png`
 
-        fs.writeFile(path, img.replace(/^data:image\/png;base64,/, ''), 'base64', function(err) {
-          if (err) throw err;
-        });
+        fs.writeFile(path, img.replace(/^data:image\/png;base64,/, ''), 'base64', function (err) {
+          if (err) throw err
+        })
         vex.dialog.buttons.YES.text = 'Ok'
         vex.dialog.buttons.NO.text = 'Open folder'
         vex.dialog.confirm({
@@ -356,17 +353,14 @@ const shuttle = {
             vex.dialog.buttons.NO.text = 'Cancel'
           }
         })
-
-      }, 2000);
-    });
+      }, 2000)
+    })
   },
 
   changeUserAgent: () => {
-    
     let userAgentBtn = document.querySelector('#userAgentBtn')
 
     if (userAgentIsPc === false) {
-      
       view.setAttribute('useragent', pcUserAgent)
 
       curentUserAgent = pcUserAgent
@@ -375,20 +369,16 @@ const shuttle = {
       shuttle.viewReload()
 
       userAgentBtn.innerHTML = '<i class="fa fa-laptop" aria-hidden="true">'
-
     } else {
-      
       view.setAttribute('useragent', mobileUserAgent)
-      
+
       curentUserAgent = mobileUserAgent
       userAgentIsPc = false
-      
+
       shuttle.viewReload()
 
       userAgentBtn.innerHTML = '<i class="fa fa-phone" aria-hidden="true">'
-
     }
-
   },
 
   minimizeWindow: () => {
@@ -400,23 +390,19 @@ const shuttle = {
   },
 
   setFullscreen: (bool) => {
-    
     if (settings.get('settings.ShowFrame').value() === true) {
       shuttle.showFrame(!bool)
     }
-    
+
     browser.setFullScreen(bool)
 
     if (bool) {
-    
       bookmarksBar.style.visibility = 'hidden'
       controlBar.style.visibility = 'hidden'
       document.querySelector('.add-btn').style.visibility = 'hidden'
       document.querySelector('.btn-bar').style.visibility = 'hidden'
       view.style.left = '0px'
-
     } else {
-
       bookmarksBar.style.visibility = 'visible'
       controlBar.style.visibility = 'visible'
       document.querySelector('.add-btn').style.visibility = 'visible'
@@ -425,11 +411,8 @@ const shuttle = {
       view.executeJavaScript(`
         document.webkitExitFullscreen()
       `)
-
     }
-
   }
-
 }
 
 // app init
@@ -441,12 +424,12 @@ view.addEventListener('did-fail-load', (errorCode, errorDescription, validatedUR
   console.log()
   currentBookmarkId = 'error'
   if (navigator.onLine === false) {
-    view.loadURL(__dirname + '/no_internet.html?text=NO INTERNET CONNECTION')
+    view.loadURL(resolve('/no_internet.html?text=NO INTERNET CONNECTION'))
   } else {
     if (errorCode.errorDescription) {
-      view.loadURL(__dirname + `/no_internet.html?text=${errorCode.errorDescription}`)
+      view.loadURL(resolve(`no_internet.html?text=${errorCode.errorDescription}`))
     } else {
-      view.loadURL(__dirname + `/no_internet.html?text=UNKNOW ERROR`)
+      view.loadURL(resolve('no_internet.html?text=UNKNOW ERROR'))
     }
   }
 })
@@ -454,19 +437,18 @@ view.addEventListener('did-fail-load', (errorCode, errorDescription, validatedUR
 let rotateBtn
 let deg = 0
 view.addEventListener('did-start-loading', () => {
-
-  document.querySelector('.shuttle-btn').style.WebkitTransitionDuration='1s'
+  document.querySelector('.shuttle-btn').style.WebkitTransitionDuration = '1s'
 
   rotateBtn = setInterval(() => {
     document.querySelector('.shuttle-btn').style.webkitTransform = `rotate(${deg}deg)`
     deg = deg + 10
-  }, 5);
+  }, 5)
 })
 
 view.addEventListener('did-stop-loading', () => {
   deg = 0
   clearInterval(rotateBtn)
-  document.querySelector('.shuttle-btn').style.webkitTransform = 'rotate(0deg)';
+  document.querySelector('.shuttle-btn').style.webkitTransform = 'rotate(0deg)'
 })
 
 view.addEventListener('did-finish-load', () => {
@@ -479,8 +461,8 @@ view.addEventListener('did-finish-load', () => {
     nextBookmarkToDisplay = undefined
   }
 
-  view.style.opacity = "1"
-  view.style.zIndex = "50"
+  view.style.opacity = '1'
+  view.style.zIndex = '50'
 })
 
 view.addEventListener('dom-ready', () => {
@@ -499,14 +481,11 @@ view.addEventListener('dom-ready', () => {
 })
 
 view.addEventListener('enter-html-full-screen', () => {
-
   shuttle.setFullscreen(true)
-
 })
+
 view.addEventListener('leave-html-full-screen', () => {
-
   shuttle.setFullscreen(false)
-
 })
 
 ipcRenderer.on('addframe', (event, arg) => {
@@ -552,14 +531,15 @@ window.addEventListener('online', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector(".bookmark-zone").addEventListener('mouseleave', function (e) {
-    console.log("You leave !");
+  document.querySelector('.bookmark-zone').addEventListener('mouseleave', function (e) {
+    console.log('You leave !')
   })
 })
 
-let sortable = Sortable.create(document.getElementsByClassName("bookmarks-zone")[0], {
-	animation: 150,
-  ghostClass: "ghost",
+// eslint-disable-next-line no-unused-vars
+const sort0able = Sortable.create(document.getElementsByClassName('bookmarks-zone')[0], {
+  animation: 150,
+  ghostClass: 'ghost',
   onUpdate: shuttle.reorderBookmarks,
-  filter: ".add-btn",
+  filter: '.add-btn'
 })

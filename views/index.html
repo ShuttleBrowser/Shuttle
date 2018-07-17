@@ -1,67 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Shuttle</title>
+  <meta charset="UTF-8">
+  <title>Shuttle</title>
 
-	<link rel="stylesheet" href="../assets/css/style.css">
-	<link rel="stylesheet" href="../assets/css/fontawesome.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/fontawesome.css">
 
-	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-	<script src="../assets/js/Sortable.js"></script>
-	<script>if (window.module) module = window.module;</script>
-	<link rel="stylesheet" href="../assets/css/Sortable.css">
+  <script>
+    if (typeof module === 'object') {
+      window.module = module
+      module = undefined
+    }
+  </script>
+  <script src="../assets/js/Sortable.js"></script>
+  <script>if (window.module) module = window.module</script>
+  <link rel="stylesheet" href="../assets/css/Sortable.css">
 
-	<script src="../assets/js/vex.combined.min.js"></script>
-	<script>vex.defaultOptions.className = 'vex-theme-default'</script>
-	<link rel="stylesheet" href="../assets/css/vex.css" />
-	<link rel="stylesheet" href="../assets/css/vex-theme-default.css" />
+  <script src="../assets/js/vex.combined.min.js"></script>
+  <script>vex.defaultOptions.className = 'vex-theme-default'</script>
+  <link rel="stylesheet" href="../assets/css/vex.css"/>
+  <link rel="stylesheet" href="../assets/css/vex-theme-default.css"/>
 
 </head>
 <body>
 
-	<div class="title-bar">
-		<div class="title-bar-btn">
-			<a href="#" class="title-bar-btn-minimize" onclick="shuttle.minimizeWindow()">
-				<svg class="title-bar-btn-ctr">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../assets/img/window.svg#minimize-window"></use>
-				</svg>
-			</a>
-			<a href="#" class="title-bar-btn-close" onclick="shuttle.quitWindow()">
-				<svg class="title-bar-btn-ctr">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../assets/img/window.svg#close-window"></use>
-				</svg>
-			</a>
-		</div>
-	</div>
+<div class="title-bar">
+  <div class="title-bar-btn">
+    <a href="#" class="title-bar-btn-minimize" onclick="shuttle.minimizeWindow()">
+      <svg class="title-bar-btn-ctr">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../assets/img/window.svg#minimize-window"></use>
+      </svg>
+    </a>
+    <a href="#" class="title-bar-btn-close" onclick="shuttle.quitWindow()">
+      <svg class="title-bar-btn-ctr">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../assets/img/window.svg#close-window"></use>
+      </svg>
+    </a>
+  </div>
+</div>
 
-	<webview src="http://changelog.getshuttle.xyz" useragent="Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36" onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
-	<webview id="settings" src="./settings.html" nodeintegration onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
+<webview src="http://changelog.getshuttle.xyz"
+         useragent="Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36"
+         onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
+<webview id="settings" src="./settings.html" nodeintegration
+         onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
 
-	<div class="bkms-bar" onclick="shuttle.showControlBar('id-0', 'hide');">
-		<a href="#" class="shuttle-btn" onclick="shuttle.loadView('http://changelog.getshuttle.xyz')" onmouseover="shuttle.showControlBar('show')"></a>
-		<hr>
-		<div class="bookmarks-zone">
-			<a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a>
-		</div>
-	</div>
+<div class="bkms-bar" onclick="shuttle.showControlBar('id-0', 'hide');">
+  <a href="#" class="shuttle-btn" onclick="shuttle.loadView('http://changelog.getshuttle.xyz')"
+     onmouseover="shuttle.showControlBar('show')"></a>
+  <hr>
+  <div class="bookmarks-zone">
+    <a href="javascript:shuttle.askNewBookAddress()" class="add-btn"></a>
+  </div>
+</div>
 
-	<div class="btn-bar">
-		<hr>
-		<a href="#" id="userAgentBtn" onclick="shuttle.changeUserAgent()" title="PC/Mobile view"><i class="fa fa-phone" aria-hidden="true"></i></a>
-		<a href="javascript:shuttle.showSearchBar()"><i class="fa fa-send" aria-hidden="true"></i></a>
-		<a href="#" onclick="shuttle.openSettings()"><i class="fa fa-cog" aria-hidden="true"></i></a>
-		<a href="#" onclick="shuttle.checkForUpate()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
-	</div>
+<div class="btn-bar">
+  <hr>
+  <a href="#" id="userAgentBtn" onclick="shuttle.changeUserAgent()" title="PC/Mobile view"><i class="fa fa-phone"
+                                                                                              aria-hidden="true"></i></a>
+  <a href="javascript:shuttle.showSearchBar()"><i class="fa fa-send" aria-hidden="true"></i></a>
+  <a href="#" onclick="shuttle.openSettings()"><i class="fa fa-cog" aria-hidden="true"></i></a>
+  <a href="#" onclick="shuttle.checkForUpate()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+</div>
 
-	<div class="control-bar">
-		<a href="#" onclick="shuttle.viewBack()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-		<a href="#" onclick="shuttle.viewForward()"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-		<a href="#" onclick="shuttle.viewReload()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
-		<a href="#" onclick="shuttle.makeScreenshot()"><i class="fa fa-scissors" aria-hidden="true"></i></a>
-	</div>
+<div class="control-bar">
+  <a href="#" onclick="shuttle.viewBack()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+  <a href="#" onclick="shuttle.viewForward()"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+  <a href="#" onclick="shuttle.viewReload()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+  <a href="#" onclick="shuttle.makeScreenshot()"><i class="fa fa-scissors" aria-hidden="true"></i></a>
+</div>
 
-	<img src="../assets/img/loader.gif" onmouseover="shuttle.showControlBar('id-0', 'hide');" class="loader" alt="">
+<img src="../assets/img/loader.gif" onmouseover="shuttle.showControlBar('id-0', 'hide');" class="loader" alt="">
 
 </body>
 

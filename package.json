@@ -6,6 +6,7 @@
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
+    "lint": "standard",
     "dist": "build -mwl"
   },
   "repository": {
@@ -43,7 +44,9 @@
     "appId": "xyz.robjullian.shuttle",
     "compression": "maximum",
     "asar": "true",
-    "publish": ["github"],
+    "publish": [
+      "github"
+    ],
     "win": {
       "target": [
         "NSIS",
