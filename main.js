@@ -187,10 +187,6 @@ ipcMain.on('CheckUpdate', (event, arg) => {
   shuttleUpdater.checkUpdate()
 })
 
-ipcMain.on('openSettings', (event, arg) => {
-  main.settings()
-})
-
 ipcMain.on('refreshApp', (event, arg) => {
   mb.window.webContents.send('refreshApp')
   console.log('true')
