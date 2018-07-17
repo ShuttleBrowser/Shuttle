@@ -38,11 +38,11 @@ if (settings.get('settings.autostart').value() === true || settings.get('setting
 }
 
 if (process.platform === 'darwin' || process.platform === 'linux') {
-  iconPath = resolve('/assets/img/icon.png')
+  iconPath = resolve('assets/img/icon.png')
   toggleSkipTaskbar = false
   toggleAlwaysOnTop = true
 } else if (process.platform === 'win32') {
-  iconPath = resolve('/assets/img/icon.ico')
+  iconPath = resolve('assets/img/icon.ico')
   toggleSkipTaskbar = true
   toggleAlwaysOnTop = settings.get('settings.StayOpen').value()
 }
