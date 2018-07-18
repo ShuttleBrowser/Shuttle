@@ -61,7 +61,7 @@ let mb = menubar({
   backgroundColor: '#ffffff',
   preloadWindow: true,
   alwaysOnTop: toggleAlwaysOnTop,
-  resizable: settings.get('settings.ResizeWindow').value(),
+  resizable: settings.get('settings.ResizeWindow').value() || false,
   webPreferences: {
     webSecurity: false,
     'overlay-fullscreen-video': true,
@@ -75,7 +75,9 @@ mb.on('ready', () => {
   winston.log('Shuttle is ready')
   mb.tray.setContextMenu(contextMenu)
 
-  mb.showWindow()
+  if (process.platform === "linux") {
+    mb.showWindow()
+  }
 
   /** LOCAL SHORTCUTS */
   globalShortcut.register('CmdOrCtrl+Shift+X', () => {

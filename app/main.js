@@ -424,23 +424,27 @@ view.addEventListener('did-fail-load', (errorCode, errorDescription, validatedUR
   console.log()
   currentBookmarkId = 'error'
   if (navigator.onLine === false) {
-    view.loadURL(resolve('/no_internet.html?text=NO INTERNET CONNECTION'))
+    view.loadURL(`file://${__dirname}/../views/no_internet.html?text=NO INTERNET CONNECTION`)
   } else {
     if (errorCode.errorDescription) {
-      view.loadURL(resolve(`no_internet.html?text=${errorCode.errorDescription}`))
+      view.loadURL(`file://${__dirname}/../views/no_internet.html?text=${errorCode.errorDescription}`)
     } else {
-      view.loadURL(resolve('no_internet.html?text=UNKNOW ERROR'))
+      view.loadURL(`file://${__dirname}/../views/no_internet.html?text=UNKNOW ERROR`)
     }
   }
 })
 
 let rotateBtn
 let deg = 0
+let bookMarksToRotate
 view.addEventListener('did-start-loading', () => {
-  document.querySelector('.shuttle-btn').style.WebkitTransitionDuration = '1s'
+
+  bookMarksToRotate = document.querySelector(`#id-${currentBookmarkId}`)
+
+  bookMarksToRotate.style.WebkitTransitionDuration = '1s'
 
   rotateBtn = setInterval(() => {
-    document.querySelector('.shuttle-btn').style.webkitTransform = `rotate(${deg}deg)`
+    bookMarksToRotate.style.webkitTransform = `rotate(${deg}deg)`
     deg = deg + 10
   }, 5)
 })
@@ -448,7 +452,7 @@ view.addEventListener('did-start-loading', () => {
 view.addEventListener('did-stop-loading', () => {
   deg = 0
   clearInterval(rotateBtn)
-  document.querySelector('.shuttle-btn').style.webkitTransform = 'rotate(0deg)'
+  bookMarksToRotate.style.webkitTransform = 'rotate(0deg)'
 })
 
 view.addEventListener('did-finish-load', () => {
