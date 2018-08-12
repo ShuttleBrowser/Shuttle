@@ -163,14 +163,6 @@ const contextMenu = Menu.buildFromTemplate([
     }
   },
 
-  // Check update
-  {
-    label: locationMsg('checkForUpdates', osLocale.sync()),
-    click () {
-      shuttleUpdater.checkUpdate()
-    }
-  },
-
   // wow, a separator !
   {type: 'separator'},
 

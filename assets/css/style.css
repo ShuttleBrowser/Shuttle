@@ -209,10 +209,13 @@ hr {
 
 .loader {
 	position: absolute;
-	top: 50%; left: 50%;
-	transform: translate(-50%, -50%);
-	margin-left: 18px;
+	bottom: 40px; left: 50%;
+	margin-left: 17.5px;
+	transform: translate(-50%);
 	visibility: hidden;
+	z-index: 9999;
+	width: 45px;
+
 }
 
 ::-webkit-scrollbar {

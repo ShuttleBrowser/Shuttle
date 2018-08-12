@@ -435,10 +435,21 @@ view.addEventListener('did-fail-load', (errorCode, errorDescription, validatedUR
 })
 
 view.addEventListener('did-start-loading', () => {
+  let loaderImg = document.querySelector('.loader')
+  loaderImg.style.visibility = "visible"
+
+  view.style.opacity = '0'
+  view.style.zIndex = '0'
 
 })
 
 view.addEventListener('did-stop-loading', () => {
+
+  let loaderImg = document.querySelector('.loader')
+  loaderImg.style.visibility = "hidden"
+
+  view.style.opacity = '1'
+  view.style.zIndex = '50'
 
 })
 
@@ -451,9 +462,6 @@ view.addEventListener('did-finish-load', () => {
     shuttle.loadView(nextBookmarkToDisplay.url, nextBookmarkToDisplay.id)
     nextBookmarkToDisplay = undefined
   }
-
-  view.style.opacity = '1'
-  view.style.zIndex = '50'
 })
 
 view.addEventListener('dom-ready', () => {
