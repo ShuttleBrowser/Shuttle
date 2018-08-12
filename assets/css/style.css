@@ -32,7 +32,7 @@ webview {
 	bottom: 0;
 	left: 0;
 	width: 35px;
-	height: 120px;
+	height: 95px;
 	background-color: #F4F4F4;
 	text-align: center;
 }
@@ -48,7 +48,7 @@ a {
 .bkms-bar {
 	position: absolute;
 	top: 0;
-	bottom: 120px;
+	bottom: 95px;
 	left: 0;
 	width: 35px;
 	background-color: #F4F4F4;

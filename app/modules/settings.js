@@ -20,7 +20,6 @@ const db = lowdb(LowdbAdapter)
 const checkboxAutoStart = document.querySelector('input[name=SAboot]')
 const checkboxStayOpen = document.querySelector('input[name=SOpen]')
 const checkboxShowFrame = document.querySelector('input[name=SFrame]')
-const checkboxReziseWindow = document.querySelector('input[name=RWindow]')
 
 // all buttons
 const downloadButton = document.querySelector('input[name=download]')
@@ -36,7 +35,6 @@ const clearCacheButton = document.querySelector('input[name=ccache]')
 document.querySelector('#SAboot').innerHTML = locationMsg('settings_StartAtBoot')
 document.querySelector('#SOpen').innerHTML = locationMsg('settings_StayOpen')
 document.querySelector('#SFrame').innerHTML = locationMsg('settings_ShowFrame')
-document.querySelector('#RWindow').innerHTML = locationMsg('settings_ResizeWindow')
 
 document.querySelector('#bkms').innerHTML = locationMsg('bookmarks')
 document.querySelector('#Export').innerHTML = locationMsg('settings_ExportBokmarks')
@@ -79,20 +77,12 @@ checkboxStayOpen.addEventListener('change', () => {
 // Checkbox for frame option
 checkboxShowFrame.addEventListener('change', () => {
   db.set('settings.ShowFrame', checkboxShowFrame.checked).write()
-  ipcRenderer.send('SettingShowFrame', checkboxShowFrame.checked)
-  console.log(`ShowFrame: ${checkboxShowFrame.checked}`)
-})
+  db.set('settings.ResizeWindow', checkboxShowFrame.checke).write()
 
-checkboxReziseWindow.addEventListener('change', () => {
-  if (checkboxReziseWindow.checked) {
-    db.set('settings.ResizeWindow', true).write()
-    ipcRenderer.send('SettingResizeWindow', true)
-    console.log(`ReziseWindow : ${true}`)
-  } else {
-    db.set('settings.ResizeWindow', false).write()
-    ipcRenderer.send('SettingResizeWindow', false)
-    console.log(`ReziseWindow : ${false}`)
-  }
+  ipcRenderer.send('SettingShowFrame', checkboxShowFrame.checked)
+  ipcRenderer.send('SettingResizeWindow', checkboxShowFrame.checked)
+
+  console.log(`ShowFrame: ${checkboxShowFrame.checked}`)
 })
 
 /// ///////// BUTTONS ///////// ///

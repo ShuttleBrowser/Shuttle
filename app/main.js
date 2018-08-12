@@ -368,7 +368,7 @@ const shuttle = {
 
       shuttle.viewReload()
 
-      userAgentBtn.innerHTML = '<i class="fa fa-laptop" aria-hidden="true">'
+      userAgentBtn.style.webkitTransform = "rotate(180deg)"
     } else {
       view.setAttribute('useragent', mobileUserAgent)
 
@@ -377,7 +377,7 @@ const shuttle = {
 
       shuttle.viewReload()
 
-      userAgentBtn.innerHTML = '<i class="fa fa-phone" aria-hidden="true">'
+      userAgentBtn.style.webkitTransform = "rotate(0deg)"
     }
   },
 
@@ -434,25 +434,12 @@ view.addEventListener('did-fail-load', (errorCode, errorDescription, validatedUR
   }
 })
 
-let rotateBtn
-let deg = 0
-let bookMarksToRotate
 view.addEventListener('did-start-loading', () => {
 
-  bookMarksToRotate = document.querySelector(`#id-${currentBookmarkId}`)
-
-  bookMarksToRotate.style.WebkitTransitionDuration = '1s'
-
-  rotateBtn = setInterval(() => {
-    bookMarksToRotate.style.webkitTransform = `rotate(${deg}deg)`
-    deg = deg + 10
-  }, 5)
 })
 
 view.addEventListener('did-stop-loading', () => {
-  deg = 0
-  clearInterval(rotateBtn)
-  bookMarksToRotate.style.webkitTransform = 'rotate(0deg)'
+
 })
 
 view.addEventListener('did-finish-load', () => {
