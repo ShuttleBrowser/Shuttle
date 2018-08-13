@@ -32,6 +32,7 @@ const controlBar = document.querySelector('.control-bar')
 const titleBar = document.querySelector('.title-bar')
 const view = document.querySelector('webview')
 const settingsView = document.querySelector('#settings')
+const accountPanel = document.querySelector('#account')
 
 // get the browser window
 const browser = remote.getCurrentWindow()
@@ -412,7 +413,25 @@ const shuttle = {
         document.webkitExitFullscreen()
       `)
     }
+  },
+
+  showAccountPanel: (show) => {
+
+    if (show) {
+      accountPanel.style.opacity = "1"
+      accountPanel.style.zIndex = "999"
+    } else {
+      accountPanel.style.opacity = "0"
+      accountPanel.style.zIndex = "0"
+    }
+
   }
+
+}
+
+if (settings.get('firstrun').value() === undefined) {
+  shuttle.showAccountPanel(true)
+  settings.set('firstrun', true).write()
 }
 
 // app init
@@ -522,6 +541,10 @@ ipcRenderer.on('bookmarkThisPage', (event, arg) => {
 
 ipcRenderer.on('quitFullscreen', (event, arg) => {
   shuttle.setFullscreen(false)
+})
+
+ipcRenderer.on('ShowAccountPanel', (event, arg) => {
+  shuttle.showAccountPanel(arg)
 })
 
 window.addEventListener('online', () => {

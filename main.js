@@ -208,3 +208,7 @@ ipcMain.on('SettingResizeWindow', (event, arg) => {
     }, 5)
   }
 })
+
+ipcMain.on('ShowAccountPan', (event, arg) => {
+  mb.window.webContents.send('ShowAccountPanel', arg)
+})
