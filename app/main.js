@@ -8,6 +8,7 @@ const {remote, ipcRenderer} = require('electron')
 const {app} = require('electron').remote
 const lowdb = require('lowdb')
 
+const syncBkms = require(`${__dirname}/../app/modules/syncBkms.js`)
 const locationMsg = require(`${__dirname}/../app/modules/lang.js`)
 const adapter = require(`${__dirname}/../app/modules/adapter.js`)
 

@@ -1,13 +1,12 @@
 const socket = require(`${__dirname}/../app/modules/sockets.js`)
 const crypto = require('crypto')
-const lowdb = require('lowdb')
-const {ipcRenderer, remote} = require('electron')
-const {app} = require('electron').remote
+const lowdbAccount = require('lowdb')
+const ipcRend = require('electron').ipcRenderer
 
-// Lowdb db init
-const FileSync = require('lowdb/adapters/FileSync')
-const LowdbAdapter = new FileSync(`${app.getPath('userData')}/settings.json`)
-const db = lowdb(LowdbAdapter)
+// Lowdb dbBkms init
+const FileSyncAccount = require('lowdb/adapters/FileSync')
+const LowdbAdapterAccount = new FileSyncAccount(`${require('electron').remote.app.getPath('userData')}/settings.json`)
+const dbBkms = lowdbAccount(LowdbAdapterAccount)
 
 const salt = "ART9I8uXjca8ygs3qlwaMNQ4kL7Qax5EIxYFfX9OUxm9uwL7s8BpQ3G7QSRN89D7sfdDhLrEgs9NGZvG9bfOB7tTvSyZrQCsirjmVYjcN0EtQMaP6w0Hs02enpv6Cms9"
 
@@ -113,19 +112,19 @@ const action = {
 
     saveUserData: (email, uuid, password) => {
 
-        db.set('user.isLogin', true).write()
-        db.set('user.email', email).write()
-        db.set('user.uuid', uuid).write()
-        db.set('user.password', password).write()
+        dbBkms.set('user.isLogin', true).write()
+        dbBkms.set('user.email', email).write()
+        dbBkms.set('user.uuid', uuid).write()
+        dbBkms.set('user.password', password).write()
 
     },
 
     clearUserData: (email, uuid, password) => {
 
-        db.set('user.isLogin', false).write()
-        db.set('user.email', "").write()
-        db.set('user.uuid', "").write()
-        db.set('user.password', "").write()
+        dbBkms.set('user.isLogin', false).write()
+        dbBkms.set('user.email', "").write()
+        dbBkms.set('user.uuid', "").write()
+        dbBkms.set('user.password', "").write()
 
     }
 
@@ -150,13 +149,13 @@ socket.on('message', (data) => {
 
         case "auth_bad_password":
             ui.showErrorMessage('You have enter a bad password')
-            ipcRenderer.send('ShowAccountPan', true)
+            ipcRend.send('ShowAccountPan', true)
             action.clearUserData()
         break
 
         case "auth_no_account":
             ui.showErrorMessage('This account is not exist')
-            ipcRenderer.send('ShowAccountPan', true)
+            ipcRend.send('ShowAccountPan', true)
             action.clearUserData()
         break
 
@@ -170,26 +169,24 @@ socket.on('message', (data) => {
 
         case "auth_succeful_registation":
             action.saveUserData(data.email, data.uuid, data.password)
-            ipcRenderer.send('ShowAccountPan', false)
+            ipcRend.send('ShowAccountPan', false)
         break
         
         case "auth_succeful_login":
             action.saveUserData(data.email, data.uuid, data.password)
-            ipcRenderer.send('ShowAccountPan', false)
+            ipcRend.send('ShowAccountPan', false)
         break
     }
 
 })
 
-if (db.get('user.isLogin').value()) {
+if (dbBkms.get('user.isLogin').value()) {
     if (navigator.onLine) {
 
-        let email = db.get('user.email')
-        let password = db.get('user.password')
+        let email = dbBkms.get('user.email')
+        let password = dbBkms.get('user.password')
 
         action.autologin(email, password)
     
     }
 }
-
-module.exports = action

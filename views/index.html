@@ -5,6 +5,7 @@
   <title>Shuttle</title>
 
   <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/account.css">
   <link rel="stylesheet" href="../assets/css/fontawesome.css">
 
   <script>
@@ -42,7 +43,27 @@
 
 <webview class="view" src="http://changelog.getshuttle.xyz" useragent="Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36" onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
 <webview class="view" id="settings" src="./settings.html" nodeintegration onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
-<webview id="account" src="./account.html" nodeintegration onmouseover="shuttle.showControlBar('id-0', 'hide');"></webview>
+<div id="account" src="./account.html" nodeintegration onmouseover="shuttle.showControlBar('id-0', 'hide');">
+
+  <div class="page-container">
+    <h1 class="title">SHUTTLE WITH YOU, <span class="italic">EVERYWHERE.</span></h1>
+    <p class="description">Create a shuttle account to keep<br>your bookmarks <span class="italic">everywhere</span> you go.</p>
+    
+    <div class="form">
+        <h4 class="methode">Log-in <span class="error"></span></h4>
+        <input id="email_textbox" class="textbox" type="email" placeholder="E-MAIL">
+        <input id="pass_textbox" class="textbox" type="password" placeholder="PASSWORD">
+        <input id="conf_pass_textbox" class="textbox" type="password" placeholder="CONFIRM PASSWORD">
+        <a href="#" class="methodeBtn btn">LOG-IN</a>
+        <p class="askOtherMethode">YOU DON'T HAVE ANY ACCOUNT ? <a href="#" onclick="ui.signup()" class="link">SIGN-UP</a> HERE</p>
+    </div>
+
+</div>
+
+<p class="temsOfUse">BY LOG-IN, YOU ALSO ACCEPT <a href="#" class="link gray">GENERAL TERMS OF USE</a></p>
+<a href="#" class="close"></a>
+
+</div>
 
 <div class="bkms-bar" onclick="shuttle.showControlBar('id-0', 'hide');">
   <a href="#" class="shuttle-btn" onclick="shuttle.loadView('http://changelog.getshuttle.xyz')"
@@ -72,5 +93,6 @@
 </body>
 
 <script src="../app/main.js" async=""></script>
+<script src="../app/modules/account.js"></script>
 
 </html>
