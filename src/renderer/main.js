@@ -1,18 +1,23 @@
 import Vue from 'vue'
 import axios from 'axios'
+import VueElectron from 'vue-electron'
+
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
 
 import App from './App'
 import router from './router'
-import store from './store'
 
-if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
+Vue.component('icon', Icon)
+
+Vue.use(VueElectron)
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  components: { App },
+  el: '#app',
   router,
-  store,
-  template: '<App/>'
-}).$mount('#app')
+  template: '<App/>',
+  components: { App }
+})

@@ -13,12 +13,12 @@ export default new Router({
     {
       path: '/settings',
       name: 'settings',
-      component: require('@/components/settings')
+      component: require('@/components/settings').default
     },
     {
       path: '/auth',
       name: 'auth',
-      component: require('@/components/auth')
+      component: require('@/components/auth').default
     },
     {
       path: '*',

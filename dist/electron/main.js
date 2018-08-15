@@ -2573,7 +2573,7 @@ function createWindow() {
     skipTaskbar: true,
     backgroundColor: '#ffffff',
     preloadWindow: true,
-    alwaysOnTop: false,
+    alwaysOnTop: true,
     resizable: false,
     webPreferences: {
       webSecurity: false,
