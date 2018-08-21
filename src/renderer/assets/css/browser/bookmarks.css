@@ -1,0 +1,56 @@
+hr {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 2.5px;
+}
+
+.bkms-bar {
+	position: absolute;
+	top: 0;
+	bottom: 95px;
+	left: 0;
+	width: 35px;
+	background-color: #F4F4F4;
+	text-align: center;
+	transition: 0.5s;
+}
+
+.bookmarks-zone {
+	position: absolute;
+	top: 50px;
+	left: 0;
+	bottom: 0px;
+	width: 35px;
+	overflow: auto;
+}
+
+.shuttle-btn {
+	margin-top: 11px;
+	margin-left: 2px;
+	display: block;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: url(../../img/browser/bar-icon.png) no-repeat center;
+	background-size: 60% auto;
+	transition: 0.2s;
+}
+
+.shuttle-btn:hover {
+	background-image: url(../../img/browser/bar-icon-hover.png);
+}
+
+.bubble-btn {
+	margin-top: 4px;
+	margin-left: 2.5px;
+	display: block;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	transition: 0.2s;
+	background: #fff no-repeat center;
+	background-size: 70% auto;
+}
+.bubble-btn:hover {
+	border-radius: 25%;
+}

@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Browser from '../components/Browser'
+import Auth from '../components/Auth'
+
 Vue.use(Router)
 
 export default new Router({
@@ -8,17 +11,17 @@ export default new Router({
     {
       path: '/',
       name: 'browser',
-      component: require('@/components/browser').default
+      component: Browser
     },
-    {
+    /* {
       path: '/settings',
       name: 'settings',
-      component: require('@/components/settings').default
-    },
+      component: () => import('@/components/Settings')
+    }, */
     {
       path: '/auth',
       name: 'auth',
-      component: require('@/components/auth').default
+      component: Auth
     },
     {
       path: '*',
