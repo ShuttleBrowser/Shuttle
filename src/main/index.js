@@ -17,10 +17,8 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow () {
-  /**
-   * Initial window options
-   */
   mainWindow = menubar({
+    icon: '/static/icon/icon.png',
     width: 395,
     minWidth: 395,
     height: 645,

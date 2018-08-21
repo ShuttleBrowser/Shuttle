@@ -9,18 +9,18 @@ export default {
     }
   },
   methods: {
-  
+
     setUiToSignup () {
       this.methodText = 'Sign-up'
     },
-  
+
     setUiToLogin () {
       this.methodText = 'Log-in'
     },
 
     toggleMethod () {
       console.log(this.method)
-  
+
       if (this.method === 'login') {
         this.method = 'signup'
         this.setUiToSignup()
@@ -28,13 +28,13 @@ export default {
         this.method = 'login'
         this.setUiToLogin()
       }
-  
+
       this.$forceUpdate()
     },
 
     showTemsOfUse () {
       this.$electron.shell.openExternal('https://getshuttle.xyz/legal.txt')
     }
-  
+
   }
 }

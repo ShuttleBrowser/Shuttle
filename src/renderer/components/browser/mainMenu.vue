@@ -3,7 +3,7 @@
         <hr>
         <a href="javascript:shuttle.showSearchBar()"><icon name="paper-plane"></icon></a>
         <a href="#" onclick="shuttle.changeUserAgent()" title="PC/Mobile view"><icon name="window-restore"></icon></a>
-        <a href="#/auth"><icon name="cog"></icon></a>
+        <a href="#" @click="showSettings"><icon name="cog"></icon></a>
     </div>
 </template>
 
@@ -11,7 +11,11 @@
 
 export default {
   name: 'mainMenu',
-  methods: {}
+  methods: {
+      showSettings () {
+          
+      }
+  }
 }
 </script>
 
