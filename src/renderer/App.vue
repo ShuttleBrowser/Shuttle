@@ -1,19 +1,18 @@
 <template>
   <div id="app">
-    <titleBar></titleBar>
+    <title-bar/>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 
-import titleBar from './components/titleBar.vue'
+import TitleBar from './components/TitleBar.vue'
 
 export default {
   name: 'shuttle',
   components: {
-    titleBar
+    TitleBar
   }
 }
-
 </script>
