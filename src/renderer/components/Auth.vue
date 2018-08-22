@@ -12,7 +12,7 @@
         <input v-if="method === 'signup'" id="conf_pass_textbox" class="textbox" type="password"
                placeholder="CONFIRM PASSWORD">
         <a href="#" class="methodeBtn btn">{{ methodText.toUpperCase() }}</a>
-        <p v-if="method === 'login'" class="askOtherMethode">YOU DON'T HAVE ANY ACCOUNT ? <a href="#"
+        <p v-if="method === 'signin'" class="askOtherMethode">YOU DON'T HAVE ANY ACCOUNT ? <a href="#"
                                                                                              @click="toggleMethod"
                                                                                              class="link">SIGN-UP</a>
           HERE</p>
@@ -32,29 +32,29 @@ export default {
   name: 'auth',
   data () {
     return {
-      method: 'login',
-      methodText: 'Log-in',
+      method: 'signin',
+      methodText: 'Sign in',
       errorText: 'Bad password',
       confirmPassTextBox: document.querySelector('#conf_pass_textbox')
     }
   },
   methods: {
     setUiToSignup () {
-      this.methodText = 'Sign-up'
+      this.methodText = 'Sign up'
     },
 
     setUiToLogin () {
-      this.methodText = 'Log-in'
+      this.methodText = 'Sign in'
     },
 
     toggleMethod () {
       console.log(this.method)
 
-      if (this.method === 'login') {
+      if (this.method === 'signin') {
         this.method = 'signup'
         this.setUiToSignup()
       } else {
-        this.method = 'login'
+        this.method = 'signin'
         this.setUiToLogin()
       }
 

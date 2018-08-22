@@ -91,15 +91,6 @@ body {
   margin-left: 20px;
 }
 
-.temsOfUse {
-  font-size: 10px;
-  position: absolute;
-  bottom: 12.5px;
-  left: 12.5px;
-  margin: 0;
-  color: #878a8b;
-}
-
 .close {
   width: 15px;
   height: 15px;
@@ -115,4 +106,13 @@ body {
   font-size: 14px;
   color: #ee2568;
   padding-left: 10px;
+}
+
+.termsOfUse {
+  font-size: 10px;
+  position: absolute;
+  bottom: 12.5px;
+  left: 12.5px;
+  margin: 0;
+  color: #878a8b;
 }
