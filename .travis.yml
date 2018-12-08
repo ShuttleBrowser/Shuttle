@@ -28,7 +28,5 @@ deploy:
     - "dist/Shuttle-MacOS.dmg"
   options:
     draft: true
-  on:
-    repo: ShuttleBrowser/Shuttle
-    branch: 3.0.0
-tags: true
+ on:
+    tags: true
