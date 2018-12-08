@@ -1,0 +1,68 @@
+{
+  "appId": "io.shuttle.app",
+  "productName": "Shuttle",
+  "copyright": "Copyright © year ${author}",
+  "remoteBuild": false,
+  "compression": "maximum",
+
+  "linux": {
+    "target": [
+      {
+        "target": "AppImage",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }
+    ],
+    "category": "Network",
+    "icon": "build/icons/icon.png"
+  },
+
+  "mac": {
+    "target": [
+      {
+        "target": "dmg",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "category": "public.app-category.utilities",
+    "icon": "build/icons/icon.icns"
+  },
+
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }
+    ],
+    "icon": "build/icons/icon.ico"
+  },
+
+
+  "dmg": {
+    "artifactName": "Shuttle-MacOS.dmg",
+    "background": "build/background.png",
+    "window": {
+      "height": 380,
+      "width": 540
+    }
+  },
+
+  "appImage": {
+    "artifactName": "Shuttle-Linux-${arch}.AppImage"
+  },
+
+  "nsis": {
+    "artifactName": "Shuttle-win-${arch}.exe",
+    "oneClick": true,
+    "deleteAppDataOnUninstall": true,
+    "license": "build/license.txt"
+  }
+}

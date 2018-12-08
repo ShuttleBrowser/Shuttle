@@ -1,0 +1,32 @@
+[
+  {"value": "ADD_BOOKMARK", "message": "Add a bookmark"},
+  {"value": "TYPE_URL", "message": "Enter the url of a website"},
+  {"value": "CHOOSE_THIS_URL", "message": "Select the curent page"},
+  {"value": "RMOVE_BOOKMARK", "message": "Removing bookmark ?"},
+  {"value": "QUICK_SEARCH", "message": "Enter your quick search bellow"},
+  {"value": "SCREENSHOT_DONE", "message": "Screenshot successfully done"},
+  {"value": "UPDATE_AVAILIBLE", "message": "An update is available, do you want to install it ?"},
+
+  {"value": "SETTINGS_START_AT_BOOT", "message": "Start at startup"},
+  {"value": "SETTINGS_STAY_OPEN", "message": "Stay opened"},
+  {"value": "SETTINGS_SHOW_FRAME", "message": "Move frame"},
+  {"value": "SETTINGS_EXPORT_BOKMARKS", "message": "Export bookmarks"},
+  {"value": "SETTINGS_IMPORT_BOKMARKS", "message": "Import bookmarks"},
+  {"value": "SETTINGS_RESET_BOOKMARKS", "message": "Reset bookmarks"},
+  {"value": "SETTINGS_SHOW_CONSOLE", "message": "Show console"},
+  {"value": "SETTINGS_CLEAR_CACHE", "message": "clear cache"},
+  {"value": "SETTINGS_REPORT_BUG", "message": "Report a bug"},
+  {"value": "SETTINGS_BOOKMARKS", "message": "BOOKMARKS"},
+  {"value": "SETTINGS_ADVANCED", "message": "ADVANCED"},
+  {"value": "SETTINGS_ACCOUNT", "message": "ACCOUNT"},
+
+  {"value": "CONTINUE_BUTTON", "message": "continue"},
+  {"value": "CANCEL_BUTTON", "message": "cancel"},
+  {"value": "SEARCH_BUTTON", "message": "Search"},
+  {"value": "QUIT_BUTTON", "message": "Quit"},
+  {"value": "SETTINGS_BUTTON", "message": "Settings"},
+  {"value": "ABOUT_BUTTON", "message": "About"},
+  {"value": "YES_BUTTON", "message": "yes"},
+  {"value": "NO_BUTTON", "message": "no"},
+  {"value": "SHOW_SHUTTLE_BUTTON", "message": "Show Shuttle"}
+]

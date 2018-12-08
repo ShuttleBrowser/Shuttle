@@ -1,0 +1,68 @@
+.bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 35px;
+  background-color: #F4F4F4;
+}
+
+.bubble-btn {
+	margin-top: 4px;
+	margin-left: 2.5px;
+	display: block;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	transition: 0.2s;
+	background-color: white;
+	background-size: 70% auto;
+	background-color: #ffff;
+	background-repeat: no-repeat;
+	background-position: center; 
+}
+.bubble-btn:hover {
+	border-radius: 25%;
+}
+
+.add-btn {
+	position: absolute;
+	margin-top: 4px;
+	margin-left: 4px;
+	display: block;
+	width: 27px;
+	height: 27px;
+	transition: 0.2s;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center; 
+	background-image: url(assets/img/add.svg);
+	transition: 0.5s;
+}
+
+.add-btn:hover {
+	background-image: url(assets/img/add-hover.svg)
+}
+
+hr {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 2.5px;
+}
+
+.shuttle-btn {
+	margin-top: 11px;
+	margin-left: 2px;
+	display: block;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-size: 60% auto;
+	background-repeat: no-repeat;
+	background-position: center; 
+	background-image: url(assets/img/bar-icon.png);
+	transition: 0.2s;
+}
+.shuttle-btn:hover {
+	background-image: url(assets/img/bar-icon-hover.png);
+}

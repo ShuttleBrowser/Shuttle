@@ -1,71 +1,99 @@
 {
   "name": "shuttle",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "The fastest access to your favorite applications",
+  "homepage": "https://shuttleapp.io",
   "main": "main.js",
   "scripts": {
-    "postinstall": "install-app-deps",
-    "start": "electron .",
-    "lint": "standard",
-    "dist": "build -mwl"
+    "run": "node main.js",
+    "build-linux": "electron-builder --config ./build/build.json --linux",
+    "build-mac": "electron-builder --config ./build/build.json --mac",
+    "build-win": "electron-builder --config ./build/build.json --win"
   },
+  "author": "Robin Jullian <38robin38@gmail.com>",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robjullian/shuttle.git"
-  },
-  "keywords": [
-    "js",
-    "javascript",
-    "electron"
-  ],
-  "author": "Robin Jullian <robin.jullian@getshuttle.xyz>",
-  "license": "NPOSL-3.0",
-  "bugs": {
-    "url": "https://github.com/robjullian/shuttle/issues"
-  },
-  "homepage": "https://getshuttle.xyz/",
-  "dependencies": {
-    "auto-launch": "^5.0.5",
-    "electron-localshortcut": "^3.1.0",
-    "electron-updater": "^2.20.1",
-    "is-promise": "^2.1.0",
-    "lowdb": "^1.0.0",
-    "menubar": "^5.2.3",
-    "os-locale": "^3.0.1",
-    "request": "^2.87.0",
-    "socket.io-client": "^2.1.1",
-    "winston": "^2.4.0"
-  },
-  "devDependencies": {
-    "electron-builder": "^20.17.0",
-    "electron-packager": "^10.1.2",
-    "standard": "^10.0.3"
+    "url": "git+https://github.com/ShuttleBrowser/Shuttle.git"
   },
   "build": {
-    "appId": "xyz.robjullian.shuttle",
+    "appId": "xyz.shuttle.browser",
+    "productName": "Shuttle",
+    "asar": true,
     "compression": "maximum",
-    "asar": "true",
+    "copyright": "Copyright © 2018-2019 Shuttle <38robin38@gmail.com>",
     "publish": [
       "github"
     ],
-    "win": {
-      "target": [
-        "NSIS",
-        "zip"
-      ]
+    "directories": {
+      "output": "dist"
     },
+    "forceCodeSigning": false,
+    "npmRebuild": true,
+    "artifactName": "Shuttle-${os}-${arch}.${ext}",
+
     "linux": {
       "target": [
-        "deb",
-        "tar.gz"
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
       ],
-      "icon": "./build/icon.png",
-      "synopsis": "The fastest access to your favorite applications",
-      "description": "The fastest access to your favorite applications",
-      "category": "Network"
+      "category": "Network",
+      "icon": "./build/linuxIcons"
+    },
+    "appImage": {
+      "artifactName": "Shuttle Linux (${arch}).AppImage"
     },
     "mac": {
-      "category": "public.app-category.productivity"
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "public.app-category.utilities",
+      "icon": "./build/icon.icns"
+    },
+    "dmg": {
+      "artifactName": "Shuttle MacOS Image.dmg"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "./build/icon.ico"
+    },
+    "nsis": {
+      "artifactName": "Shuttle Installer.exe",
+      "oneClick": false,
+      "deleteAppDataOnUninstall": true,
+      "allowToChangeInstallationDirectory": true
     }
+  },
+  "dependencies": {
+    "auto-launch": "^5.0.5",
+    "electron-fetch": "^1.3.0",
+    "extract-zip": "^1.6.7",
+    "file-saver": "^2.0.0",
+    "lowdb": "^1.0.0",
+    "menubar": "^5.2.3",
+    "os-locale": "^3.0.1",
+    "vex-js": "^4.1.0"
+  },
+  "devDependencies": {
+    "electron": "^3.0.10",
+    "electron-builder": "^20.36.2"
   }
 }
