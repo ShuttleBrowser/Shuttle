@@ -1,70 +1,189 @@
-// Import libs
-const { app, shell, ipcMain } = require('electron')
+const {resolve} = require('path')
+const {Menu, ipcMain, app, shell, globalShortcut} = require('electron')
+const lowdb = require('lowdb')
 const menubar = require('menubar')
+const winston = require('winston')
+const AutoLaunch = require('auto-launch')
+const osLocale = require('os-locale')
+const electronLocalshortcut = require('electron-localshortcut')
 
-require('./main/events.js')
-const contextMenu = require('./main/menu.js')
-const files = require('./app/modules/files.js')
+// let os = require('os').platform()
+let iconPath
+let toggleShow = false
+let toggleSkipTaskbar
+let toggleAlwaysOnTop
 
-// set window variable
-let mb
+const shuttleUpdater = require(resolve('app/modules/shuttle-updater.js'))
+const locationMsg = require(resolve('app/modules/lang.js'))
 
-const shuttle = {
-  // create window
-  createAppWindows () {
-    mb = new menubar({
-      icon: `${__dirname}/main/icon.png`,
-      index: `${__dirname}/app/index.html`,
-      width: 395,
-      minWidth: 395,
-      height: 645,
-      minHeight: 645,
-      title: 'Shuttle',
-      autoHideMenuBar: true,
-      frame: files.settings.getValue('settings.ShowFrame') || false,
-      skipTaskbar: true,
-      backgroundColor: '#ffffff',
-      preloadWindow: true,
-      alwaysOnTop: files.settings.getValue('settings.StayOpen') || false,
-      resizable: true,
-      webPreferences: {
-        webSecurity: false,
-        'overlay-fullscreen-video': true,
-        webaudio: true,
-        webgl: true,
-        textAreasAreResizable: true
-      }
-    })
-  }
+winston.add(winston.transports.File, {filename: resolve('app/logs/Latest.log')})
+
+winston.info('Lauch app')
+
+// Lowdb db init
+const FileSync = require('lowdb/adapters/FileSync')
+const LowdbAdapterSettings = new FileSync(`${app.getPath('userData')}/settings.json`)
+const settings = lowdb(LowdbAdapterSettings)
+
+// Autolaunch init
+let ShuttleAutoLauncher = new AutoLaunch({
+  name: 'Shuttle',
+  path: app.getAppPath()
+})
+
+if (settings.get('settings.autostart').value() === true || settings.get('settings.autostart').value() === undefined) {
+  ShuttleAutoLauncher.enable()
+} else {
+  ShuttleAutoLauncher.disable()
 }
 
-app.on('ready', () => {
-  shuttle.createAppWindows()
+if (process.platform === 'darwin' || process.platform === 'linux') {
+  iconPath = resolve('assets/img/icon.png')
+  toggleSkipTaskbar = false
+  toggleAlwaysOnTop = true
+} else if (process.platform === 'win32') {
+  iconPath = resolve('assets/img/icon.ico')
+  toggleSkipTaskbar = true
+  toggleAlwaysOnTop = settings.get('settings.StayOpen').value()
+}
+
+let mb = menubar({
+  icon: iconPath,
+  index: `file://${__dirname}/views/index.html`,
+  width: 395,
+  minWidth: 395,
+  height: 645,
+  minHeight: 645,
+  title: 'Shuttle',
+  autoHideMenuBar: true,
+  frame: false,
+  skipTaskbar: toggleSkipTaskbar,
+  backgroundColor: '#ffffff',
+  preloadWindow: true,
+  alwaysOnTop: toggleAlwaysOnTop,
+  resizable: settings.get('settings.ResizeWindow').value() || false,
+  webPreferences: {
+    webSecurity: false,
+    'overlay-fullscreen-video': true,
+    webaudio: true,
+    webgl: true,
+    textAreasAreResizable: true
+  }
+})
+
+mb.on('ready', () => {
+  winston.log('Shuttle is ready')
   mb.tray.setContextMenu(contextMenu)
-  app.on('before-quit', () => {
-    mb.window.removeAllListeners('close')
-    mb.window.close()
+
+  if (process.platform === "linux") {
+    mb.showWindow()
+  }
+
+  /** LOCAL SHORTCUTS */
+  globalShortcut.register('CmdOrCtrl+Shift+X', () => {
+    if (!toggleShow) {
+      mb.showWindow()
+      console.log('show window')
+    } else {
+      mb.hideWindow()
+      console.log('hide window')
+    }
+  })
+
+  electronLocalshortcut.register(mb.window, 'Escape', () => {
+    mb.window.webContents.send('quitFullscreen')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+P', () => {
+    mb.window.webContents.send('addBmks')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+H', () => {
+    mb.window.webContents.send('home')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+S', () => {
+    mb.window.webContents.send('openSettings')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+K', () => {
+    mb.window.webContents.send('quicksearch')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+Shift+S', () => {
+    mb.window.webContents.send('screenshot')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+Shift+I', () => {
+    mb.window.openDevTools()
   })
 })
 
-EventsEmitter.on('SHOW_SHUTTLE', () => {
-  mb.showWindow()
+mb.on('after-create-window', () => {
+  mb.tray.setContextMenu(contextMenu)
+  mb.tray.on('right-click', () => {
+    mb.tray.popUpContextMenu(contextMenu)
+  })
+  console.log(mb.window.getSize()[1])
 })
 
-EventsEmitter.on('SHOW_ABOUT', () => {
-  shell.openExternal('https://shuttleapp.io/about')
+mb.on('hide', () => {
+  toggleShow = false
 })
 
-EventsEmitter.on('SHOW_SETTINGS', () => {
-  mb.window.webContents.send('OPEN_SETTINGS')
+mb.on('show', () => {
+  toggleShow = true
 })
 
-EventsEmitter.on('QUIT_SHUTTLE', () => {
-  app.quit()
+// create the context menu
+const contextMenu = Menu.buildFromTemplate([
+
+  // about btn
+  {
+    label: locationMsg('showShuttle', osLocale.sync()),
+    click () {
+      mb.showWindow()
+    }
+  },
+
+  // about btn
+  {
+    label: locationMsg('about', osLocale.sync()),
+    click () {
+      // We open the website at about
+      shell.openExternal('https://getshuttle.xyz/')
+    }
+  },
+
+  // Settings btn
+  {
+    label: locationMsg('settings', osLocale.sync()),
+    click () {
+      mb.window.webContents.send('openSettings')
+    }
+  },
+
+  // wow, a separator !
+  {type: 'separator'},
+
+  // quit btn :(
+  {
+    label: locationMsg('quit', osLocale.sync()),
+    click () {
+      winston.info('Goodbye !')
+      mb.app.quit()
+    }
+  }
+
+])
+
+ipcMain.on('CheckUpdate', (event, arg) => {
+  shuttleUpdater.checkUpdate()
 })
 
-ipcMain.on('PAGE_ALERT', (event, data) => {
-  mb.window.webContents.send('ALERT', data)
+ipcMain.on('refreshApp', (event, arg) => {
+  mb.window.webContents.send('refreshApp')
+  console.log('true')
 })
 
 ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
@@ -76,5 +195,20 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
 })
 
 ipcMain.on('SettingShowFrame', (event, arg) => {
-  mb.window.webContents.send('SHOW_FRAME', arg)
+  mb.window.webContents.send('addframe', arg)
+})
+
+ipcMain.on('SettingResizeWindow', (event, arg) => {
+  mb.window.setResizable(arg)
+  if (arg === false) {
+    mb.window.setSize(396, 646)
+    mb.hideWindow()
+    setTimeout(() => {
+      mb.showWindow()
+    }, 5)
+  }
+})
+
+ipcMain.on('ShowAccountPan', (event, arg) => {
+  mb.window.webContents.send('ShowAccountPanel', arg)
 })
