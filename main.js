@@ -13,8 +13,8 @@ const shuttle = {
   // create window
   createAppWindows () {
     mb = new menubar({
-      icon: `${__dirname}/main/icon.png`,
-      index: `${__dirname}/app/index.html`,
+      icon: require.resolve(`./main/icon.png`),
+      index: require.resolve(`./app/index.html`),
       width: 395,
       minWidth: 395,
       height: 645,
@@ -26,7 +26,7 @@ const shuttle = {
       backgroundColor: '#ffffff',
       preloadWindow: true,
       alwaysOnTop: files.settings.getValue('settings.StayOpen') || false,
-      resizable: true,
+      resizable: false,
       webPreferences: {
         webSecurity: false,
         'overlay-fullscreen-video': true,

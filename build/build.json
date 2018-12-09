@@ -4,6 +4,7 @@
   "copyright": "Copyright © year ${author}",
   "remoteBuild": false,
   "compression": "maximum",
+  "asar": false,
 
   "linux": {
     "target": [

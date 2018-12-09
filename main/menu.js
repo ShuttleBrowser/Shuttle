@@ -24,7 +24,7 @@ module.exports = Menu.buildFromTemplate([
     label: lang('SETTINGS_BUTTON'),
     click () {
       EventsEmitter.emit('SHOW_SETTINGS')
-
+      EventsEmitter.emit('SHOW_SHUTTLE')
     }
   },
 
