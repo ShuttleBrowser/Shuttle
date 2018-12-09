@@ -1,35 +1,35 @@
 os:
-  - linux
-  - osx
+- linux
+- osx
+
 language: node_js
 node_js:
-  - "8"
+- '8'
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libc6-dev-i386 gcc-multilib g++-multilib        ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libc6-dev-i386
+  gcc-multilib g++-multilib        ; fi
 
 before_script:
-  - npm install snyk
-  - npm run snyk-protect
-  - npm install
+- npm install snyk
+- npm run snyk-protect
+- npm install
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run build-mac         ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run build-linux        ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run build-mac         ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run build-linux        ; fi
 
 deploy:
   skip_cleanup: true
   provider: releases
   api_key:
-    secure: G8Sd2o4civmiM6U0/wW6dCOQ8NJxNZvXVcvw1HFBZorwegRRdWnR2LgZxPY+somXMVxWT6bI4yCThywURVWf1078HjpPxjrs+ks4hKyfnbOsOVeaGJeDaAEUnyMxbiVW5QyzanN5Jmgjd3sYJ8ABAFrUtTI0JLZIqx3qT2mY15f8okn51FGbnQuq9yL1cjrmukVD+bmzEH3++6tlnxqo+2T0AUfaPJrjVcuwmkpazyy9q0iGKc9iydsj8f7jtZ9kliEQiwtqLFAFG34WBaGeYqgTjrwLlW5/LbJAQFN/GaVzUDFg27F8RIIDr5h1WOOrxS+SkicuIzhDboZi4+WEjRxeKCC5M7zLS1punJh3/QOcqtl8Gh4RMpxak/+NaW6s2xyxgFWOrRkvPMAp5MDcTOYSCdodmRu1hx+uEDCwUGQW6eRVlN+4O64OR0ecb1r4LktprdibDsxjZRP4nhBo2Va4aZ7GPFyGj4PAIBqf+890/QkIOfllmCJVtD62bpvo6XdG2r8cKx/Fe6v5QvL80x2LJ/gGKrFerGY8j8jD8AqNKJfKoRzfb0PyrpVPSV17LjCErSanYYVzLiBp9i6c1ZlCQ/rxtJcGp9UXroZbKIXd9dR2LW+SauefU6l+hpUDiQzYJsscX3bcskWrQAcbwRbOwgBzyt0i0eWzMULD2kM=
+    secure: cOGP2gnK2bUlslRfggOXNJdud5VTewsEYaDihqthmUOW7nHNEM06NOLJMo/luPASJgk/tk954TQPc99MBgBxQHw2LqgKcp6iAIqLTcsv727WDB1Eg9c/4jk0cskrqD7Z9OvJg66UjenmefQR9HZq1j47viZBBxnoGxTcSL7nzFM0kgtPrsxtaI/RccaPlcNjTrfjJ8D42onQM4Ex/m7Pbc2mx9SxA3AmBkN52wpwPdUGV+XwYuorgjSt+YgFdgb+k9BHwDEmLYo4TOp5nYg1CvlkQ1V8K+Ux192utYnL8sN3Q71qPhyEkwwAcjLT1FdIF2TI7cDl8kmakgYxSWlApjxNRPe9qoSRxBPIHLatkVqmb9vEC2x7gxZHTaCiP/DkywVhBbwRpp/jgIeF4MU+MiKhxFqEVlJG8+JfM1fy5DYCAptDq0HTAcRdCnXNyjoZnUcltiOUTUqm+GEFJz4sEZDFtFmBAdrLvDVom+AlE2B/4NYs3AYiLIjKXQxcayFJnYGgWgJr9FTU9a5jB1LN36K0P1vQdflDFZC6K8Cl88jQ+lYzYPp6v5bMOHYyDdq3Nk7kvjRz9vh6HDCcV0wFCCUetY4xYlgsCSgEK7ivdDns4UAQOLya+0Hty/8KJMAT8TgT6EP9EptlaPiJGzva1715VeGsdw4qIrxM8WC0Zns=
   file:
-    - "dist/Shuttle-Linux-i386.AppImage"
-    - "dist/Shuttle-Linux-x86_64.AppImage"
-    - "dist/Shuttle-MacOS.dmg"
-    - "dist/latest.yml"
-    - "dist/latest-mac.yml"
-    - "dist/latest-linux.yml"
-  options:
-      draft: true
-   on:
-      tags: true
+  - "dist/Shuttle-Linux-i386.AppImage"
+  - "dist/Shuttle-Linux-x86_64.AppImage"
+  - "dist/Shuttle-MacOS.dmg"
+  - "dist/latest.yml"
+  - "dist/latest-mac.yml"
+  - "dist/latest-linux.yml"
+  on:
+    tags: true
