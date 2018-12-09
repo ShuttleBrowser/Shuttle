@@ -11,8 +11,6 @@ before_install:
   gcc-multilib g++-multilib        ; fi
 
 before_script:
-- npm install snyk
-- npm run snyk-protect
 - npm install
 
 script:
