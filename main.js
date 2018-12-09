@@ -41,6 +41,7 @@ const shuttle = {
 app.on('ready', () => {
   shuttle.createAppWindows()
   mb.tray.setContextMenu(contextMenu)
+  mb.window.openDevTools()
   app.on('before-quit', () => {
     mb.window.removeAllListeners('close')
     mb.window.close()
