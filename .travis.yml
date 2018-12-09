@@ -32,3 +32,5 @@ deploy:
     draft: true
   on:
     tags: true
+    repo: ShuttleBrowser/Shuttle
+    branch: master
