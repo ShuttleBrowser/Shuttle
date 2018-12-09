@@ -8,7 +8,8 @@
     "run": "node main.js",
     "build-linux": "electron-builder --config ./build/build.json --linux",
     "build-mac": "electron-builder --config ./build/build.json --mac",
-    "build-win": "electron-builder --config ./build/build.json --win"
+    "build-win": "electron-builder --config ./build/build.json --win",
+    "snyk-protect": "snyk protect"
   },
   "author": "Robin Jullian <38robin38@gmail.com>",
   "license": "GPL-3.0",
