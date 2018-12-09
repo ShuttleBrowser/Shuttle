@@ -1,0 +1,23 @@
+version: '{build}'
+pull_requests:
+  do_not_increment_build_number: true
+install:
+- ps: Install-Product node 8
+build_script:
+- cmd: npm install && npm run build-win
+test: off
+artifacts:
+  - path: "dist\\Shuttle-Windows.exe"
+    name: Installer
+deploy:
+- provider: GitHub
+  tag: $(appveyor_repo_tag_name)
+  release: Shuttle $(appveyor_repo_tag_name)
+  description: 'Placeholder description'
+  auth_token:
+    secure: N1MWDp+MurAYh/oA1w9ZZAc0nPY3SNxKhizllZXzwaBa18jy7UmlbQ2UGqmp7Ylr
+  artifact: Installer
+  draft: true
+  force_update: true
+  on:
+appveyor_repo_tag: true

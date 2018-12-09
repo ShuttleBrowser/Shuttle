@@ -61,7 +61,7 @@
   },
 
   "nsis": {
-    "artifactName": "Shuttle-win-${arch}.exe",
+    "artifactName": "Shuttle-Windows.exe",
     "oneClick": true,
     "deleteAppDataOnUninstall": true,
     "license": "build/license.txt"

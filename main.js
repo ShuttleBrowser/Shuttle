@@ -4,6 +4,7 @@ const menubar = require('menubar')
 
 require('./main/events.js')
 const contextMenu = require('./main/menu.js')
+const autoUpdater = require('./main/updater.js')
 const files = require('./app/modules/files.js')
 
 // set window variable
@@ -13,8 +14,8 @@ const shuttle = {
   // create window
   createAppWindows () {
     mb = new menubar({
-      icon: require.resolve(`./main/icon.png`),
-      index: require.resolve(`./app/index.html`),
+      icon: `./main/icon.png`,
+      index: `file://${__dirname}/app/index.html`,
       width: 395,
       minWidth: 395,
       height: 645,
@@ -41,6 +42,7 @@ const shuttle = {
 app.on('ready', () => {
   shuttle.createAppWindows()
   mb.tray.setContextMenu(contextMenu)
+  mb.showWindow()
   mb.window.openDevTools()
   app.on('before-quit', () => {
     mb.window.removeAllListeners('close')
