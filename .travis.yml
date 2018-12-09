@@ -26,8 +26,9 @@ deploy:
   - "dist/Shuttle-Linux-i386.AppImage"
   - "dist/Shuttle-Linux-x86_64.AppImage"
   - "dist/Shuttle-MacOS.dmg"
-  - "dist/latest.yml"
   - "dist/latest-mac.yml"
   - "dist/latest-linux.yml"
+  options:
+    draft: true
   on:
     tags: true
