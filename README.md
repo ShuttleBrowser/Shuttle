@@ -1,6 +1,6 @@
 <div align="center">
 <br>
-<a href="https://getshuttle.xyz" target="_blank"><img width="500" src="https://getshuttle.xyz/images/new/logo-p.png" alt="Shuttle"></a>
+<a href="https://shuttleapp.io" target="_blank"><img width="500" src="https://shuttleapp.io/images/new/logo-p.png" alt="Shuttle"></a>
 <br>
 <br>
 </div>
@@ -96,4 +96,4 @@ The logo and all associated visuals are under the [CC BY-NC-ND 3.0](https://crea
 
 ## Current Version
 
-* 2.0.6
+* 2.0.9
