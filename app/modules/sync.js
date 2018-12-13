@@ -9,7 +9,7 @@ const sync = {
 
       let isLogged = files.settings.getValue('settings.isLogged')
 
-      if (isLogged && !files.settings.getValue('settings.sync')) {
+      if (isLogged && files.settings.getValue('settings.sync')) {
 
         let body = {
           token: files.settings.getValue('settings.userToken')
@@ -44,7 +44,7 @@ const sync = {
 
       let isLogged = files.settings.getValue('settings.isLogged')
 
-      if (isLogged && !files.settings.getValue('settings.sync')) {
+      if (isLogged && files.settings.getValue('settings.sync')) {
 
         let body = {
           token: files.settings.getValue('settings.userToken'),

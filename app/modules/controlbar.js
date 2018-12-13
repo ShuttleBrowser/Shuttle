@@ -1,6 +1,7 @@
 const vex = require('vex-js')
 const fs = require('fs')
 const { app, shell } = require('electron').remote
+const modales = require('./modales.js')
 
 const controlBar = {
   goBack () {
@@ -32,20 +33,10 @@ const controlBar = {
         if (err) throw err
       })
 
-      vex.dialog.buttons.YES.text = 'Ok'
-      vex.dialog.buttons.NO.text = 'openFolder'
-      vex.dialog.confirm({
-        message: 'screenDone',
-        callback: (value) => {
-          if (value) {
-            return
-          } else {
-            shell.showItemInFolder(path)
-          }
-          vex.dialog.buttons.YES.text = 'Ok'
-          vex.dialog.buttons.NO.text = 'Cancel'
-        }
+      modales.screenshot(() => {
+        shell.showItemInFolder(path)
       })
+
     })
   },
 

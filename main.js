@@ -1,5 +1,5 @@
 // Import libs
-const { app, shell, ipcMain } = require('electron')
+const { app, shell, ipcMain, Notification } = require('electron')
 const menubar = require('menubar')
 
 require('./main/events.js')

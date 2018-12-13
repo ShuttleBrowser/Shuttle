@@ -64,6 +64,23 @@ const modales = {
     })
   },
 
+  screenshot (callback) {
+    vex.dialog.buttons.YES.text = 'Ok'
+    vex.dialog.buttons.NO.text = 'openFolder'
+    vex.dialog.confirm({
+      message: lang('SCREENSHOT_DONE'),
+      callback: (value) => {
+        if (value) {
+          return
+        } else {
+          callback()
+        }
+        vex.dialog.buttons.YES.text = 'Ok'
+        vex.dialog.buttons.NO.text = 'Cancel'
+      }
+    })
+  },
+
   alert (message) {
     vex.dialog.open({
       message: message,

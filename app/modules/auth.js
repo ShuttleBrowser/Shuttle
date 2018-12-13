@@ -69,7 +69,8 @@ const auth = {
                 if (data.message === 'success') {
 
                   files.settings.setValue('settings.isLogged', true)
-                  files.settings.setValue('settings.token', data.token)
+                  files.settings.setValue('settings.sync', true)
+                  files.settings.setValue('settings.userToken', data.token)
                   this.closeView()
 
                 } else if (data.message === 'AUTH_BAD_PASSWORD') {
@@ -127,6 +128,7 @@ const auth = {
             if (data.message === 'success') {
 
               files.settings.setValue('settings.isLogged', true)
+              files.settings.setValue('settings.sync', true)
               files.settings.setValue('settings.userToken', data.token)
               this.closeView()
 
@@ -148,6 +150,7 @@ const auth = {
   logout () {
     files.settings.setValue('settings.userToken', '')
     files.settings.setValue('settings.isLogged', false)
+    files.settings.setValue('settings.sync', false)
     EventsEmitter.emit('SHOW_AUTH')
   }
 }

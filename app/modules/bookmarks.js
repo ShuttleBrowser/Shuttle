@@ -89,6 +89,7 @@ const bkms = {
 
   loadBookmarks () {
     return new Promise((resolve) => {
+      document.querySelector('.bkms').innerHTML = ""
 
       sync.syncBookmarks().then((bkm) => {
         console.log(bkm)
@@ -107,5 +108,9 @@ const bkms = {
     })
   }
 }
+
+setInterval(() => {
+  bkms.loadBookmarks()
+}, 60000)
 
 module.exports = bkms

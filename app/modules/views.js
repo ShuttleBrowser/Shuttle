@@ -2,15 +2,13 @@ const files = require('./files')
 
 const view = {
   load () {
-    let landingPageUrl = `${require('electron').remote.app.getAppPath()}/app/views/changelog.html`
+    let landingPageUrl = `file://${require('electron').remote.app.getAppPath()}/app/views/changelog.html`.replace(/\\/g,"/")
     this.show(0, landingPageUrl)
   },
 
   fixUrl (url) {
     return new Promise((resolve) => {
-      let changelogPath = 'shuttle/app/views/changelog.html'
-
-      if (url.includes('https://') || url.includes('http://') || url.includes('file://') || url.includes(changelogPath)) {
+      if (url.includes('https://') || url.includes('http://') || url.includes('file://')) {
         resolve(url)
       } else {
         resolve(`http://${url}`)
@@ -28,9 +26,9 @@ const view = {
 
       this.fixUrl(url).then((url) => {
         if (type === 'addon') {
-          webViewList.innerHTML += `<webview src="file://${url}" id="view-${id}" preload="./modules/addonApi.js" onmouseover="controlBar.show(0, false)" class="web-content inactive" useragent="${mobileUserAgent}"></webview>`
+          webViewList.innerHTML += `<webview src="file://${url}" id="view-${id}" preload="./modules/addonApi.js" onmouseover="controlBar.show(0, false)" class="web-content inactive" useragent="${mobileUserAgent}" disablewebsecurity></webview>`
         } else {
-          webViewList.innerHTML += `<webview src="${url}" id="view-${id}" preload="./modules/webviewPreloader.js" onmouseover="controlBar.show(0, false)" class="web-content inactive" useragent="${mobileUserAgent}"></webview>`
+          webViewList.innerHTML += `<webview src="${url}" id="view-${id}" preload="./modules/webviewPreloader.js" onmouseover="controlBar.show(0, false)" class="web-content inactive" useragent="${mobileUserAgent}" disablewebsecurity></webview>`
         }
         this.listenWebViewError(id)
         this.show(id)
@@ -75,6 +73,7 @@ const view = {
   },
 
   listenWebViewError (id) {
+  	/*
     let webviewToListen = document.querySelector(`#view-${id}`)
     if (webviewToListen) {
       webviewToListen.addEventListener('did-fail-load', (errorCode, errorDescription, validatedURL) => {
@@ -89,6 +88,7 @@ const view = {
         }
       })
     }
+    */
   }
 }
 
