@@ -1,0 +1,9 @@
+{
+    "Bing" : "https://www.bing.com/search?q=",
+    "DuckDuckGo" : "https://duckduckgo.com/?q=",
+    "Ecosia" : "https://www.ecosia.org/search?q=",
+    "Google" : "https://www.google.com/search?q=",
+    "Qwant" : "http://qwant.com/?q=",
+    "Lilo" : "https://search.lilo.org/searchweb.php?q=",
+    "Yahoo" : "https://fr.search.yahoo.com/search?p="
+}

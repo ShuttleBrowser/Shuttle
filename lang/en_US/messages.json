@@ -17,6 +17,8 @@
   {"value": "SETTINGS_CLEAR_CACHE", "message": "clear cache"},
   {"value": "SETTINGS_REPORT_BUG", "message": "Report a bug"},
   {"value": "SETTINGS_BOOKMARKS", "message": "BOOKMARKS"},
+  {"value": "SETTINGS_CHOOSESEARCHENGINE", "message": "Choose Search engine"},
+  {"value": "SETTINGS_QUICKSEARCH", "message": "QUICK SEARCH"},
   {"value": "SETTINGS_ADVANCED", "message": "ADVANCED"},
   {"value": "SETTINGS_ACCOUNT", "message": "ACCOUNT"},
 
