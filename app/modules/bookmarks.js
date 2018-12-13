@@ -13,6 +13,7 @@ const bkms = {
       bkmId = bkmsList[bkmsList.length - 1].id + 1
     }
 
+    console.log(url)
     url = this.repairUrl(url)
 
     files.bookmarks.push({
@@ -32,10 +33,10 @@ const bkms = {
   },
 
   repairUrl (url) {
-    if (!url.startsWith('https') || !url.startsWith('http')) {
-      return `http://${url}`
-    } else {
+    if (url.startsWith('https://') === true || url.startsWith('http://') === true) {
       return url
+    } else {
+      return `http://${url}`
     }
   },
 
