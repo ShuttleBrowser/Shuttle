@@ -1,3 +1,4 @@
+const image2base64 = require('image-to-base64')
 const files = require('./files')
 const views = require('./views.js')
 const sync = require('./sync.js')
@@ -84,7 +85,9 @@ const bkms = {
     }
 
     return new Promise((resolve) => {
-      resolve(`https://api.faviconkit.com/${url}/144`)
+      image2base64(`https://api.faviconkit.com/${url}/144`).then((response) => {
+        resolve(`data:image/png;base64,${response}`)
+      })
     })
   },
 

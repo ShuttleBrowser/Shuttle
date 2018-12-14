@@ -22,6 +22,7 @@
     "electron-updater": "^4.0.5",
     "extract-zip": "^1.6.7",
     "file-saver": "^2.0.0",
+    "image-to-base64": "^2.0.1",
     "lowdb": "^1.0.0",
     "menubar": "^5.2.3",
     "os-locale": "^3.0.1",
