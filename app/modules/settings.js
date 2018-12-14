@@ -3,6 +3,7 @@ const AutoLaunch = require('auto-launch')
 const fs = require('fs')
 const saveAs = require('file-saver')
 const files = require('./files')
+const searchengines = require('./searchengines.json')
 
 const { app } = require('electron').remote
 
@@ -76,6 +77,8 @@ const settings = {
     document.getElementById('Export').innerHTML = lang('SETTINGS_EXPORT_BOKMARKS')
     document.getElementById('Import').innerHTML = lang('SETTINGS_IMPORT_BOKMARKS')
     document.getElementById('Reset').innerHTML = lang('SETTINGS_RESET_BOOKMARKS')
+    document.getElementById('quicksearch').innerHTML = lang('SETTINGS_QUICKSEARCH')
+    document.getElementById('chooseSearchEngine').innerHTML = lang('SETTINGS_CHOOSESEARCHENGINE');
     document.getElementById('advanced').innerHTML = lang('SETTINGS_ADVANCED')
     document.getElementById('showConsole').innerHTML = lang('SETTINGS_SHOW_CONSOLE')
     document.getElementById('clearCache').innerHTML = lang('SETTINGS_CLEAR_CACHE')
@@ -238,6 +241,19 @@ const settings = {
     files.settings.setValue('settings.isLogged', false)
     files.settings.setValue('settings.userToken', '')
     EventsEmitter.emit('SHOW_AUTH')
+  },
+
+  setSearchEngineSelect() {
+    console.log(document.querySelector('select[name="chooseSearchEngine"]'));
+    let seleted;
+    for(let key in searchengines) {
+      selected = ( (files.settings.getValue('settings.searchEngine') === undefined && key == "Google") || (files.settings.getValue('settings.searchEngine') == key) ) ? "selected" : "";
+      document.querySelector('select[name="chooseSearchEngine"]').innerHTML += "<option value=" + key + " " + selected + ">" + key + "</option>";
+    }
+  },
+
+  chooseSearchEngine() {
+    files.settings.setValue('settings.searchEngine', document.querySelector('select[name="chooseSearchEngine"]').value);
   }
 }
 
