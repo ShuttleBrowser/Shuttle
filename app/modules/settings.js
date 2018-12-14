@@ -225,7 +225,6 @@ const settings = {
   },
 
   setSearchEngineSelect() {
-    console.log(document.querySelector('select[name="chooseSearchEngine"]'));
     let seleted;
     for(let key in searchengines) {
       selected = ( (files.settings.getValue('settings.searchEngine') === undefined && key == "Google") || (files.settings.getValue('settings.searchEngine') == key) ) ? "selected" : "";

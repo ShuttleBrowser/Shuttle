@@ -17,16 +17,20 @@
   <div id="app"></div>
 
   <script src="./assets/js/all.js"></script>
+  <script src=""></script>
   <script>
     window.require = require
 
     const { loadFile, event, bookmarks, view, files, auth, settings, controlBar, modales, store, sync } = require('./modules/index.js')
     const { ipcRenderer } = require('electron')
     const lang = require('../lang/lang.js')
+    const Sortable = require('./assets/js/Sortable.min.js')
 
     window.alert = (message) => {
       modales.alert(message)
     }
+
+    let sortable = undefined;
 
     const shuttle = {
       initApp () {
@@ -55,6 +59,12 @@
         loadFile('browser').then(() => {
           bookmarks.loadBookmarks().then(() => {
             view.load()
+            const el = document.querySelector('.nav-zone .bkms')
+            sortable = Sortable.create(el, {
+              onEnd: () => {
+                bookmarks.reorderBookmarks(el);
+              }
+            })
             loadFile('settings', '.settings').then(() => {
               settings.setLang()
               settings.setCheckBox()
