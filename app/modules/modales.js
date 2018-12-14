@@ -88,8 +88,4 @@ const modales = {
   }
 }
 
-ipcRenderer.on('ALERT', (event, data) => {
-  modales.alert(data.message)
-})
-
 module.exports = modales

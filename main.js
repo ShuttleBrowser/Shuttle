@@ -1,11 +1,22 @@
 // Import libs
 const { app, shell, ipcMain, Notification } = require('electron')
 const menubar = require('menubar')
+const AutoLaunch = require('auto-launch')
 
 require('./main/events.js')
 const contextMenu = require('./main/menu.js')
 const autoUpdater = require('./main/updater.js')
 const files = require('./app/modules/files.js')
+
+let ShuttleAutoLauncher = new AutoLaunch({
+  name: 'Shuttle'
+})
+
+if (files.settings.getValue('settings.autostart') === true || files.settings.getValue('settings.autostart') === undefined) {  
+  ShuttleAutoLauncher.enable()
+} else {
+  ShuttleAutoLauncher.disable()
+}
 
 // set window variable
 let mb
@@ -22,7 +33,7 @@ const shuttle = {
       minHeight: 645,
       title: 'Shuttle',
       autoHideMenuBar: true,
-      frame: files.settings.getValue('settings.ShowFrame') || false,
+      frame: false,
       skipTaskbar: true,
       backgroundColor: '#ffffff',
       preloadWindow: true,
@@ -76,8 +87,4 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
   setTimeout(() => {
     mb.showWindow()
   }, 5)
-})
-
-ipcMain.on('SettingShowFrame', (event, arg) => {
-  mb.window.webContents.send('SHOW_FRAME', arg)
 })

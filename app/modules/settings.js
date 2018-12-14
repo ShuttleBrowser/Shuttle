@@ -61,7 +61,7 @@ const settings = {
     if (files.settings.getValue('settings.StayOpen')) {
       checkboxStayOpen.checked = true
     }
-    if (files.settings.getValue('settings.ShowFrame')) {
+    if (files.settings.getValue('settings.frame')) {
       checkboxShowFrame.checked = true
     }
     if (files.settings.getValue('settings.sync') === true || files.settings.getValue('settings.sync') === undefined) {
@@ -109,16 +109,8 @@ const settings = {
 
   setShowFrame () {
     let checkboxShowFrame = document.querySelector('input[name=SFrame]')
-    files.settings.setValue('settings.ShowFrame', checkboxShowFrame.checked)
-    if (checkboxShowFrame.checked === true) {
-      document.querySelector('.title-bar').style.top = '0px'
-      document.querySelector('webview').style.top = '15px'
-      this.changeViewsSize(15)
-    } else {
-      document.querySelector('.title-bar').style.top = '-15px'
-      document.querySelector('webview').style.top = '0px'
-      this.changeViewsSize(0)
-    }
+    files.settings.setValue('settings.frame', checkboxShowFrame.checked)
+    shuttle.frame(checkboxShowFrame.checked)
     console.log(`ShowFrame: ${checkboxShowFrame.checked}`)
   },
 
@@ -180,17 +172,6 @@ const settings = {
     win.webContents.session.clearCache(() => {
       alert('cache is cleared')
     })
-  },
-
-  changeViewsSize (size) {
-    let views = document.querySelectorAll('webview')
-    for (let i in views) {
-      if (i > views.length - 1) {
-        break
-      } else {
-        views[i].style.top = `${size}px`
-      }
-    }
   },
 
   downloadFavorites () {

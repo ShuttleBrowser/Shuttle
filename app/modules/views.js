@@ -1,5 +1,3 @@
-const files = require('./files')
-
 const view = {
   load () {
     let landingPageUrl = `file://${require('electron').remote.app.getAppPath()}/app/views/changelog.html`.replace(/\\/g,"/")
@@ -73,7 +71,6 @@ const view = {
   },
 
   listenWebViewError (id) {
-  	/*
     let webviewToListen = document.querySelector(`#view-${id}`)
     if (webviewToListen) {
       webviewToListen.addEventListener('did-fail-load', (errorCode, errorDescription, validatedURL) => {
@@ -87,8 +84,14 @@ const view = {
           }
         }
       })
+      webviewToListen.addEventListener('ipc-message', event => {
+        if (event.channel === "OPEN_QUICK_SEARCH") {
+          EventsEmitter.emit('OPEN_QUICK_SEARCH', event.args[0])
+        } if (event.channel === "PAGE_ALERT") {
+          alert(`${event.args[0].site} : ${event.args[0].message}`)
+        }
+      })
     }
-    */
   }
 }
 

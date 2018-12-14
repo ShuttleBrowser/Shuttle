@@ -110,8 +110,4 @@ const bkms = {
   }
 }
 
-setInterval(() => {
-  bkms.loadBookmarks()
-}, 60000)
-
 module.exports = bkms

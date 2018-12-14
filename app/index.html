@@ -13,6 +13,7 @@
 
   </head>
 
+  <div class="title-bar"></div>
   <div id="app"></div>
 
   <script src="./assets/js/all.js"></script>
@@ -31,11 +32,22 @@
       initApp () {
         if (files.settings.getValue('settings.firstRun') === undefined) {
           if (!files.settings.getValue('settings.isLogged')) {
-            shuttle.showAuth()
+            this.showAuth()
           }
           files.settings.setValue('settings.firstRun', false)
         } else {
-          shuttle.showBrowser()
+          this.showBrowser()
+        }
+        this.frame(files.settings.getValue('settings.frame'))
+      },
+
+      frame (show) {
+        if (show) {
+          document.querySelector('#app').style.top = "10px"
+          document.querySelector('.title-bar').style.height = "10px"
+        } else {
+          document.querySelector('#app').style.top = "0px"
+          document.querySelector('.title-bar').style.height = "0px"
         }
       },
 
@@ -93,6 +105,24 @@
 
     body {
       font-family: SourceSansPro-Regular;
+    }
+
+    .title-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 0px;
+      -webkit-app-region: drag;
+      transition-duration: 0.5s;
+    }
+
+    #app {
+      position: absolute;
+      top: 0px;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
   </style>
 
