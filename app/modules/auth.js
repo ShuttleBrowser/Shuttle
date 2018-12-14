@@ -1,4 +1,3 @@
-
 const config = require('./config.json')
 const files = require('./files')
 const sync = require('./sync.js')

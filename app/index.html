@@ -17,7 +17,6 @@
   <div id="app"></div>
 
   <script src="./assets/js/all.js"></script>
-  <script src=""></script>
   <script>
     window.require = require
 
@@ -29,9 +28,7 @@
     window.alert = (message) => {
       modales.alert(message)
     }
-
-    let sortable = undefined;
-
+    
     const shuttle = {
       initApp () {
         if (files.settings.getValue('settings.firstRun') === undefined) {
