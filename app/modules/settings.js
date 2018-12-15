@@ -229,12 +229,12 @@ const settings = {
     let seleted;
     for(let key in searchengines) {
       selected = ( (files.settings.getValue('settings.searchEngine') === undefined && key == "Google") || (files.settings.getValue('settings.searchEngine') == key) ) ? "selected" : "";
-      document.querySelector('select[name="chooseSearchEngine"]').innerHTML += "<option value=" + key + " " + selected + ">" + key + "</option>";
+      document.querySelector('select[name="chooseSearchEngine"]').innerHTML += `<option class="search-engine-select" value="${key}" ${selected}>${key}</option>`
     }
   },
 
   chooseSearchEngine() {
-    files.settings.setValue('settings.searchEngine', document.querySelector('select[name="chooseSearchEngine"]').value);
+    files.settings.setValue('settings.searchEngine', document.querySelector('select[name="chooseSearchEngine"]').value)
   }
 }
 
