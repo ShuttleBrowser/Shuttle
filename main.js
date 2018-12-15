@@ -26,7 +26,7 @@ const shuttle = {
   // create window
   createAppWindows () {
     mb = new menubar({
-      icon: `./main/icon.png`,
+      icon: require.resolve(`./main/icon.png`),
       index: `file://${__dirname}/app/index.html`,
       width: 395,
       minWidth: 395,
