@@ -8,8 +8,13 @@
 
     <script src="./assets/js/vex.combined.min.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-default'</script>
-    <link rel="stylesheet" href="./assets/css/vex.css"/>
-    <link rel="stylesheet" href="./assets/css/vex-theme-default.css"/>
+    <link rel="stylesheet" href="./assets/css/vex.css" />
+    <link rel="stylesheet" href="./assets/css/vex-theme-default.css" />
+
+    <link rel="stylesheet" href="./assets/css/browser.css" />
+    <link rel="stylesheet" href="./assets/css/auth.css" />
+    <link rel="stylesheet" href="./assets/css/settings.css" />
+    <link rel="stylesheet" href="./assets/css/store.css" />
 
   </head>
 
@@ -81,8 +86,29 @@
     }
 
     shuttle.initApp()
-    ipcRenderer.on('OPEN_SETTINGS', (event, data) => {
+
+    ipcRenderer.on('SHORTCUT_QUIT_FULLSCREEN', () => {
+      view.setFullscreen(false, document.querySelector('.active'))
+    })
+
+    ipcRenderer.on('SHORTCUT_ADD_BOOKMARK', () => {
+      modales.createNewBookmark()
+    })
+
+    ipcRenderer.on('SHORTCUT_SHOW_MAIN', () => {
+      view.show(0)
+    })
+
+    ipcRenderer.on('SHORTCUT_SHOW_SETTING', () => {
       EventsEmitter.emit('SHOW_SETTINGS')
+    })
+
+    ipcRenderer.on('SHORTCUT_SHOW_QUICKSERACH', () => {
+      modales.quickSearch()
+    })
+
+    ipcRenderer.on('SHORTCUT_MAKE_SCREENSHOT', () => {
+      modales.screenshot()
     })
 
     EventsEmitter.on('SHOW_BROWSER', () => {
@@ -92,6 +118,7 @@
     EventsEmitter.on('SHOW_AUTH', () => {
       shuttle.showAuth()
     })
+
   </script>
 
   <style>

@@ -1,0 +1,197 @@
+@font-face {
+	font-family: SourceSansPro-Regular;
+	src: url(../fonts/SourceSansPro-Regular.ttf);
+}
+
+@font-face {
+	font-family: SourceSansPro-Light;
+	src: url(../fonts/SourceSansPro-Light.ttf);
+}
+
+body {
+	margin: 0;
+    font-family: SourceSansPro-Light, sans-serif;
+    overflow: hidden;
+}
+
+iframe {
+	width: 90%;
+    height: 167px;
+    overflow: hidden;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+	bottom: -20px;
+}
+
+.sht-full {
+	position: absolute;
+	left: 50%; top: 60%;
+	transform: translate(-50%);
+	width: 150px;
+	position: absolute;
+}
+.sht-w {
+	position: absolute;
+	left: 50%; top: 40%;
+	transform: translate(-50%, -50%);
+	width: 50%;
+	max-width: 250px;
+}
+.arrow-w {
+	width: 70px;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+	bottom: 30px;
+}
+.arrow-r {
+	width: 70px;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+	top: 30px;
+}
+
+.version {
+	position: absolute;
+	left: 50%; top: 65%;
+	transform: translate(-50%);
+	color: #ffffff;
+    display: inline-block;
+	padding-bottom: 0.001px;
+	border-bottom: 1px solid white;
+}
+
+.section1 {
+	text-align: center;
+	width: 100%;
+	height: 100vh;
+	background-color: #E7165F;
+}
+.section2 {
+	background-color: #ffffff;
+	width: 100%;
+	height: 100vh;
+}
+
+::selection {
+  color: #eb5c7b;
+  background: #f9f6f0;
+}
+
+/* CHANGELOG CSS */
+
+ul {
+	list-style-type: none;
+	margin-top: 0;
+}
+li:before {
+	content: "- ";
+	font-size: 9.5pt;
+    font-family: SourceSansPro-Regular, sans-serif;
+}
+li {
+	font-size: 9.5pt;
+    font-family: SourceSansPro-Regular, sans-serif;
+    margin-left:-36px;
+    color: #7F7F7F;
+}
+span {
+	color: #C3C3C3;
+    font-family: SourceSansPro-Regular, sans-serif;
+	font-size: 8.5pt;
+}
+
+.changelog-v {
+	color: #C3C3C3;
+    font-family: SourceSansPro-Regular, sans-serif;
+	font-size: 8.5pt;
+}
+
+.content {
+	margin-left: 30px;
+	position: absolute;
+	top: 50px;
+    font-family: SourceSansPro-Light, sans-serif;
+}
+
+.changelog {
+	line-height:5px;
+}
+
+.title {
+    font-family: SourceSansPro-Light, sans-serif;
+    font-size: 11.5pt;
+}
+
+.ads {
+	background-color: #E7165F;
+	height: 50px;
+	position: absolute;
+	left: 10px;
+	right: 10px;
+}
+
+.bg {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, #E71F5F, #eb5c7b);
+  background-repeat: no-repeat;
+  background-size: 1000% 1000%;
+  animation: gradient 50s ease infinite;
+}
+
+@keyframes gradient { 
+  0%{background-position:0% 0%}
+  50%{background-position:100% 100%}
+  100%{background-position:0% 0%}
+}
+
+/* carbon */
+#carbonads {
+    display: block;
+    overflow: hidden;
+    padding: 1em;
+    font-size: 1.02em;
+    line-height: 1.5;
+    margin-left: -15px;
+    margin-right: 15px;
+    background-color: #F4F4F4;
+    transition: 0.5s;
+}
+
+#carbonads:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+#carbonads span {
+    display: block;
+    overflow: hidden;
+}
+
+#carbonads a {
+	text-decoration: none;
+    color: #7F7F7F;
+}
+
+.carbon-img {
+    float: left;
+    margin-right: 1em;
+}
+.carbon-text {
+    display: block;
+    float: left;
+    max-width: 50%;
+    text-align: left;
+}
+.carbon-poweredby {
+    float: right;
+    text-align: right;
+    width: 100%;
+    font-size: 70%;
+}

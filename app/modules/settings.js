@@ -77,7 +77,7 @@ const settings = {
     document.getElementById('Export').innerHTML = lang('SETTINGS_EXPORT_BOKMARKS')
     document.getElementById('Import').innerHTML = lang('SETTINGS_IMPORT_BOKMARKS')
     document.getElementById('Reset').innerHTML = lang('SETTINGS_RESET_BOOKMARKS')
-    document.getElementById('quicksearch').innerHTML = lang('SETTINGS_QUICKSEARCH')
+    document.getElementById('navigation').innerHTML = lang('SETTINGS_NAVIGATION')
     document.getElementById('chooseSearchEngine').innerHTML = lang('SETTINGS_CHOOSESEARCHENGINE');
     document.getElementById('advanced').innerHTML = lang('SETTINGS_ADVANCED')
     document.getElementById('showConsole').innerHTML = lang('SETTINGS_SHOW_CONSOLE')
@@ -224,16 +224,38 @@ const settings = {
     EventsEmitter.emit('SHOW_AUTH')
   },
 
-  setSearchEngineSelect() {
-    let seleted;
-    for(let key in searchengines) {
-      selected = ( (files.settings.getValue('settings.searchEngine') === undefined && key == "Google") || (files.settings.getValue('settings.searchEngine') == key) ) ? "selected" : "";
-      document.querySelector('select[name="chooseSearchEngine"]').innerHTML += "<option value=" + key + " " + selected + ">" + key + "</option>";
+  searchEngineSelectorIsShow: false,
+  showSearchEngineSelector () {
+    let searchEngineSelector = document.querySelector('.selector-list')
+    let searchEngineSelectorArrow = document.querySelector('.selector-arrow')
+    if (this.searchEngineSelectorIsShow) {
+      searchEngineSelector.style.display = 'none'
+      searchEngineSelectorArrow.innerHTML = "▼"
+      this.searchEngineSelectorIsShow = false
+    } else {
+      searchEngineSelector.style.display = 'block'
+      searchEngineSelectorArrow.innerHTML = "▲"
+      this.searchEngineSelectorIsShow = true
     }
   },
 
-  chooseSearchEngine() {
-    files.settings.setValue('settings.searchEngine', document.querySelector('select[name="chooseSearchEngine"]').value);
+  setSearchEngineSelect () {
+    document.querySelector('.selector-list').innerHTML = ''
+    for(let key in searchengines) {
+      selected = ( (files.settings.getValue('settings.searchEngine') === undefined && key == "Google") || (files.settings.getValue('settings.searchEngine') == key) ) ? "selected" : "";
+      if (selected) {
+        document.querySelector('.selector-list').innerHTML += `<a href="#" onclick="settings.chooseSearchEngine('${key}')" class="selector-list-buttons selector-list-buttons-selected">${key.toUpperCase()}</a>`
+        document.querySelector('.selector-text').innerHTML = key.toUpperCase()
+      } else {
+        document.querySelector('.selector-list').innerHTML += `<a href="#" onclick="settings.chooseSearchEngine('${key}')" class="selector-list-buttons">${key.toUpperCase()}</a>`
+      }
+    }
+  },
+
+  chooseSearchEngine(engine) {
+    files.settings.setValue('settings.searchEngine', engine)
+    this.setSearchEngineSelect()
+    this.showSearchEngineSelector()
   }
 }
 

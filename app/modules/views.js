@@ -91,8 +91,40 @@ const view = {
           alert(`${event.args[0].site} : ${event.args[0].message}`)
         }
       })
+
+      webviewToListen.addEventListener('enter-html-full-screen', () => {
+        this.setFullscreen(true, webviewToListen)
+      })
+      
+      webviewToListen.addEventListener('leave-html-full-screen', () => {
+        this.setFullscreen(false, webviewToListen)
+      })
+
+    }
+  },
+
+  setFullscreen: (bool, view) => {
+    let bookmarksBar = document.querySelector('.bar')
+    let controlBar = document.querySelector('.control-bar')
+    
+    require('electron').remote.getCurrentWindow().setFullScreen(bool)
+
+    if (bool) {
+      bookmarksBar.style.display = 'none'
+      controlBar.style.display = 'none'
+      document.querySelector('.add-btn').style.display = 'none'
+      view.style.left = '0px'
+    } else {
+      bookmarksBar.style.display = 'block'
+      controlBar.style.display = 'block'
+      document.querySelector('.add-btn').style.display = 'block'
+      view.style.left = '35px'
+      view.executeJavaScript(`
+        document.webkitExitFullscreen()
+      `)
     }
   }
+
 }
 
 module.exports = view

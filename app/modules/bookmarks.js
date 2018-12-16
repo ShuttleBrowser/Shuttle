@@ -54,7 +54,7 @@ const bkms = {
   },
 
   removeBookmark (id) {
-    if (id !== 'quickSearch') {
+    if (String(id).startsWith('quickSearch') !== true) {
       this.removeBookmarkInFile(id)
     }
     this.removeBookmarkInUI(id)
