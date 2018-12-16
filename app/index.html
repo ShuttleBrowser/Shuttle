@@ -109,12 +109,21 @@
       shuttle.showBrowser()
     })
 
-    EventsEmitter.on('SHOW_AUTH', () => {
-      shuttle.showAuth()
+    ipcRenderer.on('SHORTCUT_REFRESH_CURRENTPAGE', () => {
+      controlBar.reload()
     })
 
-    EventsEmitter.on('SHORTCUT_REFRESH_CURRENTPAGE', () => {
-      controlBar.reload()
+    ipcRenderer.on('SHORTCUT_GOBACKINHISTORY', () => {
+      console.log('go back');
+      controlBar.goBack()
+    })
+
+    ipcRenderer.on('SHORTCUT_GOFORWARDINHISTORY', () => {
+      controlBar.goForward()
+    })
+
+    EventsEmitter.on('SHOW_AUTH', () => {
+      shuttle.showAuth()
     })
 
   </script>
