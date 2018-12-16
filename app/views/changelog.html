@@ -12,10 +12,21 @@
 	<body>
 		<div class="main">
 			<section class="section1" align="center">
-				<img onmousedown="return false" class="sht-w" src="../assets/img/changelog/changelog-icon.png" alt="">
-				<img onmousedown="return false" class="sht-full" src="../assets/img/changelog/changelog-logo.png" alt="">
-				<p class="version">3.0.0</p>
-				<iframe src="http://api.shuttleapp.io/utils/ad" frameborder="0"></iframe>
+				<div id="searchbarcontainer">
+					<div id="searchbar">
+						<input type="text" name="search" required="required">
+						<span id="background"><span>SEARCH...</span></span>
+						<img id="searchsubmit" src="../assets/img/store/search.svg" alt="search">
+						<img src="../assets/img/store/close.svg" alt="" id="close">
+					</div>
+				</div>
+				<div id="content">
+						<img onmousedown="return false" class="sht-w" src="../assets/img/changelog/changelog-icon.png" alt="S">
+						<img onmousedown="return false" class="sht-full" src="../assets/img/changelog/changelog-logo.png" alt="Shuttle">
+						<div class="version">3.0.0</div>
+						<iframe src="http://api.shuttleapp.io/utils/ad" frameborder="0"></iframe>
+						<img src="../assets/img/changelog/arrow.svg" alt="v">
+				</div><span class="taille"></span>
 			</section>
 			<section class="changelog">
 				test
