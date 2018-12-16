@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron')
+const { ipcRenderer } = require('electron').remote
 const { files, bookmarks, loadFile } = require('./index.js')
 
 window.settings = {

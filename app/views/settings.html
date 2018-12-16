@@ -48,11 +48,20 @@
 
   <br>
 
-  <h1 id="quicksearch"></h1>
+  <h1 id="navigation"></h1>
   <div class="content">
     <div class="section gray">
       <p id="chooseSearchEngine"></p>
-      <select name="chooseSearchEngine" class="selector" onchange="settings.chooseSearchEngine()"></select>
+      <a href="#" class="selector" onclick="settings.showSearchEngineSelector()"><span class="selector-text">GOOGLE</span> <span class="selector-arrow">▼</span></a>
+    </div>
+    <div class="selector-list"></div>
+    <div class="section white">
+      <p id="clearCache"></p>
+      <input type="button" name="ccache" class="btn" onclick="settings.clearCacheButton()">
+    </div>
+    <div class="section gray">
+      <p id="clearCache"></p>
+      <input type="button" name="ccache" class="btn" onclick="settings.clearCacheButton()">
     </div>
   </div>
 
@@ -66,8 +75,7 @@
     </div>
 
     <div class="section white">
-      <p id="clearCache"></p>
-      <input type="button" name="ccache" class="btn" onclick="settings.clearCacheButton()">
+
     </div>
 
     <div class="section gray">

@@ -17,8 +17,8 @@
   {"value": "SETTINGS_REPORT_BUG", "message": "Signaler un bug"},
   {"value": "SETTINGS_CLEAR_CACHE", "message": "Vider le cache"},
   {"value": "SETTINGS_BOOKMARKS", "message": "FAVORIS"},
-  {"value": "SETTINGS_CHOOSESEARCHENGINE", "message": "Choisir le moteur de recherche"},
-  {"value": "SETTINGS_QUICKSEARCH", "message": "RECHERCHE RAPIDE"},
+  {"value": "SETTINGS_CHOOSESEARCHENGINE", "message": "Moteur de recherche"},
+  {"value": "SETTINGS_NAVIGATION", "message": "NAVIGATION"},
   {"value": "SETTINGS_ADVANCED", "message": "AVANCÉ"},
   {"value": "SETTINGS_ACCOUNT", "message": "COMPTE"},
 

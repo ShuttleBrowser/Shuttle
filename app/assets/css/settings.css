@@ -64,12 +64,12 @@
   }
   
   .btn-text {
-    width: 50px;
+    width: 52px;
     height: 17px;
     background-color: transparent;
     border: none;
     position: absolute;
-    right: 20px;
+    right: 22px;
     transition-duration: 0.3s;
     margin-top: 6.5px;
     font-size: 10px;
@@ -153,12 +153,56 @@
   .selector {
     position: relative;
     top: 3px;
-    left: 75%;
-    width: 70px;
+    left: 69%;
     background-color: transparent;
     border: none;
-    color: #000000;
-    appearance:none;
+    color: #bfbebd;
+    text-decoration: none;
+  }
+
+  .selector-text {
+    margin-right: 10px;
+  }
+
+  .selector-arrow {
+    font-size: 10px;
+    position: relative;
+    top: -2.5px;
+  }
+
+  .selector-list {
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 888;
+    background-color: white;
+    display: none;
+  }
+
+  .selector-list-buttons {
+    width: auto;
+    height: 15px;
+    border-radius: 25px;
+    font-size: 13px;
+    border: solid 1px #bfbebd;
+    text-decoration: none;
+    margin-top: 6px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    color: #bfbebd;
+    float: left;
+  }
+
+  .selector-list-buttons-selected {
+    background-color: #bfbebd;
+    color: white;
   }
 
   .search-engine-select {
