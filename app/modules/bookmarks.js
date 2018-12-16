@@ -39,7 +39,7 @@ const bkms = {
 
   reorderBookmarks(el) {
     for(let i = 0; i < el.children.length; i++) {
-      files.bookmarks.setOrder(/id\-([0-9]+)/g.exec(el.children[i].id)[1], i)
+      files.bookmarks.setOrder(parseInt(/id\-([0-9]+)/g.exec(el.children[i].id)[1]), i)
     }
     console.log(files.bookmarks.list())
     sync.uploadBookmarks()

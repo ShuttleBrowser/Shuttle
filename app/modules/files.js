@@ -64,7 +64,7 @@ const files = {
     setOrder(id, order) {
       bookmarksDb.get('bookmarks')
       .find({ id: id })
-      .assign({ order : order })
+      .assign({ order: order })
       .write()
     },
 
