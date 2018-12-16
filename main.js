@@ -100,6 +100,10 @@ app.on('ready', () => {
     mb.window.openDevTools()
   })
 
+  electronLocalshortcut.register(mb.window, 'F5', () => {
+    mb.window.webContents.send('SHORTCUT_REFRESH_CURRENTPAGE');
+  })
+
 })
 
 EventsEmitter.on('SHOW_SHUTTLE', () => {

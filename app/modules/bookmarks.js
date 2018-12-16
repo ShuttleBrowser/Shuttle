@@ -109,7 +109,12 @@ const bkms = {
       document.querySelector('.bkms').innerHTML = ""
 
       sync.syncBookmarks().then((bkm) => {
+        let sortedindexes = {}
         for (i in bkm) {
+          sortedindexes[bkm[i].order] = i
+        }
+        for(order in sortedindexes) {
+          i = sortedindexes[order]
           bkms.addBookmarksInUI(bkm[i].id, bkm[i].icon, bkm[i].url)
         }
       }).catch(() => {

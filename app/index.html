@@ -119,6 +119,10 @@
       shuttle.showAuth()
     })
 
+    EventsEmitter.on('SHORTCUT_REFRESH_CURRENTPAGE', () => {
+      controlBar.reload()
+    })
+
   </script>
 
   <style>
