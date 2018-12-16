@@ -34,7 +34,6 @@ A bookmark can be deleted by right-clicking on its icon.
 The settings can be edited by clicking on the gear. They make possible to manage your preferences by offering, for instance, to launch Shuttle on boot or to force Shuttle to stay opened.
 
 All updates are automatic and new versions are checked at the launch of the application. You can also search for updates by clicking on the arrows below the settings.
-
 If you need help to setup or use Shuttle, or you want to report a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz).
 
 Stay in touch by joining us on [Twitter](https://twitter.com/shuttle_app) or [Discord](discord.gg/QCFdGq7).
@@ -50,6 +49,10 @@ _Currently in developement._
 * Open quicksearch : <kbd>Ctrl</kbd> <kbd>K</kbd>
 * Take screenshot : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>S</kbd>
 * Show/Hide Shuttle : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>X</kbd><br>
+* Refresh page : <kbd>F5</kbd>
+* Go back in history <kbd>Alt</kbd>←<kbd>
+* Go forward in history <kbd>Alt</kbd>→<kbd>
+
 <br>
 Note: the <kbd>Ctrl</kbd> key is replaced by <kbd>Cmd</kbd> key on MacOs.
 

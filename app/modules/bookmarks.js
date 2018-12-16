@@ -7,12 +7,14 @@ const config = require('./config.json')
 const bkms = {
   createBookmark (url) {
     let bkmsList = files.bookmarks.list()
-    let bkmId
+    let bkmId, bkmOrder
 
     if (bkmsList.length === 0) {
       bkmId = 1
+      bkmOrder = 1
     } else {
       bkmId = bkmsList[bkmsList.length - 1].id + 1
+      bkmOrder = bkmsList[bkmsList.length - 1].order + 1
     }
 
     console.log(url)
@@ -21,7 +23,8 @@ const bkms = {
     files.bookmarks.push({
       id: bkmId,
       url: url,
-      icon: null
+      icon: null,
+      order: bkmOrder
     })
 
     console.log(`Add : ${url}`)
@@ -32,6 +35,14 @@ const bkms = {
       views.create(bkmId, url)
       sync.uploadBookmarks()
     })
+  },
+
+  reorderBookmarks(el) {
+    for(let i = 0; i < el.children.length; i++) {
+      files.bookmarks.setOrder(parseInt(/id\-([0-9]+)/g.exec(el.children[i].id)[1]), i)
+    }
+    console.log(files.bookmarks.list())
+    sync.uploadBookmarks()
   },
 
   repairUrl (url) {
@@ -98,11 +109,18 @@ const bkms = {
       document.querySelector('.bkms').innerHTML = ""
 
       sync.syncBookmarks().then((bkm) => {
-        console.log(bkm)
+        let sortedindexes = {}
         for (i in bkm) {
+          sortedindexes[bkm[i].order] = i
+        }
+        for(order in sortedindexes) {
+          i = sortedindexes[order]
           bkms.addBookmarksInUI(bkm[i].id, bkm[i].icon, bkm[i].url)
         }
       }).catch(() => {
+        files.bookmarks.sortByOrder()
+        console.log(files.bookmarks.list())
+
         let bkm = files.bookmarks.list()
 
         for (i in bkm) {

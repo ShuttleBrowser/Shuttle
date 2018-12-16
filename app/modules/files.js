@@ -59,6 +59,17 @@ const files = {
       .find({ id: id })
       .assign({ icon: url })
       .write()
+    },
+
+    setOrder(id, order) {
+      bookmarksDb.get('bookmarks')
+      .find({ id: id })
+      .assign({ order: order })
+      .write()
+    },
+
+    sortByOrder() {
+      bookmarksDb.sortBy('order').write()
     }
   },
   

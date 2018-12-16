@@ -100,6 +100,17 @@ app.on('ready', () => {
     mb.window.openDevTools()
   })
 
+  electronLocalshortcut.register(mb.window, 'F5', () => {
+    mb.window.webContents.send('SHORTCUT_REFRESH_CURRENTPAGE');
+  })
+
+  electronLocalshortcut.register(mb.window, 'Alt+Left', () => {
+    mb.window.webContents.send('SHORTCUT_GOBACKINHISTORY');
+  })
+
+  electronLocalshortcut.register(mb.window, 'Alt+Right', () => {
+    mb.window.webContents.send('SHORTCUT_GOFORWARDINHISTORY');
+  })
 })
 
 EventsEmitter.on('SHOW_SHUTTLE', () => {

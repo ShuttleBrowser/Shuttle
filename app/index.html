@@ -22,11 +22,12 @@
     const { loadFile, event, bookmarks, view, files, auth, settings, controlBar, modales, store, sync } = require('./modules/index.js')
     const { ipcRenderer } = require('electron')
     const lang = require('../lang/lang.js')
+    const Sortable = require('./assets/js/Sortable.min.js')
 
     window.alert = (message) => {
       modales.alert(message)
     }
-
+    
     const shuttle = {
       initApp () {
         if (files.settings.getValue('settings.firstRun') === undefined) {
@@ -54,6 +55,12 @@
         loadFile('browser').then(() => {
           bookmarks.loadBookmarks().then(() => {
             view.load()
+            const el = document.querySelector('.nav-zone .bkms')
+            sortable = Sortable.create(el, {
+              onEnd: () => {
+                bookmarks.reorderBookmarks(el);
+              }
+            })
             loadFile('settings', '.settings').then(() => {
               settings.setLang()
               settings.setCheckBox()
@@ -100,6 +107,19 @@
 
     EventsEmitter.on('SHOW_BROWSER', () => {
       shuttle.showBrowser()
+    })
+
+    ipcRenderer.on('SHORTCUT_REFRESH_CURRENTPAGE', () => {
+      controlBar.reload()
+    })
+
+    ipcRenderer.on('SHORTCUT_GOBACKINHISTORY', () => {
+      console.log('go back');
+      controlBar.goBack()
+    })
+
+    ipcRenderer.on('SHORTCUT_GOFORWARDINHISTORY', () => {
+      controlBar.goForward()
     })
 
     EventsEmitter.on('SHOW_AUTH', () => {
