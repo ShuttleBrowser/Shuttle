@@ -7,6 +7,14 @@ body {
     overflow: hidden;
 }
 
+.arrow-r {
+	width: 70px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 30px;
+}
+
 .arrow-w {
 	width: 70px;
 	position: absolute;
@@ -44,7 +52,7 @@ body {
 	display: inline-block;
 	vertical-align: middle;
 }
-.section1 span.taille {
+span.taille {
 	height: 100%;
 }
 .section1 #content {
@@ -68,36 +76,14 @@ body {
 }
 
 ::selection {
-  color: #eb5c7b;
-  background: #f9f6f0;
+  color: white;
+  background: #eb5c7b;
 }
 
 /* CHANGELOG CSS */
 
-ul {
-	list-style-type: none;
-	margin-top: 0;
-}
-li:before {
-	content: "- ";
-	font-size: 9.5pt;
-    font-family: 'Source Sans Pro', sans-serif;
-}
-li {
-	font-size: 9.5pt;
-    font-family: 'Source Sans Pro', sans-serif;
-    margin-left:-36px;
-    color: #7F7F7F;
-}
-li span {
-	color: #C3C3C3;
-    font-family:  'Source Sans Pro', sans-serif;
-	font-size: 8.5pt;
-}
-
 .changelog-v {
 	color: #C3C3C3;
-    font-family: 'Source Sans Pro', sans-serif;
 	font-size: 8.5pt;
 }
 
@@ -107,10 +93,6 @@ li span {
 	top: 50px;
 	font-family:'Source Sans Pro', sans-serif;
 	font-weight: 300;
-}
-
-.changelog {
-	line-height:5px;
 }
 
 .title {
@@ -287,4 +269,31 @@ li span {
     text-align: right;
     width: 100%;
     font-size: 70%;
+}
+.changelog {
+	text-align: center;
+	position: relative;
+}
+.changelog > * {
+	display: inline-block;
+	vertical-align: middle;
+}
+.changelog #main {
+	width: 80%;
+	text-align: left;
+}
+.changelog ul {
+	padding-left: 1em;
+	margin: 0;
+}
+.changelog h1 {
+	margin: 0 0 .2em;
+}
+.changelog h3 {
+	margin: 0 0 1em;
+	font-size: 1.2em;
+    color: rgb(58, 58, 58);
+}
+.changelog li {
+    color: #7F7F7F;
 }

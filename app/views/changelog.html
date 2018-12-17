@@ -26,23 +26,35 @@
 					<div class="version">3.0.0</div>
 					<iframe src="http://api.shuttleapp.io/utils/ad" frameborder="0"></iframe>
 					<img class="arrow-w" src="../assets/img/changelog/arrow-w.svg" alt="v">
-				</div>
-				<span class="taille"></span>
+				</div><span class="taille"></span><!-- ALLOW COLLAPSE DIV AND SPAN.TAILLE!!!-->
 			</section>
 			<section class="changelog">
-				test
+				<img class="arrow-r" src="../assets/img/changelog/arrow-r.svg" alt="^" id="goup" onclick="op.prev()">
+				<div id="main">
+					<h1>CHANGELOG</h1>
+					<h3>New version 3.0</h3>
+					<ul>
+						<li>Choose your search engine</li>
+						<li>Sync your bookmarks</li>
+						<li>Reorder your icons</li>
+					</ul>
+				</div><span class="taille"></span>
 			</section>
 		</div>
 	</body>
 
 	<script>
-		onePageScroll(".main", {
-			sectionContainer: "section",
-			easing: "ease-in-out",
-			animationTime: 500,
-			pagination: false,
-			keyboard: true,
-			responsiveFallback: false
+		let op;
+		document.addEventListener('DOMContentLoaded', () => {
+			op = onePageScroll(".main", {
+				sectionContainer: "section",
+				easing: "ease-in-out",
+				animationTime: 500,
+				pagination: false,
+				keyboard: true,
+				responsiveFallback: false
+			})
+			console.log(op);
 		})
 	</script>
 </html>
