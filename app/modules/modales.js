@@ -9,7 +9,7 @@ const modales = {
     inputs.push(
       '<div class="vex-custom-field-wrapper">',
       '<div class="vex-custom-radio">',
-      '<input type="radio" name="action" checked value="radioURL" id="radioURL"><label for="radioURL">' + lang('TYPE_URL') + '</label><br>',
+      '<input type="radio" name="action" checked value="radioURL" id="radioURL"><label for="radioURL"><span></span><div>' + lang('TYPE_URL') + '</div></label><br>',
       '</div>',
       '<div class="vex-custom-input-wrapper">',
       '<input name="inputURL" type="text" value="" id="inputURL" placeholder="http://" />',
@@ -18,7 +18,7 @@ const modales = {
 
     inputs.push(
       '<div class="vex-custom-radio">',
-      '<input type="radio" name="action" value="radioCurrent" id="radioCurrent"><label for="radioCurrent">' + lang('CHOOSE_THIS_URL') + '</label><br>',
+      '<input type="radio" name="action" value="radioCurrent" id="radioCurrent"><label for="radioCurrent"><span></span><div>' + lang('CHOOSE_THIS_URL') + '</div></label><br>',
       '</div>')
 
     vex.dialog.buttons.YES.text = lang('CONTINUE_BUTTON')

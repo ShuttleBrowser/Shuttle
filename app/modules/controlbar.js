@@ -1,4 +1,3 @@
-const vex = require('vex-js')
 const fs = require('fs')
 const { app, shell } = require('electron').remote
 const modales = require('./modales.js')
