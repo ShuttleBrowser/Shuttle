@@ -39,7 +39,7 @@ const modales = {
     vex.dialog.buttons.YES.text = lang('CONTINUE_BUTTON')
     vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
     vex.dialog.confirm({
-      message: `${lang('REMOVE_BOOKMARK')} : ${url}`,
+      message: `${lang('REMOVE_BOOKMARK')} : ${require('url').parse(url).hostname}`,
       callback: (bool) => {
         if (bool) {
           bookmarks.removeBookmark(id)

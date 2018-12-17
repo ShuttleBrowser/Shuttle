@@ -7,6 +7,14 @@ body {
     overflow: hidden;
 }
 
+.arrow-w {
+	width: 70px;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+	bottom: 30px;
+}
+
 .sht-full {
 	width: 100px;
 }
@@ -25,12 +33,13 @@ body {
 	width: 100%;
 	height: 100vh;
 	background-color: #E7165F;
-	border-bottom-left-radius: 50% 4em;
-	border-bottom-right-radius: 50% 4em;
+	border-bottom-left-radius: 180px 50px;
+	border-bottom-right-radius: 180px 50px;
 	overflow: hidden;
 	height: 100%;
 	color: white;
 }
+
 .section1 > * {
 	display: inline-block;
 	vertical-align: middle;
