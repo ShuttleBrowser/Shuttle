@@ -50,8 +50,6 @@ const view = {
     const activeWebView = 'web-content active'
     const inactiveWebView = 'web-content inactive'
 
-    console.log(id)
-
     if (document.querySelector('.active')) {
       document.querySelector('.active').className = inactiveWebView
     }
