@@ -11,9 +11,6 @@ const view = {
       } else {
         resolve(`http://${url}`)
       }
-
-      console.log(url)
-
     })
   },
 

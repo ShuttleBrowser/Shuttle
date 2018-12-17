@@ -27,8 +27,11 @@ window.alert = (message) => {
   ipcRenderer.sendToHost('PAGE_ALERT', {site: document.title, message: message})
 }
 
+window.openTab = (search) => {
+  ipcRenderer.sendToHost('OPEN_QUICK_SEARCH', search)
+}
+
 document.addEventListener('contextmenu', (event) => {
-  console.log(event.target.href)
   if (event.target.href) {
     event.preventDefault()
     
@@ -36,7 +39,7 @@ document.addEventListener('contextmenu', (event) => {
       {
         label: 'Open in quick search',
         click() {
-          ipcRenderer.sendToHost('OPEN_QUICK_SEARCH', event.target.href)
+          openTab(event.target.href)
         },
       }
     ]).popup(require('electron').remote.getCurrentWindow())

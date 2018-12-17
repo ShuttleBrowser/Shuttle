@@ -14,7 +14,7 @@
 			<section class="section1" align="center">
 				<div id="searchbarcontainer">
 					<div id="searchbar">
-						<input type="text" name="search" required="required">
+						<input type="text" name="search" required="required" onsubmit="openTab(document.querySelector('input[name=search]').value)">
 						<span id="background"><span>SEARCH...</span></span>
 						<img id="searchsubmit" src="../assets/img/store/search.svg" alt="search">
 						<img src="../assets/img/store/close.svg" alt="" id="close">

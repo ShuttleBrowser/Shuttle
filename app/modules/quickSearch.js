@@ -15,7 +15,6 @@ const quickSearch = (search) => {
 
   view.create(randomId, search)
   bookmarks.addBookmarksInUI(randomId, bookmarks.getIcon(search), search)
-
 }
 
 EventsEmitter.on('OPEN_QUICK_SEARCH', (data) => {
