@@ -1,0 +1,275 @@
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.title-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0px;
+    -webkit-app-region: drag;
+    transition-duration: 0.5s;
+}
+
+#app {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.browser {
+    overflow: hidden;
+}
+
+.settings {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 35px;
+    z-index: 97;
+    background-color: white;
+    display: none;
+    overflow: auto;
+}
+
+.store {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 35px;
+    z-index: 96;
+    background-color: white;
+    display: none;
+    overflow: auto;
+}
+
+webview {
+    background-color: #ffff;
+}
+
+.web-content {
+    position: absolute;
+    left: 35px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #ffff;
+}
+
+.active {
+    opacity: 1;
+    z-index: 10;
+}
+
+.inactive {
+    opacity: 0;
+    z-index: 0;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+.nav-zone {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    bottom: 0px;
+    width: 35px;
+    overflow: auto;
+}
+
+.bar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 35px;
+    background-color: #F4F4F4;
+}
+
+.bubble-btn {
+    margin-top: 4px;
+    margin-left: 1.5px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: 0.2s;
+    background-color: white;
+    background-size: 70% auto;
+    background-color: #ffff;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.bubble-btn:hover {
+    border-radius: 25%;
+}
+
+.quickSearchBubble {
+    position: relative;
+    left: 17px;
+    border-radius: 50%;
+    top: -1px;
+    width: 15px;
+    height: 15px;
+    background-size: 70% auto;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: 1.4px 2px;
+}
+
+.add-btn {
+    margin-top: 4px;
+    margin-left: 4px;
+    display: block;
+    width: 27px;
+    height: 27px;
+    transition: 0.2s;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(../img/add.svg);
+    transition: 0.5s;
+}
+
+.add-btn:hover {
+    background-image: url(../img/add-hover.svg)
+}
+
+hr {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 2.5px;
+}
+
+.shuttle-btn {
+    margin-top: 11px;
+    margin-left: 2px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-size: 60% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(../img/bar-icon.png);
+    transition: 0.2s;
+}
+
+.shuttle-btn:hover {
+    background-image: url(../img/bar-icon-hover.png);
+}
+
+.control-bar {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 35px;
+    width: 30px;
+    height: 128px;
+    background-color: #F4F4F4;
+    text-align: center;
+    transition: 0.35s;
+    z-index: 150;
+}
+
+.control-bar svg {
+    margin-top: 11px;
+    color: #CECECE;
+    transition: 0.3s;
+}
+
+.control-bar svg:hover {
+    color: #7F7F7F;
+}
+
+.mainMenu {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 34.9px;
+    height: 100px;
+    background-color: #F4F4F4;
+    text-align: center;
+}
+
+.svg-inline--fa {
+    width: auto;
+    height: 1em;
+    font-size: 16px;
+    margin-top: 7.5px;
+    margin-right: 1px;
+    text-decoration: none;
+    color: #CECECE;
+    transition: 0.3s;
+}
+
+.svg-inline--fa:hover {
+    color: #7F7F7F
+}
+
+hr {
+    margin: 2.5px 5px 6px;
+}
+
+input, textarea, select, button {
+    outline: none;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"] + label > * {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 2em;
+}
+
+input[type="radio"] + label span {
+    content: "";
+    height: .7em;
+    width: .7em;
+    border-radius: 50%;
+    background: rgb(189, 189, 189);
+    margin: 0 5px 0 0;
+    position: relative;
+    transition: all .2s ease;
+}
+
+input[type="radio"] + label:hover span {
+    background: rgb(180, 180, 180);
+}
+
+input[type="radio"] + label span::before {
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+    transform: scale(0);
+    transition: all .2s ease;
+}
+
+input[type="radio"]:checked + label span::before {
+    transform: scale(1);
+    background: #e71f5f;
+    box-shadow: 0px 0px 3px 0px rgba(231, 31, 94, 0.72);
+}
+
+#inputURL {
+    transition: all .2s ease;
+}
+
+#inputURL:focus {
+    box-shadow: inset 0 0 0 2px #e71f5f;
+}
