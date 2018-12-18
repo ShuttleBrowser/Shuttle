@@ -69,13 +69,15 @@ const view = {
     let webviewToListen = document.querySelector(`#view-${id}`)
     if (webviewToListen) {
       webviewToListen.addEventListener('did-fail-load', (errorCode, errorDescription, validatedURL) => {
-        if (navigator.onLine === false) {
-          webviewToListen.loadURL(this.generateErrorPage('NO INTERNET CONNECTION'))
-        } else {
-          if (errorCode.errorDescription) {
-            webviewToListen.loadURL(this.generateErrorPage(errorCode.errorDescription))
+        if (errorCode.errorCode !== -3) {
+          if (navigator.onLine === false) {
+            webviewToListen.loadURL(this.generateErrorPage('NO INTERNET CONNECTION'))
           } else {
-            webviewToListen.loadURL(this.generateErrorPage('UNKNOW ERROR'))
+            if (errorCode.errorDescription) {
+              webviewToListen.loadURL(this.generateErrorPage(errorCode.errorDescription))
+            } else {
+              webviewToListen.loadURL(this.generateErrorPage('UNKNOW ERROR'))
+            }
           }
         }
       })

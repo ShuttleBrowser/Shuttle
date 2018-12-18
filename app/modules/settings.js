@@ -84,6 +84,8 @@ const settings = {
     document.getElementById('clearCache').innerHTML = lang('SETTINGS_CLEAR_CACHE')
     document.getElementById('reportBug').innerHTML = lang('SETTINGS_REPORT_BUG')
     document.getElementById('accountTitle').innerHTML = lang('SETTINGS_ACCOUNT')
+    document.getElementById('accountSettings').innerHTML = lang('SETTINGS_ACCOUNT_STATUS')
+    document.getElementById('syncButton').innerHTML = lang('SETTINGS_ACCOUNT_SETTINGS')
     document.querySelector('.version').innerHTML = `VERSION ${require('electron').remote.app.getVersion()}`
   },
 
