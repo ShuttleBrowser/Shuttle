@@ -21,6 +21,8 @@
   {"value": "SETTINGS_NAVIGATION", "message": "NAVIGATION"},
   {"value": "SETTINGS_ADVANCED", "message": "AVANCÉ"},
   {"value": "SETTINGS_ACCOUNT", "message": "COMPTE"},
+  {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Statut"},
+  {"value": "SETTINGS_ACCOUNT_SETTINGS", "message": "Parametres utilisateurs"},
 
   {"value": "CONTINUE_BUTTON", "message": "continuer"},
   {"value": "CANCEL_BUTTON", "message": "annuler"},
