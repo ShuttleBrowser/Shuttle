@@ -65,6 +65,17 @@ const view = {
     return html
   },
 
+  getActiveView() {
+    return document.querySelector('webview.web-content.active');
+  },
+
+  showWebviewConsole() {
+    let w = this.getActiveView()
+    if(w != undefined) {
+      w.openDevTools()
+    }
+  },
+
   listenWebViewError (id) {
     let webviewToListen = document.querySelector(`#view-${id}`)
     if (webviewToListen) {
@@ -72,18 +83,25 @@ const view = {
         if (navigator.onLine === false) {
           webviewToListen.loadURL(this.generateErrorPage('NO INTERNET CONNECTION'))
         } else {
-          if (errorCode.errorDescription) {
-            webviewToListen.loadURL(this.generateErrorPage(errorCode.errorDescription))
+          if (errorCode.errorDescription || errorCode.type) {
+            webviewToListen.loadURL(this.generateErrorPage(errorCode.errorDescription || errorCode.type))
           } else {
-            webviewToListen.loadURL(this.generateErrorPage('UNKNOW ERROR'))
+            console.log(errorCode);
+            webviewToListen.loadURL(this.generateErrorPage('UNKNOWN ERROR'))
           }
         }
       })
       webviewToListen.addEventListener('ipc-message', event => {
-        if (event.channel === "OPEN_QUICK_SEARCH") {
+        if (event.channel === 'OPEN_QUICK_SEARCH') {
           EventsEmitter.emit('OPEN_QUICK_SEARCH', event.args[0])
-        } if (event.channel === "PAGE_ALERT") {
+        } if (event.channel === 'PAGE_ALERT') {
           alert(`${event.args[0].site} : ${event.args[0].message}`)
+        } if(event.channel === 'COPY_TO_CLIPBOARD') {
+          require('electron').clipboard.writeText(event.args[0])
+        }  if(event.channel === 'OPEN_IN_BROWSER') {
+          require('electron').shell.openExternal(event.args[0])
+        } if(event.channel === 'SWITCH_VERSION') {
+
         }
       })
 
@@ -118,6 +136,8 @@ const view = {
         document.webkitExitFullscreen()
       `)
     }
+
+    require('electron').ipcRenderer.send('SetFullscreen', bool)
   }
 
 }

@@ -1,5 +1,5 @@
 // Import libs
-const { app, shell, ipcMain, Notification, globalShortcut } = require('electron')
+const { app, shell, ipcMain, Notification, globalShortcut, clipboard } = require('electron')
 const menubar = require('menubar')
 const AutoLaunch = require('auto-launch')
 const electronLocalshortcut = require('electron-localshortcut')
@@ -20,6 +20,9 @@ if (files.settings.getValue('settings.autostart') === true || files.settings.get
 }
 
 // set window variable
+const normalWidth = 395
+const normalHeight = 645
+let screen
 let mb
 
 const shuttle = {
@@ -28,10 +31,10 @@ const shuttle = {
     mb = new menubar({
       icon: require.resolve(`./main/icon.png`),
       index: `file://${__dirname}/app/index.html`,
-      width: 395,
-      minWidth: 395,
-      height: 645,
-      minHeight: 645,
+      width: normalWidth,
+      minWidth: normalWidth,
+      height: normalHeight,
+      minHeight: normalHeight,
       title: 'Shuttle',
       autoHideMenuBar: true,
       frame: false,
@@ -52,6 +55,7 @@ const shuttle = {
 }
 
 app.on('ready', () => {
+  screen = require('electron').screen.getPrimaryDisplay()
   shuttle.createAppWindows()
   mb.tray.setContextMenu(contextMenu)
   mb.showWindow()
@@ -96,7 +100,7 @@ app.on('ready', () => {
     mb.window.webContents.send('SHORTCUT_MAKE_SCREENSHOT')
   })
 
-  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+Shift+I', () => {
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+Alt+I', () => {
     mb.window.openDevTools()
   })
 
@@ -110,6 +114,10 @@ app.on('ready', () => {
 
   electronLocalshortcut.register(mb.window, 'Alt+Right', () => {
     mb.window.webContents.send('SHORTCUT_GOFORWARDINHISTORY');
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+Shift+I', () => {
+    mb.window.webContents.send('SHORTCUT_OPENWEBVIEWDEVTOOLS');
   })
 })
 
@@ -128,7 +136,6 @@ EventsEmitter.on('SHOW_SETTINGS', () => {
 EventsEmitter.on('QUIT_SHUTTLE', () => {
   app.quit()
 })
-
 ipcMain.on('PAGE_ALERT', (event, data) => {
   mb.window.webContents.send('ALERT', data)
 })
@@ -139,4 +146,15 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
   setTimeout(() => {
     mb.showWindow()
   }, 5)
+})
+
+ipcMain.on('SetFullscreen', (event, bool) => {
+  console.log(screen.size, bool , mb)
+  if(bool) {
+    mb.setOption('width', screen.size.width);
+    mb.setOption('height', screen.size.height);
+  } else {
+    mb.setOption('width', normalWidth);
+    mb.setOption('height', normalHeight);
+  }
 })
