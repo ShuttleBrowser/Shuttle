@@ -35,6 +35,7 @@ const bkms = {
   },
 
   reorderBookmarks(el) {
+    console.log(el)
     for(let i = 0; i < el.children.length; i++) {
       if (el.children[i].id.includes('quickSearch') === false) {
         files.bookmarks.setOrder(parseInt(/id\-([0-9]+)/g.exec(el.children[i].id)[1]), i)
