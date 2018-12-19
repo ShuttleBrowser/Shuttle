@@ -125,6 +125,10 @@
       controlBar.goForward()
     })
 
+    ipcRenderer.on('SHORTCUT_OPENWEBVIEWDEVTOOLS', () => {
+      view.showWebviewConsole()
+    })
+
     EventsEmitter.on('SHOW_AUTH', () => {
       shuttle.showAuth()
     })

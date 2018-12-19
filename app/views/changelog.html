@@ -25,18 +25,19 @@
 					<img onmousedown="return false" class="sht-full" src="../assets/img/changelog/changelog-logo.png" alt="Shuttle">
 					<div class="version">3.0.0</div>
 					<iframe src="http://api.shuttleapp.io/utils/ad" frameborder="0"></iframe>
-					<img class="arrow-w" src="../assets/img/changelog/arrow-w.svg" alt="v">
+					<img class="arrow-w" src="../assets/img/changelog/arrow-w.svg" alt="v" onclick="moveDown('.main')">
 				</div><span class="taille"></span><!-- ALLOW COLLAPSE DIV AND SPAN.TAILLE!!!-->
 			</section>
 			<section class="changelog">
-				<img class="arrow-r" src="../assets/img/changelog/arrow-r.svg" alt="^" id="goup" onclick="op.prev()">
+				<img class="arrow-r" src="../assets/img/changelog/arrow-r.svg" alt="^" id="goup" onclick="moveUp('.main')">
 				<div id="main">
 					<h1>CHANGELOG</h1>
 					<h3>New version 3.0</h3>
 					<ul>
 						<li>Choose your search engine</li>
-						<li>Sync your bookmarks</li>
+						<li>Custom context menu</li>
 						<li>Reorder your icons</li>
+						<li>Sync your bookmarks</li>
 					</ul>
 				</div><span class="taille"></span>
 			</section>
