@@ -9,6 +9,8 @@ const contextMenu = require('./main/menu.js')
 const autoUpdater = require('./main/updater.js')
 const files = require('./app/modules/files.js')
 
+let prevBounds
+
 let ShuttleAutoLauncher = new AutoLaunch({
   name: 'Shuttle'
 })
@@ -60,8 +62,8 @@ app.on('ready', () => {
   mb.tray.setContextMenu(contextMenu)
   mb.showWindow()
   mb.window.setMenu(null)
-  mb.window.openDevTools()
   app.on('before-quit', () => {
+    mb.tray.Destroy()
     mb.window.removeAllListeners('close')
     mb.window.close()
   })
@@ -149,12 +151,16 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
 })
 
 ipcMain.on('SetFullscreen', (event, bool) => {
-  console.log(screen.size, bool , mb)
   if(bool) {
-    mb.setOption('width', screen.size.width);
-    mb.setOption('height', screen.size.height);
+    prevBounds = mb.window.getBounds()
+    mb.window.setBounds({
+      x: 0,
+      y: 0,
+      width: screen.size.width,
+      height: screen.size.height
+    })
+    console.log(mb.window.isFullScreen())
   } else {
-    mb.setOption('width', normalWidth);
-    mb.setOption('height', normalHeight);
+    mb.window.setBounds(prevBounds)
   }
 })

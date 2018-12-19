@@ -32,5 +32,13 @@
   {"value": "ABOUT_BUTTON", "message": "A propos"},
   {"value": "YES_BUTTON", "message": "oui"},
   {"value": "NO_BUTTON", "message": "non"},
-  {"value": "SHOW_SHUTTLE_BUTTON", "message": "Afficher Shuttle"}
+  {"value": "SHOW_SHUTTLE_BUTTON", "message": "Afficher Shuttle"},
+
+  {"value": "SWITCH_WEBSITE_VERSION", "message": "Afficher la version mobile/bureau"},
+  {"value": "COPY_TEXT", "message": "Copier le texte"},
+  {"value": "OPEN_LINK_QUICK_SEARCH", "message": "Ouvrir le lien dans une recherche rapide"},
+  {"value": "OPEN_LINK_BROWSER", "message": "Ouvrir le lien dans le navigateur"},
+  {"value": "COPY_lINK", "message": "Copier le lien"},
+  {"value": "OPEN_PICTURE_BROWSER", "message": "Ouvrir la photo dans le navigateur"},
+  {"value": "COPY_PICTURE_URL", "message": "Copier l'URL de l'image"}
 ]

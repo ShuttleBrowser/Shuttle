@@ -1,4 +1,7 @@
 const view = {
+  mobileUserAgent: 'Mozilla/5.0 (Linux; Android 9.0; Pixel XL 2 Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.181 Mobile Safari/537.36',
+  desktopUserAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+
   load () {
     let landingPageUrl = `file://${require('electron').remote.app.getAppPath()}/app/views/changelog.html`.replace(/\\/g,"/")
     this.show(0, landingPageUrl)
@@ -17,13 +20,12 @@ const view = {
   create (id, url, type) {
     return new Promise((resolve) => {
       const webViewList = document.querySelector('.views')
-      const mobileUserAgent = 'Mozilla/5.0 (Linux; Android 9.0; Pixel XL 2 Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.181 Mobile Safari/537.36'
 
       this.fixUrl(url).then((url) => {
         if (type === 'addon') {
-          webViewList.innerHTML += `<webview src="file://${url}" id="view-${id}" preload="./modules/addonApi.js" onmouseover="controlBar.show(0, false)" class="web-content inactive" useragent="${mobileUserAgent}" disablewebsecurity></webview>`
+          webViewList.innerHTML += `<webview src="file://${url}" id="view-${id}" preload="./modules/addonApi.js" onmouseover="controlBar.show(0, false)" class="web-content inactive" useragent="${this.mobileUserAgent}" disablewebsecurity></webview>`
         } else {
-          webViewList.innerHTML += `<webview src="${url}" id="view-${id}" preload="./modules/webviewPreloader.js" onmouseover="controlBar.show(0, false)" class="web-content inactive" useragent="${mobileUserAgent}" disablewebsecurity></webview>`
+          webViewList.innerHTML += `<webview src="${url}" id="view-${id}" preload="./modules/webviewPreloader.js" onmouseover="controlBar.show(0, false)" class="web-content inactive" useragent="${this.mobileUserAgent}" disablewebsecurity></webview>`
         }
         this.listenWebViewError(id)
         this.show(id)
@@ -76,6 +78,19 @@ const view = {
     }
   },
 
+  changeVersion() {
+    let v = this.getActiveView()
+    if(v.classList.contains('desktop')) {
+      v.classList.remove('desktop')
+      v.setUserAgent(this.mobileUserAgent)
+    }
+    else {
+      v.classList.add('desktop')
+      v.setUserAgent(this.desktopUserAgent)
+    }
+    v.reload()
+  },
+
   listenWebViewError (id) {
     let webviewToListen = document.querySelector(`#view-${id}`)
     if (webviewToListen) {
@@ -102,7 +117,7 @@ const view = {
         }  if(event.channel === 'OPEN_IN_BROWSER') {
           require('electron').shell.openExternal(event.args[0])
         } if(event.channel === 'SWITCH_VERSION') {
-
+          this.changeVersion()
         }
       })
 
@@ -120,8 +135,6 @@ const view = {
   setFullscreen: (bool, view) => {
     let bookmarksBar = document.querySelector('.bar')
     let controlBar = document.querySelector('.control-bar')
-    
-    require('electron').remote.getCurrentWindow().setFullScreen(bool)
 
     if (bool) {
       bookmarksBar.style.display = 'none'

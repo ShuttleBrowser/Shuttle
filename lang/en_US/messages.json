@@ -32,5 +32,13 @@
   {"value": "ABOUT_BUTTON", "message": "About"},
   {"value": "YES_BUTTON", "message": "yes"},
   {"value": "NO_BUTTON", "message": "no"},
-  {"value": "SHOW_SHUTTLE_BUTTON", "message": "Show Shuttle"}
+  {"value": "SHOW_SHUTTLE_BUTTON", "message": "Show Shuttle"},
+
+  {"value": "SWITCH_WEBSITE_VERSION", "message": "Switch to mobile/desktop version"},
+  {"value": "COPY_TEXT", "message": "Copy text"},
+  {"value": "OPEN_LINK_QUICK_SEARCH", "message": "Open link in quick search"},
+  {"value": "OPEN_LINK_BROWSER", "message": "Open link in browser"},
+  {"value": "COPY_lINK", "message": "Copy link"},
+  {"value": "OPEN_PICTURE_BROWSER", "message": "Open picture in browser"},
+  {"value": "COPY_PICTURE_URL", "message": "Copy picture URL"}
 ]

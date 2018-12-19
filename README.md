@@ -13,6 +13,7 @@
 <div align="center">
   <img src="https://api.travis-ci.org/KazeJiyu/Shuttle.svg?branch=master">   
   <a href="https://snyk.io/test/github/robjullian/shuttle?targetFile=package.json"><img src="https://snyk.io/test/github/robjullian/shuttle/badge.svg?targetFile=package.json" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/robjullian/shuttle?targetFile=package.json" style="max-width:100%;"></a>
+  <a href="/releases/"><img src="https://img.shields.io/github/downloads/ShuttleBrowser/Shuttle/total.svg">
 </div>
 
 ## Installation
@@ -50,8 +51,10 @@ _Currently in developement._
 * Take screenshot : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>S</kbd>
 * Show/Hide Shuttle : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>X</kbd><br>
 * Refresh page : <kbd>F5</kbd>
-* Go back in history <kbd>Alt</kbd>←<kbd>
-* Go forward in history <kbd>Alt</kbd>→<kbd>
+* Go back in history <kbd>Alt</kbd> <kbd>←</kbd>
+* Go forward in history <kbd>Alt</kbd> <kbd>→</kbd>
+* Open website dev tools <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>I</kbd>
+* Open Shuttle dev tools <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>I</kbd>
 
 <br>
 Note: the <kbd>Ctrl</kbd> key is replaced by <kbd>Cmd</kbd> key on MacOs.

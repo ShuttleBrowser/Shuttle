@@ -1,6 +1,9 @@
 const electron = require('electron')
 const Menu = electron.remote.Menu
 const ipcRenderer = electron.ipcRenderer
+const lang = require('../../lang/lang')
+
+console.log(lang)
 
 let Notification = function (title, ops) {
   let imgURL = `${window.location.origin}/${ops.icon}`
@@ -65,9 +68,9 @@ document.addEventListener('contextmenu', (event) => {
   }
 
   let items = [{
-    label: 'Switch to mobile/desktop version',
+    label: lang('SWITCH_WEBSITE_VERSION'),
     click() {
-      // switch to desktop version 
+      switchVersion()
     }
   }]
 
@@ -77,7 +80,7 @@ document.addEventListener('contextmenu', (event) => {
       type: 'separator'
     },
     {
-      label: 'Copy',
+      label: lang('COPY_TEXT'),
       click() {
         copyToClipboard(text)
       }
@@ -90,19 +93,19 @@ document.addEventListener('contextmenu', (event) => {
       type: 'separator'
     },
     {
-      label: 'Open link in quick search',
+      label: lang('OPEN_LINK_QUICK_SEARCH'),
       click() {
         openTab(a.href)
       },
     },
     {
-      label: 'Open link in browser',
+      label: lang('OPEN_LINK_BROWSER'),
       click() {
         openInBrowser(a.href)
     }
     },
     {
-      label: 'Copy link',
+      label: lang('COPY_lINK'),
       click() {
         copyToClipboard(a.href)
       }
@@ -114,18 +117,18 @@ document.addEventListener('contextmenu', (event) => {
       type: 'separator'
     },
     {
-      label: 'Open picture in browser',
+      label: lang('OPEN_PICTURE_BROWSER'),
       click() {
         openInBrowser(img.src)
       }
     },
     {
-      label: 'Copy picture URL',
+      label: lang('COPY_PICTURE_URL'),
       click() {
         copyToClipboard(img.src)
       }
     })
   }
   
-  Menu.buildFromTemplate(items).popup(require('electron').remote.getCurrentWindow())
+  Menu.buildFromTemplate(items).popup(electron.remote.getCurrentWindow())
 })
