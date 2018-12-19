@@ -95,6 +95,7 @@ const view = {
     let webviewToListen = document.querySelector(`#view-${id}`)
     if (webviewToListen) {
       webviewToListen.addEventListener('did-fail-load', (errorCode, errorDescription, validatedURL) => {
+        console.log(errorCode)
         if (errorCode.errorCode !== -3) {
           if (navigator.onLine === false) {
             webviewToListen.loadURL(this.generateErrorPage('NO INTERNET CONNECTION'))
@@ -119,6 +120,11 @@ const view = {
         } if(event.channel === 'SWITCH_VERSION') {
           this.changeVersion()
         }
+      })
+
+      webviewToListen.addEventListener('new-window', event => {
+        console.log('new')
+        EventsEmitter.emit('OPEN_QUICK_SEARCH', event.url)
       })
 
       webviewToListen.addEventListener('enter-html-full-screen', () => {

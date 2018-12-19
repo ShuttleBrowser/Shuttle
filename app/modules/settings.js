@@ -4,6 +4,7 @@ const fs = require('fs')
 const saveAs = require('file-saver')
 const files = require('./files')
 const searchengines = require('./searchengines.json')
+const config = require('./config.json')
 
 const { app } = require('electron').remote
 
@@ -146,32 +147,46 @@ const settings = {
 
   // Button for report a bug
   reportBugButton () {
-    let shuttleVersion = app.getVersion()
-    let osPlatform = process.platform
-    let osVersion = require('os').release
-    let arch = process.arch
-    let electronVerison = process.versions.electron
-    let nodeVerison = process.versions.node
-    let chromiumVerison = process.versions.chrome
-    let v8Verison = process.versions.v8
-    let mailContent = [
-      `Shuttle version : ${shuttleVersion}%0A` +
-      `OS : ${osPlatform}%0A` +
-      `OS Version : ${osVersion}%0A` +
-      `Computer Arch : ${arch}%0A` +
-      `Electron : ${electronVerison}%0A` +
-      `NodeJS : ${nodeVerison}%0A` +
-      `Chromium : ${chromiumVerison}%0A` +
-      `V8 : ${v8Verison}%0A`
-    ]
-    console.log(`report bug button is clicked`)
-    remote.shell.openExternal(`mailto:support@shuttleapp.io&subject=bug shuttle-${shuttleVersion}?body=${mailContent}`)
+    
+    modales.feedback((email, desc) => {
+
+      console.log(`report bug button is clicked`)
+
+      let body = {
+        email: email,
+        shuttleVersion: app.getVersion(),
+        osPlatform: process.platform,
+        osVersion: require('os').release,
+        arch: process.arch,
+        electronVerison: process.versions.electron,
+        nodeVerison: process.versions.node,
+        chromiumVerison: process.versions.chrome,
+        v8Version: process.versions.v8,
+        description: desc        
+      }
+
+      fetch(`${config.api}/utils/feedback/send`, {
+        method: 'post',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' }
+      }).then(res => res.json()).catch(() => {
+        reject()
+      }).then((data) => {
+          if (data.message === 'success') {
+            resolve()
+          } else {
+            reject()
+          }
+        })
+
+    })
   },
 
   clearCacheButton () {
     console.log(`clear cache button is clicked`)
     let win = remote.getCurrentWindow()
     win.webContents.session.clearCache(() => {
+      win.webContents.session.clearStorageData()
       alert('cache is cleared')
     })
   },
@@ -188,11 +203,13 @@ const settings = {
   uploadFavorites () {
     remote.dialog.showOpenDialog({ filters: [{ name: 'Shuttle data', extensions: ['shtd'] }] }, (fileNames) => {
       if (fileNames === undefined) {
-        console.log('No file selected')
+        console.log('[ERROR] > No file selected')
       } else {
-        console.log(fileNames[0])
         fs.createReadStream(fileNames[0]).pipe(fs.createWriteStream(`${app.getPath('userData')}/bookmarks.json`))
-        location.reload()
+        sync.uploadBookmarks().then((data) => {
+          console.log(data)
+          bookmarks.loadBookmarks()
+        })
       }
     })
   },
@@ -205,12 +222,17 @@ const settings = {
       message: 'Reset all bookmarks ?'
     })
     if (choice === 0) {
-      console.log('Reset...')
+      console.log('[INFO] > Reset bookmarks')
       fs.writeFile(`${app.getPath('userData')}/bookmarks.json`, '', (err) => {
         if (err) {
-          return console.log(err)
+          return console.log(`[ERROR] > ${err}`)
         }
-        location.reload()
+        sync.uploadBookmarks().then((data) => {
+          console.log(data)
+          bookmarks.loadBookmarks()
+        }).catch(() => {
+          bookmarks.loadBookmarks()
+        })
       })
     }
   },

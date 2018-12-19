@@ -107,9 +107,8 @@ const bkms = {
     return new Promise((resolve) => {
       document.querySelector('.bkms').innerHTML = ""
 
-      console.log(`[INFO] > Load bookmarks`)
-
       sync.syncBookmarks().then((bkm) => {
+        console.log(`[INFO] > Load bookmarks from Server`)
         let sortedindexes = {}
         for (i in bkm) {
           sortedindexes[bkm[i].order] = i
@@ -119,6 +118,8 @@ const bkms = {
           bkms.addBookmarksInUI(bkm[i].id, bkm[i].icon, bkm[i].url)
         }
       }).catch(() => {
+        console.log(`[INFO] > Load bookmarks from local file`)
+        console.log('From local file')
         files.bookmarks.sortByOrder()
         console.log(files.bookmarks.list())
 
