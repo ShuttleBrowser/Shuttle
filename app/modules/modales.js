@@ -49,6 +49,30 @@ const modales = {
     })
   },
 
+  feedback (callback) {
+    let inputs = []
+    inputs.push(
+        '<div class="vex-custom-field-wrapper">',
+          '<div class="vex-custom-input-wrapper">',
+            '<input name="email" type="text" value="" id="email" placeholder="yourmail@mail.com" />',
+            '<textarea name="description" type="text" value="" id="description" placeholder="Description" style="resize: vertical;"></textarea>',
+          '</div>',
+        '</div>'
+      )
+
+    vex.dialog.buttons.YES.text = lang('CONTINUE_BUTTON')
+    vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
+    vex.dialog.open({
+      message: lang('SETTINGS_REPORT_BUG'),
+      input: inputs.join(''),
+      callback: (data) => {
+        if (data) {
+          callback(data.email, data.description)
+        }
+      }
+    })
+  },
+
   quickSearch () {
     vex.dialog.buttons.YES.text = lang('SEARCH_BUTTON')
     vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
