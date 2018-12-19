@@ -123,7 +123,6 @@ const view = {
       })
 
       webviewToListen.addEventListener('new-window', event => {
-        console.log('new')
         EventsEmitter.emit('OPEN_QUICK_SEARCH', event.url)
       })
 
@@ -139,6 +138,7 @@ const view = {
   },
 
   setFullscreen: (bool, view) => {
+
     let bookmarksBar = document.querySelector('.bar')
     let controlBar = document.querySelector('.control-bar')
 
@@ -157,7 +157,7 @@ const view = {
       `)
     }
 
-    require('electron').ipcRenderer.send('SetFullscreen', bool)
+    require('electron').ipcRenderer.send('SetBounds', bool)
   }
 
 }

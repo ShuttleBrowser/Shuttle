@@ -9,7 +9,8 @@ const contextMenu = require('./main/menu.js')
 const autoUpdater = require('./main/updater.js')
 const files = require('./app/modules/files.js')
 
-let prevBounds
+let lastBounds = undefined
+let fullscreenBounds
 
 let ShuttleAutoLauncher = new AutoLaunch({
   name: 'Shuttle'
@@ -57,15 +58,25 @@ const shuttle = {
 }
 
 app.on('ready', () => {
-  screen = require('electron').screen.getPrimaryDisplay()
   shuttle.createAppWindows()
   mb.tray.setContextMenu(contextMenu)
-  mb.showWindow()
   mb.window.setMenu(null)
+  mb.showWindow()
+  screen = require('electron').screen.getPrimaryDisplay()
+  fullscreenBounds = {
+    x: 0,
+    y: 0,
+    width: screen.size.width,
+    height: screen.size.height
+  }
   app.on('before-quit', () => {
     mb.tray.Destroy()
     mb.window.removeAllListeners('close')
     mb.window.close()
+  })
+  mb.window.on('move', () => {
+    if(JSON.stringify(mb.window.getBounds()) != JSON.stringify(fullscreenBounds))
+      lastBounds = mb.window.getBounds()
   })
 
   globalShortcut.register('CmdOrCtrl+Shift+X', () => {
@@ -150,17 +161,13 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
   }, 5)
 })
 
-ipcMain.on('SetFullscreen', (event, bool) => {
+ipcMain.on('SetBounds', (event, bool) => {
   if(bool) {
-    prevBounds = mb.window.getBounds()
-    mb.window.setBounds({
-      x: 0,
-      y: 0,
-      width: screen.size.width,
-      height: screen.size.height
-    })
-    console.log(mb.window.isFullScreen())
+    mb.window.setBounds(fullscreenBounds)
   } else {
-    mb.window.setBounds(prevBounds)
+    if(lastBounds != undefined) {
+      console.log(lastBounds)
+      mb.window.setBounds(lastBounds)
+    }
   }
 })

@@ -3,8 +3,6 @@ const Menu = electron.remote.Menu
 const ipcRenderer = electron.ipcRenderer
 const lang = require('../../lang/lang')
 
-console.log(lang)
-
 let Notification = function (title, ops) {
   let imgURL = `${window.location.origin}/${ops.icon}`
   let text = ops.body
