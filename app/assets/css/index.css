@@ -11,6 +11,7 @@ body {
     height: 0px;
     -webkit-app-region: drag;
     transition-duration: 0.5s;
+    background-color: #F4F4F4;
 }
 
 #app {

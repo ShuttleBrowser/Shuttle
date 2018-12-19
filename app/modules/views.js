@@ -90,6 +90,11 @@ const view = {
         }
       })
 
+      webviewToListen.addEventListener('new-window', event => {
+        console.log('new')
+        EventsEmitter.emit('OPEN_QUICK_SEARCH', event.url)
+      })
+
       webviewToListen.addEventListener('enter-html-full-screen', () => {
         this.setFullscreen(true, webviewToListen)
       })
