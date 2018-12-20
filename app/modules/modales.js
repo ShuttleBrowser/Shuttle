@@ -1,6 +1,7 @@
 const lang = require('../../lang/lang.js')
 const bookmarks = require('./bookmarks.js')
 const quickSearch = require('./quickSearch.js')
+const files = require('./files.js')
 const { ipcRenderer } = require('electron')
 
 const modales = {
@@ -39,7 +40,7 @@ const modales = {
     vex.dialog.buttons.YES.text = lang('CONTINUE_BUTTON')
     vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
     vex.dialog.confirm({
-      message: `${lang('REMOVE_BOOKMARK')} : ${require('url').parse(url).hostname}`,
+      message: (id.toLowerCase().includes('quicksearch')) ? lang('REMOVE_QUICKSEARCH') : lang('REMOVE_BOOKMARK') + ': ' + require('url').parse(url).hostname,
       callback: (bool) => {
         if (bool) {
           bookmarks.removeBookmark(id)
@@ -78,7 +79,7 @@ const modales = {
     vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
     vex.dialog.prompt({
       message: lang('QUICK_SEARCH'),
-      placeholder: lang('SEARCH_BUTTON'),
+      placeholder: files.settings.getValue('settings.searchEngine') + ' ' + lang('SEARCH_BUTTON'),
       callback: (value) => {
         if (value) {
           quickSearch(value)

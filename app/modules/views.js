@@ -110,7 +110,7 @@ const view = {
     if (webviewToListen) {
       webviewToListen.addEventListener('did-fail-load', (errorCode, errorDescription, validatedURL) => {
         console.log(errorCode)
-        if (errorCode.errorCode !== -3 || errorCode.errorCode !== -27) {
+        if (errorCode.errorCode !== -3 && errorCode.errorCode !== -27) {
           if (navigator.onLine === false) {
             webviewToListen.loadURL(this.generateErrorPage('NO INTERNET CONNECTION'))
           } else {

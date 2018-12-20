@@ -3,6 +3,7 @@
   {"value": "TYPE_URL", "message": "Entrez l'url de votre favori"},
   {"value": "CHOOSE_THIS_URL", "message": "Choisir la page active"},
   {"value": "REMOVE_BOOKMARK", "message": "Supprimer le favori ?"},
+  {"value": "REMOVE_QUICKSEARCH", "message": "Supprimer la recherche rapide ?"},
   {"value": "QUICK_SEARCH", "message": "Entrez votre recherche rapide"},
   {"value": "SCREENSHOT_DONE", "message": "Capture d'écran réussie"},
   {"value": "UPDATE_AVAILIBLE", "message": "Une mise a jour est disponible, voulez-vous l'installer ?"},
