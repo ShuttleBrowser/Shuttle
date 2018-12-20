@@ -20,16 +20,30 @@ const view = {
   create (id, url, type) {
     return new Promise((resolve) => {
       const webViewList = document.querySelector('.views')
-
       this.fixUrl(url).then((url) => {
+
+        let webViewToCreate = document.createElement("webview")
+
         if (type === 'addon') {
-          webViewList.innerHTML += `<webview src="file://${url}" id="view-${id}" preload="./modules/addonApi.js" onmouseover="controlBar.show(0, false)" class="web-content inactive" useragent="${this.mobileUserAgent}" disablewebsecurity></webview>`
+          webViewToCreate.setAttribute('src', `file://${url}`)
+          webViewToCreate.setAttribute('preload', './modules/addonApi.js')
         } else {
-          webViewList.innerHTML += `<webview src="${url}" id="view-${id}" preload="./modules/webviewPreloader.js" onmouseover="controlBar.show(0, false)" class="web-content inactive" useragent="${this.mobileUserAgent}" disablewebsecurity></webview>`
+          webViewToCreate.setAttribute('src', url)
+          webViewToCreate.setAttribute('preload', './modules/webviewPreloader.js')
         }
+
+        webViewToCreate.setAttribute('id', `view-${id}`)
+        webViewToCreate.setAttribute('onmouseover', 'controlBar.show(0, false)')
+        webViewToCreate.setAttribute('class', 'web-content inactive')
+        webViewToCreate.setAttribute('useragent', this.mobileUserAgent)
+        webViewToCreate.setAttribute('disablewebsecurity', '')
+
+        webViewList.appendChild(webViewToCreate)
+
         this.listenWebViewError(id)
         this.show(id)
         resolve()
+
       })
     })
   },
