@@ -39,8 +39,17 @@ const modales = {
   removeBookmark (id, url) {
     vex.dialog.buttons.YES.text = lang('CONTINUE_BUTTON')
     vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
+
+    let message
+
+    if (String(id).includes('quickSearch')) {
+      message = lang('REMOVE_QUICKSEARCH')
+    } else {
+      message = `${lang('REMOVE_BOOKMARK')}: ${require('url').parse(url).hostname}`
+    }
+
     vex.dialog.confirm({
-      message: (id.toLowerCase().includes('quicksearch')) ? lang('REMOVE_QUICKSEARCH') : lang('REMOVE_BOOKMARK') + ': ' + require('url').parse(url).hostname,
+      message: message,
       callback: (bool) => {
         if (bool) {
           bookmarks.removeBookmark(id)
