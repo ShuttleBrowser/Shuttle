@@ -156,6 +156,8 @@ const view = {
     let bookmarksBar = document.querySelector('.bar')
     let controlBar = document.querySelector('.control-bar')
 
+    console.log(bool)
+
     if (bool) {
       bookmarksBar.style.display = 'none'
       controlBar.style.display = 'none'

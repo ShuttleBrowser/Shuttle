@@ -76,12 +76,14 @@ app.on('ready', () => {
 
   app.on('before-quit', () => {
     mb.tray.Destroy()
+    electronLocalshortcut.unregisterAll()
     mb.window.removeAllListeners('close')
     mb.window.close()
   })
+  
   mb.window.on('move', () => {
-    if(JSON.stringify(mb.window.getBounds()) != JSON.stringify(fullscreenBounds))
-      lastBounds = mb.window.getBounds()
+    normalBounds.x = mb.window.getBounds().x
+    normalBounds.y = mb.window.getBounds().y
   })
 
   globalShortcut.register('CmdOrCtrl+Shift+X', () => {
