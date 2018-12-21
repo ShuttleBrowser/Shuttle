@@ -9,7 +9,7 @@ const contextMenu = require('./main/menu.js')
 const autoUpdater = require('./main/updater.js')
 const files = require('./app/modules/files.js')
 
-let lastBounds = undefined
+let normalBound
 let fullscreenBounds
 
 let ShuttleAutoLauncher = new AutoLaunch({
@@ -22,9 +22,6 @@ if (files.settings.getValue('settings.autostart') === true || files.settings.get
   ShuttleAutoLauncher.disable()
 }
 
-// set window variable
-const normalWidth = 395
-const normalHeight = 645
 let screen
 let mb
 
@@ -34,10 +31,10 @@ const shuttle = {
     mb = new menubar({
       icon: require.resolve(`./main/icon.png`),
       index: `file://${__dirname}/app/index.html`,
-      width: normalWidth,
-      minWidth: normalWidth,
-      height: normalHeight,
-      minHeight: normalHeight,
+      width: 395,
+      minWidth: 395,
+      height: 645,
+      minHeight: 645,
       title: 'Shuttle',
       autoHideMenuBar: true,
       frame: false,
@@ -62,6 +59,7 @@ app.on('ready', () => {
   mb.tray.setContextMenu(contextMenu)
   mb.window.setMenu(null)
   mb.showWindow()
+
   screen = require('electron').screen.getPrimaryDisplay()
   fullscreenBounds = {
     x: 0,
@@ -69,6 +67,13 @@ app.on('ready', () => {
     width: screen.size.width,
     height: screen.size.height
   }
+  normalBounds = {
+  	x: mb.window.getBounds().x,
+  	y: mb.window.getBounds().y,
+    width: 395,
+    height: 645
+  }
+
   app.on('before-quit', () => {
     mb.tray.Destroy()
     mb.window.removeAllListeners('close')
@@ -162,12 +167,9 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
 })
 
 ipcMain.on('SetBounds', (event, bool) => {
-  if(bool) {
+  if (bool) {
     mb.window.setBounds(fullscreenBounds)
   } else {
-    if(lastBounds != undefined) {
-      console.log(lastBounds)
-      mb.window.setBounds(lastBounds)
-    }
+    mb.window.setBounds(normalBounds)
   }
 })
