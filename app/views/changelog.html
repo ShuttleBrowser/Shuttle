@@ -45,6 +45,7 @@
 	</body>
 
 	<script>
+		const searchBar = document.querySelector('input[name=search]')
 		let op;
 		document.addEventListener('DOMContentLoaded', () => {
 			op = onePageScroll(".main", {
@@ -56,6 +57,16 @@
 				responsiveFallback: false
 			})
 			console.log(op);
+		})
+
+		searchBar.addEventListener('keyup', (event) => {
+		    event.preventDefault()
+		    if (event.keyCode === 13) {
+		    	if (searchBar !== '') {
+					openTab(searchBar.value)
+					searchBar.value = ''
+		    	}
+		    }
 		})
 	</script>
 </html>

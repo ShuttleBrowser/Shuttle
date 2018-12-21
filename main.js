@@ -156,6 +156,18 @@ EventsEmitter.on('SHOW_SETTINGS', () => {
 EventsEmitter.on('QUIT_SHUTTLE', () => {
   app.quit()
 })
+
+ipcMain.on('WEB_NOTIFICATION', (event, data) => {
+  let notif = new Notification(data.title, {
+    body: data.text
+  })
+
+  notif.onclick = () => {
+    console.log('Notification clicked')
+  }
+
+})
+
 ipcMain.on('PAGE_ALERT', (event, data) => {
   mb.window.webContents.send('ALERT', data)
 })

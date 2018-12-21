@@ -3,14 +3,12 @@ const Menu = electron.remote.Menu
 const ipcRenderer = electron.ipcRenderer
 const lang = require('../../lang/lang')
 
-let Notification = function (title, ops) {
-  let imgURL = `${window.location.origin}/${ops.icon}`
+let Notification = (title, ops) => {
   let text = ops.body
 
-  ipcRenderer.send('notif', {
+  ipcRenderer.send('WEB_NOTIFICATION', {
     title: title,
-    text: text,
-    imgURL: imgURL
+    text: text
   })
 }
 
