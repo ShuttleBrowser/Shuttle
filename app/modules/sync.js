@@ -24,6 +24,7 @@ const sync = {
         }).then((data) => {
             if (data.message === 'success') {
               resolve(data.bookmarks)
+              files.bookmarks.set(data.bookmarks)
             } else if (data.message === 'TOKEN_ERROR' || data.message === 'USER_NOT_FOUND') {
               reject()
             } else {

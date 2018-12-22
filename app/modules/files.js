@@ -46,6 +46,10 @@ const files = {
       return bookmarksDb.get('bookmarks').value()
     },
   
+    set (bookmarks) {
+      bookmarksDb.get('bookmarks').set(bookmarks).write()
+    },
+
     push (payload) {
       bookmarksDb.get('bookmarks').push(payload).write()
     },
