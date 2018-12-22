@@ -4,44 +4,59 @@ const sync = require('./sync.js')
 const config = require('./config.json')
 
 const bkms = {
-  createBookmark (url) {
+  createBookmark (url, type, uuid) {
     let bkmsList = files.bookmarks.list()
+    let bkmsListWithoutAddons = files.bookmarks.get().filter({ type: 'website' }).value()
     let bkmId, bkmOrder
 
     if (bkmsList.length === 0) {
       bkmId = 1
       bkmOrder = 1
     } else {
-      bkmId = bkmsList[bkmsList.length - 1].id + 1
+      bkmId = bkmsListWithoutAddons[bkmsListWithoutAddons.length - 1].id + 1
       bkmOrder = bkmsList[bkmsList.length - 1].order + 1
     }
+    
+    if (type === 'app') {
+      console.log('type: app')
+      files.bookmarks.push({
+        id: uuid,
+        type: 'app',
+        url: `file://${url}/app/index.html`,
+        icon: `file://${url}/icon.png`,
+        order: bkmOrder
+      })
 
-    console.log(url)
-    url = this.repairUrl(url)
+      files.bookmarks.setIcon(uuid, `file://${url}/icon.png`)
+      bkms.addBookmarksInUI(uuid, `file://${url}/icon.png`, url, 'app')
+      views.create(uuid, `file://${url}/app/index.html`, 'app')
+    } else {
+      url = this.repairUrl(url)
 
-    files.bookmarks.push({
-      id: bkmId,
-      url: url,
-      icon: null,
-      order: bkmOrder
-    })
+      files.bookmarks.push({
+        id: bkmId,
+        type: 'website',
+        url: url,
+        icon: null,
+        order: bkmOrder
+      })
+
+      files.bookmarks.setIcon(bkmId, this.getIcon(url))
+      bkms.addBookmarksInUI(bkmId, this.getIcon(url), url)
+      views.create(bkmId, url)
+    }
 
     console.log(`[INFO] > create bookmark : ${url}`)
 
-    files.bookmarks.setIcon(bkmId, this.getIcon(url))
-    bkms.addBookmarksInUI(bkmId, this.getIcon(url), url)
-    views.create(bkmId, url)
     sync.uploadBookmarks()
   },
 
   reorderBookmarks(el) {
-    console.log(el)
     for(let i = 0; i < el.children.length; i++) {
       if (el.children[i].id.includes('quickSearch') === false) {
         files.bookmarks.setOrder(parseInt(/id\-([0-9]+)/g.exec(el.children[i].id)[1]), i)
       }
     }
-    console.log(files.bookmarks.list())
     sync.uploadBookmarks()
   },
 
@@ -88,8 +103,8 @@ const bkms = {
 
     console.log(`[INFO] > Add bookmark in UI : ${id}`)
 
-    if (type === 'addon') {
-      navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show('${id}', '${url}', 'addon')" oncontextmenu="modales.uninstallAddon('${id}')" onmouseover="controlBar.show('${id}', true)" style="background-image: url('${icon}');"></a>`
+    if (type === 'app') {
+      navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show('${id}', '${url}', 'addon')" oncontextmenu="modales.uninstallAddon('${id}', '${type}')" onmouseover="controlBar.show('${id}', true)" style="background-image: url('${icon}');"></a>`
     } else if (String(id).startsWith('quickSearch') !== true) {
       navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show(${id}, '${url}')" oncontextmenu="modales.removeBookmark(${id}, '${url}')" onmouseover="controlBar.show(${id}, true)" style="background-image: url(${icon});"></a>`
     } else {
@@ -115,18 +130,17 @@ const bkms = {
         }
         for(order in sortedindexes) {
           i = sortedindexes[order]
-          bkms.addBookmarksInUI(bkm[i].id, bkm[i].icon, bkm[i].url)
+          bkms.addBookmarksInUI(bkm[i].id, bkm[i].icon, bkm[i].url, bkm[i].type)
         }
       }).catch(() => {
         console.log(`[INFO] > Load bookmarks from local file`)
-        console.log('From local file')
         files.bookmarks.sortByOrder()
         console.log(files.bookmarks.list())
 
         let bkm = files.bookmarks.list()
 
         for (i in bkm) {
-          bkms.addBookmarksInUI(bkm[i].id, bkm[i].icon, bkm[i].url)
+          bkms.addBookmarksInUI(bkm[i].id, bkm[i].icon, bkm[i].url, bkm[i].type)
         }
       })
 

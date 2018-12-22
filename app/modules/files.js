@@ -10,7 +10,6 @@ const userData = appPath.getPath('userData')
 
 const settingsFilePath = `${userData}/settings.json`
 const bookamrksFilePath = `${userData}/bookmarks.json`
-const applicationsFilePath = `${userData}/applications.json`
 const modulesFilePath = `${userData}/modules.json`
 
 const low = require('lowdb')
@@ -18,16 +17,13 @@ const FileSync = require('lowdb/adapters/FileSync')
 
 const settingsAdapter = new FileSync(settingsFilePath)
 const bookmarksAdapter = new FileSync(bookamrksFilePath)
-const applicationsAdapter = new FileSync(applicationsFilePath)
 const modulesAdapter = new FileSync(modulesFilePath)
 
 const settingsDb = low(settingsAdapter)
 const bookmarksDb = low(bookmarksAdapter)
-const applicationsDb = low(applicationsAdapter)
 const modulesDb = low(modulesAdapter)
 
 bookmarksDb.defaults({ bookmarks: [] }).write()
-applicationsDb.defaults({ apps: [] }).write()
 modulesDb.defaults({ modules: [] }).write()
 
 const files = {
@@ -46,6 +42,10 @@ const files = {
       return bookmarksDb.get('bookmarks').value()
     },
   
+    get () {
+      return bookmarksDb.get('bookmarks')
+    },
+
     set (bookmarks) {
       bookmarksDb.get('bookmarks').set(bookmarks).write()
     },
@@ -76,32 +76,22 @@ const files = {
       bookmarksDb.sortBy('order').write()
     }
   },
-  
-  apps: {
-    list () {
-      return applicationsDb.get('bookmarks').value()
-    },
-  
-    push (payload) {
-      applicationsDb.get('bookmarks').push(payload).write()
-    },
-  
-    remove (payload) {
-      applicationsDb.get('bookmarks').remove(payload).write()
-    }
-  },
-  
+
   modules: {
     list () {
-      return modulesDb.get('bookmarks').value()
+      return modulesDb.get('modules').value()
     },
   
+    set (bookmarks) {
+      modulesDb.get('modules').set(bookmarks).write()
+    },
+
     push (payload) {
-      modulesDb.get('bookmarks').push(payload).write()
+      modulesDb.get('modules').push(payload).write()
     },
   
     remove (payload) {
-      modulesDb.get('bookmarks').remove(payload).write()
+      modulesDb.get('modules').remove(payload).write()
     }
   }
 }

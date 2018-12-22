@@ -1,11 +1,14 @@
 const config = require('./config.json')
 const files = require('./files')
-const sync = require('./sync.js')
 
 let isSignUp = false
 
 EventsEmitter.on('USER_LOGOUT', () => {
-  auth.logout()    
+  auth.logout()
+})
+
+EventsEmitter.on('SHOW_AUTH', () => {
+  auth.tooggleMethod('signin')
 })
 
 const auth = {
@@ -13,19 +16,27 @@ const auth = {
     EventsEmitter.emit('SHOW_BROWSER')
   },
 
-  tooggleMethod () {
-    if (!isSignUp) {
-      document.getElementById('conf_pass_textbox').style.display = 'block'
-      document.querySelector('.methodeBtn').innerHTML = lang('AUTH_SIGNUP').toUpperCase()
-      document.getElementById('methodText').innerHTML = lang('AUTH_SIGNUP')
-      document.querySelector('.askOtherMethode').innerHTML = lang('AUTH_ASK_FOR_SIGNIN')
-      isSignUp = true
-    } else {
+  tooggleMethod (method) {
+    if (method === "signin") {
       document.getElementById('conf_pass_textbox').style.display = 'none'
       document.querySelector('.methodeBtn').innerHTML = lang('AUTH_SIGNIN').toUpperCase()
       document.getElementById('methodText').innerHTML = lang('AUTH_SIGNIN')
       document.querySelector('.askOtherMethode').innerHTML = lang('AUTH_ASK_FOR_SIGNUP')
       isSignUp = false
+    } else {
+      if (!isSignUp) {
+        document.getElementById('conf_pass_textbox').style.display = 'block'
+        document.querySelector('.methodeBtn').innerHTML = lang('AUTH_SIGNUP').toUpperCase()
+        document.getElementById('methodText').innerHTML = lang('AUTH_SIGNUP')
+        document.querySelector('.askOtherMethode').innerHTML = lang('AUTH_ASK_FOR_SIGNIN')
+        isSignUp = true
+      } else {
+        document.getElementById('conf_pass_textbox').style.display = 'none'
+        document.querySelector('.methodeBtn').innerHTML = lang('AUTH_SIGNIN').toUpperCase()
+        document.getElementById('methodText').innerHTML = lang('AUTH_SIGNIN')
+        document.querySelector('.askOtherMethode').innerHTML = lang('AUTH_ASK_FOR_SIGNUP')
+        isSignUp = false
+      }
     }
   },
 

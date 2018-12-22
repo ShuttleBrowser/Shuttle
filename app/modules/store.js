@@ -1,10 +1,11 @@
 const config = require('./config.json')
 
 const fs = require('fs')
-const http = require('http')
+const http = require('https')
 const extractZip = require('extract-zip')
 
 const bookmarks = require('./bookmarks.js')
+const files = require('./files.js')
 
 const userData = require('electron').remote.app.getPath('userData').replace(/\\/g,"/")
 
@@ -30,6 +31,17 @@ EventsEmitter.on('SHOW_STORE', (bool) => {
 })
 
 const store = {
+  addonsTypes: [
+    {
+      type: "app",
+      path: `${userData}/addons/apps/`
+    },
+    {
+      type: "module",
+      path: `${userData}/addons/modules/`
+    }
+  ],
+
   popup: {
     install (show, name, description, uuid, type) {
       if (show) {
@@ -109,106 +121,114 @@ const store = {
     })
   },
 
-  checkAddonsDirectory () {
+  checkDirectorie (path) {
     return new Promise((resolve, reject) => {
+
       fs.exists(`${userData}/addons`, (bool) => {
 
-        if (bool === false) {
+        if (!bool) {
           fs.mkdir(`${userData}/addons`, { recursive: true }, (err) => {
-            if (err) reject(err)
-
-            fs.mkdir(`${userData}/addons/apps`, { recursive: true }, (err) => {
-              if (err) reject(err)
-  
-              fs.mkdir(`${userData}/addons/modules`, { recursive: true }, (err) =>{
-                if (err) reject(err)
-  
-                resolve()
-              })
-  
+            fs.exists(path, (bool) => {
+              if (!bool) {
+                fs.mkdir(path, { recursive: true }, (err) => {
+                  resolve()
+                })
+              }
             })
-
           })
-
         } else {
           resolve()
         }
-  
+
       })
     })
   },
 
-  downloadAddon (uuid, path) {
+  download (type, path, uuid) {
     return new Promise((resolve, reject) => {
 
-      let iconFile = fs.createWriteStream(`${path}/icon.png`)
-      let appFile = fs.createWriteStream(`${path}/app.zip`)
-
-      http.get(`${config.api}/store/assets/${uuid}/icon`, (res) => {
-        res.pipe(iconFile)
-
-        res.on('end', () => {
-
-          http.get(`${config.api}/store/action/download/${uuid}`, (res) => {
-            res.pipe(appFile)
+      fs.mkdir(path + uuid, () => {
+        let iconFile = fs.createWriteStream(`${path + uuid}/icon.png`)
+        let appFile = fs.createWriteStream(`${path + uuid}/app.zip`)
   
-            res.on('end', () => {
-
-              this.unzipAddon(path).then(() => {
-                resolve('succes')
-              }).catch((e) => {
-                console.log(e)
-              })
-
-            })
-  
-            res.on('error', (e) => {
-              reject(e)
-            })
-          })
-  
-          res.on('error', (e) => {
-            reject(e)
-          })
-
+        http.get(`${config.api}/store/assets/${uuid}/icon`, (res) => {
+          res.pipe(iconFile)
         })
+  
+        http.get(`${config.api}/store/action/download/${uuid}`, (res) => {
+          res.pipe(appFile)
 
+          res.on('end', () => {
+            resolve()
+          })
+        })
+  
       })
 
     })
   },
 
-  unzipAddon (path) {
+  addInFile (path, type, uuid) {
     return new Promise((resolve, reject) => {
-      extractZip(`${path}/app.zip`, {dir: `${path}/app`}, (err) => {
-        if (err) reject(err)
+
+      if (type === "app") {
+        bookmarks.createBookmark(path + uuid, 'app', uuid)
+      } else if (type === "module") {
+        files.modules.push({
+          uuid: uuid,
+          path: path + uuid 
+        })
+      }
+
+      resolve()
+    })
+  },
+
+  unzip (path, uuid) {
+    return new Promise((resolve, reject) => {
+      extractZip(`${path + uuid}/app.zip`, {
+        dir: `${path + uuid}/app`
+      }, () => {
         resolve()
       })
     })
   },
 
   install (uuid, type) {
-    this.checkAddonsDirectory().then(() => {
-      let installPath
+    console.log('installing...')
+    for (i in this.addonsTypes) {
 
-      if (type === 'app') {
-        installPath = `${userData}/addons/apps/${uuid}`
-      } else if (type === 'module') {
-        installPath = `${userData}/addons/modules/${uuid}`
+      if (this.addonsTypes[i].type === type) {
+        this.checkDirectorie(this.addonsTypes[i].path).then(() => {
+          this.download(type, this.addonsTypes[i].path, uuid).then(() => {
+            this.unzip(this.addonsTypes[i].path, uuid).then(() => {
+              this.addInFile(this.addonsTypes[i].path, type, uuid).then(() => {
+
+              })
+            })
+          })
+        })
+
+        break
       }
-  
-      fs.mkdir(installPath, { recursive: true }, (err) => {
-        if (err) alert(err.toString())
-      })
 
-      this.downloadAddon(uuid, installPath).then((result) => {
-        fs.unlinkSync(`${installPath}/app.zip`)
-        bookmarks.addBookmarksInUI(`${uuid}`, `${installPath}/icon.png`, `${installPath}/app/index.html`, 'addon')
-      }).catch((e) => {
-        alert(e)
-      })
-    })
+    }
+
+  },
+
+  uninstall (uuid, type) {
+    bookmarks.removeBookmark(uuid)
   }
+
 }
+
+/*
+
+download: `${config.api}/store/action/download/${uuid}`
+install path:
+  app: ${userData}/addons/apps/${uuid} || icon.png || index.html
+  modules: ${userData}/addons/modules/${uuid} || icon.png || index.js
+
+*/
 
 module.exports = store

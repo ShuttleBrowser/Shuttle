@@ -1,6 +1,7 @@
 const config = require('./config.json')
 
 const files = require('./files.js')
+const store = require('./store.js')
 
 const sync = {
 

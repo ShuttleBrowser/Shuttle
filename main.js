@@ -60,6 +60,8 @@ app.on('ready', () => {
   mb.window.setMenu(null)
   mb.showWindow()
 
+  mb.window.openDevTools()
+
   screen = require('electron').screen.getPrimaryDisplay()
   fullscreenBounds = {
     x: 0,
