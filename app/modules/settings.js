@@ -87,6 +87,8 @@ const settings = {
     document.getElementById('accountTitle').innerHTML = lang('SETTINGS_ACCOUNT')
     document.getElementById('accountStatus').innerHTML = lang('SETTINGS_ACCOUNT_STATUS')
     document.getElementById('accountSettings').innerHTML = lang('SETTINGS_ACCOUNT_PASSWORD')
+    document.getElementById('logoutButton').value = lang('AUTH_LOGOUT').toUpperCase()
+    document.getElementById('signinButton').value = lang('AUTH_SIGNIN').toUpperCase()
     document.querySelector('.version').innerHTML = `VERSION ${require('electron').remote.app.getVersion()}`
   },
 
@@ -298,16 +300,14 @@ const settings = {
       }).then(res => res.json()).catch((e) => {
         alert(`error : ${e}`)
       }).then((data) => {
-        console.log(data)
-          if (data.message === 'success') {
-            alert(`Success ! an email was send to : ${data.email}`)
-            this.logout()
-          } else if (data.message === "BAD_PASSWORD") {
-            alert('bad password')
-          } else {
-            alert(`error with the server`)
-          }
-        })
+        if (data.message === 'success') {
+          this.logout()
+        } else if (data.message === "BAD_PASSWORD") {
+          alert(lang('AUTH_BAD_PASSWORD'))
+        } else {
+          alert(lang('AUTH_SERVER_ERROR'))
+        }
+      })
 
     })
   }

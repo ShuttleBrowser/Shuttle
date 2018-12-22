@@ -16,15 +16,15 @@ const auth = {
   tooggleMethod () {
     if (!isSignUp) {
       document.getElementById('conf_pass_textbox').style.display = 'block'
-      document.querySelector('.methodeBtn').innerHTML = 'SIGNUP'
-      document.getElementById('methodText').innerHTML = 'Signup'
-      document.querySelector('.askOtherMethode').innerHTML = `YOU HAVE ALREADY AN ACCOUNT ? <a href="#" onclick="auth.tooggleMethod()" class="link">LOG-IN</a> YOU HERE`
+      document.querySelector('.methodeBtn').innerHTML = lang('AUTH_SIGNUP').toUpperCase()
+      document.getElementById('methodText').innerHTML = lang('AUTH_SIGNUP')
+      document.querySelector('.askOtherMethode').innerHTML = lang('AUTH_ASK_FOR_SIGNIN')
       isSignUp = true
     } else {
       document.getElementById('conf_pass_textbox').style.display = 'none'
-      document.querySelector('.methodeBtn').innerHTML = 'SIGNIN'
-      document.getElementById('methodText').innerHTML = 'Signin'
-      document.querySelector('.askOtherMethode').innerHTML = `YOU DON'T HAVE ANY ACCOUNT ? <a href="#" onclick="auth.tooggleMethod()" class="link">SIGN-UP</a> HERE`
+      document.querySelector('.methodeBtn').innerHTML = lang('AUTH_SIGNIN').toUpperCase()
+      document.getElementById('methodText').innerHTML = lang('AUTH_SIGNIN')
+      document.querySelector('.askOtherMethode').innerHTML = lang('AUTH_ASK_FOR_SIGNUP')
       isSignUp = false
     }
   },
@@ -52,14 +52,13 @@ const auth = {
 
     if (emailTextBox !== "" && emailTextBox.includes('@') && emailTextBox.includes('.')) {
       if (passwordTextBox !== "") {
-        if (passwordTextBox.length > 8) {
           if (passwordTextBox === confPasswordTextBox) {
 
             let body = {
               email: emailTextBox,
               password: passwordTextBox
             }
-    
+
             fetch(`${config.api}/auth/signup`, {
               method: 'post',
               body: JSON.stringify(body),
@@ -74,23 +73,20 @@ const auth = {
                   this.closeView()
 
                 } else if (data.message === 'AUTH_BAD_PASSWORD') {
-                  this.setError('Wrong password')
+                  this.setError(lang('AUTH_BAD_PASSWORD'))
                 } else if (data.message === 'AUTH_USER_NOT_FOUND') {
-                  this.setError('User not found')
+                  this.setError(lang('AUTH_USER_NOT_FOUND'))
                 }
               })
 
           } else {
-            this.setError('password do not match')
+            this.setError(lang('AUTH_PASSWORD_DONT_MATCH'))
           }
         } else {
-          this.setError('password must be more than 8 char')
-        }
-      } else {
-        this.setError('password mus be set')
+        this.setError(lang('AUTH_INVALID_PASSWORD'))
       }
     } else {
-      this.setError('Bad email')
+      this.setError(lang('AUTH_INVALID_EMAIL'))
     }
   },
 
@@ -116,7 +112,7 @@ const auth = {
             // To uncomment
             /*
             if (nobodySaveTheWorld) {
-              let years = 2018
+              let years = 2019
               while (years < 2074) {
                 console.log('work')
                 years++
@@ -133,17 +129,17 @@ const auth = {
               this.closeView()
 
             } else if (data.message === 'AUTH_BAD_PASSWORD') {
-              this.setError('Wrong password')
+              this.setError(lang('AUTH_BAD_PASSWORD'))
             } else if (data.message === 'AUTH_USER_NOT_FOUND') {
-              this.setError('User not found')
+              this.setError(lang('AUTH_USER_NOT_FOUND'))
             }
           })
 
       } else {
-        this.setError('password mus be set')
+        this.setError(lang('AUTH_INVALID_PASSWORD'))
       }
     } else {
-      this.setError('Bad email')
+      this.setError(lang('AUTH_INVALID_EMAIL'))
     }
   },
 

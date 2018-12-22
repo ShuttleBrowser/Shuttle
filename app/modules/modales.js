@@ -120,9 +120,9 @@ const modales = {
     inputs.push(
         '<div class="vex-custom-field-wrapper">',
           '<div class="vex-custom-input-wrapper">',
-            '<input name="oldPassword" type="password" id="oldPassword" placeholder="Old password" />',
-            '<input name="newPassword" type="password" id="newPassword" placeholder="New password" />',
-            '<input name="confirmNewPassword" type="password" id="confirmNewPassword" placeholder="Confirm password" />',
+            `<input name="oldPassword" type="password" id="oldPassword" placeholder="${lang('AUTH_OLD_PASSWORD')}" />`,
+            `<input name="newPassword" type="password" id="newPassword" placeholder="${lang('AUTH_NEW_PASSWORD')}" />`,
+            `<input name="confirmNewPassword" type="password" id="confirmNewPassword" placeholder="${lang('AUTH_CONF_PASSWORD')}" />`,
           '</div>',
         '</div>'
       )
@@ -130,17 +130,17 @@ const modales = {
     vex.dialog.buttons.YES.text = lang('CONTINUE_BUTTON')
     vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
     vex.dialog.open({
-      message: 'change password',
+      message: lang('AUTH_CHANGE_PASSWORD'),
       input: inputs.join(''),
       callback: (data) => {
         if (data && data.oldPassword !== undefined && data.newPassword !== undefined) {
           if (data.newPassword === data.confirmNewPassword) {
             callback(data.oldPassword, data.newPassword)
           } else {
-            alert('passwords d\'ont match')
+            alert(lang('AUTH_PASSWORD_DONT_MATCH'))
           }
         } else {
-          alert('Bad password')
+          alert(lang('AUTH_INVALID_PASSWORD'))
         }
       }
     })
