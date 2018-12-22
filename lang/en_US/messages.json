@@ -23,7 +23,7 @@
   {"value": "SETTINGS_ADVANCED", "message": "ADVANCED"},
   {"value": "SETTINGS_ACCOUNT", "message": "ACCOUNT"},
   {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Status"},
-  {"value": "SETTINGS_ACCOUNT_SETTINGS", "message": "Accounts settings"},
+  {"value": "SETTINGS_ACCOUNT_PASSWORD", "message": "Change password"},
 
   {"value": "CONTINUE_BUTTON", "message": "continue"},
   {"value": "CANCEL_BUTTON", "message": "cancel"},

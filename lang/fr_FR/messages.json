@@ -23,7 +23,7 @@
   {"value": "SETTINGS_ADVANCED", "message": "AVANCÉ"},
   {"value": "SETTINGS_ACCOUNT", "message": "COMPTE"},
   {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Statut"},
-  {"value": "SETTINGS_ACCOUNT_SETTINGS", "message": "Parametres utilisateurs"},
+  {"value": "SETTINGS_ACCOUNT_PASSWORD", "message": "Changer le mot de passe"},
 
   {"value": "CONTINUE_BUTTON", "message": "continuer"},
   {"value": "CANCEL_BUTTON", "message": "annuler"},

@@ -115,6 +115,37 @@ const modales = {
     })
   },
 
+  changePassword (callback) {
+    let inputs = []
+    inputs.push(
+        '<div class="vex-custom-field-wrapper">',
+          '<div class="vex-custom-input-wrapper">',
+            '<input name="oldPassword" type="password" id="oldPassword" placeholder="Old password" />',
+            '<input name="newPassword" type="password" id="newPassword" placeholder="New password" />',
+            '<input name="confirmNewPassword" type="password" id="confirmNewPassword" placeholder="Confirm password" />',
+          '</div>',
+        '</div>'
+      )
+
+    vex.dialog.buttons.YES.text = lang('CONTINUE_BUTTON')
+    vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
+    vex.dialog.open({
+      message: 'change password',
+      input: inputs.join(''),
+      callback: (data) => {
+        if (data && data.oldPassword !== undefined && data.newPassword !== undefined) {
+          if (data.newPassword === data.confirmNewPassword) {
+            callback(data.oldPassword, data.newPassword)
+          } else {
+            alert('passwords d\'ont match')
+          }
+        } else {
+          alert('Bad password')
+        }
+      }
+    })
+  },
+
   alert (message) {
     vex.dialog.open({
       message: message,

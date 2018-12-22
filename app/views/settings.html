@@ -87,14 +87,14 @@
   <h1 id="accountTitle"></h1>
   <div class="content">
     <div class="section gray">
-      <p id="formButton">Account</p>
+      <p id="accountStatus">Stat</p>
       <input onclick="settings.logout()" type="button" name="logout" class="btn-text" value="LOG OUT" />
       <input onclick="EventsEmitter.emit('SHOW_AUTH')" type="button" name="singin" class="btn-text" value="SIGN IN" />
     </div>
 
     <div class="section white">
-      <p id="accountSettings">Account settings</p>
-      <input type="button" name="accountSettings" class="btn" disabled>
+      <p id="accountSettings">Password</p>
+      <input type="button" name="accountSettings" class="btn" onclick="settings.changePassword()" disabled>
     </div>
 
     <div class="section gray">

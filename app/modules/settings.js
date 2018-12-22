@@ -85,8 +85,8 @@ const settings = {
     document.getElementById('clearCache').innerHTML = lang('SETTINGS_CLEAR_CACHE')
     document.getElementById('reportBug').innerHTML = lang('SETTINGS_REPORT_BUG')
     document.getElementById('accountTitle').innerHTML = lang('SETTINGS_ACCOUNT')
-    document.getElementById('accountSettings').innerHTML = lang('SETTINGS_ACCOUNT_STATUS')
-    document.getElementById('syncButton').innerHTML = lang('SETTINGS_ACCOUNT_SETTINGS')
+    document.getElementById('accountStatus').innerHTML = lang('SETTINGS_ACCOUNT_STATUS')
+    document.getElementById('accountSettings').innerHTML = lang('SETTINGS_ACCOUNT_PASSWORD')
     document.querySelector('.version').innerHTML = `VERSION ${require('electron').remote.app.getVersion()}`
   },
 
@@ -280,6 +280,36 @@ const settings = {
     files.settings.setValue('settings.searchEngine', engine)
     this.setSearchEngineSelect()
     this.showSearchEngineSelector()
+  },
+
+  changePassword () {
+    modales.changePassword((oldpassword, newpassword) => {
+
+      let body = {
+        token: files.settings.getValue('settings.userToken'),
+        old: oldpassword,
+        new: newpassword
+      }
+  
+      fetch(`${config.api}/auth/reset/`, {
+        method: 'post',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' }
+      }).then(res => res.json()).catch((e) => {
+        alert(`error : ${e}`)
+      }).then((data) => {
+        console.log(data)
+          if (data.message === 'success') {
+            alert(`Success ! an email was send to : ${data.email}`)
+            this.logout()
+          } else if (data.message === "BAD_PASSWORD") {
+            alert('bad password')
+          } else {
+            alert(`error with the server`)
+          }
+        })
+
+    })
   }
 }
 
