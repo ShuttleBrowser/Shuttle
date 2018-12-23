@@ -2,7 +2,7 @@
 const { app, shell, ipcMain, Notification, globalShortcut, clipboard } = require('electron')
 const menubar = require('menubar')
 const AutoLaunch = require('auto-launch')
-const electronLocalshortcut = require('electron-localshortcut')
+const electronLocalshortcut = require('@beaker/electron-localshortcut')
 
 require('./main/events.js')
 const contextMenu = require('./main/menu.js')

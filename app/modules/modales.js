@@ -100,7 +100,7 @@ const modales = {
 
   screenshot (callback) {
     vex.dialog.buttons.YES.text = 'Ok'
-    vex.dialog.buttons.NO.text = 'openFolder'
+    vex.dialog.buttons.NO.text = lang('OPEN_SCREENSHOT_DIR')
     vex.dialog.confirm({
       message: lang('SCREENSHOT_DONE'),
       callback: (value) => {

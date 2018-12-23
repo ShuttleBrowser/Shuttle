@@ -6,6 +6,7 @@
   {"value": "REMOVE_QUICKSEARCH", "message": "Supprimer la recherche rapide ?"},
   {"value": "QUICK_SEARCH", "message": "Entrez votre recherche rapide"},
   {"value": "SCREENSHOT_DONE", "message": "Capture d'écran réussie"},
+  {"value": "OPEN_SCREENSHOT_DIR", "message": "Ouvrire le dossier"},
   {"value": "UPDATE_AVAILIBLE", "message": "Une mise a jour est disponible, voulez-vous l'installer ?"},
 
   {"value": "SETTINGS_START_AT_BOOT", "message": "Lancer au démarrage"},

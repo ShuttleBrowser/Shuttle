@@ -6,6 +6,7 @@
   {"value": "REMOVE_QUICKSEARCH", "message": "Remove quick search ?"},
   {"value": "QUICK_SEARCH", "message": "Enter your quick search below"},
   {"value": "SCREENSHOT_DONE", "message": "Screenshot successfully done"},
+  {"value": "OPEN_SCREENSHOT_DIR", "message": "Open the file"},
   {"value": "UPDATE_AVAILIBLE", "message": "An update is available, do you want to install it ?"},
 
   {"value": "SETTINGS_START_AT_BOOT", "message": "Start at startup"},
