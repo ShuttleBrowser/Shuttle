@@ -25,10 +25,16 @@
   {"value": "SETTINGS_ACCOUNT", "message": "ACCOUNT"},
   {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Status"},
   {"value": "SETTINGS_ACCOUNT_PASSWORD", "message": "Change password"},
+  {"value": "SETTINGS_BLOCK_WEBSITE", "message": "Block dangerous websites"},
 
   {"value": "STORE_MODAL_UNINSTALL_ADDON", "message": "Do you really want to uninstall this application?"},
   {"value": "STORE_ADD_ADDON", "message": "INSTALL"},
   {"value": "STORE_UNINSTALL_ADDON", "message": "UNINSTALL"},
+
+  {"value": "CERT_ERROR_TITLE", "message": "DANGEROUS WEBSITE"},
+  {"value": "CERT_ERROR_TEXT", "message": "The website you try to access<br>content hight dangerous content"},
+  {"value": "CERT_ERROR_BACK", "message": "Back to safety"},
+  {"value": "CERT_ERROR_CONTINUE", "message": "Continue"},
 
   {"value": "AUTH_SIGNUP", "message": "Signup"},
   {"value": "AUTH_LOGOUT", "message": "Logout"},

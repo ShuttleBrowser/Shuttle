@@ -22,6 +22,10 @@ Notification.requestPermission = () => {
 }
 
 window.Notification = Notification
+window.goHome = () => {
+  ipcRenderer.sendToHost('GO_HOME', window.location)
+}
+
 window.alert = (message) => {
   ipcRenderer.sendToHost('PAGE_ALERT', {site: document.title, message: message})
 }

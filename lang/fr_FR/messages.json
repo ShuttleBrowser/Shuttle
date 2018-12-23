@@ -25,10 +25,16 @@
   {"value": "SETTINGS_ACCOUNT", "message": "COMPTE"},
   {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Statut"},
   {"value": "SETTINGS_ACCOUNT_PASSWORD", "message": "Changer le mot de passe"},
-
+  {"value": "SETTINGS_BLOCK_WEBSITE", "message": "Bloquer les pages dangereuses"},
+  
   {"value": "STORE_MODAL_UNINSTALL_ADDON", "message": "Voulez vous vraiment désinstaller cette application ?"},
   {"value": "STORE_ADD_ADDON", "message": "INSTALLER"},
   {"value": "STORE_UNINSTALL_ADDON", "message": "DÉSINSTALLER"},
+
+  {"value": "CERT_ERROR_TITLE", "message": "SITE WEB DANGEREUX"},
+  {"value": "CERT_ERROR_TEXT", "message": "Le site web auquel vous tentez d'accéder<br>contient du contenu dangereux"},
+  {"value": "CERT_ERROR_BACK", "message": "Retour à la sécuritée"},
+  {"value": "CERT_ERROR_CONTINUE", "message": "Continuer"},
 
   {"value": "AUTH_SIGNUP", "message": "Inscription"},
   {"value": "AUTH_LOGOUT", "message": "Déconnexion"},

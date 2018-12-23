@@ -55,9 +55,11 @@ const settings = {
     let checkboxStayOpen = document.querySelector('input[name=SOpen]')
     let checkboxShowFrame = document.querySelector('input[name=SFrame]')
     let checkboxSync = document.querySelector('input[name=syncButton]')
+    let checkboxBlockWebsite = document.querySelector('input[name=blockDangerousWebsiteBox]')
 
-    if (files.settings.getValue('settings.autostart') || files.settings.getValue('settings.autostart') === undefined) {
-      checkboxAutoStart.checked = true
+    if (files.settings.getValue('settings.autostart') === true || files.settings.getValue('settings.autostart') === undefined) {
+      checkboxAutoStart.checked = 
+      files.settings.setValue('settings.autostart', true)
     }
     if (files.settings.getValue('settings.StayOpen')) {
       checkboxStayOpen.checked = true
@@ -66,7 +68,12 @@ const settings = {
       checkboxShowFrame.checked = true
     }
     if (files.settings.getValue('settings.sync') === true || files.settings.getValue('settings.sync') === undefined) {
-      checkboxSync.checked = true
+      checkboxSync.checked = 
+      files.settings.setValue('settings.sync', true)
+    }
+    if (files.settings.getValue('settings.blockDangerousWebsite') === true || files.settings.getValue('settings.blockDangerousWebsite') === undefined) {
+      checkboxBlockWebsite.checked = true
+      files.settings.setValue('settings.blockDangerousWebsite', true)
     }
   },
 
@@ -74,21 +81,27 @@ const settings = {
     document.getElementById('startAtBoot').innerHTML = lang('SETTINGS_START_AT_BOOT')
     document.getElementById('stayOpen').innerHTML = lang('SETTINGS_STAY_OPEN')
     document.getElementById('showFrame').innerHTML = lang('SETTINGS_SHOW_FRAME')
+
     document.getElementById('bkms').innerHTML = lang('SETTINGS_BOOKMARKS')
     document.getElementById('Export').innerHTML = lang('SETTINGS_EXPORT_BOKMARKS')
     document.getElementById('Import').innerHTML = lang('SETTINGS_IMPORT_BOKMARKS')
     document.getElementById('Reset').innerHTML = lang('SETTINGS_RESET_BOOKMARKS')
+
     document.getElementById('navigation').innerHTML = lang('SETTINGS_NAVIGATION')
     document.getElementById('chooseSearchEngine').innerHTML = lang('SETTINGS_CHOOSESEARCHENGINE');
+    document.getElementById('clearCache').innerHTML = lang('SETTINGS_CLEAR_CACHE')
+    document.getElementById('blockDangerousWebsite').innerHTML = lang('SETTINGS_BLOCK_WEBSITE')
+    
     document.getElementById('advanced').innerHTML = lang('SETTINGS_ADVANCED')
     document.getElementById('showConsole').innerHTML = lang('SETTINGS_SHOW_CONSOLE')
-    document.getElementById('clearCache').innerHTML = lang('SETTINGS_CLEAR_CACHE')
     document.getElementById('reportBug').innerHTML = lang('SETTINGS_REPORT_BUG')
+
     document.getElementById('accountTitle').innerHTML = lang('SETTINGS_ACCOUNT')
     document.getElementById('accountStatus').innerHTML = lang('SETTINGS_ACCOUNT_STATUS')
     document.getElementById('accountSettings').innerHTML = lang('SETTINGS_ACCOUNT_PASSWORD')
     document.getElementById('logoutButton').value = lang('AUTH_LOGOUT').toUpperCase()
     document.getElementById('signinButton').value = lang('AUTH_SIGNIN').toUpperCase()
+
     document.querySelector('.version').innerHTML = `VERSION ${require('electron').remote.app.getVersion()}`
   },
 
@@ -310,6 +323,11 @@ const settings = {
       })
 
     })
+  },
+
+  setWebsiteBlocking () {
+    let checkboxBlockWebsite = document.querySelector('input[name=blockDangerousWebsiteBox]')
+    files.settings.setValue('settings.blockDangerousWebsite', checkboxBlockWebsite.checked)
   }
 }
 

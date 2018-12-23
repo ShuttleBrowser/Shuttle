@@ -76,8 +76,11 @@
     </div>
 
     <div class="section gray">
-      <p id="reportBug"></p>
-      <input type="button" name="report" class="btn" onclick="settings.reportBugButton()">
+      <p id="blockDangerousWebsite"></p>
+      <label class="switch">
+        <input type="checkbox" name="blockDangerousWebsiteBox" onclick="settings.setWebsiteBlocking()">
+        <span class="slider round"></span>
+      </label>
     </div>
 
   </div>

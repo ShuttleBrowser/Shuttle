@@ -47,7 +47,7 @@ const bkms = {
   },
 
   repairUrl (url) {
-    if (url.startsWith('https://') === true || url.startsWith('http://') === true) {
+    if (url.startsWith('https://') === true || url.startsWith('http://') === true || url.startsWith('file://') === true) {
       return url
     } else {
       return `http://${url}`
