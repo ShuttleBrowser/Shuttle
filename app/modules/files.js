@@ -41,13 +41,17 @@ const files = {
       return settingsDb.get('history').value()
     },
 
-    pushToHistory (url, date) {
-      settingsDb.get('history').push({ website: url, date: date }).write()
+    pushToHistory (payload) {
+      settingsDb.get('history').push(payload).write()
     },
 
     resetHistory () {
       settingsDb.set('history', []).write()
-    }
+    },
+
+    remove (payload) {
+      settingsDb.get('history').remove(payload).write()
+    },
   },
 
   settings: {

@@ -160,17 +160,6 @@ const modales = {
     })
   },
 
-  history () {
-    document.querySelector('.historyModal').style.display = 'block'
-    let list = document.querySelector('.historyList')
-    
-    let historyList = files.history.getHistory()
-
-    for (i in historyList) {
-      list.innerHTML += `<li>${require('url').parse(historyList[i].website).hostname}</li>`
-    }
-  },
-
   alert (message) {
     vex.dialog.open({
       message: message,

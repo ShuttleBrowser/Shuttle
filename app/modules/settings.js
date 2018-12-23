@@ -331,8 +331,48 @@ const settings = {
     files.settings.setValue('settings.blockDangerousWebsite', checkboxBlockWebsite.checked)
   },
 
-  showHistory () {
-    console.log('history')
+  showHistory (show) {
+    if (show) {
+      document.querySelector('.historyModal').style.display = 'block'
+      document.querySelector('.settings').style.overflow = 'hidden'
+      this.listHistory()
+    } else {
+      document.querySelector('.historyModal').style.display = 'none'
+      document.querySelector('.settings').style.overflow = 'auto'
+    }
+  },
+
+  removeHistory (fulldate) {
+    files.history.remove({
+      fulldate: fulldate
+    })
+    this.listHistory()
+  },
+
+  clearHistory () {
+    files.history.resetHistory()
+    this.listHistory()
+  },
+
+  listHistory () {
+    let historyList = files.history.getHistory()
+    let list = document.querySelector('.history-modale-list-wrapper')
+
+    list.innerHTML = ''
+    for (i in historyList) {
+
+      let color = (i%2 ? '#fafafa' : '#f1f1f1')
+
+      list.innerHTML += `
+      <div class="history-modale-list" style="background-color: ${color};">
+        <ul style="list-style-type: none; position: relative; top: 3.5px; margin: 0;">
+          <li class="history-modale-list-item" style="left: 10px"><i class="history-modale-date left">${historyList[i].date}</i></li>
+          <li class="history-modale-list-item" style="left: 110px"><i class="history-modale-url center">${require('url').parse(historyList[i].url).hostname}</i></li>
+          <li class="history-modale-list-item" style="right: 20px"><a href="#" onclick="settings.removeHistory('${historyList[i].fulldate}')"><img src="./assets/img/store/close.svg" alt="" class="history-modale-remove-button right"></a></li>
+        </ul>
+      </div>
+      `
+    }
   }
 }
 

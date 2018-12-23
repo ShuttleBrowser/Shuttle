@@ -161,7 +161,7 @@ const view = {
 
       webviewToListen.addEventListener('did-navigate', event => {
         if (event.url.includes('app/views/changelog.html') === false) {
-          files.history.pushToHistory(event.url)
+          this.saveHistory(event.url)
         }
       })
 
@@ -206,12 +206,18 @@ const view = {
 
   saveHistory: (url) => {
     const files = require('./files.js')
+    const date = require('date-and-time')
 
-    let d = new Date()
-    let dte = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()} - ${d.getHours()}:${d.getMinutes()}`
-    
+    let now = new Date()
+    let payload = {
+      url: url,
+      date: date.format(now, 'YYYY/MM/DD'),
+      fulldate: date.addMilliseconds(now, 1)
+    }
 
-    files.history.pushToHistory(url, dte)
+    console.log(payload)
+
+    files.history.pushToHistory(payload)
   }
 
 }

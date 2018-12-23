@@ -61,7 +61,7 @@
     </div>
     <div class="section gray">
       <p id="historyText"></p>
-      <input type="button" name="historyBtn" class="btn" onclick="settings.showHistory()">
+      <input type="button" name="historyBtn" class="btn" onclick="settings.showHistory(true)">
     </div>
   </div>
 
@@ -120,14 +120,16 @@
   </div>
 
   <div class="historyModal">
-    <ul class="historyList">
-
-    </ul>
+    <h1 class="history-modale-title">HISTORY</h1>
+    <a href="#" onclick="settings.showHistory(false)"><img src="./assets/img/store/close.svg" alt="close" class="history-modale-close-button"></a>
+    <div class="history-modale-list-wrapper"></div>
+    <a href="#" onclick="settings.clearHistory()" class="history-modale-clear-button">Clear all</a>
   </div>
 
 <style>
   @import url(./assets/fonts/SourceSansPro.css);
-  
+  @import url(./assets/css/grid.css);
+
   .historyModal {
     position: fixed;
     top: 0px;
@@ -137,7 +139,51 @@
     background-color: white;
     z-index: 888;
     display: none;
+    overflow: auto
+  }
+
+  .history-modale-title {
+    font-size: 30px;
+    margin-top: 25px;
+  }
+
+  .history-modale-close-button {
+    width: 12px;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+  }
+
+  .history-modale-list {
+    width: 100%;
+    height: 30px;
+  }
+
+  .history-modale-list-wrapper {
+    position: absolute;
+    top: 70px;
+    bottom: 70px;
+    left: 20px;
+    right: 20px;
     overflow: auto;
+  }
+
+  .history-modale-list-item {
+    float: left;
+    position: absolute;
+  }
+
+  .history-modale-remove-button {
+    width: 10px;
+    margin-top: 6px;
+  }
+
+  .history-modale-clear-button {
+    text-decoration: none;
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    color: #E71F5F;
   }
 
   .section {
