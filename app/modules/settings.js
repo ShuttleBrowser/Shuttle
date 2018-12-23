@@ -100,6 +100,7 @@ const settings = {
     document.getElementById('accountTitle').innerHTML = lang('SETTINGS_ACCOUNT')
     document.getElementById('accountStatus').innerHTML = lang('SETTINGS_ACCOUNT_STATUS')
     document.getElementById('accountSettings').innerHTML = lang('SETTINGS_ACCOUNT_PASSWORD')
+    document.getElementById('syncButton').innerHTML = lang('SETTINGS_SYNC')
     document.getElementById('logoutButton').value = lang('AUTH_LOGOUT').toUpperCase()
     document.getElementById('signinButton').value = lang('AUTH_SIGNIN').toUpperCase()
 
