@@ -77,8 +77,8 @@
         })
       },
 
-      showAuth () {
-        loadFile('auth')
+      showAuth (callback) {
+        loadFile('auth', false, callback)
       },
     }
 
@@ -146,7 +146,9 @@
     })
 
     EventsEmitter.on('SHOW_AUTH', () => {
-      shuttle.showAuth()
+      shuttle.showAuth(() => {
+        auth.tooggleMethod('signin')
+      })
     })
 
   </script>

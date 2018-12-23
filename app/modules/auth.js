@@ -7,10 +7,6 @@ EventsEmitter.on('USER_LOGOUT', () => {
   auth.logout()
 })
 
-EventsEmitter.on('SHOW_AUTH', () => {
-  auth.tooggleMethod('signin')
-})
-
 const auth = {
   closeView () {
     EventsEmitter.emit('SHOW_BROWSER')
