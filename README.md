@@ -18,7 +18,7 @@
 
 ## Installation
 
-Shuttle's last stable version can be downloaded from either [our website](https://getshuttle.xyz) or [GitHub releases](https://github.com/robjullian/shuttle/releases).
+Shuttle's last stable version can be downloaded from either [our website](https://shuttleapp.io) or [GitHub releases](https://github.com/ShuttleBrowser/Shuttle).
 
 Working on Microsoft Windows (7+), GNU/Linux Debian (Xfce and Mate) and MacOS (1.9+).
 _Not deployed on MacOS_
@@ -91,7 +91,7 @@ Shuttle stores informations about your current bookmarks in a JSON file:
 
 * **Robin Jullian** - *Lead developer* - [robjullian](https://github.com/robjullian)
 
-Currently maintained by [robjullian](https://github.com/robjullian), [KazeJiyu](https://github.com/KazeJiyu) and [Vahelnir](https://github.com/Vahelnir).
+Currently maintained by [robjullian](https://github.com/robjullian), [KazeJiyu](https://github.com/KazeJiyu), [Vahelnir](https://github.com/Vahelnir) and [TheRolf](https://github.com/TheRolfFR).
 
 See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contributors) who participated in this project.
 
