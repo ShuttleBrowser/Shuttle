@@ -24,9 +24,9 @@ const view = {
 
         let webViewToCreate = document.createElement("webview")
 
-        if (type === 'addon') {
+        if (type === 'app') {
           webViewToCreate.setAttribute('src', `file://${url}`)
-          webViewToCreate.setAttribute('preload', './modules/addonApi.js')
+          webViewToCreate.setAttribute('preload', './modules/applications.js')
         } else {
           webViewToCreate.setAttribute('src', url)
           webViewToCreate.setAttribute('preload', './modules/webviewPreloader.js')

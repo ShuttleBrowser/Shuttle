@@ -26,6 +26,7 @@
     "lowdb": "^1.0.0",
     "menubar": "^5.2.3",
     "os-locale": "^3.0.1",
+    "rmdir": "^1.2.0",
     "vex-js": "^4.1.0"
   },
   "devDependencies": {

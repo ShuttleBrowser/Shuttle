@@ -4,8 +4,8 @@ const fs = require('fs')
 const http = require('https')
 const extractZip = require('extract-zip')
 
-const bookmarks = require('./bookmarks.js')
 const files = require('./files.js')
+const lang = require('../../lang/lang.js')
 
 const userData = require('electron').remote.app.getPath('userData').replace(/\\/g,"/")
 
@@ -54,9 +54,9 @@ const store = {
             `<div class="store-in-app-background" style="background: url(${config.api}/store/assets/${uuid}/banner) no-repeat center; background-size: contain;"></div>`,
             `<div class="store-in-app-content">`,
               `<h4 class="store-in-app-title">${name}</h4>`,
-              `<a href="#" onclick="store.install('${uuid}', '${type}')">`,
+              `<a href="javascript:" id="store-action-button" onclick="store.installAddon('${uuid}', '${type}')">`,
                 `<div class="store-in-app-button">`,
-                  `<p class="store-in-app-button-text">ADD TO SHUTTLE</p>`,
+                  `<p class="store-in-app-button-text">${(store.isInstalled(uuid, type) ? lang('STORE_UNINSTALL_ADDON') : lang('STORE_ADD_ADDON'))}</p>`,
                   `<i class="store-in-app-button-icon"></i>`,
                 `</div>`,
               `</a>`,
@@ -67,6 +67,9 @@ const store = {
         ].join('')
         document.querySelector('.popup').innerHTML = input
         document.querySelector('.store-in-app').style.display = 'block'
+        if (store.isInstalled(uuid, type)) {
+          store.setToUninstall(uuid, type)
+        }
       } else {
         document.querySelector('.store-in-app').style.display = 'none'
         document.querySelector('.popup').innerHTML = ''
@@ -113,6 +116,28 @@ const store = {
       }
     }
 
+  },
+
+  installAddon (uuid, type) {
+    this.install(uuid, type, () => {
+      this.setToUninstall(uuid, type)
+    })
+  },
+
+  uninstallAddon (uuid, type) {
+    this.uninstall(uuid, type, () => {
+      this.setToInstall(uuid, type)
+    })
+  },
+
+  setToUninstall (uuid, type) {
+    document.querySelector('#store-action-button').setAttribute('onclick', `store.uninstallAddon('app-${uuid}', '${type}')`)
+    document.querySelector('.store-in-app-button-text').innerHTML = lang('STORE_UNINSTALL_ADDON')
+  },
+
+  setToInstall (uuid, type) {
+    document.querySelector('#store-action-button').setAttribute('onclick', `store.installAddon('${uuid.replace('app-', '')}', '${type}')`)
+    document.querySelector('.store-in-app-button-text').innerHTML = lang('STORE_ADD_ADDON')
   },
 
   runListener () {
@@ -168,22 +193,6 @@ const store = {
     })
   },
 
-  addInFile (path, type, uuid) {
-    return new Promise((resolve, reject) => {
-
-      if (type === "app") {
-        bookmarks.createBookmark(path + uuid, 'app', uuid)
-      } else if (type === "module") {
-        files.modules.push({
-          uuid: uuid,
-          path: path + uuid 
-        })
-      }
-
-      resolve()
-    })
-  },
-
   unzip (path, uuid) {
     return new Promise((resolve, reject) => {
       extractZip(`${path + uuid}/app.zip`, {
@@ -194,8 +203,41 @@ const store = {
     })
   },
 
-  install (uuid, type) {
-    console.log('installing...')
+  addInFile (path, type, uuid) {
+    return new Promise((resolve, reject) => {
+
+      if (type === "app") {
+        let url = `file://${path + uuid}/app/index.html`
+        let icon = `file://${path + uuid}/icon.png`
+
+        let payload = {
+          id: `app-${uuid}`,
+          url: url,
+          icon: icon,
+          type: 'app',
+          order: 99999
+        }
+
+        files.apps.push(payload)
+
+        this.addInUI(payload.id, icon, url)
+
+      } else if (type === "module") {
+        files.modules.push({
+          uuid: uuid,
+          path: `file://${path + uuid}/app/index.js`,
+        })
+      }
+
+      resolve()
+    })
+  },
+
+  addInUI (uuid, icon, url) {
+    require('./bookmarks.js').addBookmarksInUI(uuid, icon, url, 'app')
+  },
+
+  install (uuid, type, callback) {
     for (i in this.addonsTypes) {
 
       if (this.addonsTypes[i].type === type) {
@@ -203,7 +245,7 @@ const store = {
           this.download(type, this.addonsTypes[i].path, uuid).then(() => {
             this.unzip(this.addonsTypes[i].path, uuid).then(() => {
               this.addInFile(this.addonsTypes[i].path, type, uuid).then(() => {
-
+                callback()
               })
             })
           })
@@ -216,19 +258,41 @@ const store = {
 
   },
 
-  uninstall (uuid, type) {
-    bookmarks.removeBookmark(uuid)
+  uninstall (uuid, type, callback) {
+    console.log(type)
+    require('./modales.js').uninstallAddon(() => {
+      if (type === 'app') {
+        bookmarks.removeBookmarkInUI(uuid)
+  
+        require('rmdir')(`${userData}/addons/apps/${uuid.replace('app-', '')}`, (err, dir, files) => {
+          console.log(err)
+        })
+
+        files.apps.remove({
+          id: uuid
+        })
+
+        callback()
+      }
+    })
+  },
+
+  isInstalled (uuid, type) {
+    if (type === 'app') {
+      if (files.apps.get().filter({id: `app-${uuid}`}).value().length >= 1) {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      if (files.modules.get().filter({uuid: uuid}).value().length >= 1) {
+        return true
+      } else {
+        return false
+      }
+    }
   }
 
 }
-
-/*
-
-download: `${config.api}/store/action/download/${uuid}`
-install path:
-  app: ${userData}/addons/apps/${uuid} || icon.png || index.html
-  modules: ${userData}/addons/modules/${uuid} || icon.png || index.js
-
-*/
 
 module.exports = store

@@ -11,6 +11,7 @@ const userData = appPath.getPath('userData')
 const settingsFilePath = `${userData}/settings.json`
 const bookamrksFilePath = `${userData}/bookmarks.json`
 const modulesFilePath = `${userData}/modules.json`
+const applicationsFilePath = `${userData}/applications.json`
 
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
@@ -18,13 +19,16 @@ const FileSync = require('lowdb/adapters/FileSync')
 const settingsAdapter = new FileSync(settingsFilePath)
 const bookmarksAdapter = new FileSync(bookamrksFilePath)
 const modulesAdapter = new FileSync(modulesFilePath)
+const applicationsAdapter = new FileSync(applicationsFilePath)
 
 const settingsDb = low(settingsAdapter)
 const bookmarksDb = low(bookmarksAdapter)
 const modulesDb = low(modulesAdapter)
+const applicationDb = low(applicationsAdapter)
 
 bookmarksDb.defaults({ bookmarks: [] }).write()
 modulesDb.defaults({ modules: [] }).write()
+applicationDb.defaults({ apps: [] }).write()
 
 const files = {
   settings: {
@@ -36,7 +40,7 @@ const files = {
       settingsDb.set(key, value).write()
     }
   },
-  
+
   bookmarks: {
     list () {
       return bookmarksDb.get('bookmarks').value()
@@ -46,8 +50,8 @@ const files = {
       return bookmarksDb.get('bookmarks')
     },
 
-    set (bookmarks) {
-      bookmarksDb.get('bookmarks').set(bookmarks).write()
+    set (value) {
+      bookmarksDb.set('bookmarks', value).write()
     },
 
     push (payload) {
@@ -82,8 +86,8 @@ const files = {
       return modulesDb.get('modules').value()
     },
   
-    set (bookmarks) {
-      modulesDb.get('modules').set(bookmarks).write()
+    get () {
+      return modulesDb.get('modules')
     },
 
     push (payload) {
@@ -92,6 +96,24 @@ const files = {
   
     remove (payload) {
       modulesDb.get('modules').remove(payload).write()
+    }
+  },
+
+  apps: {
+    list () {
+      return applicationDb.get('apps').value()
+    },
+  
+    get () {
+      return applicationDb.get('apps')
+    },
+
+    push (payload) {
+      applicationDb.get('apps').push(payload).write()
+    },
+  
+    remove (payload) {
+      applicationDb.get('apps').remove(payload).write()
     }
   }
 }

@@ -25,6 +25,10 @@
   {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Status"},
   {"value": "SETTINGS_ACCOUNT_PASSWORD", "message": "Change password"},
 
+  {"value": "STORE_MODAL_UNINSTALL_ADDON", "message": "Do you really want to uninstall this application?"},
+  {"value": "STORE_ADD_ADDON", "message": "INSTALL"},
+  {"value": "STORE_UNINSTALL_ADDON", "message": "UNINSTALL"},
+
   {"value": "AUTH_SIGNUP", "message": "Signup"},
   {"value": "AUTH_LOGOUT", "message": "Logout"},
   {"value": "AUTH_SIGNIN", "message": "Signin"},
