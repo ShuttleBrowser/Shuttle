@@ -59,6 +59,10 @@
       <p id="clearCache"></p>
       <input type="button" name="ccache" class="btn" onclick="settings.clearCacheButton()">
     </div>
+    <div class="section gray">
+      <p id="historyText"></p>
+      <input type="button" name="historyBtn" class="btn" onclick="settings.showHistory()">
+    </div>
   </div>
 
   <br>
@@ -114,9 +118,28 @@
   <div class="bar-bottom white">
     <p class="version">VERSION</p>
   </div>
+
+  <div class="historyModal">
+    <ul class="historyList">
+
+    </ul>
+  </div>
+
 <style>
   @import url(./assets/fonts/SourceSansPro.css);
   
+  .historyModal {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 35px;
+    right: 0px;
+    background-color: white;
+    z-index: 888;
+    display: none;
+    overflow: auto;
+  }
+
   .section {
     width: 100%;
     height: 30px;

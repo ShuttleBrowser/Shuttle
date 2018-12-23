@@ -58,7 +58,7 @@ const settings = {
     let checkboxBlockWebsite = document.querySelector('input[name=blockDangerousWebsiteBox]')
 
     if (files.settings.getValue('settings.autostart') === true || files.settings.getValue('settings.autostart') === undefined) {
-      checkboxAutoStart.checked = 
+      checkboxAutoStart.checked = true
       files.settings.setValue('settings.autostart', true)
     }
     if (files.settings.getValue('settings.StayOpen')) {
@@ -68,7 +68,7 @@ const settings = {
       checkboxShowFrame.checked = true
     }
     if (files.settings.getValue('settings.sync') === true || files.settings.getValue('settings.sync') === undefined) {
-      checkboxSync.checked = 
+      checkboxSync.checked = true
       files.settings.setValue('settings.sync', true)
     }
     if (files.settings.getValue('settings.blockDangerousWebsite') === true || files.settings.getValue('settings.blockDangerousWebsite') === undefined) {
@@ -90,11 +90,12 @@ const settings = {
     document.getElementById('navigation').innerHTML = lang('SETTINGS_NAVIGATION')
     document.getElementById('chooseSearchEngine').innerHTML = lang('SETTINGS_CHOOSESEARCHENGINE');
     document.getElementById('clearCache').innerHTML = lang('SETTINGS_CLEAR_CACHE')
-    document.getElementById('blockDangerousWebsite').innerHTML = lang('SETTINGS_BLOCK_WEBSITE')
-    
+    document.getElementById('historyText').innerHTML = lang('SETTINGS_SHOW_HISTORY')
+
     document.getElementById('advanced').innerHTML = lang('SETTINGS_ADVANCED')
     document.getElementById('showConsole').innerHTML = lang('SETTINGS_SHOW_CONSOLE')
     document.getElementById('reportBug').innerHTML = lang('SETTINGS_REPORT_BUG')
+    document.getElementById('blockDangerousWebsite').innerHTML = lang('SETTINGS_BLOCK_WEBSITE')
 
     document.getElementById('accountTitle').innerHTML = lang('SETTINGS_ACCOUNT')
     document.getElementById('accountStatus').innerHTML = lang('SETTINGS_ACCOUNT_STATUS')
@@ -328,6 +329,10 @@ const settings = {
   setWebsiteBlocking () {
     let checkboxBlockWebsite = document.querySelector('input[name=blockDangerousWebsiteBox]')
     files.settings.setValue('settings.blockDangerousWebsite', checkboxBlockWebsite.checked)
+  },
+
+  showHistory () {
+    console.log('history')
   }
 }
 

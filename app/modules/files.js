@@ -26,11 +26,30 @@ const bookmarksDb = low(bookmarksAdapter)
 const modulesDb = low(modulesAdapter)
 const applicationDb = low(applicationsAdapter)
 
+settingsDb.defaults({ settings: {}, history: [] }).write()
 bookmarksDb.defaults({ bookmarks: [] }).write()
 modulesDb.defaults({ modules: [] }).write()
 applicationDb.defaults({ apps: [] }).write()
 
 const files = {
+  history: {
+    get () {
+      return settingsDb.get('history')
+    },
+
+    getHistory () {
+      return settingsDb.get('history').value()
+    },
+
+    pushToHistory (url, date) {
+      settingsDb.get('history').push({ website: url, date: date }).write()
+    },
+
+    resetHistory () {
+      settingsDb.set('history', []).write()
+    }
+  },
+
   settings: {
     getValue (key) {
       return settingsDb.get(key).value()

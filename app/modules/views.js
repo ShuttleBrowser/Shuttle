@@ -159,6 +159,12 @@ const view = {
         }
       })
 
+      webviewToListen.addEventListener('did-navigate', event => {
+        if (event.url.includes('app/views/changelog.html') === false) {
+          files.history.pushToHistory(event.url)
+        }
+      })
+
       webviewToListen.addEventListener('new-window', event => {
         EventsEmitter.emit('OPEN_QUICK_SEARCH', event.url)
       })
@@ -175,7 +181,6 @@ const view = {
   },
 
   setFullscreen: (bool, view) => {
-
     let bookmarksBar = document.querySelector('.bar')
     let controlBar = document.querySelector('.control-bar')
 
@@ -197,6 +202,16 @@ const view = {
     }
 
     require('electron').ipcRenderer.send('SetBounds', bool)
+  },
+
+  saveHistory: (url) => {
+    const files = require('./files.js')
+
+    let d = new Date()
+    let dte = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()} - ${d.getHours()}:${d.getMinutes()}`
+    
+
+    files.history.pushToHistory(url, dte)
   }
 
 }

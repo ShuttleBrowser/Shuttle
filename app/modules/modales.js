@@ -88,7 +88,7 @@ const modales = {
     vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
     vex.dialog.prompt({
       message: lang('QUICK_SEARCH'),
-      placeholder: `${lang('QUICK_SEARCH_PLACEOLDER')} ${files.settings.getValue('settings.searchEngine')}`,
+      placeholder: `${lang('QUICK_SEARCH_PLACEOLDER')} ${files.settings.getValue('settings.searchEngine') || "Google"}`,
       callback: (value) => {
         if (value) {
           quickSearch(value)
@@ -158,6 +158,17 @@ const modales = {
         }
       }
     })
+  },
+
+  history () {
+    document.querySelector('.historyModal').style.display = 'block'
+    let list = document.querySelector('.historyList')
+    
+    let historyList = files.history.getHistory()
+
+    for (i in historyList) {
+      list.innerHTML += `<li>${require('url').parse(historyList[i].website).hostname}</li>`
+    }
   },
 
   alert (message) {
