@@ -8,6 +8,15 @@ EventsEmitter.on('USER_LOGOUT', () => {
 })
 
 const auth = {
+  init() {
+    document.querySelector('.title').innerHTML = lang('AUTH_TITLE')
+    document.querySelector('.description').innerHTML = lang('AUTH_DESCRIPTION')
+    document.getElementById('email_textbox').setAttribute('placeholder', lang('AUTH_EMAIL'))
+    document.getElementById('pass_textbox').setAttribute('placeholder', lang('AUTH_PASSWORD'))
+    document.getElementById('conf_pass_textbox').setAttribute('placeholder', lang('AUTH_CONF_PASSWORD'))
+    document.querySelector('.termsOfUse').innerHTML = lang('AUTH_TERMS_OF_USES')
+  },
+
   closeView () {
     EventsEmitter.emit('SHOW_BROWSER')
   },

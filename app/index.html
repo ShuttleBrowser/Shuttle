@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./assets/css/vex-theme-default.css" />
 
     <link rel="stylesheet" href="./assets/css/index.css">
+    <link rel="stylesheet" href="./assets/fonts/SourceSansPro.css">
   </head>
 
   <div class="title-bar"></div>
@@ -147,6 +148,7 @@
 
     EventsEmitter.on('SHOW_AUTH', () => {
       shuttle.showAuth(() => {
+        auth.init()
         auth.tooggleMethod('signin')
       })
     })
