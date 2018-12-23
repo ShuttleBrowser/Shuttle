@@ -272,7 +272,9 @@ const store = {
           id: uuid
         })
 
-        callback()
+        if (callback) {
+          callback()
+        }
       }
     })
   },

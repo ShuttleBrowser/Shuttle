@@ -118,8 +118,12 @@ app.on('ready', () => {
     mb.window.webContents.send('SHORTCUT_SHOW_QUICKSERACH')
   })
 
-  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+Shift+S', () => {
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+S', () => {
     mb.window.webContents.send('SHORTCUT_MAKE_SCREENSHOT')
+  })
+
+  electronLocalshortcut.register(mb.window, 'CmdOrCtrl+R', () => {
+    mb.window.webContents.send('SHORTCUT_REMOVE_BOOKMARK')
   })
 
   electronLocalshortcut.register(mb.window, 'CmdOrCtrl+Alt+I', () => {

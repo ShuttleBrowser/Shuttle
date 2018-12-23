@@ -129,6 +129,22 @@
       view.showWebviewConsole()
     })
 
+    ipcRenderer.on('SHORTCUT_REMOVE_BOOKMARK', () => {
+      console.log('SHORTCUT_REMOVE_BOOKMARK')
+      let id = document.querySelector('.active').id.replace('view-', '')
+      let url = document.querySelector('.active').src
+      
+      if (id !== '0') {
+        if (id.includes('quickSearch')) {
+          modales.removeBookmark(id, url)
+        } else if (id.includes('app')) {
+          return
+        } else {
+          modales.removeBookmark(Number(id), url)
+        }
+      }
+    })
+
     EventsEmitter.on('SHOW_AUTH', () => {
       shuttle.showAuth()
     })
