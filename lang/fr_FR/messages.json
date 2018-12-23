@@ -26,6 +26,7 @@
   {"value": "SETTINGS_ACCOUNT", "message": "COMPTE"},
   {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Statut"},
   {"value": "SETTINGS_ACCOUNT_PASSWORD", "message": "Changer le mot de passe"},
+  {"value": "SETTINGS_SYNC", "message": "Synchronisation"},
   {"value": "SETTINGS_BLOCK_WEBSITE", "message": "Bloquer les pages dangereuses"},
   
   {"value": "STORE_MODAL_UNINSTALL_ADDON", "message": "Voulez vous vraiment désinstaller cette application ?"},

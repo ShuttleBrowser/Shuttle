@@ -25,15 +25,15 @@
             <div class="store-app-collection">
 
               <div class="store-app-collection-item">
-                <img class="store-app-collection-item-img" src="http://www.toucharger.com/media/files/data/Articles/Masquer%20num%C3%A9ro%20messenger/facebook_messenger1600.png" alt="">
+                <img class="store-app-collection-item-img" src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-facebook-messenger-square2-512.png" alt="">
                 <h4 class="store-app-collection-item-name">Messenger</h4>
                 <p class="store-app-collection-item-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
                 <a href="#" class="store-app-collection-item-add-btn"></a>
               </div>
 
               <div class="store-app-collection-item">
-                  <img class="store-app-collection-item-img" src="https://www.google.com/gmail/about/images/favicon.ico" alt="">
-                  <h4 class="store-app-collection-item-name">GMail</h4>
+                  <img class="store-app-collection-item-img" src="http://icons.iconarchive.com/icons/martz90/circle/256/gmail-icon.png" alt="">
+                  <h4 class="store-app-collection-item-name">Gmail</h4>
                   <p class="store-app-collection-item-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
                   <a href="#" class="store-app-collection-item-add-btn"></a>
               </div>
@@ -190,7 +190,7 @@
   }
 
   .store-trending-add-button:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
   }
 
   .store-trending-add-button-text {
@@ -227,7 +227,9 @@
 
   .store-app-collection-item-img {
     width: 50px;
-    border-radius: 25px;
+    border-radius: 50%;
+    background: #efefef;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.27);
   }
 
   .store-app-collection-item-name {
@@ -260,6 +262,11 @@
     background-size: cover;
     width: 12px;
     height: 12px;
+    opacity: .5;
+    transition: all .5s
+  }
+  .store-app-collection-item-add-btn:hover {
+    opacity: 1;
   }
 
   .store-in-app-background {

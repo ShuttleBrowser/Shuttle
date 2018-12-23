@@ -75,6 +75,14 @@ span.taille {
 	height: 100vh;
 }
 
+#welcometitle, #usethebar {
+	font-weight: 300;
+}
+
+#usethebar {
+	color: #919292;
+}
+
 ::selection {
   color: white;
   background: #eb5c7b;
@@ -288,12 +296,14 @@ span.taille {
 }
 .changelog h1 {
 	margin: 0 0 .2em;
+	font-weight: normal;
 }
 .changelog h3 {
-	margin: 0 0 1em;
+	margin: 1em 0 0;
 	font-size: 1.2em;
-    color: rgb(58, 58, 58);
+    color: #C3C3C3;
+	font-weight: normal;
 }
 .changelog li {
-    color: #7F7F7F;
+    color: #919192;
 }
