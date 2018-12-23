@@ -88,7 +88,7 @@ const modales = {
     vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
     vex.dialog.prompt({
       message: lang('QUICK_SEARCH'),
-      placeholder: files.settings.getValue('settings.searchEngine') + ' ' + lang('SEARCH_BUTTON'),
+      placeholder: `${lang('QUICK_SEARCH_PLACEOLDER')} ${files.settings.getValue('settings.searchEngine')}`,
       callback: (value) => {
         if (value) {
           quickSearch(value)

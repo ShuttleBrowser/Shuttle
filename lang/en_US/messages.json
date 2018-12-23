@@ -5,6 +5,7 @@
   {"value": "REMOVE_BOOKMARK", "message": "Remove bookmark ?"},
   {"value": "REMOVE_QUICKSEARCH", "message": "Remove quick search ?"},
   {"value": "QUICK_SEARCH", "message": "Enter your quick search below"},
+  {"value": "QUICK_SEARCH_PLACEOLDER", "message": "Search with"},
   {"value": "SCREENSHOT_DONE", "message": "Screenshot successfully done"},
   {"value": "OPEN_SCREENSHOT_DIR", "message": "Open the file"},
   {"value": "UPDATE_AVAILIBLE", "message": "An update is available, do you want to install it ?"},
@@ -32,7 +33,7 @@
   {"value": "STORE_UNINSTALL_ADDON", "message": "UNINSTALL"},
 
   {"value": "CERT_ERROR_TITLE", "message": "DANGEROUS WEBSITE"},
-  {"value": "CERT_ERROR_TEXT", "message": "The website you try to access<br>content hight dangerous content"},
+  {"value": "CERT_ERROR_TEXT", "message": "The website you try to access<br>content hight dangerous content."},
   {"value": "CERT_ERROR_BACK", "message": "Back to safety"},
   {"value": "CERT_ERROR_CONTINUE", "message": "Continue"},
 

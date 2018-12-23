@@ -5,6 +5,7 @@
   {"value": "REMOVE_BOOKMARK", "message": "Supprimer le favori ?"},
   {"value": "REMOVE_QUICKSEARCH", "message": "Supprimer la recherche rapide ?"},
   {"value": "QUICK_SEARCH", "message": "Entrez votre recherche rapide"},
+  {"value": "QUICK_SEARCH_PLACEOLDER", "message": "Rechercher avec"},
   {"value": "SCREENSHOT_DONE", "message": "Capture d'écran réussie"},
   {"value": "OPEN_SCREENSHOT_DIR", "message": "Ouvrire le dossier"},
   {"value": "UPDATE_AVAILIBLE", "message": "Une mise a jour est disponible, voulez-vous l'installer ?"},
@@ -32,7 +33,7 @@
   {"value": "STORE_UNINSTALL_ADDON", "message": "DÉSINSTALLER"},
 
   {"value": "CERT_ERROR_TITLE", "message": "SITE WEB DANGEREUX"},
-  {"value": "CERT_ERROR_TEXT", "message": "Le site web auquel vous tentez d'accéder<br>contient du contenu dangereux"},
+  {"value": "CERT_ERROR_TEXT", "message": "Le site web auquel vous tentez d'accéder<br>contient du contenu dangereux."},
   {"value": "CERT_ERROR_BACK", "message": "Retour à la sécuritée"},
   {"value": "CERT_ERROR_CONTINUE", "message": "Continuer"},
 
