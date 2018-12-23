@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const appContent = document.querySelector('#app')
 
-module.exports = (view, content) => {
+module.exports = (view, content , callback) => {
   return new Promise((resolve) => {
     let filePath = path.resolve(`${__dirname}/../views/${view}.html`)
 
@@ -14,6 +14,10 @@ module.exports = (view, content) => {
         appContent.innerHTML = data
       }
       resolve()
+
+      if(callback) {
+        callback()
+      }
     })
   }) 
 }
