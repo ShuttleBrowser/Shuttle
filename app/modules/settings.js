@@ -350,9 +350,9 @@ const settings = {
     }
   },
 
-  removeHistory (fulldate) {
+  removeHistory (id) {
     files.history.remove({
-      fulldate: fulldate
+      id: id
     })
     this.listHistory()
   },
@@ -376,7 +376,7 @@ const settings = {
         <ul style="list-style-type: none; position: relative; top: 3.5px; margin: 0;">
           <li class="history-modale-list-item" style="left: 10px"><i class="history-modale-date left">${historyList[i].date}</i></li>
           <li class="history-modale-list-item" style="left: 110px"><i class="history-modale-url center">${require('url').parse(historyList[i].url).hostname}</i></li>
-          <li class="history-modale-list-item" style="right: 20px"><a href="#" onclick="settings.removeHistory('${historyList[i].fulldate}')"><img src="./assets/img/store/close.svg" alt="" class="history-modale-remove-button right"></a></li>
+          <li class="history-modale-list-item" style="right: 20px"><a href="#" onclick="settings.removeHistory(${historyList[i].id})"><img src="./assets/img/store/close.svg" alt="" class="history-modale-remove-button right"></a></li>
         </ul>
       </div>
       `

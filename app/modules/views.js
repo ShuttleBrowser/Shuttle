@@ -208,11 +208,13 @@ const view = {
     const files = require('./files.js')
     const date = require('date-and-time')
 
+    let historyFile = files.history.getHistory()
+
     let now = new Date()
     let payload = {
       url: url,
       date: date.format(now, 'YYYY/MM/DD'),
-      fulldate: date.addMilliseconds(now, 1)
+      id: historyFile[historyFile.length - 1].id + 1
     }
 
     console.log(payload)
