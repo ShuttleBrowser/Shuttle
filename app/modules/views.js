@@ -218,8 +218,6 @@ const view = {
       id: (historyFile.length) ? historyFile[historyFile.length - 1].id + 1 : 0
     }
 
-    console.log(payload)
-
     files.history.pushToHistory(payload)
   }
 
