@@ -14,6 +14,7 @@ let storeIsShow = false
 EventsEmitter.on('SHOW_STORE', (bool) => {
   let storeView = document.querySelector('.store')
   if (bool === true) {
+    store.loadHome()
     storeView.style.display = 'block'
     storeIsShow = true
   } else if (bool === false) {
@@ -24,6 +25,7 @@ EventsEmitter.on('SHOW_STORE', (bool) => {
       storeView.style.display = 'none'
       storeIsShow = false
     } else {
+      store.loadHome()
       storeView.style.display = 'block'
       storeIsShow = true
     }
@@ -118,6 +120,45 @@ const store = {
 
   },
 
+  loadHome () {
+    let trendingApp = document.querySelector('.store-trending-app')
+    let trendingButton = document.querySelector('.store-trending-add-button')
+    let trendingButtonText = document.querySelector('.store-trending-add-button-text')
+
+    fetch(`${config.api}/store/get/trending`).then(res => res.json()).then((data) => {
+      trendingApp.style.backgroundImage = `url(${data.banner})`
+
+      if (store.isInstalled(data.uuid, data.type)) {
+        trendingButtonText.innerHTML = lang('STORE_UNINSTALL_ADDON')
+        trendingButton.setAttribute('onclick', `store.uninstallFromHome('${data.uuid}', '${data.type}')`)
+      } else {
+        trendingButtonText.innerHTML = lang('STORE_ADD_ADDON')
+        trendingButton.setAttribute('onclick', `store.installFromHome('${data.uuid}', '${data.type}')`)
+      }
+
+    })
+  },
+
+  uninstallFromHome (uuid, type) {
+    let trendingButton = document.querySelector('.store-trending-add-button')
+    let trendingButtonText = document.querySelector('.store-trending-add-button-text')
+
+    this.uninstall(uuid, type, () => {
+      trendingButton.setAttribute('onclick', `store.install('${uuid}', '${type}')`)
+      trendingButtonText.innerHTML = lang('STORE_ADD_ADDON')
+    })
+  },
+
+  installFromHome (uuid, type) {
+    let trendingButton = document.querySelector('.store-trending-add-button')
+    let trendingButtonText = document.querySelector('.store-trending-add-button-text')
+
+    this.install(uuid, type, () => {
+      trendingButton.setAttribute('onclick', `store.uninstall('${uuid}', '${type}')`)
+      trendingButtonText.innerHTML = lang('STORE_UNINSTALL_ADDON')
+    })
+  },
+
   installAddon (uuid, type) {
     this.install(uuid, type, () => {
       this.setToUninstall(uuid, type)
@@ -131,7 +172,7 @@ const store = {
   },
 
   setToUninstall (uuid, type) {
-    document.querySelector('#store-action-button').setAttribute('onclick', `store.uninstallAddon('app-${uuid}', '${type}')`)
+    document.querySelector('#store-action-button').setAttribute('onclick', `store.uninstallAddon('${uuid}', '${type}')`)
     document.querySelector('.store-in-app-button-text').innerHTML = lang('STORE_UNINSTALL_ADDON')
   },
 
@@ -205,17 +246,25 @@ const store = {
 
   addInFile (path, type, uuid) {
     return new Promise((resolve, reject) => {
+      let appList = files.apps.list()
+      let order
 
       if (type === "app") {
         let url = `file://${path + uuid}/app/index.html`
         let icon = `file://${path + uuid}/icon.png`
 
+        if (appList.length === 0) {
+          order = 1
+        } else {
+          order = appList[appList.length - 1].order + 1
+        }
+
         let payload = {
-          id: `app-${uuid}`,
+          id: `${uuid}`,
           url: url,
           icon: icon,
           type: 'app',
-          order: 99999
+          order: 9999 + order
         }
 
         files.apps.push(payload)
@@ -238,50 +287,56 @@ const store = {
   },
 
   install (uuid, type, callback) {
-    for (i in this.addonsTypes) {
+    if (files.apps.get().filter({id: `${uuid}`}).value().length === 0) {
+      for (i in this.addonsTypes) {
 
-      if (this.addonsTypes[i].type === type) {
-        this.checkDirectorie(this.addonsTypes[i].path).then(() => {
-          this.download(type, this.addonsTypes[i].path, uuid).then(() => {
-            this.unzip(this.addonsTypes[i].path, uuid).then(() => {
-              this.addInFile(this.addonsTypes[i].path, type, uuid).then(() => {
-                callback()
+        if (this.addonsTypes[i].type === type) {
+          this.checkDirectorie(this.addonsTypes[i].path).then(() => {
+            this.download(type, this.addonsTypes[i].path, uuid).then(() => {
+              this.unzip(this.addonsTypes[i].path, uuid).then(() => {
+                this.addInFile(this.addonsTypes[i].path, type, uuid).then(() => {
+                  if (callback) {
+                    callback()
+                  }
+                })
               })
             })
           })
-        })
-
-        break
+  
+          break
+        }
+  
       }
-
     }
-
   },
 
   uninstall (uuid, type, callback) {
     console.log(type)
     require('./modales.js').uninstallAddon(() => {
       if (type === 'app') {
-        bookmarks.removeBookmarkInUI(uuid)
-  
         require('rmdir')(`${userData}/addons/apps/${uuid.replace('app-', '')}`, (err, dir, files) => {
-          console.log(err)
+          if (err) {
+            console.log(err)
+          }
+  
+          if (callback) {
+            callback()
+          }
+
         })
+
+        bookmarks.removeBookmarkInUI(uuid, type)
 
         files.apps.remove({
           id: uuid
         })
-
-        if (callback) {
-          callback()
-        }
       }
     })
   },
 
   isInstalled (uuid, type) {
     if (type === 'app') {
-      if (files.apps.get().filter({id: `app-${uuid}`}).value().length >= 1) {
+      if (files.apps.get().filter({id: `${uuid}`}).value().length >= 1) {
         return true
       } else {
         return false

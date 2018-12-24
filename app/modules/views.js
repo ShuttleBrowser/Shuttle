@@ -48,13 +48,17 @@ const view = {
     })
   },
 
-  remove (id) {
+  remove (id, type) {
     let viewToRemove = document.getElementById(`view-${id}`)
     if (viewToRemove) {
       document.getElementById(`view-${id}`).remove()
     }
 
-    this.show(0)
+    if (type === 'app') {
+      EventsEmitter.emit('SHOW_STORE', true)
+    } else {
+      this.show(0)
+    }
   },
 
   show (id, url, type) {

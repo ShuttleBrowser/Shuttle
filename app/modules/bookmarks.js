@@ -54,20 +54,20 @@ const bkms = {
     }
   },
 
-  removeBookmark (id) {
+  removeBookmark (id, type) {
     console.log(`[INFO] > Remove bookmark : ${id}`)
 
     if (String(id).startsWith('quickSearch') !== true) {
       this.removeBookmarkInFile(id)
     }
-    this.removeBookmarkInUI(id)
+    this.removeBookmarkInUI(id, type)
   },
 
-  removeBookmarkInUI (id) {
+  removeBookmarkInUI (id, type) {
     console.log(`[INFO] > Remove bookmark in UI : ${id}`)
 
     let bookmarkToRemove = document.getElementById(`id-${id}`)
-    views.remove(id)
+    views.remove(id, type)
     if (bookmarkToRemove) {
       bookmarkToRemove.remove()
     }
@@ -92,9 +92,9 @@ const bkms = {
     if (type === 'app') {
       navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show('${id}', '${url}', 'app')" oncontextmenu="store.uninstall('${id}', '${type}')" onmouseover="controlBar.show('${id}', true)" style="background-image: url('${icon}');"></a>`
     } else if (String(id).startsWith('quickSearch') !== true) {
-      navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show(${id}, '${url}')" oncontextmenu="modales.removeBookmark(${id}, '${url}')" onmouseover="controlBar.show(${id}, true)" style="background-image: url(${icon});"></a>`
+      navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show(${id}, '${url}')" oncontextmenu="modales.removeBookmark(${id}, '${url}', 'website')" onmouseover="controlBar.show(${id}, true)" style="background-image: url(${icon});"></a>`
     } else {
-      navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show('${id}', '${url}')" oncontextmenu="modales.removeBookmark('${id}', '${url}')" onmouseover="controlBar.show('${id}', true)" style="background-image: url(${icon});"><div class="quickSearchBubble" style="background-image: url(${quickSearchIcon});"></div></a>`
+      navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show('${id}', '${url}')" oncontextmenu="modales.removeBookmark('${id}', '${url}', 'website')" onmouseover="controlBar.show('${id}', true)" style="background-image: url(${icon});"><div class="quickSearchBubble" style="background-image: url(${quickSearchIcon});"></div></a>`
     }
   },
 
@@ -111,6 +111,7 @@ const bkms = {
       sync.syncBookmarks().then((bkm) => {
         console.log(`[INFO] > Load bookmarks from Server`)
         bkm = bkm.concat(files.apps.list())
+        console.log(bkm)
         let sortedindexes = {}
         for (i in bkm) {
           sortedindexes[bkm[i].order] = i
