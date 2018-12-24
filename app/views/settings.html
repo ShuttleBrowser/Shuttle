@@ -121,7 +121,7 @@
 
   <div class="historyModal">
     <h1 class="history-modale-title"></h1>
-    <a href="#" onclick="settings.showHistory(false)"><img src="./assets/img/store/close.svg" alt="close" class="history-modale-close-button"></a>
+    <a href="#" onclick="settings.showHistory(false)" class="history-modale-close-button"><img src="./assets/img/store/close.svg" alt="X"></a>
     <div class="history-modale-list-wrapper"></div><div id="noactivity">
       <img src="./assets/img/no-activity.svg" alt="No activity">
       <h2 id="history_no_ativity_title"></h2>
@@ -133,7 +133,7 @@
 
 <style>
   @import url(./assets/fonts/SourceSansPro.css);
-  @import url(./assets/css/grid.css);
+  @import url(./assets/fonts/Inconsolata.css);
 
   .historyModal {
     position: fixed;
@@ -144,7 +144,7 @@
     background-color: white;
     z-index: 888;
     display: none;
-    overflow: auto
+    overflow: auto;
   }
 
   .history-modale-title {
@@ -153,24 +153,65 @@
   }
 
   .history-modale-close-button {
-    width: 12px;
+    text-align: center;
     position: absolute;
-    right: 40px;
-    top: 40px;
+    right: 15px;
+    top: 25px;
   }
-
-  .history-modale-list {
-    width: 100%;
+  .history-modale-close-button img {
     height: 30px;
+    transform: scale(.66666667);
   }
 
   .history-modale-list-wrapper {
     position: absolute;
-    top: 70px;
-    bottom: 70px;
+    top: 87px;
     left: 20px;
     right: 20px;
+    bottom: 80px;
     overflow: auto;
+    font-family: 'Inconsolata';
+  }
+  
+  .history-item {
+    height: 2em;
+    color: #919192;
+    text-align: center;
+    font-size: .82em;
+  }
+
+  .history-item > span {
+    padding: .5em 0;
+    height: 1em;
+    vertical-align: middle;
+    line-height: 1em;
+  }
+
+  .history-item-date {
+    display: inline-block;
+    width: 30%;
+    padding: 0 .5em;
+  }
+
+   .history-item > .history-item-content {
+    display: inline-block;
+    width: 50%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .history-item-content span {
+    color: black;
+    font-weight: bold;
+  }
+
+  .history-item-remove {
+    display: inline-block;
+    width: 20%;
+  }
+  .history-item-remove img {
+    height: 12px;
   }
 
   div#noactivity {
@@ -213,16 +254,11 @@
     position: absolute;
   }
 
-  .history-modale-remove-button {
-    width: 10px;
-    margin-top: 6px;
-  }
-
   .history-modale-clear-button {
     text-decoration: none;
     position: absolute;
     bottom: 30px;
-    right: 40px;
+    right: 20px;
     color: #E71F5F;
   }
 
@@ -444,13 +480,11 @@
     width: 5px; height: 0px;
   }
   ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    -webkit-border-radius: 10px;border-radius: 10px;
+    background: rgba(0, 0, 0, .15)
   }
   ::-webkit-scrollbar-thumb {
-    background: grey;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-    }
+    background: #7d7d7d;
+  }
   
   ::selection {
     color: #eb5c7b;

@@ -159,9 +159,9 @@ const view = {
         }
       })
 
-      webviewToListen.addEventListener('did-navigate', event => {
-        if (event.url.includes('app/views/changelog.html') === false) {
-          this.saveHistory(event.url)
+      webviewToListen.addEventListener('did-finish-load', event => {
+        if (view.getActiveView().getURL().includes('app/views/changelog.html') === false) {
+          this.saveHistory(view.getActiveView().getURL(), view.getActiveView().getTitle())
         }
       })
 
@@ -204,7 +204,7 @@ const view = {
     require('electron').ipcRenderer.send('SetBounds', bool)
   },
 
-  saveHistory: (url) => {
+  saveHistory: (url, title) => {
     const files = require('./files.js')
     const date = require('date-and-time')
 
@@ -213,8 +213,9 @@ const view = {
     let now = new Date()
     let payload = {
       url: url,
+      title: title,
       date: date.format(now, 'YYYY/MM/DD'),
-      id: historyFile[historyFile.length - 1].id + 1
+      id: (historyFile.length) ? historyFile[historyFile.length - 1].id + 1 : 0
     }
 
     console.log(payload)

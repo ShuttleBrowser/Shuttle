@@ -16,6 +16,11 @@ let settingsIsShow = false
 
 EventsEmitter.on('SHOW_SETTINGS', (bool) => {
   let settingsView = document.querySelector('.settings')
+
+  if(document.querySelector('.historyModal')) {
+    document.querySelector('.historyModal').style.display = 'none'
+  }
+
   if (bool === true) {
     settingsView.style.display = 'block'
     settingsIsShow = true
@@ -367,17 +372,20 @@ const settings = {
     let list = document.querySelector('.history-modale-list-wrapper')
 
     list.innerHTML = ''
+    let color
     for (i in historyList) {
 
-      let color = (i%2 ? '#fafafa' : '#f1f1f1')
+      color = (i%2 ? '#fafafa' : '#f1f1f1')
 
       list.innerHTML += `
-      <div class="history-modale-list" style="background-color: ${color};">
-        <ul style="list-style-type: none; position: relative; top: 3.5px; margin: 0;">
-          <li class="history-modale-list-item" style="left: 10px"><i class="history-modale-date left">${historyList[i].date}</i></li>
-          <li class="history-modale-list-item" style="left: 110px"><i class="history-modale-url center">${require('url').parse(historyList[i].url).hostname}</i></li>
-          <li class="history-modale-list-item" style="right: 20px"><a href="#" onclick="settings.removeHistory(${historyList[i].id})"><img src="./assets/img/store/close.svg" alt="" class="history-modale-remove-button right"></a></li>
-        </ul>
+      <div class="history-item" style="background-color: ${color}" title="${historyList[i].title} (${require('url').parse(historyList[i].url).hostname})">
+        <span class="history-item-date">
+          ${historyList[i].date}
+        </span><span class="history-item-content">
+          <span>${historyList[i].title}</span> (${require('url').parse(historyList[i].url).hostname})
+        </span><span class="history-item-remove"><a href="#" onclick="settings.removeHistory(${historyList[i].id})">
+          <img src="./assets/img/store/close.svg" alt="x">
+        </a></span>
       </div>
       `
     }
