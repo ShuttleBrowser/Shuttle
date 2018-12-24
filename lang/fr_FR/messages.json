@@ -30,6 +30,12 @@
   {"value": "SETTINGS_BLOCK_WEBSITE", "message": "Bloquer les pages dangereuses"},
   {"value": "SETTINGS_SHOW_HISTORY", "message": "Voir l'historique"},
 
+  {"value": "HISTORY_TITLE", "message": "HISTORIQUE"},
+  {"value": "HISTORY_CLEAR_ALL", "message": "Tout effacer"},
+  {"value": "HISTORY_NO_ACTIVITY_TITLE", "message": "VOUS N'AVEZ AUCUNE ACTIVITÉ"},
+  {"value": "HISTORY_NO_ACTIVITY_P", "message": "Ils semble que vous n'avez pas encore utilisé Shuttle ou que vous ayez supprimé l'historique récemment."},
+  {"value": "HISTORY_START_USE", "message": "Commencer à utiliser Shuttle"},
+
   {"value": "STORE_MODAL_UNINSTALL_ADDON", "message": "Voulez vous vraiment désinstaller cette application ?"},
   {"value": "STORE_ADD_ADDON", "message": "INSTALLER"},
   {"value": "STORE_UNINSTALL_ADDON", "message": "DÉSINSTALLER"},

@@ -120,9 +120,14 @@
   </div>
 
   <div class="historyModal">
-    <h1 class="history-modale-title">HISTORY</h1>
+    <h1 class="history-modale-title"></h1>
     <a href="#" onclick="settings.showHistory(false)"><img src="./assets/img/store/close.svg" alt="close" class="history-modale-close-button"></a>
-    <div class="history-modale-list-wrapper"></div>
+    <div class="history-modale-list-wrapper"></div><div id="noactivity">
+      <img src="./assets/img/no-activity.svg" alt="No activity">
+      <h2 id="history_no_ativity_title"></h2>
+      <p id="history_no_activity_p"></p>
+      <a href="#" onclick="view.show(0)" id="history_start_use"></a>
+    </div>
     <a href="#" onclick="settings.clearHistory()" class="history-modale-clear-button">Clear all</a>
   </div>
 
@@ -166,6 +171,41 @@
     left: 20px;
     right: 20px;
     overflow: auto;
+  }
+
+  div#noactivity {
+    display: none;
+  }
+
+  .history-modale-list-wrapper:empty + div#noactivity {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+    font-size: .8em;
+    text-align: center;
+    font-weight: 300;
+    width: 70%;
+  }
+
+  #noactivity img {
+    height: 65px;
+  }
+
+  #history_no_ativity_title {
+    font-weight: 300;
+  }
+
+  #history_no_activity_p {
+    font-weight: 300;
+    color: #919192;
+  }
+
+  #history_start_use {
+    text-decoration: none;
+    color: #e71f5f;
+    font-weight: regular;
   }
 
   .history-modale-list-item {

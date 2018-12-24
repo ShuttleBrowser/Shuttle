@@ -105,6 +105,13 @@ const settings = {
     document.getElementById('signinButton').value = lang('AUTH_SIGNIN').toUpperCase()
 
     document.querySelector('.version').innerHTML = `VERSION ${require('electron').remote.app.getVersion()}`
+
+    document.querySelector('.history-modale-title').innerHTML = lang('HISTORY_TITLE')
+    document.getElementById('history_no_ativity_title').innerHTML = lang('HISTORY_TITLE')
+    document.querySelector('.history-modale-clear-button').innerHTML = lang('HISTORY_CLEAR_ALL')
+    document.getElementById('history_no_ativity_title').innerHTML = lang('HISTORY_NO_ACTIVITY_TITLE')
+    document.getElementById('history_no_activity_p').innerHTML = lang('HISTORY_NO_ACTIVITY_P')
+    document.getElementById('history_start_use').innerHTML = lang('HISTORY_START_USE')
   },
 
   setAutoStart () {

@@ -30,6 +30,12 @@
   {"value": "SETTINGS_BLOCK_WEBSITE", "message": "Block dangerous websites"},
   {"value": "SETTINGS_SHOW_HISTORY", "message": "Show history"},
 
+  {"value": "HISTORY_TITLE", "message": "HISTORY"},
+  {"value": "HISTORY_CLEAR_ALL", "message": "Clear all"},
+  {"value": "HISTORY_NO_ACTIVITY_TITLE", "message": "YOU DON'T HAVE ANY ACTIVITY"},
+  {"value": "HISTORY_NO_ACTIVITY_P", "message": "It's seems you haven't used Shuttle yet or you recently cleared your history."},
+  {"value": "HISTORY_START_USE", "message": "Start using Shuttle"},
+
   {"value": "STORE_MODAL_UNINSTALL_ADDON", "message": "Do you really want to uninstall this application?"},
   {"value": "STORE_ADD_ADDON", "message": "INSTALL"},
   {"value": "STORE_UNINSTALL_ADDON", "message": "UNINSTALL"},
