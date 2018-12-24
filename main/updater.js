@@ -6,6 +6,14 @@ const lang = require(`../lang/lang.js`)
 // -------------------------------------------------------------------
 // Auto updates
 // -------------------------------------------------------------------
+
+autoUpdater.setFeedURL({
+  provider: 'generic',
+  url: `http://update.shuttleapp.io/update/latest/${process.platform}/`
+})
+
+console.log(autoUpdater.getFeedURL())
+
 app.on('ready', () => {
   autoUpdater.checkForUpdates()
 })
