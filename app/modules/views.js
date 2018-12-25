@@ -163,6 +163,21 @@ const view = {
         }
       })
 
+      webviewToListen.addEventListener('dom-ready', () => {
+        webviewToListen.insertCSS(`\
+        ::-webkit-scrollbar { 
+          width: 7px; 
+          height: 7px; 
+          background-color: #F4F4F4; 
+          z-index: 9999999;
+          }
+          
+          ::-webkit-scrollbar-thumb { 
+          background-color: #333333; 
+          } 
+        `)
+      })
+
       webviewToListen.addEventListener('did-finish-load', event => {
         if (view.getActiveView().getURL().includes('app/views/changelog.html') === false) {
           this.saveHistory(view.getActiveView().getURL(), view.getActiveView().getTitle())
