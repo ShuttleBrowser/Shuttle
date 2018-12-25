@@ -13,7 +13,6 @@
 <div align="center">
   <img src="https://api.travis-ci.org/KazeJiyu/Shuttle.svg?branch=master">   
   <a href="https://snyk.io/test/github/robjullian/shuttle?targetFile=package.json"><img src="https://snyk.io/test/github/robjullian/shuttle/badge.svg?targetFile=package.json" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/robjullian/shuttle?targetFile=package.json" style="max-width:100%;"></a>
-  <a href="/releases/"><img src="https://img.shields.io/github/downloads/ShuttleBrowser/Shuttle/total.svg">
 </div>
 
 ## Installation
