@@ -93,18 +93,8 @@ const store = {
         searchCloseIcon.style.display = 'block'
         searchIcon.style.display = 'none'
 
-        fetch(`${config.api}/store/get/search/shuttle?q=${searchBarValue.value}`).then(res => res.json()).then((data) => {
-          appsContainer.innerHTML = ''
-          for (i in data) {
-            appsContainer.innerHTML += `
-              <div class="store-app-collection-item">
-                <img class="store-app-collection-item-img" src="${config.api}/store/assets/${data[i].uuid}/icon" alt="">
-                <h4 class="store-app-collection-item-name">${data[i].name}</h4>
-                <p class="store-app-collection-item-description">${data[i].description}</p>
-                <a href="#" class="store-app-collection-item-add-btn" onclick="store.popup.install(true, '${data[i].name}', '${data[i].description}', '${data[i].uuid}', '${data[i].type}')"></a>
-              </div>`
-          }
-        })
+        store.injectInCollection(appsContainer, `store/get/search/shuttle?q=${searchBarValue.value}`)
+
       } else {
         search.style.display = 'none'
         home.style.display = 'block'
@@ -119,6 +109,22 @@ const store = {
 
   },
 
+  injectInCollection (content, route) {
+    fetch(`${config.api}/${route}`).then(res => res.json()).then((data) => {
+      content.innerHTML = ''
+      for (i in data) {
+        content.innerHTML += `
+          <div class="store-app-collection-item">
+            <img class="store-app-collection-item-img" src="${config.api}/store/assets/${data[i].uuid}/icon" alt="">
+            <a href="#" class="store-app-collection-item-name" onclick="store.popup.install(true, '${data[i].name}', '${data[i].description}', '${data[i].uuid}', '${data[i].type}')">${data[i].name}</a>
+            <p class="store-app-collection-item-description">${data[i].description.substring(0, 60)}</p>
+            <a href="#" class="store-app-collection-item-add-btn" onclick="store.install('${data[i].uuid}', '${data[i].type}')"></a>
+          </div>
+        `
+      }
+    })
+  },
+
   requireHttp () {
     if (config.api.includes('https://')) {
       return require('https')
@@ -131,6 +137,7 @@ const store = {
     let trendingApp = document.querySelector('.store-trending-app')
     let trendingButton = document.querySelector('.store-trending-add-button')
     let trendingButtonText = document.querySelector('.store-trending-add-button-text')
+    let recentlyCollection = document.querySelector('#recently')
 
     fetch(`${config.api}/store/get/trending`).then(res => res.json()).then((data) => {
       trendingApp.style.backgroundImage = `url(${data.banner})`
@@ -144,6 +151,8 @@ const store = {
       }
 
     })
+
+    this.injectInCollection(recentlyCollection, 'store/get/recent')
   },
 
   uninstallFromHome (uuid, type) {
