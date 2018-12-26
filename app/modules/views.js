@@ -27,6 +27,7 @@ const view = {
         if (type === 'app') {
           webViewToCreate.setAttribute('src', `file://${url}`)
           webViewToCreate.setAttribute('preload', './modules/applications.js')
+          webViewToCreate.setAttribute('nodeintegration', '')
         } else {
           webViewToCreate.setAttribute('src', url)
           webViewToCreate.setAttribute('preload', './modules/webviewPreloader.js')
@@ -36,7 +37,6 @@ const view = {
         webViewToCreate.setAttribute('onmouseover', 'controlBar.show(0, false)')
         webViewToCreate.setAttribute('class', 'web-content inactive')
         webViewToCreate.setAttribute('useragent', this.mobileUserAgent)
-        webViewToCreate.setAttribute('disablewebsecurity', '')
 
         webViewList.appendChild(webViewToCreate)
 

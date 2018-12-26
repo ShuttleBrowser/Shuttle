@@ -1,23 +1,39 @@
-const { ipcRenderer } = require('electron').remote
-const { files, bookmarks, loadFile } = require('./index.js')
+const electron = require('electron')
+const ipcRenderer = electron.ipcRenderer
 
-window.settings = {
-	set (key, value) {
-		files.settings.setValue(`settings.addon.${key}`, value)
-	},
+let Notification = (title, ops) => {
+  let text = ops.body
 
-	get (key) {
-		files.settings.getValue(`settings.addon.${key}`)
-	}
+  ipcRenderer.send('WEB_NOTIFICATION', {
+    title: title,
+    text: text
+  })
 }
 
-window.bookmarks = bookmarks
-window.inject = (file, id) => {
-	if (file && id) {
-		loadFile(file, id)
-	}
+Notification.permission = false 
+
+Notification.requestPermission = () => {
+  return new Promise((resolve) => {
+    Notification.permission = true
+    resolve()
+  })
+}
+
+window.Notification = Notification
+window.__appPath = window.location.href.replace('/index.html', '')
+
+window.goHome = () => {
+  ipcRenderer.sendToHost('GO_HOME', window.location)
 }
 
 window.alert = (message) => {
-  ipcRenderer.send('PAGE_ALERT', {message: message})
+  ipcRenderer.sendToHost('PAGE_ALERT', {site: document.title, message: message})
+}
+
+window.openTab = (search) => {
+  ipcRenderer.sendToHost('OPEN_QUICK_SEARCH', search)
+}
+
+window.copyToClipboard = (url) => {
+  ipcRenderer.sendToHost('COPY_TO_CLIPBOARD', url)
 }

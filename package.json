@@ -1,6 +1,6 @@
 {
   "name": "shuttle",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "The fastest access to your favorite applications",
   "homepage": "https://shuttleapp.io",
   "main": "main.js",
@@ -32,7 +32,7 @@
     "vex-js": "^4.1.0"
   },
   "devDependencies": {
-    "electron": "^3.0.10",
+    "electron": "^4.0.0",
     "electron-builder": "^20.36.2"
   }
 }
