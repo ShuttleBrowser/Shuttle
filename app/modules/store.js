@@ -1,7 +1,6 @@
 const config = require('./config.json')
 
 const fs = require('fs')
-const http = require('https')
 const extractZip = require('extract-zip')
 
 const files = require('./files.js')
@@ -97,7 +96,7 @@ const store = {
         fetch(`${config.api}/store/get/search/shuttle?q=${searchBarValue.value}`).then(res => res.json()).then((data) => {
           appsContainer.innerHTML = ''
           for (i in data) {
-            appsContainer.innerHTML = `
+            appsContainer.innerHTML += `
               <div class="store-app-collection-item">
                 <img class="store-app-collection-item-img" src="${config.api}/store/assets/${data[i].uuid}/icon" alt="">
                 <h4 class="store-app-collection-item-name">${data[i].name}</h4>
@@ -118,6 +117,14 @@ const store = {
       }
     }
 
+  },
+
+  requireHttp () {
+    if (config.api.includes('https://')) {
+      return require('https')
+    } else {
+      return require('http')
+    }
   },
 
   loadHome () {
@@ -217,11 +224,11 @@ const store = {
         let iconFile = fs.createWriteStream(`${path + uuid}/icon.png`)
         let appFile = fs.createWriteStream(`${path + uuid}/app.zip`)
   
-        http.get(`${config.api}/store/assets/${uuid}/icon`, (res) => {
+        this.requireHttp().get(`${config.api}/store/assets/${uuid}/icon`, (res) => {
           res.pipe(iconFile)
         })
   
-        http.get(`${config.api}/store/action/download/${uuid}`, (res) => {
+        this.requireHttp().get(`${config.api}/store/action/download/${uuid}`, (res) => {
           res.pipe(appFile)
 
           res.on('end', () => {
