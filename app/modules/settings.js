@@ -202,9 +202,9 @@ const settings = {
         reject()
       }).then((data) => {
           if (data.message === 'success') {
-            resolve()
+            alert('Message sent !')
           } else {
-            reject()
+            alert(`Error with the server : ${data.message}`)
           }
         })
 

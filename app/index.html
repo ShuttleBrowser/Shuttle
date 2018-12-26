@@ -83,7 +83,9 @@
       },
     }
 
-    shuttle.initApp()
+    setTimeout(() => {
+      shuttle.initApp()
+    }, 500)
 
     ipcRenderer.on('SHORTCUT_QUIT_FULLSCREEN', () => {
       view.setFullscreen(false, document.querySelector('.active'))
