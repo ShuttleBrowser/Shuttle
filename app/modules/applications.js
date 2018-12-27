@@ -25,10 +25,16 @@ window.app = {
       })
     },
   
-    async get (key) {
-      ipcRenderer.send('GET_SETTINGS', `settings.addon.${app.uuid}.${key}`)
-      await ipcRenderer.on('GET_SETTINGS_RESPONSE', (event, data) => {
-        console.log(data)
+    get (key) {
+      return new Promise((resolve) => {
+        if (key === 'token' && app.uuid === 'Kwarn') {
+          ipcRenderer.sendToHost('GET_SETTINGS', `settings.userToken`)
+        } else {
+          ipcRenderer.sendToHost('GET_SETTINGS', `settings.addon.${app.uuid}.${key}`)
+        }
+        ipcRenderer.on('GET_SETTINGS_RESPONSE', (event, data) => {
+          resolve(data)
+        })
       })
     },
   },

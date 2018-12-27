@@ -183,12 +183,10 @@ const view = {
             files.settings.setValue(args.key, args.value)
 
         } if (event.channel === 'GET_SETTINGS') {
-
-          const files = require('./files.js')
-          let args = event.args[0]
-          webviewToListen.send('GET_SETTINGS_RESPONSE', { message: 'hello' })
-
-        }
+            const files = require('./files.js')
+            let args = event.args[0]
+            webviewToListen.send('GET_SETTINGS_RESPONSE', files.settings.getValue(args))
+          }
       })
 
       webviewToListen.addEventListener('dom-ready', () => {
