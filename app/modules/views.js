@@ -25,8 +25,8 @@ const view = {
         let webViewToCreate = document.createElement("webview")
 
         if (type === 'app') {
-          webViewToCreate.setAttribute('src', `file://${url}`)
-          webViewToCreate.setAttribute('preload', './modules/applications.js')
+          webViewToCreate.setAttribute('src', `file://${url}?uuid=${id}`)
+          webViewToCreate.setAttribute('preload', `./modules/applications.js`)
           webViewToCreate.setAttribute('nodeintegration', '')
         } else {
           webViewToCreate.setAttribute('src', url)
@@ -151,6 +151,7 @@ const view = {
         } if (event.channel === 'GO_HOME') {
             const bookmarks = require('./bookmarks.js')
             const files = require('./files.js')
+
             if (event.args[0].href.includes('data:text/html;charset=UTF-8,')) {
               if (files.settings.getValue('settings.blockDangerousWebsite')) {
                 let id = webviewToListen.id.replace('view-', '')
@@ -163,6 +164,30 @@ const view = {
                 }
               }
             }
+        } if (event.channel === 'ADD_NEW_BOOKMARK') {
+
+            const bookmarks = require('./bookmarks.js')
+            let args = event.args[0]
+            bookmarks.addBookmarksInUI(args.id, args.icon, args.url, args.type)
+
+        } if (event.channel === 'REMOVE_BOOKMARK') {
+
+            const bookmarks = require('./bookmarks.js')
+            let args = event.args[0]
+            bookmarks.removeBookmarkInUI(args.id, args.type)
+
+        } if (event.channel === 'SAVE_SETTINGS') {
+
+            const files = require('./files.js')
+            let args = event.args[0]
+            files.settings.setValue(args.key, args.value)
+
+        } if (event.channel === 'GET_SETTINGS') {
+
+          const files = require('./files.js')
+          let args = event.args[0]
+          webviewToListen.send('GET_SETTINGS_RESPONSE', { message: 'hello' })
+
         }
       })
 
