@@ -116,7 +116,7 @@ const store = {
         content.innerHTML += `
           <div class="store-app-collection-item">
             <img class="store-app-collection-item-img" src="${config.api}/store/assets/${data[i].uuid}/icon" alt="">
-            <a href="#" class="store-app-collection-item-name" onclick="store.popup.install(true, '${data[i].name}', '${data[i].description}', '${data[i].uuid}', '${data[i].type}')">${data[i].name}</a>
+            <a href="#" class="store-app-collection-item-name" onclick="store.popup.install(true, '${data[i].name}', '${data[i].description.replace(/[\']+/, '&quot;')}', '${data[i].uuid}', '${data[i].type}')">${data[i].name}</a>
             <p class="store-app-collection-item-description">${data[i].description.substring(0, 60)}</p>
             <a href="#" class="store-app-collection-item-add-btn" onclick="store.install('${data[i].uuid}', '${data[i].type}')"></a>
           </div>
@@ -159,32 +159,30 @@ const store = {
     let trendingButton = document.querySelector('.store-trending-add-button')
     let trendingButtonText = document.querySelector('.store-trending-add-button-text')
 
-    this.uninstall(uuid, type, () => {
-      trendingButton.setAttribute('onclick', `store.install('${uuid}', '${type}')`)
-      trendingButtonText.innerHTML = lang('STORE_ADD_ADDON')
-    })
+    trendingButton.setAttribute('onclick', `store.install('${uuid}', '${type}')`)
+    trendingButtonText.innerHTML = lang('STORE_ADD_ADDON')
+
+    this.uninstall(uuid, type)
   },
 
   installFromHome (uuid, type) {
     let trendingButton = document.querySelector('.store-trending-add-button')
     let trendingButtonText = document.querySelector('.store-trending-add-button-text')
 
-    this.install(uuid, type, () => {
-      trendingButton.setAttribute('onclick', `store.uninstall('${uuid}', '${type}')`)
-      trendingButtonText.innerHTML = lang('STORE_UNINSTALL_ADDON')
-    })
+    trendingButton.setAttribute('onclick', `store.uninstall('${uuid}', '${type}')`)
+    trendingButtonText.innerHTML = lang('STORE_UNINSTALL_ADDON')
+
+    this.install(uuid, type)
   },
 
   installAddon (uuid, type) {
-    this.install(uuid, type, () => {
-      this.setToUninstall(uuid, type)
-    })
+    this.setToUninstall(uuid, type)
+    this.install(uuid, type)
   },
 
   uninstallAddon (uuid, type) {
-    this.uninstall(uuid, type, () => {
-      this.setToInstall(uuid, type)
-    })
+    this.setToInstall(uuid, type)
+    this.uninstall(uuid, type)
   },
 
   setToUninstall (uuid, type) {

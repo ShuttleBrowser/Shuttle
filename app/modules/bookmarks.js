@@ -90,7 +90,7 @@ const bkms = {
     console.log(`[INFO] > Add bookmark in UI : ${id}`)
 
     if (type === 'app') {
-      navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show('${id}', '${url}', 'app')" oncontextmenu="store.uninstall('${id}', '${type}')" onmouseover="controlBar.show('${id}', true)" style="background-image: url('${icon}');"></a>`
+      navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show('${id}', '${url}', 'app')" oncontextmenu="store.uninstall('${id}', '${type}')" onmouseover="controlBar.show('${id}', true)" style="background-image: url('${icon}'); background-size: 100%;"></a>`
     } else if (String(id).startsWith('quickSearch') !== true) {
       navZone.innerHTML += `<a href="#" class="bubble-btn" id="id-${id}" onclick="view.show(${id}, '${url}')" oncontextmenu="modales.removeBookmark(${id}, '${url}', 'website')" onmouseover="controlBar.show(${id}, true)" style="background-image: url(${icon});"></a>`
     } else {

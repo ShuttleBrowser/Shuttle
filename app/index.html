@@ -35,9 +35,7 @@
     const shuttle = {
       initApp () {
         if (files.settings.getValue('settings.firstRun') === undefined) {
-          if (!files.settings.getValue('settings.isLogged')) {
-            this.showAuth()
-          }
+          this.showAuth()
           files.settings.setValue('settings.firstRun', false)
         } else {
           this.showBrowser()
@@ -78,14 +76,18 @@
         })
       },
 
-      showAuth (callback) {
-        loadFile('auth', false, callback)
+      showAuth () {
+        loadFile('auth', false, () => {
+          console.log('[INFO] > Auth show')
+        })
       },
     }
 
-    setTimeout(() => {
-      shuttle.initApp()
-    }, 500)
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        shuttle.initApp()
+      }, 500)
+    }, false )
 
     ipcRenderer.on('SHORTCUT_QUIT_FULLSCREEN', () => {
       view.setFullscreen(false, document.querySelector('.active'))
