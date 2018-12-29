@@ -10,16 +10,16 @@ const lang = require('../../lang/lang.js')
 
 // This object encloses all that is necessary to manage the addons
 const addons = {
-  installApp (uuid) {
+  installApp (uid) {
     return new Promise((resolve) => {
 
-      if (this.utils.isInstalled(uuid) === false) {
+      if (this.utils.isInstalled(uid) === false) {
 
-        this.utils.checkDirectorie(uuid).then(() => {
-          this.installation.download(uuid).then(() => {
-            this.installation.decompress(uuid).then(() => {
-              this.ui.add(uuid)
-              this.installation.addInFile(uuid)
+        this.utils.checkDirectorie(uid).then(() => {
+          this.installation.download(uid).then(() => {
+            this.installation.decompress(uid).then(() => {
+              this.ui.add(uid)
+              this.installation.addInFile(uid)
               resolve()
             })
           })
@@ -30,12 +30,12 @@ const addons = {
     })
   },
 
-  uninstallApp (uuid) {
+  uninstallApp (uid) {
     return new Promise(resolve => {
       Promise.all([
-        this.ui.remove(uuid),
-        this.uninstall.removeInFile(uuid),
-        this.uninstall.removeDirectory(uuid)
+        this.ui.remove(uid),
+        this.uninstall.removeInFile(uid),
+        this.uninstall.removeDirectory(uid)
       ]).then(() => {
         resolve()
       })
@@ -48,13 +48,13 @@ const addons = {
     userData: app.getPath('userData').replace(/\\/g,"/"),
 
     // Function to get addons install path
-    getAddonPath (uuid) {
-      return `${this.userData}/addons/${uuid}`
+    getAddonPath (uid) {
+      return `${this.userData}/addons/${uid}`
     },
 
     // Check if addons is already installed
-    isInstalled (uuid) {
-      if (files.apps.get().filter({id: `${uuid}`}).value().length >= 1) {
+    isInstalled (uid) {
+      if (files.apps.get().filter({id: `${uid}`}).value().length >= 1) {
         return true
       } else {
         return false
@@ -62,10 +62,10 @@ const addons = {
     },
 
     // check if addon directory exist
-    checkDirectorie (uuid) {
+    checkDirectorie (uid) {
       return new Promise(resolve => {
     
-        require('mkdirp')(this.getAddonPath(uuid), (err) => {
+        require('mkdirp')(this.getAddonPath(uid), (err) => {
           if (err) {
             console.error(err)
           } else {
@@ -88,18 +88,18 @@ const addons = {
   // section where we interact with the user interface
   ui: {
     // ad addon in ui
-    add (uuid) {
+    add (uid) {
       let args = {
-        icon: `http://localhost:57661/${uuid}/icon`,
-        url: `http://localhost:57661/${uuid}`
+        icon: `http://localhost:57661/${uid}/icon`,
+        url: `http://localhost:57661/${uid}`
       }
 
-      require('./bookmarks.js').addBookmarksInUI(uuid, args.icon, args.url, 'app')
+      require('./bookmarks.js').addBookmarksInUI(uid, args.icon, args.url, 'app')
     },
 
     // remove add in ui
-    remove (uuid) {
-      require('./bookmarks.js').removeBookmarkInUI(uuid, 'app')
+    remove (uid) {
+      require('./bookmarks.js').removeBookmarkInUI(uid, 'app')
     }
   },
 
@@ -107,14 +107,14 @@ const addons = {
   installation: {
 
     // download all files
-    download (uuid) {
+    download (uid) {
       return new Promise((resolve) => {
-        addons.utils.requireHttp().get(`${config.api}/store/assets/${uuid}/icon`, (res) => {
-          res.pipe(fs.createWriteStream(`${addons.utils.getAddonPath(uuid)}/icon.png`))
+        addons.utils.requireHttp().get(`${config.api}/store/assets/${uid}/icon`, (res) => {
+          res.pipe(fs.createWriteStream(`${addons.utils.getAddonPath(uid)}/icon.png`))
         })
   
-        addons.utils.requireHttp().get(`${config.api}/store/action/download/${uuid}`, (res) => {
-          res.pipe(fs.createWriteStream(`${addons.utils.getAddonPath(uuid)}/app.zip`))
+        addons.utils.requireHttp().get(`${config.api}/store/action/download/${uid}`, (res) => {
+          res.pipe(fs.createWriteStream(`${addons.utils.getAddonPath(uid)}/app.zip`))
   
           res.on('end', () => {
             resolve()
@@ -124,10 +124,10 @@ const addons = {
     },
 
     // decompress app.zip in to app folder
-    decompress (uuid) {
+    decompress (uid) {
       return new Promise((resolve, reject) => {
-        extract(`${addons.utils.getAddonPath(uuid)}/app.zip`, {
-          dir: `${addons.utils.getAddonPath(uuid)}/app`
+        extract(`${addons.utils.getAddonPath(uid)}/app.zip`, {
+          dir: `${addons.utils.getAddonPath(uid)}/app`
         }, () => {
           resolve()
         })
@@ -135,7 +135,7 @@ const addons = {
     },
 
     // add addon in file
-    addInFile (uuid) {
+    addInFile (uid) {
       return new Promise((resolve, reject) => {
         const appList = files.apps.list()
 
@@ -146,9 +146,9 @@ const addons = {
         }
   
         files.apps.push({
-          id: `${uuid}`,
-          url: `http://localhost:57661/${uuid}`,
-          icon: `http://localhost:57661/${uuid}/icon`,
+          id: `${uid}`,
+          url: `http://localhost:57661/${uid}`,
+          icon: `http://localhost:57661/${uid}/icon`,
           type: 'app',
           order: 9999 + order
         })
@@ -160,16 +160,16 @@ const addons = {
   uninstall: {
 
     // remove addon in file
-    removeInFile (uuid) {
+    removeInFile (uid) {
       files.apps.remove({
-        id: uuid
+        id: uid
       })
     },
 
     // remove addon directory
-    removeDirectory (uuid) {
+    removeDirectory (uid) {
       return new Promise((resolve, reject) => {
-        require('rmdir')(addons.utils.getAddonPath(uuid), (err, dir, files) => {
+        require('rmdir')(addons.utils.getAddonPath(uid), (err, dir, files) => {
           if (err) {
             console.log(err)
             resolve()
@@ -196,7 +196,7 @@ let store = {
     storeIsShow: false,
 
     modal: {
-      showAppInstallation (show, uuid, name, description) {
+      showAppInstallation (show, uid, name, description) {
         const modalContainer = document.querySelector('#store-modal-container')
         const modalTitle = document.querySelector('#store-modal-title')
         const modalBanner = document.querySelector('#store-modal-banner')
@@ -207,25 +207,25 @@ let store = {
           modalContainer.style.display = 'block'
   
           modalTitle.innerHTML = name.toUpperCase()
-          modalBanner.setAttribute('style', `background: url(${config.api}/store/assets/${uuid}/banner) no-repeat center; background-size: contain;`)
+          modalBanner.setAttribute('style', `background: url(${config.api}/store/assets/${uid}/banner) no-repeat center; background-size: contain;`)
           modalAppName.innerHTML = name
           modalAppDescription.innerHTML = description
-          this.setButtonTo(addons.utils.isInstalled(uuid), uuid)
+          this.setButtonTo(addons.utils.isInstalled(uid), uid)
         } else {
           modalContainer.style.display = 'none'
         }
       },
 
-      setButtonTo (action, uuid) {
+      setButtonTo (action, uid) {
         const modalButton = document.querySelector('#store-action-button')
         const modalButtonText = document.querySelector('#store-modal-button-text')
 
         if (action === true) {
-          modalButton.setAttribute('onclick', `store.front.modal.install(true, '${uuid}')`)
+          modalButton.setAttribute('onclick', `store.front.modal.install(true, '${uid}')`)
           modalButtonText.innerHTML = lang('STORE_UNINSTALL_ADDON')
           console.log('finish')
         } else if (action === false) {
-          modalButton.setAttribute('onclick', `store.front.modal.install(false, '${uuid}')`)
+          modalButton.setAttribute('onclick', `store.front.modal.install(false, '${uid}')`)
           modalButtonText.innerHTML = lang('STORE_ADD_ADDON')
         } else {
           modalButton.setAttribute('onclick', '')
@@ -233,16 +233,16 @@ let store = {
         }
       },
 
-      install (bool, uuid) {
-        this.setButtonTo('loading', uuid)
+      install (bool, uid) {
+        this.setButtonTo('loading', uid)
 
         if (bool) {
-          addons.installApp(uuid).then(() => {
-            this.setButtonTo(true, uuid)
+          addons.installApp(uid).then(() => {
+            this.setButtonTo(true, uid)
           })
         } else {
-          addons.uninstallApp(uuid).then(() => {
-            this.setButtonTo(false, uuid)
+          addons.uninstallApp(uid).then(() => {
+            this.setButtonTo(false, uid)
           })
         }
       }
@@ -253,30 +253,30 @@ let store = {
       injectInCollection (content, data) {
         content.innerHTML = ''
         for (i in data) {
-          let itemID = `item-${data[i].uuid}-${Math.floor(Math.random() * (1000 - 1) + 1)}`
+          let itemID = `item-${data[i].uid}-${Math.floor(Math.random() * (1000 - 1) + 1)}`
 
           content.innerHTML += `
           <div class="store-app-collection-item">
-            <img class="store-app-collection-item-img" src="${config.api}/store/assets/${data[i].uuid}/icon" alt="">
-            <a href="#" class="store-app-collection-item-name" onclick="store.front.modal.showAppInstallation(true, '${data[i].uuid}', '${data[i].name}', '${data[i].description.replace(/[\']+/, '&quot;')}')">${data[i].name}</a>
+            <img class="store-app-collection-item-img" src="${config.api}/store/assets/${data[i].uid}/icon" alt="">
+            <a href="#" class="store-app-collection-item-name" onclick="store.front.modal.showAppInstallation(true, '${data[i].uid}', '${data[i].name}', '${data[i].description.replace(/[\']+/, '&quot;')}')">${data[i].name}</a>
             <p class="store-app-collection-item-description">${data[i].description.substring(0, 60)}</p>
-            <a href="#" id="${itemID}" class="store-app-collection-item-add-btn" onclick="store.front.items.install(true, '${data[i].uuid}', '${itemID}')"></a>
+            <a href="#" id="${itemID}" class="store-app-collection-item-add-btn" onclick="store.front.items.install(true, '${data[i].uid}', '${itemID}')"></a>
           </div>
           `
 
-          this.setButtonTo(addons.utils.isInstalled(data[i].uuid), data[i].uuid, itemID)
+          this.setButtonTo(addons.utils.isInstalled(data[i].uid), data[i].uid, itemID)
         }
       },
 
-      setButtonTo (action, uuid, item) {
+      setButtonTo (action, uid, item) {
         const itemButton = document.querySelector(`#${item}`)
 
         if (action === true) {
-          itemButton.setAttribute('onclick', `store.front.items.install(false, '${uuid}', '${item}')`)
+          itemButton.setAttribute('onclick', `store.front.items.install(false, '${uid}', '${item}')`)
           itemButton.style.transform = 'rotate(45deg)'
           itemButton.setAttribute('class', 'store-app-collection-item-add-btn')
         } else if (action === false) {
-          itemButton.setAttribute('onclick', `store.front.items.install(true, '${uuid}', '${item}')`)
+          itemButton.setAttribute('onclick', `store.front.items.install(true, '${uid}', '${item}')`)
           itemButton.style.transform = 'rotate(0deg)'
         } else {
           itemButton.setAttribute('onclick', '')
@@ -285,16 +285,16 @@ let store = {
         }
       },
 
-      install (bool, uuid, item) {
-        this.setButtonTo('loading', uuid, item)
+      install (bool, uid, item) {
+        this.setButtonTo('loading', uid, item)
 
         if (bool) {
-          addons.installApp(uuid).then(() => {
-            this.setButtonTo(true, uuid, item)
+          addons.installApp(uid).then(() => {
+            this.setButtonTo(true, uid, item)
           })
         } else {
-          addons.uninstallApp(uuid).then(() => {
-            this.setButtonTo(false, uuid, item)
+          addons.uninstallApp(uid).then(() => {
+            this.setButtonTo(false, uid, item)
           })
         }
       }
@@ -334,30 +334,30 @@ let store = {
     
         store.back.trending().then(data => {
           trendingApp.style.backgroundImage = `url(${data.banner})`
-          this.setButtonTo(addons.utils.isInstalled(data.uuid), data.uuid)
+          this.setButtonTo(addons.utils.isInstalled(data.uid), data.uid)
         })  
       },
 
-      setButtonTo (uninstall, uuid) {
+      setButtonTo (uninstall, uid) {
         let trendingButton = document.querySelector('.store-trending-add-button')
         let trendingButtonText = document.querySelector('.store-trending-add-button-text')
 
         if (uninstall) {
           trendingButtonText.innerHTML = lang('STORE_UNINSTALL_ADDON')
-          trendingButton.setAttribute('onclick', `store.install(true, '${uuid}')`)
+          trendingButton.setAttribute('onclick', `store.install(true, '${uid}')`)
         } else {
           trendingButtonText.innerHTML = lang('STORE_ADD_ADDON')
-          trendingButton.setAttribute('onclick', `store.install(false, '${uuid}')`)
+          trendingButton.setAttribute('onclick', `store.install(false, '${uid}')`)
         }
       },
 
-      install (bool, uuid) {
+      install (bool, uid) {
         if (bool) {
-          addons.installApp(uuid)
-          this.setButtonTo(true, uuid)
+          addons.installApp(uid)
+          this.setButtonTo(true, uid)
         } else {
-          addons.uninstallApp(uuid)
-          this.setButtonTo(false, uuid)
+          addons.uninstallApp(uid)
+          this.setButtonTo(false, uid)
         }
       }
 
