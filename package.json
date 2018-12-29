@@ -27,6 +27,7 @@
     "file-saver": "^2.0.0",
     "lowdb": "^1.0.0",
     "menubar": "^5.2.3",
+    "mkdirp": "^0.5.1",
     "os-locale": "^3.0.1",
     "rmdir": "^1.2.0",
     "vex-js": "^4.1.0"

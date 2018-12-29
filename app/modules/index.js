@@ -7,7 +7,7 @@ const auth = require('./auth.js')
 const settings = require('./settings.js')
 const controlBar = require('./controlbar.js')
 const modales = require('./modales.js')
-const store = require('./store.js')
+const { store, addons } = require('./store.js')
 const sync = require('./sync.js')
 
 module.exports = {
@@ -21,5 +21,6 @@ module.exports = {
   controlBar,
   modales,
   store,
+  addons,
   sync
 }

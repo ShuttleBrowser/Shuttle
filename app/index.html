@@ -23,7 +23,7 @@
   <script>
     window.require = require
 
-    const { loadFile, event, bookmarks, view, files, auth, settings, controlBar, modales, store, sync } = require('./modules/index.js')
+    const { loadFile, event, bookmarks, view, files, auth, settings, controlBar, modales, store, addons, sync } = require('./modules/index.js')
     const { ipcRenderer } = require('electron')
     const lang = require('../lang/lang.js')
     const Sortable = require('./assets/js/Sortable.min.js')
@@ -70,7 +70,7 @@
               settings.setSearchEngineSelect()
             })
             loadFile('appStore', '.store').then(() => {
-              store.runListener()
+              store.back.runListener()
             })
           })
         })

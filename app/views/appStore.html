@@ -2,8 +2,8 @@
 
   <div class="store-header">
     <input type="text" class="store-search-bar" placeholder="SHUTTLE - ADDONS STORE">
-    <a onclick="store.popup.search(true)" href="#" class="store-search-icon"></a>
-    <a onclick="store.popup.search(false)" href="#" class="store-search-close-icon"></a>
+    <a onclick="store.front.showSearchResults(true)" href="#" class="store-search-icon"></a>
+    <a onclick="store.front.showSearchResults(false)" href="#" class="store-search-close-icon"></a>
   </div>
   <div class="store-content">
     <div class="store-home">
@@ -38,12 +38,27 @@
   </div>
 
   <div class="popup">
-
+    <div class="store-in-app" id="store-modal-container">
+      <a href="#" class="store-in-app-close" onclick="store.front.modal.showAppInstallation(false)"></a>
+      <h1 class="store-title" id="store-modal-title">${name.toUpperCase()}</h1>
+      <br>
+      <br>
+      <div class="store-in-app-background" id="store-modal-banner"></div>
+      <div class="store-in-app-content">
+        <h4 class="store-in-app-title" id="store-modal-app-name">${name}</h4>
+        <a href="javascript:" id="store-action-button" onclick="store.front.modal.install('${uuid}', '${type}')">
+          <div class="store-in-app-button">
+            <p class="store-in-app-button-text" id="store-modal-button-text">${(store.isInstalled(uuid, type) ? lang('STORE_UNINSTALL_ADDON') : lang('STORE_ADD_ADDON'))}</p>
+            <i class="store-in-app-button-icon"></i>
+          </div>
+        </a>
+        <p class="store-in-app-description" id="store-modal-description">${description}</p>
+        </div>
+      </div>
   </div>
 </div>
 
 <style>
-
   .appStore a {
     color: #ee2568;
     text-decoration: none
@@ -62,12 +77,13 @@
     z-index: 99999;
     padding: 1em;
     position: absolute;
-    top: 10px;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
     background-color: white;
     transition-duration: 0.5s;
+    border: 16px solid rgba(0, 0, 0, 0.5);
   }
 
   .store-popup-overlay {
@@ -317,4 +333,17 @@
     background: url(./assets/img/store/close.svg) no-repeat center;
     background-size: cover;
   }
+
+  .rotating {
+    animation: rotating 2s linear infinite;
+  }
+
+  @keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
