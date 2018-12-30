@@ -37,7 +37,7 @@
   {"value": "HISTORY_START_USE", "message": "Commencer à utiliser Shuttle"},
 
   {"value": "STORE_MODAL_UNINSTALL_ADDON", "message": "Voulez vous vraiment désinstaller cette application ?"},
-  {"value": "STORE_ADD_ADDON", "message": "AJOUTER A SHUTTLE"},
+  {"value": "STORE_ADD_ADDON", "message": "AJOUTER À SHUTTLE"},
   {"value": "STORE_UNINSTALL_ADDON", "message": "DÉSINSTALLER"},
 
   {"value": "CERT_ERROR_TITLE", "message": "SITE WEB DANGEREUX"},
