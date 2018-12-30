@@ -1,13 +1,13 @@
 [
   {"value": "ADD_BOOKMARK", "message": "Ajouter un favori"},
-  {"value": "TYPE_URL", "message": "Entrez l'url de votre favori"},
+  {"value": "TYPE_URL", "message": "Entrez l'url de votre site web"},
   {"value": "CHOOSE_THIS_URL", "message": "Choisir la page active"},
   {"value": "REMOVE_BOOKMARK", "message": "Supprimer le favori ?"},
-  {"value": "REMOVE_QUICKSEARCH", "message": "Supprimer la recherche rapide ?"},
+  {"value": "REMOVE_QUICKSEARCH", "message": "Supprimer l'onglet de recherche rapide ?"},
   {"value": "QUICK_SEARCH", "message": "Entrez votre recherche rapide"},
   {"value": "QUICK_SEARCH_PLACEOLDER", "message": "Rechercher avec"},
   {"value": "SCREENSHOT_DONE", "message": "Capture d'écran réussie"},
-  {"value": "OPEN_SCREENSHOT_DIR", "message": "Ouvrire le dossier"},
+  {"value": "OPEN_SCREENSHOT_DIR", "message": "Ouvrir le dossier"},
   {"value": "UPDATE_AVAILIBLE", "message": "Une mise a jour est disponible, voulez-vous l'installer ?"},
 
   {"value": "SETTINGS_START_AT_BOOT", "message": "Lancer au démarrage"},
