@@ -233,9 +233,9 @@ let store = {
       },
 
       install (bool, uid) {
-        this.setButtonTo('loading', uid)
 
         if (bool) {
+          this.setButtonTo('loading', uid)
           addons.installApp(uid).then(() => {
             this.setButtonTo(true, uid)
           })
@@ -285,9 +285,9 @@ let store = {
       },
 
       install (bool, uid, item) {
-        this.setButtonTo('loading', uid, item)
 
         if (bool) {
+          this.setButtonTo('loading', uid, item)
           addons.installApp(uid).then(() => {
             this.setButtonTo(true, uid, item)
           })
@@ -355,6 +355,7 @@ let store = {
 
       install (bool, uid) {
         if (bool) {
+          this.setButtonTo('installing', uid)
           addons.installApp(uid)
           this.setButtonTo(true, uid)
         } else {

@@ -1,7 +1,6 @@
 const electron = require('electron')
 const ipcRenderer = electron.ipcRenderer
-
-const { settings } = require('./files.js')
+const path = require('path')
 
 let Notification = (title, ops) => {
   let text = ops.body
@@ -12,10 +11,9 @@ let Notification = (title, ops) => {
   })
 }
 
-window.__appPath = window.location.href.replace('/index.html', '')
 window.app = {
 
-  uuid: document.location.search.replace('?uuid=', ''),
+  uid: document.location.search.replace('?uid=', ''),
 
   settings: {
     set (key, value) {
@@ -57,6 +55,27 @@ window.app = {
     }
   }
 
+}
+
+String.prototype.replaceAll = (search, replacement) => {
+  var target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
+}
+
+window.__appPath = require('electron').remote.app.getPath('userData').replace(/\\/g,"/") + '/addons/' + app.uid + '/app'
+
+window.require = (id) => {
+  if (id.startsWith('./')) {
+    if (document.location.protocol === 'file:') {
+      id = require('path').join(document.location.pathname.replace('index.html', '').replace(/%20/g, ' '), id).replace(/\\/g,"/").substring(1000, 1)
+      console.log(id)
+      return module.require(id)
+    } else {
+      return module.require(path.resolve(`${__appPath}/${id}`))
+    }
+  } else {
+    return module.require(id)
+  }
 }
 
 Notification.permission = false 
