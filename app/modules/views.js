@@ -25,7 +25,7 @@ const view = {
         let webViewToCreate = document.createElement("webview")
 
         if (type === 'app') {
-          webViewToCreate.setAttribute('src', `file://${url}?uuid=${id}`)
+          webViewToCreate.setAttribute('src', `${url}?uuid=${id}`)
           webViewToCreate.setAttribute('preload', `./modules/applications.js`)
           webViewToCreate.setAttribute('nodeintegration', '')
         } else {

@@ -7,6 +7,7 @@ const electronLocalshortcut = require('@beaker/electron-localshortcut')
 require('./main/events.js')
 const contextMenu = require('./main/menu.js')
 const autoUpdater = require('./main/updater.js')
+const appServer = require('./main/appServer.js')
 const files = require('./app/modules/files.js')
 
 let normalBound

@@ -90,8 +90,8 @@ const addons = {
     // ad addon in ui
     add (uid) {
       let args = {
-        icon: `http://localhost:57661/${uid}/icon`,
-        url: `http://localhost:57661/${uid}`
+        icon: `http://localhost:57661/${uid}/icon.png`,
+        url: `http://localhost:57661/${uid}/app/index.html`
       }
 
       require('./bookmarks.js').addBookmarksInUI(uid, args.icon, args.url, 'app')
@@ -147,8 +147,8 @@ const addons = {
   
         files.apps.push({
           id: `${uid}`,
-          url: `http://localhost:57661/${uid}`,
-          icon: `http://localhost:57661/${uid}/icon`,
+          icon: `http://localhost:57661/${uid}/icon.png`,
+          url: `http://localhost:57661/${uid}/app/index.html`,
           type: 'app',
           order: 9999 + order
         })
