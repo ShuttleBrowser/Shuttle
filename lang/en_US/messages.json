@@ -59,11 +59,11 @@
   {"value": "AUTH_BAD_PASSWORD", "message": "Bad password"},
   {"value": "AUTH_USER_NOT_FOUND", "message": "User not found"},
   {"value": "AUTH_PASSWORD_DONT_MATCH", "message": "Passwords do not match"},
-  {"value": "AUTH_SERVER_ERROR", "message": "A problem has occurred with the authentication server"},
+  {"value": "AUTH_SERVER_ERROR", "message": "A problem occurred with the authentication server"},
   {"value": "AUTH_OLD_PASSWORD", "message": "Old password"},
   {"value": "AUTH_NEW_PASSWORD", "message": "New password"},
   {"value": "AUTH_CONF_PASSWORD", "message": "Confirm password"},
-  {"value": "AUTH_CHANGE_PASSWORD", "message": "change the password"},
+  {"value": "AUTH_CHANGE_PASSWORD", "message": "Change password"},
   {"value": "AUTH_INVALID_PASSWORD", "message": "Please enter a valid password"},
   {"value": "AUTH_INVALID_EMAIL", "message": "Please enter a valid email"},
 
@@ -79,7 +79,7 @@
 
   {"value": "SWITCH_WEBSITE_VERSION", "message": "Switch to mobile/desktop version"},
   {"value": "COPY_TEXT", "message": "Copy text"},
-  {"value": "OPEN_LINK_QUICK_SEARCH", "message": "Open link in quick search"},
+  {"value": "OPEN_LINK_QUICK_SEARCH", "message": "Open link in quick search tab"},
   {"value": "OPEN_LINK_BROWSER", "message": "Open link in browser"},
   {"value": "COPY_lINK", "message": "Copy link"},
   {"value": "OPEN_PICTURE_BROWSER", "message": "Open picture in browser"},
