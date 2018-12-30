@@ -59,6 +59,21 @@ const modales = {
     })
   },
 
+  removeApp (id) {
+    vex.dialog.buttons.YES.text = lang('CONTINUE_BUTTON')
+    vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
+
+    vex.dialog.confirm({
+      message: lang('STORE_MODAL_UNINSTALL_ADDON'),
+      callback: (bool) => {
+        if (bool) {
+          bookmarks.removeBookmark(id)
+          addons.uninstallApp(id)
+        }
+      }
+    })
+  },
+
   feedback (callback) {
     let inputs = []
     inputs.push(

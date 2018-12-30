@@ -221,15 +221,14 @@ let store = {
         const modalButtonText = document.querySelector('#store-modal-button-text')
 
         if (action === true) {
-          modalButton.setAttribute('onclick', `store.front.modal.install(true, '${uid}')`)
           modalButtonText.innerHTML = lang('STORE_UNINSTALL_ADDON')
-          console.log('finish')
-        } else if (action === false) {
           modalButton.setAttribute('onclick', `store.front.modal.install(false, '${uid}')`)
+        } else if (action === false) {
           modalButtonText.innerHTML = lang('STORE_ADD_ADDON')
+          modalButton.setAttribute('onclick', `store.front.modal.install(true, '${uid}')`)
         } else {
-          modalButton.setAttribute('onclick', '')
           modalButtonText.innerHTML = 'INSTALLING...'
+          modalButton.setAttribute('onclick', '')
         }
       },
 
@@ -257,14 +256,14 @@ let store = {
 
           content.innerHTML += `
           <div class="store-app-collection-item">
-            <img class="store-app-collection-item-img" src="${config.api}/store/assets/${data[i].uid}/icon" alt="">
-            <a href="#" class="store-app-collection-item-name" onclick="store.front.modal.showAppInstallation(true, '${data[i].uid}', '${data[i].name}', '${data[i].description.replace(/[\']+/, '&quot;')}')">${data[i].name}</a>
+            <img class="store-app-collection-item-img" src="${config.api}/store/assets/${data[i].uuid}/icon" alt="">
+            <a href="#" class="store-app-collection-item-name" onclick="store.front.modal.showAppInstallation(true, '${data[i].uuid}', '${data[i].name}', '${data[i].description.replace(/[\']+/, '&quot;')}')">${data[i].name}</a>
             <p class="store-app-collection-item-description">${data[i].description.substring(0, 60)}</p>
-            <a href="#" id="${itemID}" class="store-app-collection-item-add-btn" onclick="store.front.items.install(true, '${data[i].uid}', '${itemID}')"></a>
+            <a href="#" id="${itemID}" class="store-app-collection-item-add-btn" onclick="store.front.items.install(true, '${data[i].uuid}', '${itemID}')"></a>
           </div>
           `
 
-          this.setButtonTo(addons.utils.isInstalled(data[i].uid), data[i].uid, itemID)
+          this.setButtonTo(addons.utils.isInstalled(data[i].uuid), data[i].uuid, itemID)
         }
       },
 
@@ -334,20 +333,23 @@ let store = {
     
         store.back.trending().then(data => {
           trendingApp.style.backgroundImage = `url(${data.banner})`
-          this.setButtonTo(addons.utils.isInstalled(data.uid), data.uid)
+          this.setButtonTo(addons.utils.isInstalled(data.uuid), data.uuid)
         })  
       },
 
-      setButtonTo (uninstall, uid) {
+      setButtonTo (action, uid) {
         let trendingButton = document.querySelector('.store-trending-add-button')
         let trendingButtonText = document.querySelector('.store-trending-add-button-text')
 
-        if (uninstall) {
+        if (action === true) {
           trendingButtonText.innerHTML = lang('STORE_UNINSTALL_ADDON')
-          trendingButton.setAttribute('onclick', `store.install(true, '${uid}')`)
-        } else {
+          trendingButton.setAttribute('onclick', `store.front.trending.install(false, '${uid}')`)
+        } else if (action === false) {
           trendingButtonText.innerHTML = lang('STORE_ADD_ADDON')
-          trendingButton.setAttribute('onclick', `store.install(false, '${uid}')`)
+          trendingButton.setAttribute('onclick', `store.front.trending.install(true, '${uid}')`)
+        } else {
+          trendingButtonText.innerHTML = 'INSTALLING...'
+          trendingButton.setAttribute('onclick', '')
         }
       },
 
