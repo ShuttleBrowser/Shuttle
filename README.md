@@ -23,6 +23,20 @@ Shuttle's last stable version can be downloaded from either [our website](https:
 Working on Microsoft Windows (7+), GNU/Linux Debian (Xfce and Mate) and MacOS (1.9+).
 _Not deployed on MacOS_
 
+### Using git
+```
+# clone the repository
+$ git clone https://github.com/ShuttleBrowser/Shuttle.git
+
+# change the working directory to shuttle
+$ cd Shuttle
+
+# install the requirements
+$ npm install
+```
+**Note:** [Node 10.11.0](https://nodejs.org/en/) or higher is required.
+
+
 ## Getting Started
 
 > You can now help us by [translating](https://github.com/ShuttleBrowser/Shuttle/issues/49) Shuttle !
