@@ -71,7 +71,7 @@
   {"value": "SEARCH_BUTTON", "message": "Rechercher"},
   {"value": "QUIT_BUTTON", "message": "Quitter"},
   {"value": "SETTINGS_BUTTON", "message": "Options"},
-  {"value": "ABOUT_BUTTON", "message": "A propos"},
+  {"value": "ABOUT_BUTTON", "message": "À propos"},
   {"value": "YES_BUTTON", "message": "oui"},
   {"value": "NO_BUTTON", "message": "non"},
   {"value": "SHOW_SHUTTLE_BUTTON", "message": "Afficher Shuttle"},
