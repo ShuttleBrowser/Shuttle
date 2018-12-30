@@ -15,6 +15,7 @@
   <a href="https://snyk.io/test/github/robjullian/shuttle?targetFile=package.json"><img src="https://snyk.io/test/github/robjullian/shuttle/badge.svg?targetFile=package.json" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/robjullian/shuttle?targetFile=package.json" style="max-width:100%;"></a>
 </div>
 
+
 ## Installation
 
 Shuttle's last stable version can be downloaded from either [our website](https://shuttleapp.io) or [GitHub releases](https://github.com/ShuttleBrowser/Shuttle).
@@ -22,7 +23,23 @@ Shuttle's last stable version can be downloaded from either [our website](https:
 Working on Microsoft Windows (7+), GNU/Linux Debian (Xfce and Mate) and MacOS (1.9+).
 _Not deployed on MacOS_
 
+### Using git
+```
+# clone the repository
+$ git clone https://github.com/ShuttleBrowser/Shuttle.git
+
+# change the working directory to shuttle
+$ cd Shuttle
+
+# install the requirements
+$ npm install
+```
+**Note:** [Node 10.11.0](https://nodejs.org/en/) or higher is required.
+
+
 ## Getting Started
+
+> You can now help us by [translating](https://github.com/ShuttleBrowser/Shuttle/issues/49) Shuttle !
 
 On Windows, Shuttle can be launched by clicking on its shortcut which can be found directly on the desktop or from the Start menu.
 The program should then start in the notification center. Its icon can be found in the system tray, at the bottom right of the screen. Clicking on its icon will show Shuttle's main window.
@@ -101,4 +118,5 @@ The logo and all associated visuals are under the [CC BY-NC-ND 3.0](https://crea
 
 ## Current Version
 
-* 2.0.9
+* Release 2.0.9
+* Pre-release 3.0.3-beta.4
