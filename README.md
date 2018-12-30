@@ -119,4 +119,4 @@ The logo and all associated visuals are under the [CC BY-NC-ND 3.0](https://crea
 ## Current Version
 
 * Release 2.0.9
-* Pre-release 3.0.3-beta.4
+* Pre-release 3.0.4-beta.5
