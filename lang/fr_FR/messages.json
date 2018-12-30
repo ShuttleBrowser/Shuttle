@@ -33,7 +33,7 @@
   {"value": "HISTORY_TITLE", "message": "HISTORIQUE"},
   {"value": "HISTORY_CLEAR_ALL", "message": "Tout effacer"},
   {"value": "HISTORY_NO_ACTIVITY_TITLE", "message": "VOUS N'AVEZ AUCUNE ACTIVITÉ"},
-  {"value": "HISTORY_NO_ACTIVITY_P", "message": "Ils semble que vous n'avez pas encore utilisé Shuttle ou que vous ayez supprimé l'historique récemment."},
+  {"value": "HISTORY_NO_ACTIVITY_P", "message": "Il semble que vous n'avez pas encore utilisé Shuttle ou que vous ayez supprimé l'historique récemment."},
   {"value": "HISTORY_START_USE", "message": "Commencer à utiliser Shuttle"},
 
   {"value": "STORE_MODAL_UNINSTALL_ADDON", "message": "Voulez vous vraiment désinstaller cette application ?"},
@@ -46,7 +46,7 @@
   {"value": "CERT_ERROR_CONTINUE", "message": "Continuer"},
 
   {"value": "AUTH_TITLE", "message": "SHUTTLE AVEC VOUS, <span class='italic'>PARTOUT."},
-  {"value": "AUTH_DESCRIPTION", "message": "Créez un compte Shuttle pour garder<br>vos marque-pages <span class='italic'>partout</span> où vous allez."},
+  {"value": "AUTH_DESCRIPTION", "message": "Créez un compte Shuttle pour garder<br>vos favoris <span class='italic'>partout</span> où vous allez."},
   {"value": "AUTH_SIGNUP", "message": "Inscription"},
   {"value": "AUTH_EMAIL", "message": "E-mail"},
   {"value": "AUTH_PASSWORD", "message": "Mot de passe"},
@@ -78,7 +78,7 @@
 
   {"value": "SWITCH_WEBSITE_VERSION", "message": "Afficher la version mobile/bureau"},
   {"value": "COPY_TEXT", "message": "Copier le texte"},
-  {"value": "OPEN_LINK_QUICK_SEARCH", "message": "Ouvrir le lien dans une recherche rapide"},
+  {"value": "OPEN_LINK_QUICK_SEARCH", "message": "Ouvrir le lien dans un onglet de recherche rapide"},
   {"value": "OPEN_LINK_BROWSER", "message": "Ouvrir le lien dans le navigateur"},
   {"value": "COPY_lINK", "message": "Copier le lien"},
   {"value": "OPEN_PICTURE_BROWSER", "message": "Ouvrir la photo dans le navigateur"},
