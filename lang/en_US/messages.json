@@ -39,6 +39,8 @@
   {"value": "STORE_MODAL_UNINSTALL_ADDON", "message": "Do you really want to uninstall this application?"},
   {"value": "STORE_ADD_ADDON", "message": "ADD TO SHUTTLE"},
   {"value": "STORE_UNINSTALL_ADDON", "message": "UNINSTALL"},
+  {"value": "STORE_CONFIRM_UPDATE_ADDON", "message": "Update"},
+  {"value": "STORE_UPDATE_ADDON", "message": "A new update is available for this application, you want to install it ?"},
 
   {"value": "CERT_ERROR_TITLE", "message": "DANGEROUS WEBSITE"},
   {"value": "CERT_ERROR_TEXT", "message": "The website you try to access<br>content hight dangerous content."},

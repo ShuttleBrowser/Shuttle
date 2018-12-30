@@ -175,6 +175,22 @@ const modales = {
     })
   },
 
+  update () {
+    return new Promise(resolve => {
+      vex.dialog.buttons.YES.text = lang('STORE_CONFIRM_UPDATE_ADDON')
+      vex.dialog.buttons.NO.text = lang('CANCEL_BUTTON')
+      
+      vex.dialog.confirm({
+        message: lang('STORE_UPDATE_ADDON'),
+        callback: (bool) => {
+          if (bool) {
+            resolve(true)
+          }
+        }
+      })
+    })
+  },
+
   alert (message) {
     vex.dialog.open({
       message: message,

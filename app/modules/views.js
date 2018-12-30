@@ -61,7 +61,7 @@ const view = {
     }
   },
 
-  show (id, url, type) {
+  show (id, url, type, version) {
     EventsEmitter.emit('SHOW_SETTINGS', false)
     EventsEmitter.emit('SHOW_STORE', false)
     const activeWebView = 'web-content active'
@@ -72,6 +72,9 @@ const view = {
     }
     if (!document.querySelector(`#view-${id}`)) {
       this.create(id, url, type).then(() => {
+        if (type === 'app') {
+          updater.check(id, version)
+        }
         document.querySelector(`#view-${id}`).className = activeWebView
       })
     } else {

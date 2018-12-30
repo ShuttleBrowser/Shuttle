@@ -56,6 +56,12 @@
         </div>
       </div>
   </div>
+
+  <div class="updater-popup">
+    <div class="updater-popup-content">
+      <h3 class="updater-title">Updating ${name}...</h3>
+    </div>
+  </div>
 </div>
 
 <style>
@@ -70,6 +76,28 @@
 
   .store-search {
     display: none;
+  }
+
+  .updater-popup {
+    display: none;
+    z-index: 99999;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5)
+  }
+
+  .updater-popup-content {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 80%;
+    height: 60px;
+    padding: 1em;
+    text-align: center;
   }
 
   .store-in-app {

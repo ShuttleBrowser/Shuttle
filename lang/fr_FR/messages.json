@@ -39,6 +39,8 @@
   {"value": "STORE_MODAL_UNINSTALL_ADDON", "message": "Voulez vous vraiment désinstaller cette application ?"},
   {"value": "STORE_ADD_ADDON", "message": "AJOUTER À SHUTTLE"},
   {"value": "STORE_UNINSTALL_ADDON", "message": "DÉSINSTALLER"},
+  {"value": "STORE_CONFIRM_UPDATE_ADDON", "message": "Mettre a jour"},
+  {"value": "STORE_UPDATE_ADDON", "message": "Une nouvelle mise a jour est disponible pour cette application, voulez vous l'installer ?"},
 
   {"value": "CERT_ERROR_TITLE", "message": "SITE WEB DANGEREUX"},
   {"value": "CERT_ERROR_TEXT", "message": "Le site web auquel vous tentez d'accéder<br>contient du contenu dangereux."},

@@ -10,7 +10,6 @@ app.get(/^(.+)$/, (req, res) => {
   } catch (error) {
     res.status(404).send('Addon not found !')
   }
-  console.log(req.params[0])
 })
 
 app.listen(port, () => {
