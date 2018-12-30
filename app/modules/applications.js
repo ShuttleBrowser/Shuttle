@@ -25,7 +25,7 @@ window.app = {
   
     get (key) {
       return new Promise((resolve) => {
-        if (key === 'token' && app.uuid === 'Kwarn') {
+        if (key === 'token' && app.uid === '4465fdb2-e838-4742-ad52-d5bf508b21f2') {
           ipcRenderer.sendToHost('GET_SETTINGS', `settings.userToken`)
         } else {
           ipcRenderer.sendToHost('GET_SETTINGS', `settings.addon.${app.uuid}.${key}`)
