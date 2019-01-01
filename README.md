@@ -12,7 +12,7 @@
 
 <div align="center">
   <img src="https://api.travis-ci.org/KazeJiyu/Shuttle.svg?branch=master">   
-  <a href="https://snyk.io/test/github/robjullian/shuttle?targetFile=package.json"><img src="https://snyk.io/test/github/robjullian/shuttle/badge.svg?targetFile=package.json" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/robjullian/shuttle?targetFile=package.json" style="max-width:100%;"></a>
+  <a href="https://snyk.io/test/github/ShuttleBrowser/shuttle?targetFile=package.json"><img src="https://snyk.io/test/github/ShuttleBrowser/shuttle/badge.svg?targetFile=package.json" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/ShuttleBrowser/shuttle?targetFile=package.json" style="max-width:100%;"></a>
 </div>
 
 
@@ -109,7 +109,7 @@ Shuttle stores informations about your current bookmarks in a JSON file:
 
 Currently maintained by [robjullian](https://github.com/robjullian), [KazeJiyu](https://github.com/KazeJiyu), [Vahelnir](https://github.com/Vahelnir) and [TheRolf](https://github.com/TheRolfFR).
 
-See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/ShuttleBrowser/Shuttle/contributors) who participated in this project.
 
 ## License
 
@@ -118,5 +118,5 @@ The logo and all associated visuals are under the [CC BY-NC-ND 3.0](https://crea
 
 ## Current Version
 
-* Release 2.0.9
-* Pre-release 3.0.4-beta.5
+* Release [2.0.9](https://github.com/ShuttleBrowser/Shuttle/releases)
+* Pre-release [3.0.4-beta.5](https://github.com/ShuttleBrowser/Shuttle/releases)
