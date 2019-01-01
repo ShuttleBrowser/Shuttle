@@ -78,6 +78,7 @@
 
       showAuth () {
         loadFile('auth', false, () => {
+          auth.init()
           console.log('[INFO] > Auth show')
         })
       },

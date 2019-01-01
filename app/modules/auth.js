@@ -1,5 +1,6 @@
 const config = require('./config.json')
 const files = require('./files')
+const lang = require('../../lang/lang.js')
 
 let isSignUp = false
 
