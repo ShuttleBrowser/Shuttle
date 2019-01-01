@@ -109,7 +109,7 @@ Shuttle stores informations about your current bookmarks in a JSON file:
 
 Currently maintained by [robjullian](https://github.com/robjullian), [KazeJiyu](https://github.com/KazeJiyu), [Vahelnir](https://github.com/Vahelnir) and [TheRolf](https://github.com/TheRolfFR).
 
-See also the list of [contributors](https://github.com/ShuttleLtd/Shuttle/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/ShuttleBrowser/Shuttle/contributors) who participated in this project.
 
 ## License
 
