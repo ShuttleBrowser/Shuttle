@@ -51,7 +51,7 @@ A bookmark can be deleted by right-clicking on its icon.
 The settings can be edited by clicking on the gear. They make possible to manage your preferences by offering, for instance, to launch Shuttle on boot or to force Shuttle to stay opened.
 
 All updates are automatic and new versions are checked at the launch of the application. You can also search for updates by clicking on the arrows below the settings.
-If you need help to setup or use Shuttle, or you want to report a bug, please contact us at [support@getshuttle.xyz](mailto:support@getshuttle.xyz).
+If you need help to setup or use Shuttle, or you want to report a bug, please contact us at [support@shuttleapp.io](mailto:support@shuttleapp.io).
 
 Stay in touch by joining us on [Twitter](https://twitter.com/shuttle_app) or [Discord](discord.gg/QCFdGq7).
 
