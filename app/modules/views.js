@@ -1,6 +1,7 @@
 const view = {
   mobileUserAgent: 'Mozilla/5.0 (Linux; Android 9.0; Pixel XL 2 Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.181 Mobile Safari/537.36',
   desktopUserAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+  lastState: false,
 
   load () {
     let landingPageUrl = `file://${require('electron').remote.app.getAppPath()}/app/views/changelog.html`.replace(/\\/g,"/")
@@ -235,27 +236,29 @@ const view = {
   },
 
   setFullscreen: (bool, view) => {
-    let bookmarksBar = document.querySelector('.bar')
-    let controlBar = document.querySelector('.control-bar')
+    if(bool != this.lastState) {
+      this.lastState = bool
 
-    console.log(bool)
-
-    if (bool) {
-      bookmarksBar.style.display = 'none'
-      controlBar.style.display = 'none'
-      document.querySelector('.add-btn').style.display = 'none'
-      view.style.left = '0px'
-    } else {
-      bookmarksBar.style.display = 'block'
-      controlBar.style.display = 'block'
-      document.querySelector('.add-btn').style.display = 'block'
-      view.style.left = '35px'
-      view.executeJavaScript(`
-        document.webkitExitFullscreen()
-      `)
+      let bookmarksBar = document.querySelector('.bar')
+      let controlBar = document.querySelector('.control-bar')
+      
+      if (bool) {
+        bookmarksBar.style.display = 'none'
+        controlBar.style.display = 'none'
+        document.querySelector('.add-btn').style.display = 'none'
+        view.style.left = '0px'
+      } else {
+        bookmarksBar.style.display = 'block'
+        controlBar.style.display = 'block'
+        document.querySelector('.add-btn').style.display = 'block'
+        view.style.left = '35px'
+        view.executeJavaScript(`
+          document.webkitExitFullscreen()
+        `)
+      }
+  
+      require('electron').ipcRenderer.send('SetBounds', bool)
     }
-
-    require('electron').ipcRenderer.send('SetBounds', bool)
   },
 
   saveHistory: (url, title) => {
