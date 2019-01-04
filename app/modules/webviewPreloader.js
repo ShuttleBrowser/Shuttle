@@ -67,12 +67,7 @@ document.addEventListener('contextmenu', (event) => {
     e = e.parentElement
   }
 
-  let items = [{
-    label: lang('SWITCH_WEBSITE_VERSION'),
-    click() {
-      switchVersion()
-    }
-  }]
+  let items = [];
 
   let text = getSelectionText()
   if(text !== '') {
@@ -84,7 +79,13 @@ document.addEventListener('contextmenu', (event) => {
       click() {
         copyToClipboard(text)
       }
-    });
+    },
+    {
+      label: lang('SEARCH_TEXT_QUICKSEARCH'),
+      click() {
+        openTab(text)
+      }
+    })
   }
   
   if(a !== undefined) {
@@ -128,6 +129,15 @@ document.addEventListener('contextmenu', (event) => {
         copyToClipboard(img.src)
       }
     })
+  }
+  
+  if(text === '' && a === undefined && img === undefined) {
+    items = [{
+      label: lang('SWITCH_WEBSITE_VERSION'),
+      click() {
+        switchVersion()
+      }
+    }]
   }
   
   Menu.buildFromTemplate(items).popup(electron.remote.getCurrentWindow())

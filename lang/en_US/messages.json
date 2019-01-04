@@ -81,6 +81,7 @@
 
   {"value": "SWITCH_WEBSITE_VERSION", "message": "Switch to mobile/desktop version"},
   {"value": "COPY_TEXT", "message": "Copy text"},
+  {"value": "SEARCH_TEXT_QUICKSEARCH", "message": "Search text in quick search tab"},
   {"value": "OPEN_LINK_QUICK_SEARCH", "message": "Open link in quick search tab"},
   {"value": "OPEN_LINK_BROWSER", "message": "Open link in browser"},
   {"value": "COPY_lINK", "message": "Copy link"},

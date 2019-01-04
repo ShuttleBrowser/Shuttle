@@ -80,6 +80,7 @@
 
   {"value": "SWITCH_WEBSITE_VERSION", "message": "Afficher la version mobile/bureau"},
   {"value": "COPY_TEXT", "message": "Copier le texte"},
+  {"value": "SEARCH_TEXT_QUICKSEARCH", "message": "Rechercher le texte dans un onglet de recherche rapide"},
   {"value": "OPEN_LINK_QUICK_SEARCH", "message": "Ouvrir le lien dans un onglet de recherche rapide"},
   {"value": "OPEN_LINK_BROWSER", "message": "Ouvrir le lien dans le navigateur"},
   {"value": "COPY_lINK", "message": "Copier le lien"},

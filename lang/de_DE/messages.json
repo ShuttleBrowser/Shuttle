@@ -78,6 +78,7 @@
 
   {"value": "SWITCH_WEBSITE_VERSION", "message": "Mobile/Desktop Version anzeigen"},
   {"value": "COPY_TEXT", "message": "Text kopieren"},
+  {"value": "SEARCH_TEXT_QUICKSEARCH", "message": "Suchen text in einer Schnellsuche Tab"},
   {"value": "OPEN_LINK_QUICK_SEARCH", "message": "Öffnen Sie den Link in einer Schnellsuche Tab"},
   {"value": "OPEN_LINK_BROWSER", "message": "Öffnen Sie den Link im Browser"},
   {"value": "COPY_lINK", "message": "Link kopieren"},
