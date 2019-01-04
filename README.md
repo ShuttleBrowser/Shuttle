@@ -84,15 +84,24 @@ Shuttle stores informations about your current bookmarks in a JSON file:
   "bookmarks": [
     {
       "id": 1,
-      "url": "google.com"
+      "type": "website",
+      "url": "http://google.com",
+      "icon": "https://api.faviconkit.com/google.com/144",
+      "order": 1
     },
     {
       "id": 2,
-      "url": "instagram.com"
+      "type": "website",
+      "url": "http://intagram.com",
+      "icon": "https://api.faviconkit.com/intagram.com/144",
+      "order": 2
     },
     {
       "id": 3,
-      "url": "twitter.com"
+      "type": "website",
+      "url": "http://twitter.com",
+      "icon": "https://api.faviconkit.com/twitter.com/144",
+      "order": 3
     }
   ]
 }
