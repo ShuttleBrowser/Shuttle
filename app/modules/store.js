@@ -183,6 +183,13 @@ const addons = {
 }
 
 let store = {
+  installKwarn () {
+    console.log('[EXPERIMENTAL] > installing Kwarn...')
+    addons.installApp('4465fdb2-e838-4742-ad52-d5bf508b21f2', '1.0.0').then(() => {
+      console.log('[EXPERIMENTAL] > Kwarn installed !')
+    })
+  },
+
   front: {
     // select the store home page
     home: document.querySelector('.store-home'),
