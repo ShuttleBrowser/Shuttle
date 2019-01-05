@@ -23,7 +23,8 @@
   <script>
     window.require = require
 
-    const { loadFile, event, bookmarks, view, files, auth, settings, controlBar, modales, store, addons, sync, updater, tempAdapter } = require('./modules/index.js')
+    const { event, bookmarks, view, auth, settings, controlBar, modales, files, loadFile, sync, updater, addons, store } = require('./modules/index.js')
+
     const { ipcRenderer } = require('electron')
     const lang = require('../lang/lang.js')
     const Sortable = require('./assets/js/Sortable.min.js')
@@ -69,9 +70,15 @@
               settings.setAccountBtn()
               settings.setSearchEngineSelect()
             })
-            loadFile('appStore', '.store').then(() => {
-              store.back.runListener()
-            })
+            if (files.settings.getValue('settings.experimental') === true) {
+              loadFile('appStore', '.store').then(() => {
+                store.back.runListener()
+              })
+            } else {
+              loadFile('storeInBuild', '.store').then(() => {
+                store.back.runListener()
+              })
+            }
           })
         })
       },

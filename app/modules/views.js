@@ -224,10 +224,12 @@ const view = {
       })
 
       webviewToListen.addEventListener('enter-html-full-screen', () => {
+        console.log('open fullscreen')
         this.setFullscreen(true, webviewToListen)
       })
       
       webviewToListen.addEventListener('leave-html-full-screen', () => {
+        console.log('quit fullscreen')
         this.setFullscreen(false, webviewToListen)
       })
 
@@ -235,27 +237,26 @@ const view = {
   },
 
   setFullscreen: (bool, view) => {
-    let bookmarksBar = document.querySelector('.bar')
-    let controlBar = document.querySelector('.control-bar')
-
-    console.log(bool)
+    const bookmarksBar = document.querySelector('.bar')
+    const controlBar = document.querySelector('.control-bar')
+    const addButton = document.querySelector('.add-btn')
 
     if (bool) {
       bookmarksBar.style.display = 'none'
       controlBar.style.display = 'none'
-      document.querySelector('.add-btn').style.display = 'none'
+      addButton.style.display = 'none'
       view.style.left = '0px'
     } else {
       bookmarksBar.style.display = 'block'
       controlBar.style.display = 'block'
-      document.querySelector('.add-btn').style.display = 'block'
+      addButton.style.display = 'none'
       view.style.left = '35px'
       view.executeJavaScript(`
         document.webkitExitFullscreen()
       `)
     }
 
-    require('electron').ipcRenderer.send('SetBounds', bool)
+    require('electron').ipcRenderer.send('SET_FULLSCREEN', bool)
   },
 
   saveHistory: (url, title) => {

@@ -184,10 +184,12 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
   }, 5)
 })
 
-ipcMain.on('SetBounds', (event, bool) => {
+ipcMain.on('SET_FULLSCREEN', (event, bool) => {
   if (bool) {
-    mb.window.setBounds(fullscreenBounds)
+    mb.setOption('fullscreen', true)
+    console.log('show fullscreen')
   } else {
-    mb.window.setBounds(normalBounds)
+    mb.setOption('fullscreen', false)
+    console.log('quit fullscreen')
   }
 })

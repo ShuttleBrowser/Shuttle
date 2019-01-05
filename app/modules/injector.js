@@ -6,6 +6,8 @@ module.exports = (view, content , callback) => {
   return new Promise((resolve) => {
     let filePath = path.resolve(`${__dirname}/../views/${view}.html`)
 
+    console.log(view)
+
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) throw err
       if (content) {
