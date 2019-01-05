@@ -82,22 +82,24 @@ app.on('ready', () => {
   })
   
   mb.window.on('move', () => {
-    normalBounds.x = mb.window.getBounds().x
-    normalBounds.y = mb.window.getBounds().y
+    if(mb.window.getBounds().x != 0) {
+      normalBounds.x = mb.window.getBounds().x
+      normalBounds.y = mb.window.getBounds().y
+    }
   })
 
   globalShortcut.register('CmdOrCtrl+Shift+X', () => {
     if (mb.window.isVisible()) {
       mb.hideWindow()
-      console.log('hide window')
     } else {
       mb.showWindow()
-      console.log('show window')
     }
   })
 
   electronLocalshortcut.register(mb.window, 'Escape', () => {
-    mb.window.webContents.send('SHORTCUT_QUIT_FULLSCREEN')
+    if(mb.window.isFullScreen()) {
+      mb.window.webContents.send('SHORTCUT_QUIT_FULLSCREEN')
+    }
   })
 
   electronLocalshortcut.register(mb.window, 'CmdOrCtrl+P', () => {
@@ -184,7 +186,12 @@ ipcMain.on('SettingSetAlwaysOnTop', (event, arg) => {
   }, 5)
 })
 
+<<<<<<< HEAD
 ipcMain.on('SET_FULLSCREEN', (event, bool) => {
+=======
+ipcMain.on('SetBounds', (event, bool) => {
+  mb.window.setFullScreen(bool)
+>>>>>>> 9e0cfe54a3797363b264a9894e0c30ba206eefe6
   if (bool) {
     mb.setOption('fullscreen', true)
     console.log('show fullscreen')

@@ -1,0 +1,53 @@
+<div id="sotre_soon">
+  <img src="assets/img/store/soon.svg" alt="No activity">
+  <h2 id="sotre_soon_title">COMMING SOON</h2>
+  <p id="sotre_soon_p">We working like never for<br>building you an amazing store !</p>
+  <br>
+  <a href="#" onclick="view.show(0)" id="sotre_soon_back_home">Back to home</a>
+</div>
+<a href="#" onclick="require('electron').shell.openExternal('https://doc.shuttleapp.io')" id="sotre_soon_learn_more">Learn more</a>
+
+<style>
+  #sotre_soon {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+    font-size: .8em;
+    text-align: center;
+    font-weight: 300;
+    width: 70%;
+  }
+
+  #sotre_soon img {
+    height: 65px;
+  }
+
+  #sotre_soon_title {
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  #sotre_soon_p {
+    font-weight: 300;
+    color: #919192;
+    font-size: 15px;
+  }
+
+  #sotre_soon_back_home {
+    text-decoration: none;
+    color: #e71f5f;
+    font-weight: regular;
+    font-size: 15px;
+  }
+
+  #sotre_soon_learn_more {
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    color: #919192;
+    font-size: 9pt;
+    text-decoration: none;
+  }
+</style>

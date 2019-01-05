@@ -84,15 +84,24 @@ Shuttle stores informations about your current bookmarks in a JSON file:
   "bookmarks": [
     {
       "id": 1,
-      "url": "google.com"
+      "type": "website",
+      "url": "http://google.com",
+      "icon": "https://api.faviconkit.com/google.com/144",
+      "order": 1
     },
     {
       "id": 2,
-      "url": "instagram.com"
+      "type": "website",
+      "url": "http://intagram.com",
+      "icon": "https://api.faviconkit.com/intagram.com/144",
+      "order": 2
     },
     {
       "id": 3,
-      "url": "twitter.com"
+      "type": "website",
+      "url": "http://twitter.com",
+      "icon": "https://api.faviconkit.com/twitter.com/144",
+      "order": 3
     }
   ]
 }
@@ -119,4 +128,4 @@ The logo and all associated visuals are under the [CC BY-NC-ND 3.0](https://crea
 ## Current Version
 
 * Release [2.0.9](https://github.com/ShuttleBrowser/Shuttle/releases)
-* Pre-release [3.0.4-beta.6](https://github.com/ShuttleBrowser/Shuttle/releases)
+* Pre-release [3.0.5-beta.6](https://github.com/ShuttleBrowser/Shuttle/releases)
