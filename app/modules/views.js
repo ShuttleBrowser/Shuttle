@@ -226,12 +226,12 @@ const view = {
 
       webviewToListen.addEventListener('enter-html-full-screen', () => {
         console.log('open fullscreen')
-        this.setFullscreen(true, webviewToListen)
+        // this.setFullscreen(true, webviewToListen)
       })
       
       webviewToListen.addEventListener('leave-html-full-screen', () => {
         console.log('quit fullscreen')
-        this.setFullscreen(false, webviewToListen)
+        // this.setFullscreen(false, webviewToListen)
       })
 
     }
