@@ -62,6 +62,26 @@ const auth = {
     }
   },
 
+  verifyToken () {
+    let body = {
+      token: files.settings.getValue('settings.userToken')
+    }
+  
+    if (body.token !== '' && body.token !== undefined) {
+      fetch(`${config.api}/auth/verif`, {
+        method: 'post',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' }
+      }).then(res => res.json())
+        .then((data) => {
+          console.log(data)
+          if (data.message !== 'success') {
+            this.logout()
+          }
+        })
+    }
+  },
+
   signup () {
     let emailTextBox = document.getElementById('email_textbox').value
     let passwordTextBox = document.getElementById('pass_textbox').value

@@ -40,6 +40,7 @@
           files.settings.setValue('settings.firstRun', false)
         } else {
           this.showBrowser()
+          auth.verifyToken()
         }
         this.frame(files.settings.getValue('settings.frame'))
       },
