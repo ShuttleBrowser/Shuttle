@@ -1,5 +1,5 @@
 // const winston = require('winston')
-const {dialog, app} = require('electron')
+const {dialog, app, shell} = require('electron')
 const {autoUpdater} = require('electron-updater')
 const lang = require(`../lang/lang.js`)
 
@@ -11,8 +11,6 @@ autoUpdater.setFeedURL({
   provider: 'generic',
   url: `http://update.shuttleapp.io/update/latest/${process.platform}/`
 })
-
-console.log(autoUpdater.getFeedURL())
 
 app.on('ready', () => {
   autoUpdater.checkForUpdates()
@@ -27,6 +25,10 @@ autoUpdater.on('checking-for-update', () => {
 })
 autoUpdater.on('update-available', info => {
   console.log('update available')
+
+  if (process.platform != 'win32') {
+    notifyUpdateOnMacLinux(process.platform)
+  }
 })
 autoUpdater.on('update-not-available', info => {
   console.log('no update available')
@@ -50,6 +52,23 @@ let notifyQuitAndinstall = () => {
   })
   if (choice === 0) {
     autoUpdater.quitAndInstall()
+  }
+}
+
+let notifyUpdateOnMacLinux = (platform) => {
+  let choice = dialog.showMessageBox({
+    type: 'question',
+    buttons: [`${lang('CONTINUE_BUTTON')}`, `${lang('CANCEL_BUTTON')}`],
+    title: 'Updater',
+    message: 'Une nouvel version est disponible, voulez vous la télécharger ?'
+  })
+  if (choice === 0) {
+    if (platform === 'linux') {
+      shell.openExternal('http://update.shuttleapp.io/update/latest/linux/Shuttle-Linux-x86_64.AppImage')
+    }
+    if (platform === 'darwin') {
+      shell.openExternal('http://update.shuttleapp.io/update/latest/mac/Shuttle-MacOS.dmg')
+    }
   }
 }
 
