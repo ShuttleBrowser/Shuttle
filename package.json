@@ -33,7 +33,7 @@
     "vex-js": "^4.1.0"
   },
   "devDependencies": {
-    "electron": "^4.0.0",
+    "electron": "^4.0.1",
     "electron-builder": "^20.36.2"
   }
 }

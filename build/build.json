@@ -49,7 +49,6 @@
 
   "dmg": {
     "artifactName": "Shuttle-MacOS.dmg",
-    "background": "build/background.png",
     "window": {
       "height": 380,
       "width": 540
