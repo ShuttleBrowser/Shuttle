@@ -43,6 +43,8 @@ const shuttle = {
       preloadWindow: true,
       alwaysOnTop: files.settings.getValue('settings.StayOpen') || false,
       resizable: false,
+      contextIsolation: false,
+      nodeIntegration: true,
       webPreferences: {
         webSecurity: false,
         'overlay-fullscreen-video': true,
