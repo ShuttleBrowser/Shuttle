@@ -12,6 +12,8 @@ const files = require('./app/modules/files.js')
 let normalBound
 let fullscreenBounds
 
+app.requestSingleInstanceLock()
+
 let ShuttleAutoLauncher = new AutoLaunch({
   name: 'Shuttle'
 })
@@ -43,6 +45,8 @@ const shuttle = {
       preloadWindow: true,
       alwaysOnTop: files.settings.getValue('settings.StayOpen') || false,
       resizable: false,
+      contextIsolation: false,
+      nodeIntegration: true,
       webPreferences: {
         webSecurity: false,
         'overlay-fullscreen-video': true,

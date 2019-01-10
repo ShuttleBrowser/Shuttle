@@ -1,6 +1,5 @@
-const electron = require('electron')
-const Menu = electron.remote.Menu
-const ipcRenderer = electron.ipcRenderer
+let {remote, ipcRenderer} = require('electron')
+const Menu = remote.Menu
 const lang = require('../../lang/lang')
 
 let Notification = (title, ops) => {
@@ -140,5 +139,5 @@ document.addEventListener('contextmenu', (event) => {
     }]
   }
   
-  Menu.buildFromTemplate(items).popup(electron.remote.getCurrentWindow())
+  Menu.buildFromTemplate(items).popup(remote.getCurrentWebContents())
 })

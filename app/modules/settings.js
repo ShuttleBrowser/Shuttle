@@ -18,7 +18,7 @@ EventsEmitter.on('SHOW_SETTINGS', (bool) => {
   let settingsView = document.querySelector('.settings')
 
   if(document.querySelector('.historyModal')) {
-    document.querySelector('.historyModal').style.display = 'none'
+    settings.showHistory(false)
   }
 
   if (bool === true) {
