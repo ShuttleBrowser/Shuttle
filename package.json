@@ -5,6 +5,7 @@
   "homepage": "https://shuttleapp.io",
   "main": "main.js",
   "scripts": {
+    "electron": "node_modules\\electron\\dist\\electron.exe .",
     "run": "node main.js",
     "build-linux": "electron-builder --config ./build/build.json --linux",
     "build-mac": "electron-builder --config ./build/build.json --mac",
