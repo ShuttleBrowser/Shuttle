@@ -12,6 +12,8 @@ const files = require('./app/modules/files.js')
 let normalBound
 let fullscreenBounds
 
+app.requestSingleInstanceLock()
+
 let ShuttleAutoLauncher = new AutoLaunch({
   name: 'Shuttle'
 })
