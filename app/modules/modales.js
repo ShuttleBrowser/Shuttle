@@ -197,15 +197,14 @@ const modales = {
     <br>
     <br>
     <ul>
-      <h5 id="changelogT">Select search engine</h5>
+      <h5 id="changelogT">Add search engine selector</h5>
       <h5 id="changelogT">Add search bar in landing page</h5>
       <h5 id="changelogT">Add multiple quick search</h5>
-      <h5 id="changelogT"></h5>
-      <h5 id="changelogT">Reorder bookmarks</h5>
-      <h5 id="changelogT">A Bookmark is like a new tab</h5>
-      <h5 id="changelogT">Add history</h5>
-      <h5 id="changelogT">Block dangerous websites</h5>
-      <h5 id="changelogT">Rewrite "Report Bug" in settings</h5>
+      <h5 id="changelogT">Add history page</h5>
+      <h5 id="changelogT">Add dangerous websites blocker</h5>
+      <h5 id="changelogT">Fix bookmarks reordering</h5>
+      <h5 id="changelogT">Fix bookmark status</h5>
+      <h5 id="changelogT">Fix "Report Bug" in settings</h5>
     </ul>
 
     <style>
