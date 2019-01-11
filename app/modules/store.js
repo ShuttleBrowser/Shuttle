@@ -378,13 +378,22 @@ let store = {
 
     },
 
+    setLangTemp () {
+      document.querySelector('#store_soon_title').innerHTML = lang('STORE_BUILD_TITLE')
+      document.querySelector('#store_soon_p').innerHTML = lang('STORE_BUILD_TEXT')
+      document.querySelector('#store_soon_back_home').innerHTML = lang('STORE_BUILD_BACK')
+      document.querySelector('#store_soon_learn_more').innerHTML = lang('STORE_BUILD_MORE')
+    },
+
     showStore (bool) {
+
       storeView = document.querySelector('.store')
       storeIsShow = store.front.storeIsShow
     
       if (bool === true) {
-        store.back.recent()
-        store.front.trending.load()
+        this.setLangTemp()
+        // store.back.recent()
+        // store.front.trending.load()
         storeView.style.display = 'block'
         storeIsShow = true
       } else if (bool === false) {
@@ -395,10 +404,11 @@ let store = {
           storeView.style.display = 'none'
           storeIsShow = false
         } else {
-          store.back.recent()
-          store.front.trending.load()
+          // store.back.recent()
+          // store.front.trending.load()
           storeView.style.display = 'block'
           storeIsShow = true
+          this.setLangTemp()
         }
       }
     }
