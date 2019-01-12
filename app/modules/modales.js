@@ -198,6 +198,7 @@ const modales = {
     <br>
     <ul>
       <h5 id="changelogT">Add search engine selector</h5>
+      <h5 id="changelogT">Add contextmenu</h5>
       <h5 id="changelogT">Add search bar in landing page</h5>
       <h5 id="changelogT">Add multiple quick search</h5>
       <h5 id="changelogT">Add history page</h5>
