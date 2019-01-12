@@ -10,16 +10,28 @@ if (process.type === 'renderer') {
 }
 
 const userData = appPath.getPath('userData')
-const confDir = `${userData}/settings`
+const confDir = `${userData}/settings/`
 const settingsFilePath = `${confDir}/settings.json`
 const bookamrksFilePath = `${confDir}/bookmarks.json`
 const modulesFilePath = `${confDir}/modules.json`
 const applicationsFilePath = `${confDir}/applications.json`
 
+function checkDirectory(directory, callback) {  
+  fs.stat(directory, function(err, stats) {
+    //Check if error defined and the error code is "not exists"
+    if (err && err.errno === 34) {
+      //Create the directory, call the callback.
+      fs.mkdir(directory, callback);
+    } else {
+      //just in case there was a different error:
+      callback(err)
+    }
+  });
+}
+
 const checkSettings = (callback) => {
-  fs.exists(confDir, (exists) => {
-    console.log(exists)
-    if (exists === false) {
+  fs.stat(confDir, (err, stats) => {
+    if (err) {
       console.log('[FILES] > creating settings dir')
       require('mkdirp')(confDir, (err) => {
       if (err) throw err
