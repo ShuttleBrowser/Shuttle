@@ -7,11 +7,10 @@ if (process.type === 'renderer') {
 }
 
 const userData = appPath.getPath('userData')
-const confDir = `${userData}/settings`
-const settingsFilePath = `${confDir}/settings.json`
-const bookamrksFilePath = `${confDir}/bookmarks.json`
-const modulesFilePath = `${confDir}/modules.json`
-const applicationsFilePath = `${confDir}/applications.json`
+const settingsFilePath = `${userData}/settings.json`
+const bookamrksFilePath = `${userData}/bookmarks.json`
+const modulesFilePath = `${userData}/modules.json`
+const applicationsFilePath = `${userData}/applications.json`
 
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')

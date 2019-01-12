@@ -10,51 +10,33 @@ if (process.type === 'renderer') {
 }
 
 const userData = appPath.getPath('userData')
-const confDir = `${userData}/settings/`
-const settingsFilePath = `${confDir}/settings.json`
-const bookamrksFilePath = `${confDir}/bookmarks.json`
-const modulesFilePath = `${confDir}/modules.json`
-const applicationsFilePath = `${confDir}/applications.json`
-
-function checkDirectory(directory, callback) {  
-  fs.stat(directory, function(err, stats) {
-    //Check if error defined and the error code is "not exists"
-    if (err && err.errno === 34) {
-      //Create the directory, call the callback.
-      fs.mkdir(directory, callback);
-    } else {
-      //just in case there was a different error:
-      callback(err)
-    }
-  });
-}
+const settingsFilePath = `${userData}/settings.json`
+const bookamrksFilePath = `${userData}/bookmarks.json`
+const modulesFilePath = `${userData}/modules.json`
+const applicationsFilePath = `${userData}/applications.json`
 
 const checkSettings = (callback) => {
-  fs.stat(confDir, (err, stats) => {
-    if (err) {
-      console.log('[FILES] > creating settings dir')
-      require('mkdirp')(confDir, (err) => {
-      if (err) throw err
+  fs.exists(settingsFilePath, (exist) => {
+    if (exist === false) {
 
-        fs.writeFile(settingsFilePath, '', (err) => {
+      fs.writeFile(settingsFilePath, '', (err) => {
+        if (err) throw err
+        console.log('[FILES] > creating settings.json')
+        fs.writeFile(bookamrksFilePath, '', (err) => {
           if (err) throw err
-          console.log('[FILES] > creating settings.json')
-          fs.writeFile(bookamrksFilePath, '', (err) => {
+          console.log('[FILES] > creating bookmarks.json')
+          fs.writeFile(modulesFilePath, '', (err) => {
             if (err) throw err
-            console.log('[FILES] > creating bookmarks.json')
-            fs.writeFile(modulesFilePath, '', (err) => {
+            console.log('[FILES] > creating modules.json')
+            fs.writeFile(applicationsFilePath, '', (err) => {
               if (err) throw err
-              console.log('[FILES] > creating modules.json')
-              fs.writeFile(applicationsFilePath, '', (err) => {
-                if (err) throw err
-                console.log('[FILES] > creating applications.json')
-                callback()
-              })
+              console.log('[FILES] > creating applications.json')
+              callback()
             })
           })
         })
-
       })
+
     } else {
       console.log('[FILES] > Settings dir alreay exist')
       callback()
