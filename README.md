@@ -127,5 +127,5 @@ The logo and all associated visuals are under the [CC BY-NC-ND 3.0](https://crea
 
 ## Current Version
 
-* Release [3.0.9](https://github.com/ShuttleBrowser/Shuttle/releases)
+* Release [3.0.10](https://github.com/ShuttleBrowser/Shuttle/releases)
 * Pre-release [3.0.7-beta.8](https://github.com/ShuttleBrowser/Shuttle/releases)
