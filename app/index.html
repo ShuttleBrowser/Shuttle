@@ -26,6 +26,7 @@
     const { event, bookmarks, view, auth, settings, controlBar, modales, files, loadFile, sync, updater, addons, store } = require('./modules/index.js')
 
     const { ipcRenderer } = require('electron')
+    const { app } = require('electron').remote
     const lang = require('../lang/lang.js')
     const Sortable = require('./assets/js/Sortable.min.js')
 
@@ -57,6 +58,12 @@
 
       showBrowser () {
         loadFile('browser').then(() => {
+
+          if (files.settings.getValue('settings.version') === undefined || files.settings.getValue('settings.version') != app.getVersion()) {
+            files.settings.setValue('settings.version', app.getVersion())
+            modales.changelog()
+          }
+
           bookmarks.loadBookmarks().then(() => {
             view.load()
             const el = document.querySelector('.nav-zone .bkms')
