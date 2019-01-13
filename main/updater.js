@@ -67,7 +67,7 @@ let notifyUpdateOnMacLinux = (platform) => {
       shell.openExternal('http://update.shuttleapp.io/update/latest/linux/Shuttle-Linux-x86_64.AppImage')
     }
     if (platform === 'darwin') {
-      shell.openExternal('http://update.shuttleapp.io/update/latest/mac/Shuttle-MacOS.dmg')
+      shell.openExternal('http://update.shuttleapp.io/update/latest/darwin/Shuttle-MacOS.dmg')
     }
   }
 }
