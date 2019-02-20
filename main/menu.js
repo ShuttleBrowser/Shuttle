@@ -2,7 +2,7 @@ const { Menu } = require('electron')
 const lang = require('../lang/lang.js')
 
 module.exports = Menu.buildFromTemplate([
-  // about btn
+  // show shuttle btn
   {
     label: lang('SHOW_SHUTTLE_BUTTON'),
     click () {

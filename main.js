@@ -115,7 +115,6 @@ const checkSettings = (callback) => {
 
       mb.tray.setContextMenu(require('./main/menu.js'))
       mb.window.setMenu(null)
-      mb.showWindow()
 
       electronLocalshortcut.register(mb.window, 'Escape', () => {
         if(mb.window.isFullScreen()) {
