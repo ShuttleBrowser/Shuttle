@@ -1,7 +1,5 @@
 let appPath
 
-const fs = require('fs')
-
 if (process.type === 'renderer') {
   appPath = require('electron').remote.app
 } else {
@@ -9,18 +7,10 @@ if (process.type === 'renderer') {
 }
 
 const userData = appPath.getPath('userData')
-
 const settingsFilePath = `${userData}/settings.json`
 const bookamrksFilePath = `${userData}/bookmarks.json`
 const modulesFilePath = `${userData}/modules.json`
 const applicationsFilePath = `${userData}/applications.json`
-
-if (fs.existsSync(settingsFilePath) === false) {
-  fs.writeFileSync(settingsFilePath, '', 'utf8')
-  fs.writeFileSync(bookamrksFilePath, '', 'utf8')
-  fs.writeFileSync(modulesFilePath, '', 'utf8')
-  fs.writeFileSync(applicationsFilePath, '', 'utf8')
-}
 
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')

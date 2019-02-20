@@ -42,6 +42,11 @@
   {"value": "STORE_CONFIRM_UPDATE_ADDON", "message": "Mettre a jour"},
   {"value": "STORE_UPDATE_ADDON", "message": "Une nouvelle mise a jour est disponible pour cette application, voulez vous l'installer ?"},
 
+  {"value": "STORE_BUILD_TITLE", "message": "BIENTÔT"},
+  {"value": "STORE_BUILD_TEXT", "message": "Nous travaillons comme jamais pour vous construire un superbe magasin !"},
+  {"value": "STORE_BUILD_BACK", "message": "Retour à l'accueil"},
+  {"value": "STORE_BUILD_MORE", "message": "En savoir plus"},
+
   {"value": "CERT_ERROR_TITLE", "message": "SITE WEB DANGEREUX"},
   {"value": "CERT_ERROR_TEXT", "message": "Le site web auquel vous tentez d'accéder<br>contient du contenu dangereux."},
   {"value": "CERT_ERROR_BACK", "message": "Retour à la sécurité"},

@@ -23,7 +23,7 @@ const controlBar = {
   },
 
   makeScreenshot: () => {
-    let view = document.querySelector(`.active`)
+    let view = document.querySelector(`.active`).getWebContents()
     view.capturePage((data) => {
       let img = data.toPNG().toString('base64')
       let path = `${app.getPath('pictures')}/screenshot-ID${Math.floor((Math.random() * 10000) + 1)}.png`

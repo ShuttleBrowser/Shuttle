@@ -53,7 +53,7 @@ The settings can be edited by clicking on the gear. They make possible to manage
 All updates are automatic and new versions are checked at the launch of the application. You can also search for updates by clicking on the arrows below the settings.
 If you need help to setup or use Shuttle, or you want to report a bug, please contact us at [support@shuttleapp.io](mailto:support@shuttleapp.io).
 
-Stay in touch by joining us on [Twitter](https://twitter.com/shuttle_app) or [Discord](discord.gg/QCFdGq7).
+Stay in touch by joining us on [Twitter](https://twitter.com/shuttle_app) or [Discord](https://discord.gg/QCFdGq7).
 
 ### Keyboard shortcuts
 
@@ -127,5 +127,5 @@ The logo and all associated visuals are under the [CC BY-NC-ND 3.0](https://crea
 
 ## Current Version
 
-* Release [2.0.9](https://github.com/ShuttleBrowser/Shuttle/releases)
-* Pre-release [3.0.6-beta.7](https://github.com/ShuttleBrowser/Shuttle/releases)
+* Release [3.0.10](https://github.com/ShuttleBrowser/Shuttle/releases)
+* Pre-release [3.0.7-beta.8](https://github.com/ShuttleBrowser/Shuttle/releases)

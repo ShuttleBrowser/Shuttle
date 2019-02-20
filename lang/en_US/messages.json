@@ -42,6 +42,11 @@
   {"value": "STORE_CONFIRM_UPDATE_ADDON", "message": "Update"},
   {"value": "STORE_UPDATE_ADDON", "message": "A new update is available for this application, you want to install it ?"},
 
+  {"value": "STORE_BUILD_TITLE", "message": "COMING SOON"},
+  {"value": "STORE_BUILD_TEXT", "message": "We're working like never for building you an amazing store !"},
+  {"value": "STORE_BUILD_BACK", "message": "Back to home"},
+  {"value": "STORE_BUILD_MORE", "message": "Learn more"},
+
   {"value": "CERT_ERROR_TITLE", "message": "DANGEROUS WEBSITE"},
   {"value": "CERT_ERROR_TEXT", "message": "The website you try to access<br>content hight dangerous content."},
   {"value": "CERT_ERROR_BACK", "message": "Back to safety"},

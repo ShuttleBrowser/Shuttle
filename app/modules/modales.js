@@ -191,6 +191,37 @@ const modales = {
     })
   },
 
+  changelog () {
+    let inputs = `
+    <h1>CHANGELOG</h1>
+    <br>
+    <br>
+    <ul>
+      <h5 id="changelogT">Add search engine selector</h5>
+      <h5 id="changelogT">Add contextmenu</h5>
+      <h5 id="changelogT">Add search bar in landing page</h5>
+      <h5 id="changelogT">Add multiple quick search</h5>
+      <h5 id="changelogT">Add history page</h5>
+      <h5 id="changelogT">Add dangerous websites blocker</h5>
+      <h5 id="changelogT">Fix bookmarks reordering</h5>
+      <h5 id="changelogT">Fix bookmark status</h5>
+      <h5 id="changelogT">Fix "Report Bug" in settings</h5>
+    </ul>
+
+    <style>
+    #changelogT {
+      margin: 0;
+      font-weight: 300;
+    }
+
+    .vex.vex-theme-default .vex-content {
+      margin: 40% auto 0;
+    }
+    </style>
+    `
+    vex.dialog.alert({ unsafeMessage: inputs })
+  },
+
   alert (message) {
     vex.dialog.open({
       message: message,
