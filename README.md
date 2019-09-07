@@ -1,6 +1,6 @@
 <div align="center">
 <br>
-<a href="https://shuttleapp.io" target="_blank"><img width="500" src="https://shuttleapp.io/images/new/logo-p.png" alt="Shuttle"></a>
+<a href="https://shuttleapp.io" target="_blank"><img width="500" src="./app/assets/img/changelog/logo-p.png" alt="Shuttle"></a>
 <br>
 <br>
 </div>
@@ -60,7 +60,7 @@ Stay in touch by joining us on [Twitter](https://twitter.com/shuttle_app) or [Di
 _Currently in developement._
 
 * Add bookmark : <kbd>Ctrl</kbd> <kbd>P</kbd>
-* Remove bookmark : <kbd>Ctrl</kbd> <kbd>R</kbd> *(not implemented)*
+* Remove bookmark : <kbd>Ctrl</kbd> <kbd>R</kbd>
 * Show home page: <kbd>Ctrl</kbd> <kbd>H</kbd>
 * Show settings : <kbd>Ctrl</kbd> <kbd>S</kbd>
 * Open quicksearch : <kbd>Ctrl</kbd> <kbd>K</kbd>

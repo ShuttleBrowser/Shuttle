@@ -102,9 +102,8 @@ const settings = {
     document.getElementById('reportBug').innerHTML = lang('SETTINGS_REPORT_BUG')
     document.getElementById('blockDangerousWebsite').innerHTML = lang('SETTINGS_BLOCK_WEBSITE')
 
-    document.getElementById('accountTitle').innerHTML = lang('SETTINGS_ACCOUNT')
+    document.getElementById('accountTitle').innerHTML = lang('SETTINGS_SYNC_TITLE')
     document.getElementById('accountStatus').innerHTML = lang('SETTINGS_ACCOUNT_STATUS')
-    document.getElementById('accountSettings').innerHTML = lang('SETTINGS_ACCOUNT_PASSWORD')
     document.getElementById('syncButton').innerHTML = lang('SETTINGS_SYNC')
     document.getElementById('logoutButton').value = lang('AUTH_LOGOUT').toUpperCase()
     document.getElementById('signinButton').value = lang('AUTH_SIGNIN').toUpperCase()
@@ -309,34 +308,6 @@ const settings = {
     files.settings.setValue('settings.searchEngine', engine)
     this.setSearchEngineSelect()
     this.showSearchEngineSelector()
-  },
-
-  changePassword () {
-    modales.changePassword((oldpassword, newpassword) => {
-
-      let body = {
-        token: files.settings.getValue('settings.userToken'),
-        old: oldpassword,
-        new: newpassword
-      }
-  
-      fetch(`${config.api}/auth/reset/`, {
-        method: 'post',
-        body: JSON.stringify(body),
-        headers: { 'Content-Type': 'application/json' }
-      }).then(res => res.json()).catch((e) => {
-        alert(`error : ${e}`)
-      }).then((data) => {
-        if (data.message === 'success') {
-          this.logout()
-        } else if (data.message === "BAD_PASSWORD") {
-          alert(lang('AUTH_BAD_PASSWORD'))
-        } else {
-          alert(lang('AUTH_SERVER_ERROR'))
-        }
-      })
-
-    })
   },
 
   setWebsiteBlocking () {

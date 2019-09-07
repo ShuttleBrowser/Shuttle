@@ -1,6 +1,6 @@
 // const winston = require('winston')
 const {dialog, app, shell} = require('electron')
-const {autoUpdater} = require('electron-updater')
+const {autoUpdater, AppUpdater } = require('electron-updater')
 const lang = require(`../lang/lang.js`)
 
 // -------------------------------------------------------------------

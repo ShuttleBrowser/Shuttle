@@ -136,6 +136,18 @@ document.addEventListener('contextmenu', (event) => {
       click() {
         switchVersion()
       }
+    },
+    {
+      label: lang('COPY_CURRENT_URL'),
+      click() {
+        copyToClipboard(location.href)
+      }
+    },
+    {
+      label: lang('OPEN_IN_BROWSER'),
+      click() {
+        openInBrowser(location.href)
+      }
     }]
   }
   

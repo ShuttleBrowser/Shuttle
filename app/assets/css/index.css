@@ -81,7 +81,7 @@ webview {
     position: absolute;
     top: 50px;
     left: 0;
-    bottom: 0px;
+    bottom: 73px;
     width: 35px;
     overflow: auto;
 }
@@ -197,9 +197,9 @@ hr {
     bottom: 0;
     left: 0;
     width: 34.9px;
-    height: 100px;
     background-color: #F4F4F4;
     text-align: center;
+    padding-bottom: 8.5px;
 }
 
 .svg-inline--fa {

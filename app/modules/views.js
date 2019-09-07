@@ -122,19 +122,21 @@ const view = {
     let webviewToListen = document.querySelector(`#view-${id}`)
     if (webviewToListen) {
       webviewToListen.addEventListener('did-fail-load', (errorCode, errorDescription, validatedURL) => {
-        console.log(errorCode)
-        if (errorCode.errorCode === -203 || errorCode.errorCode === -202 || errorCode.errorCode === -201 || errorCode.errorCode === -200) {
-          webviewToListen.loadURL(this.generateErrorPage(errorCode.validatedURL, 'cert'))
-          console.log(errorCode.validatedURL)
-        } else {
-          if (errorCode.errorCode !== -3 && errorCode.errorCode !== -27 && errorCode.errorCode !== -105) {
-            if (navigator.onLine === false) {
-              webviewToListen.loadURL(this.generateErrorPage('NO INTERNET CONNECTION', 'error'))
-            } else {
-              if (errorCode.errorDescription) {
-                webviewToListen.loadURL(this.generateErrorPage(errorCode.errorDescription, 'error'))
+        // console.error(errorCode)
+        if(!errorCode.validatedURL.includes('shuttleapp.io')) {
+          if (errorCode.errorCode === -203 || errorCode.errorCode === -202 || errorCode.errorCode === -201 || errorCode.errorCode === -200) {
+            webviewToListen.loadURL(this.generateErrorPage(errorCode.validatedURL, 'cert'))
+            console.log(errorCode.validatedURL)
+          } else {
+            if (errorCode.errorCode !== -3 && errorCode.errorCode !== -27 && errorCode.errorCode !== -105) {
+              if (navigator.onLine === false) {
+                webviewToListen.loadURL(this.generateErrorPage('NO INTERNET CONNECTION', 'error'))
               } else {
-                webviewToListen.loadURL(this.generateErrorPage('UNKNOW ERROR', 'error'))
+                if (errorCode.errorDescription) {
+                  webviewToListen.loadURL(this.generateErrorPage(errorCode.errorDescription, 'error'))
+                } else {
+                  webviewToListen.loadURL(this.generateErrorPage('UNKNOW ERROR', 'error'))
+                }
               }
             }
           }

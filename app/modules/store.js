@@ -439,10 +439,12 @@ let store = {
     },
 
     runListener () {
-      document.querySelector('.store-search-bar').addEventListener('input', () => {
-        store.front.showSearchResults(true)
-        this.search(document.querySelector('.store-search-bar').value)
-      })
+      if(!!document.querySelector('.store-search-bar')) {
+        document.querySelector('.store-search-bar').addEventListener('input', () => {
+          store.front.showSearchResults(true)
+          this.search(document.querySelector('.store-search-bar').value)
+        })
+      }
     }
   }
 }
