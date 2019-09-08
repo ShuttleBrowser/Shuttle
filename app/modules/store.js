@@ -171,12 +171,12 @@ const addons = {
     // remove addon directory
     removeDirectory (uid) {
       return new Promise((resolve, reject) => {
-        require('rmdir')(addons.utils.getAddonPath(uid), (err, dir, files) => {
+        exec('rm -r ' + addons.utils.getAddonPath(uid), function (err, stdout, stderr) {
           if (err) {
             console.log(err)
             resolve()
           }
-        })
+        });
       })
     }
   }

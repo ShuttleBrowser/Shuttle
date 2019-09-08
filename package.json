@@ -1,6 +1,6 @@
 {
   "name": "shuttle",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "The fastest access to your favorite applications",
   "homepage": "https://github.com/ShuttleBrowser/Shuttle",
   "main": "main.js",
@@ -34,7 +34,6 @@
     "mime": "^2.4.4",
     "mkdirp": "^0.5.1",
     "os-locale": "^3.0.1",
-    "rmdir": "^1.2.0",
     "vex-js": "^4.1.0"
   },
   "devDependencies": {
