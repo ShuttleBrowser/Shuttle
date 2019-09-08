@@ -7,12 +7,17 @@
 
 <p align="center" color="#6a737d">
   <i>The fastest access to your favorite applications.</i><br>
-  <a href="https://paypal.me/shuttleapp" target="_blank">Buy us a coffee !</a>
 </p>
 
 <div align="center">
-  <img src="https://api.travis-ci.org/KazeJiyu/Shuttle.svg?branch=master">   
-  <a href="https://snyk.io/test/github/ShuttleBrowser/shuttle?targetFile=package.json"><img src="https://snyk.io/test/github/ShuttleBrowser/shuttle/badge.svg?targetFile=package.json" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/ShuttleBrowser/shuttle?targetFile=package.json" style="max-width:100%;"></a>
+  <a href="https://paypal.me/shuttleapp" target="_blank"><img src="https://img.shields.io/badge/PayPal-Buy%20us%20a%20coffee!-blue" alt="Buy us a coffee!" /></a><br>
+  <a href="https://travis-ci.org/ShuttleBrowser/Shuttle">
+    <img alt="Travis (.org)" src="https://img.shields.io/travis/ShuttleBrowser/Shuttle" />
+  </a><a href="https://snyk.io/test/github/ShuttleBrowser/shuttle?targetFile=package.json">
+    <img src="https://snyk.io/test/github/ShuttleBrowser/shuttle/badge.svg?targetFile=package.json" alt="Known Vulnerabilities">
+  </a><a href="https://ci.appveyor.com/project/robjullian/shuttle">
+    <img src="https://img.shields.io/appveyor/ci/robjullian/shuttle" alt="build" /> 
+  </a>
 </div>
 
 
@@ -65,7 +70,7 @@ _Currently in developement._
 * Show settings : <kbd>Ctrl</kbd> <kbd>S</kbd>
 * Open quicksearch : <kbd>Ctrl</kbd> <kbd>K</kbd>
 * Take screenshot : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>S</kbd>
-* Show/Hide Shuttle : <kbd>Ctrl</kbd> <kbd>/</kbd> <kbd>X</kbd><br>
+* Show/Hide Shuttle : <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>X</kbd><br>
 * Refresh page : <kbd>F5</kbd>
 * Go back in history <kbd>Alt</kbd> <kbd>←</kbd>
 * Go forward in history <kbd>Alt</kbd> <kbd>→</kbd>
