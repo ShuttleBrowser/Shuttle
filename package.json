@@ -2,7 +2,7 @@
   "name": "shuttle",
   "version": "3.0.10",
   "description": "The fastest access to your favorite applications",
-  "homepage": "https://shuttleapp.io",
+  "homepage": "https://github.com/ShuttleBrowser/Shuttle",
   "main": "main.js",
   "scripts": {
     "electron": "node_modules\\electron\\dist\\electron.exe .",

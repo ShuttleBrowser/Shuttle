@@ -185,18 +185,27 @@ ipcMain.on('auth-logout', function() {
 ipcMain.on('get-credentials', async (event, args) => {
   let credentials = await auth.getCredentials()
 
-  if(args == true) {
-    if (!credentials || new Date(credentials.expiry_date) < Date.now()) {
-      console.log('get new credentials')
+  // if has args
+  if (args == true) {
+    // if there was crendentials
+    if (!!credentials) {
+      // so there is some credentials somewhere
+
+      // if there aren't up to date
+      if(new Date(credentials.expiry_date) < Date.now()) {
+        await auth.refreshCredentials() // refresh them
+      }
+      // else there are still up to date so we can use them
+    } else {
+      // we need our first credentials, start auth
       await auth.startAuth()
       .then(function (response){
         credentials = response
       })
     }
-    
-    
   }
 
+  // return them
   event.returnValue = credentials
 })
 
@@ -227,7 +236,7 @@ EventsEmitter.on('SHOW_SHUTTLE', () => {
 })
 
 EventsEmitter.on('SHOW_ABOUT', () => {
-  shell.openExternal('https://shuttleapp.io/about')
+  shell.openExternal('https://github.com/ShuttleBrowser/Shuttle')
 })
 
 EventsEmitter.on('SHOW_SETTINGS', () => {

@@ -49,7 +49,7 @@ class GoogleAuth {
       this.credentials = JSON.parse(store.get(CREDENTIALS_KEY))
       // console.log(client.credentials)
 
-      if (this.credentials.expiry_date !== undefined && new Date(this.credentials.expiry_date) > Date.now()) {
+      if (this.credentials.expiry_date !== undefined) {
         this.client.refreshToken(this.credentials.refresh_token)
           .then(function (r) {
             try {
