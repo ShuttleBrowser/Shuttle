@@ -1,7 +1,7 @@
 [
   {"value": "ADD_BOOKMARK", "message": "Fügen Sie ein Favorit"},
   {"value": "TYPE_URL", "message": "Geben Sie die url eine Website"},
- {"value": "CHOOSE_THIS_URL", "message": "Wählen Sie die aktive Seite"},
+  {"value": "CHOOSE_THIS_URL", "message": "Wählen Sie die aktive Seite"},
   {"value": "REMOVE_BOOKMARK", "message": "Löschen Sie Favorit ?"},
   {"value": "REMOVE_QUICKSEARCH", "message": "Löschen Sie die Schnellsuche Tab ?"},
   {"value": "QUICK_SEARCH", "message": "Geben Sie Ihre Schnellsuche"},
@@ -25,6 +25,7 @@
   {"value": "SETTINGS_ADVANCED", "message": "ERWEITERTE"},
   {"value": "SETTINGS_SYNC_TITLE", "message": "FAVORIT SYNCHRONISATION"},
   {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Status"},
+  {"value": "SETTINGS_ACCOUNT_CONNECTED", "message": "Verbunden"},
   {"value": "SETTINGS_SYNC", "message": "SYNCHRONISATION"},
   {"value": "SETTINGS_BLOCK_WEBSITE", "message": "Gefährliche Seiten blockieren"},
   {"value": "SETTINGS_SHOW_HISTORY", "message": "Historisch sehen"},

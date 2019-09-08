@@ -179,13 +179,6 @@ const auth = {
       this.setError(lang('AUTH_INVALID_EMAIL'))
     }
   },
-
-  logout () {
-    files.settings.setValue('settings.userToken', '')
-    files.settings.setValue('settings.isLogged', false)
-    files.settings.setValue('settings.sync', false)
-    EventsEmitter.emit('SHOW_AUTH')
-  }
 }
 
 module.exports = auth

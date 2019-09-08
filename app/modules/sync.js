@@ -2,6 +2,10 @@ const config = require('./config.json')
 
 const files = require('./files.js')
 const store = require('./store.js')
+const GoogleDriveService = require('./gd-service.js')
+
+const service = new GoogleDriveService();
+const SAVE_BOOKMARK_KEY = "bookmarks_save_id"
 
 const sync = {
 
@@ -12,26 +16,13 @@ const sync = {
 
       if (isLogged && files.settings.getValue('settings.sync')) {
 
-        let body = {
-          token: files.settings.getValue('settings.userToken')
-        }
-
-        fetch(`${config.api}/sync/bookmarks/download/`, {
-          method: 'post',
-          body: JSON.stringify(body),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(res => res.json()).catch(() => {
-          reject()
-        }).then((data) => {
-            if (data.message === 'success') {
-              resolve(data.bookmarks)
-              files.bookmarks.set(data.bookmarks)
-            } else if (data.message === 'TOKEN_ERROR' || data.message === 'USER_NOT_FOUND') {
-              reject()
-            } else {
-              reject()
-            }
-          })
+        service.getFileContent(SAVE_BOOKMARK_KEY)
+        .catch(function(err){
+          reject(err)
+        })
+        .then(function(response){
+          resolve(response)
+        })
 
       } else {
         reject()
@@ -41,40 +32,21 @@ const sync = {
   },
 
   uploadBookmarks () {
+    let isLogged = files.settings.getValue('settings.isLogged')
 
-    return new Promise((resolve, reject) => {
+    if (isLogged && files.settings.getValue('settings.sync')) {
 
-      let isLogged = files.settings.getValue('settings.isLogged')
+      service.upload(JSON.stringify(files.bookmarks.list()), 'bookmarks.shuttle', 'Shuttle app bookmarks')
+      .then(function (response) {
+        service.saveFileId(SAVE_BOOKMARK_KEY, response.id)
+      })
+      .catch(function (err) {
+        console.error('[SYNC] > ' + err)
+      })
 
-      if (isLogged && files.settings.getValue('settings.sync')) {
-
-        let body = {
-          token: files.settings.getValue('settings.userToken'),
-          bkms: files.bookmarks.list()
-        }
-
-        fetch(`${config.api}/sync/bookmarks/upload/`, {
-          method: 'post',
-          body: JSON.stringify(body),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(res => res.json()).catch(() => {
-          reject()
-        }).then((data) => {
-            if (data.message === 'success') {
-              resolve(data.bookmarks)
-            } else if (data.message === 'TOKEN_ERROR' || data.message === 'USER_NOT_FOUND') {
-              reject()
-            } else {
-              reject()
-            }
-          })
-
-      } else {
-        reject()
-      }
-
-    })
-
+    } else {
+      console.error('[SYNC] > User not logged in or not synced')
+    }
   }
 
 }

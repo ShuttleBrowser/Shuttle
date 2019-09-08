@@ -44,13 +44,11 @@ const settings = {
       document.querySelector('input[name=logout]').style.display = 'block'
       document.querySelector('input[name=singin]').style.display = 'none'
 
-      document.querySelector('input[name=accountSettings]').disabled = false
       document.querySelector('input[name=syncButton]').disabled = false
     } else {
       document.querySelector('input[name=logout]').style.display = 'none'
       document.querySelector('input[name=singin]').style.display = 'block'
-
-      document.querySelector('input[name=accountSettings]').disabled = true
+      
       document.querySelector('input[name=syncButton]').disabled = true
     }
   },
@@ -272,8 +270,10 @@ const settings = {
 
   logout () {
     files.settings.setValue('settings.isLogged', false)
-    files.settings.setValue('settings.userToken', '')
-    EventsEmitter.emit('SHOW_AUTH')
+    ipcRenderer.send('auth-logout')
+    document.querySelector('input[name="syncButton"]').disabled = true
+    document.querySelector('input[name=logout]').style.display = 'none'
+    document.querySelector('input[name=singin]').style.display = 'block'
   },
 
   searchEngineSelectorIsShow: false,

@@ -37,7 +37,6 @@
     const shuttle = {
       initApp () {
         if (files.settings.getValue('settings.firstRun') === undefined) {
-          this.showAuth()
           files.settings.setValue('settings.firstRun', false)
         } else {
           this.showBrowser()
@@ -91,12 +90,16 @@
         })
       },
 
-      showAuth () {
-        loadFile('auth', false, () => {
-          auth.init()
-          console.log('[INFO] > Auth show')
-        })
-      },
+      tryAuth(force = undefined) {
+        let result = ipcRenderer.sendSync('get-credentials', force)
+        if (result) {
+          files.settings.setValue('settings.isLogged', true);
+          document.getElementById('signinButton').value = lang('SETTINGS_ACCOUNT_CONNECTED')
+          document.querySelector('input[name="syncButton"]').disabled = false
+          document.querySelector('input[name=logout]').style.display = 'block'
+          document.querySelector('input[name=singin]').style.display = 'none'
+        }
+      }
     }
 
     window.addEventListener('load', () => {
@@ -167,10 +170,11 @@
     })
 
     EventsEmitter.on('SHOW_AUTH', () => {
-      shuttle.showAuth(() => {
-        auth.init()
-        auth.tooggleMethod('signin')
-      })
+      shuttle.tryAuth(true)
+    })
+
+    document.addEventListener('DOMContentLoaded', function() {
+      shuttle.tryAuth(false)
     })
 
   </script>

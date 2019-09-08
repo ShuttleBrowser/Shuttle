@@ -65,7 +65,7 @@ _Currently in developement._
 * Show settings : <kbd>Ctrl</kbd> <kbd>S</kbd>
 * Open quicksearch : <kbd>Ctrl</kbd> <kbd>K</kbd>
 * Take screenshot : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>S</kbd>
-* Show/Hide Shuttle : <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>X</kbd><br>
+* Show/Hide Shuttle : <kbd>Ctrl</kbd> <kbd>/</kbd> <kbd>X</kbd><br>
 * Refresh page : <kbd>F5</kbd>
 * Go back in history <kbd>Alt</kbd> <kbd>←</kbd>
 * Go forward in history <kbd>Alt</kbd> <kbd>→</kbd>
