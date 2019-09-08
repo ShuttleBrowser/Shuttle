@@ -25,7 +25,6 @@
   {"value": "SETTINGS_ADVANCED", "message": "ADVANCED"},
   {"value": "SETTINGS_SYNC_TITLE", "message": "SYNC BOOKMARKS"},
   {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Status"},
-  {"value": "SETTINGS_ACCOUNT_CONNECTED", "message": "Connected"},
   {"value": "SETTINGS_SYNC", "message": "Synchronization"},
   {"value": "SETTINGS_BLOCK_WEBSITE", "message": "Block dangerous websites"},
   {"value": "SETTINGS_SHOW_HISTORY", "message": "Show history"},

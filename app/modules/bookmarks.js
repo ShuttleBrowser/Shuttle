@@ -1,6 +1,6 @@
 const files = require('./files')
 const views = require('./views.js')
-const sync = require('./sync.js')
+const { sync } = require('./sync.js')
 const config = require('./config.json')
 const axios = require('axios')
 

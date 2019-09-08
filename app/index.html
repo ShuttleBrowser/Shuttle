@@ -23,7 +23,7 @@
   <script>
     window.require = require
 
-    const { event, bookmarks, view, auth, settings, controlBar, modales, files, loadFile, sync, updater, addons, store } = require('./modules/index.js')
+    const { event, bookmarks, view, settings, controlBar, modales, files, loadFile, sync, updater, addons, store } = require('./modules/index.js')
 
     const { ipcRenderer } = require('electron')
     const { app } = require('electron').remote
@@ -40,7 +40,6 @@
           files.settings.setValue('settings.firstRun', false)
         } else {
           this.showBrowser()
-          auth.verifyToken()
         }
         this.frame(files.settings.getValue('settings.frame'))
       },
@@ -90,11 +89,10 @@
         })
       },
 
-      tryAuth(force = undefined) {
+      tryAuth(force = false) {
         let result = ipcRenderer.sendSync('get-credentials', force)
         if (result) {
-          files.settings.setValue('settings.isLogged', true);
-          document.getElementById('signinButton').value = lang('SETTINGS_ACCOUNT_CONNECTED')
+          files.settings.setValue('settings.isLogged', true)
           document.querySelector('input[name="syncButton"]').disabled = false
           document.querySelector('input[name=logout]').style.display = 'block'
           document.querySelector('input[name=singin]').style.display = 'none'

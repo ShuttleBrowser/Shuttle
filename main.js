@@ -174,8 +174,7 @@ auth.refreshCredentials();
 
 ipcMain.on('auth-start', function () {
   auth.startAuth()
-  .then(function (){
-  })
+  .catch(function () {})
 })
 
 ipcMain.on('auth-logout', function() {
@@ -185,8 +184,15 @@ ipcMain.on('auth-logout', function() {
 ipcMain.on('get-credentials', async (event, args) => {
   let credentials = await auth.getCredentials()
 
-  // if has args
+  // if force auth
   if (args == true) {
+    // we need our first credentials, start auth
+    await auth.startAuth()
+    .then(function (response){
+      credentials = response
+    })
+    .catch(function () {})
+  } else {
     // if there was crendentials
     if (!!credentials) {
       // so there is some credentials somewhere
@@ -196,12 +202,6 @@ ipcMain.on('get-credentials', async (event, args) => {
         await auth.refreshCredentials() // refresh them
       }
       // else there are still up to date so we can use them
-    } else {
-      // we need our first credentials, start auth
-      await auth.startAuth()
-      .then(function (response){
-        credentials = response
-      })
     }
   }
 

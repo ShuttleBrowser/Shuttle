@@ -25,7 +25,6 @@
   {"value": "SETTINGS_ADVANCED", "message": "AVANCÉ"},
   {"value": "SETTINGS_SYNC_TITLE", "message": "SYNCHRONISATION COMPTE"},
   {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Statut"},
-  {"value": "SETTINGS_ACCOUNT_CONNECTED", "message": "Connecté"},
   {"value": "SETTINGS_SYNC", "message": "Synchronisation"},
   {"value": "SETTINGS_BLOCK_WEBSITE", "message": "Bloquer les pages dangereuses"},
   {"value": "SETTINGS_SHOW_HISTORY", "message": "Voir l'historique"},

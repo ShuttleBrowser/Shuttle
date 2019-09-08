@@ -25,7 +25,6 @@
   {"value": "SETTINGS_ADVANCED", "message": "ERWEITERTE"},
   {"value": "SETTINGS_SYNC_TITLE", "message": "FAVORIT SYNCHRONISATION"},
   {"value": "SETTINGS_ACCOUNT_STATUS", "message": "Status"},
-  {"value": "SETTINGS_ACCOUNT_CONNECTED", "message": "Verbunden"},
   {"value": "SETTINGS_SYNC", "message": "SYNCHRONISATION"},
   {"value": "SETTINGS_BLOCK_WEBSITE", "message": "Gefährliche Seiten blockieren"},
   {"value": "SETTINGS_SHOW_HISTORY", "message": "Historisch sehen"},
