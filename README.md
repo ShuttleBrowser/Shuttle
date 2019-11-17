@@ -18,7 +18,9 @@
   </a><a href="https://ci.appveyor.com/project/robjullian/shuttle">
     <img src="https://img.shields.io/appveyor/ci/robjullian/shuttle" alt="build" /> 
   </a>
-</div>
+</div><br>
+
+> Note: our website is currently down, we're coming back soon !
 
 
 ## Installation
