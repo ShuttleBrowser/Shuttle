@@ -20,7 +20,7 @@
   </a>
 </div><br>
 
-> This project is currently unmaintained.<br>Feel free to fork it bring it up to date !
+> This project is currently unmaintained.<br>Feel free to fork it and bringing it up to date !
 
 
 ## Installation
