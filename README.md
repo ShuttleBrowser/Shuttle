@@ -20,7 +20,7 @@
   </a>
 </div><br>
 
-> Note: our website is currently down, we're coming back soon !
+> This project is currently unmaintained.<br>Feel free to fork it bring it up to date !
 
 
 ## Installation
@@ -123,7 +123,7 @@ Shuttle stores informations about your current bookmarks in a JSON file:
 
 * **Robin Jullian** - *Lead developer* - [robjullian](https://github.com/robjullian)
 
-Currently maintained by [robjullian](https://github.com/robjullian), [KazeJiyu](https://github.com/KazeJiyu), [Vahelnir](https://github.com/Vahelnir) and [TheRolf](https://github.com/TheRolfFR).
+Many thanks to [KazeJiyu](https://github.com/KazeJiyu), [Vahelnir](https://github.com/Vahelnir) and [TheRolf](https://github.com/TheRolfFR) who accompanied us throughout the adventure.
 
 See also the list of [contributors](https://github.com/ShuttleBrowser/Shuttle/contributors) who participated in this project.
 
