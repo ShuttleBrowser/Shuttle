@@ -1,8 +1,8 @@
 <div align="center">
-<br>
-<a href="https://shuttleapp.io" target="_blank"><img width="500" src="./src/assets/imgs/logo.svg" alt="Shuttle"></a>
-<br>
-<br>
+  <br>
+  <img width="500" src="./public/img/logo.svg" alt="Shuttle">
+  <br>
+  <br>
 </div>
 
 <p align="center" color="#6a737d">
@@ -10,8 +10,8 @@
 </p>
 
 <div align="center">
-  <a href="https://snyk.io/test/github/ShuttleBrowser/shuttle?targetFile=package.json">
-    <img src="https://snyk.io/test/github/ShuttleBrowser/shuttle/badge.svg?targetFile=package.json" alt="Known Vulnerabilities">
+  <a href="https://snyk.io/test/github/ShuttleBrowser/Shuttle/tree/v4.0?targetFile=package.json">
+    <img src="https://snyk.io/test/github/ShuttleBrowser/Shuttle/tree/v4.0/badge.svg?targetFile=package.json" alt="Known Vulnerabilities">
   </a>
   <a href="https://ci.appveyor.com/project/robjullian/shuttle">
     <img src="https://img.shields.io/appveyor/ci/robjullian/shuttle" alt="build" /> 
