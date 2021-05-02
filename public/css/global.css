@@ -1,5 +1,14 @@
 html, body {
-	position: relative;
+	position: absolute;
 	width: 100%;
-	height: 100%;
+	height: 100vh;
+  background-color: white;
+}
+
+:root {
+  --blue-color: #0061FF;
+  --dark-blue-full-color: #325288;
+  --dark-blue-half-color: rgba(50, 82, 136, 0.5);
+  --dark-blue-light-color: rgba(50, 82, 136, 0.25);
+  --dark-blue-extralight-color: rgba(50, 82, 136, 0.10);
 }

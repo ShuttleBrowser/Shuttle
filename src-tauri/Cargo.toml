@@ -1,15 +1,13 @@
 [package]
-name = "app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+name = "Shuttle"
+version = "4.0.0"
+description = "The fastest access to your favorite applications"
+authors = ["Robin Jullian"]
+license = "NPOSL-3.0"
+repository = "https://github.com/ShuttleBrowser/Shuttle.git"
 default-run = "app"
-edition = "2018"
+edition = "2021"
 build = "src/build.rs"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
 tauri-build = { version = "1.0.0-beta-rc.1" }
