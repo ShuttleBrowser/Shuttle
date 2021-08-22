@@ -1,4 +1,5 @@
 /node_modules/
 
 .DS_Store
-public/bundle*
+public/bundle.js
+public/bundle.css
